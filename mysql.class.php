@@ -1,0 +1,184 @@
+<?php
+	/*************************************
+	* File with mySQL class information *
+	*************************************/
+	class mySQL {
+		private $conn, $query, $result, $db, $host, $user, $pass, $prepared;
+		public $querylist, $total, $errnum, $errmsg;
+
+		public
+		// -- Function Name : __construct
+		// -- Params : $db,$host,$user,$pass
+		// -- Purpose : construct the object and save the params
+		function __construct ($db, $host, $user, $pass) {
+			$this->db = $db;
+			$this->host = $host;
+			$this->user = $user;
+			$this->pass = $pass;
+			$this->querylist = array();
+		}
+
+		protected
+		// -- Function Name : connect
+		// -- Params :
+		// -- Purpose : connects to the database
+		function connect () {
+			try {
+				ini_set('memory_limit', '512M');
+				$this->conn = new PDO('mysql:host=' . $this->host . ';dbname=' . $this->db, $this->user, $this->pass, array(      PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true));
+				$this->conn->exec("SET CHARACTER SET utf8;");
+				$this->conn->exec("SET time_zone = '+1:00'");
+
+			}
+
+			catch (PDOException $error) {
+				//echo $error->getMessage();
+			}
+
+		}
+
+        protected function formatDates ($values) {
+            $express = '/^([\d]{1,2})-([\d]{1,2})-([\d]{4})$/';
+
+            foreach ($values as $key => $value) {
+                preg_match($express, $value, $matches);
+                if (sizeof($matches) === 4) {
+                    $values[$key] = preg_replace($express, '$3-$2-$1', $value);
+                }
+            }
+
+            return $values;
+        }
+
+        protected function formatOutputDates ($values) {
+            $express = '/^([\d]{4})-([\d]{1,2})-([\d]{1,2})$/';
+
+            foreach ($values as $key => $value) {
+                preg_match($express, $value, $matches);
+
+                if (sizeof($matches) === 4) {
+                    $values[$key] = preg_replace($express, '$3-$2-$1', $value);
+                }
+            }
+
+            return $values;
+        }
+
+		public
+		// -- Function Name : statement
+		// -- Params : $query,$values = null,$id = null
+		// -- Purpose : save query, prepare statement and calls execute function
+		function statement ($query, $values = null, $id = null) {
+			global $tpl;
+            $this->query = $query ? $query : $this->query;
+
+            $values = $values ? $this->formatDates($values) : $values;
+
+            if (!$this->conn) {
+                $this->connect();
+            }
+            if ($this->conn) {
+                $this->prepared = $this->conn->prepare($query);
+                $this->execute($values);
+            } else {
+                $file = fopen('error_log', 'a');
+                fwrite($file, 'no connection on: ' . $query . "\r\n");
+                fclose($file);
+            }
+            /*if (defined('DEBUG') && DEBUG) {
+                echo $this->erromsg();
+            }*/
+
+            if (defined('DEBUG') && DEBUG) {
+
+                if (sizeof($values)) {
+                    foreach ($values as $key => $value) {
+                        $query = str_replace($key, sprintf('"%s"', $value), $query);
+                    }
+                }
+
+                $tpl->adderror($query);
+
+                array_push($this->querylist, $query);
+                if ($this->errnum) {
+                    $tpl->adderror(sprintf("(<strong>%s</strong>) %s", $this->errnum, $this->errmsg));
+                }
+            }
+
+		}
+
+		public
+		// -- Function Name : execute
+		// -- Params : $values = null
+		// -- Purpose : executes database query
+		function execute ($values = null) {
+			global $user, $userId, $tpl;
+			try {
+              $returned = $this->prepared->execute($values);
+            }
+
+            catch(PDOException $e) {
+              echo $e;
+            }
+
+			$this->total = $this->prepared->rowCount();
+			$erro = $this->prepared->errorInfo();
+
+			$this->result = $this->prepared->fetchAll();
+
+			$this->errnum = $erro[1];
+			$this->errmsg = $erro[2];
+
+            if (sizeof($this->result) > 0) {
+                foreach ($this->result as $key => $values) {
+                    $this->result[$key] = $this->formatOutputDates($values);
+                }
+            }
+
+            if ($this->errnum && defined('IS_ADMIN')) {
+                $tpl->repvar('SHOW_COOKIE', 'is-visible');
+                $tpl->setvar('ALERT_MSG', sprintf('%s: %s', $this->errnum, $this->errmsg));
+            }
+		}
+
+		public
+		// -- Function Name : result
+		// -- Params :
+		// -- Purpose : returns database query result
+		function result() {
+			return sizeof($this->result) ? $this->result : array();
+		}
+
+		public
+		// -- Function Name : singleresult
+		// -- Params :
+		// -- Purpose : returns database query single result
+		function singleresult() {
+			return sizeof($this->result) ? $this->result[0][0] : '';
+		}
+
+		public
+		// -- Function Name : singleresult
+		// -- Params :
+		// -- Purpose : returns database query single result
+		function singleline() {
+			return sizeof($this->result) ? $this->result[0] : array();
+		}
+
+		public
+		// -- Function Name : close
+		// -- Params :
+		// -- Purpose : closes database connection
+		function close () {
+			$this->conn = null;
+		}
+
+		public
+		// -- Function Name : lastInserted
+		// -- Params :
+		// -- Purpose : returns last inserted id
+		function lastInserted () {
+			return $this->conn->lastInsertId();
+		}
+
+	}
