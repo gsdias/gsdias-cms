@@ -5,15 +5,18 @@
 
 class notification {
     public $total, $list, $read, $unread, $uid;
-    public function __construct($uid, $prefix) { 
-        $this->reset($uid, $prefix); return $this; 
+    
+    public function __construct ($uid = null) {
+        
+        $this->reset($uid);
+        
+        return $this; 
         
     }
-    public function reset($uid, $prefix) {
+    public function reset($uid) {
         global $mysql;
         
-        $mysql->statement(sprintf('SELECT nota
-        FROM %s.users WHERE uid = :uid;', $prefix), array(':uid' => $uid));
+        $mysql->statement('SELECT notifications FROM users WHERE uid = :uid;', array(':uid' => $uid));
         
         $notifications = json_decode($mysql->singleresult(), true);
         
@@ -63,7 +66,7 @@ class notification {
         
         $notifications = json_encode($this->list);
         
-        $mysql->statement("INSERT IGNORE INTO users (uid, nota) VALUES (:uid, :nota);UPDATE users SET nota = :nota WHERE uid = :uid", array(':nota' => $notifications, ':uid' => $this->uid));
+        $mysql->statement("INSERT IGNORE INTO users (uid, notifications) VALUES (:uid, :notifications); UPDATE users SET notifications = :notifications WHERE uid = :uid", array(':notifications' => $notifications, ':uid' => $this->uid));
     }
 }
 

@@ -1,4 +1,5 @@
 <?php
+
 class tpl {
     var $config = array(
         'vars' => array(), 
@@ -17,7 +18,7 @@ class tpl {
       * @return nothing
     */  
     function setVar ($id, $value) {
-        $this->config['vars'][$id] = isset($this->config['vars'][$id]) ? $this->config['vars'][$id] . $value : $value;
+        $this->config['vars'][$id] = isset($this->config['vars'][$id]) ? sprintf("%s%s", $this->config['vars'][$id], $value) : $value;
         if (constant('DEBUG') == '1') {
             //$this->adderror(sprintf('Added template key <strong>%s</strong>: %s', $id, $value));
         }
@@ -113,12 +114,12 @@ class tpl {
                     foreach ($_array as $_var => $_value) {
                         $_block = str_replace(sprintf("{%s_%s}", $blockid, $_var), $_value, $_block);
                     }
-                    $bloco .= $_block;
+                    $bloco .= sprintf("%s\r\n", $_block);
                 }
                 $c++;
             }
         }
-        return $bloco;
+        return substr($bloco, 0, -2);
     }
     private function ifBlock ($blockid, $block) {
         if (strpos($blockid, " OR ")) {
@@ -226,7 +227,7 @@ class tpl {
             foreach ($matches[0] as $file) {
                 $value = str_replace(array('[', ']'), "", $file);
                 $files = $this->findFile($value);
-                $this->config['file'] = str_replace("[" . $value . "]", $files, $this->config['file']);
+                $this->config['file'] = str_replace(sprintf("[%s]", $value), $files, $this->config['file']);
                 $this->replaceVar();
                 $this->checkblocks('BLOCK');
                 $this->checkblocks('IF');
@@ -252,11 +253,25 @@ class tpl {
         array_push($this->config['error'], $line);
     }
     
+    function includeHtml ($html) {
+        $this->config['file'] .= $html;
+        $this->replaceVar();
+        $this->checkblocks('BLOCK');
+        $this->checkblocks('IF');
+        $this->checkblocks('LOOP');
+        $this->config['file'] = preg_replace('#\{([A-Z0-9_]*)\}#s', '', $this->config['file']);
+    }
+    
     function sendOut () {
         global $mysql;
+        
+        if (!defined('DEBUG') || !DEBUG) {
+            $this->config['file'] = str_replace(array("\r\n", "\r", "\n"), array('', '', ''), $this->config['file']);
+        }
+        
         eval(" ?>" . $this->config['file'] . "<?php ");
         
-        if (DEBUG) {
+        if (defined('DEBUG') && DEBUG) {
             echo '<div class="msgError"><table id="mysql">';
             foreach ($this->config['error'] as $index => $error) {
                 printf('<tr><td>%s</td></tr>', $error);
@@ -274,7 +289,7 @@ class tpl {
         return;
         while ($error = array_pop($this->config['error'])) {
             if (constant('DEBUG') == '1')
-                $this->setVar('MSG_ERROR', $error . '<br>');
+                $this->setVar('MSG_ERROR', sprintf('%s<br>', $error));
             else 
                 $this->setVar('MSG_INFO', $error);
         }

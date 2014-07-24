@@ -82,9 +82,9 @@ class email {
         $result = preg_match_all($pattern, $content, $matches);
         foreach ($matches['name'] as $match) {
             if (isset($this->vars[$match])) {
-                $content = str_replace('$' . $match, $this->vars[$match], $content);
+                $content = str_replace(sprintf('$%s', $match), $this->vars[$match], $content);
             } else {
-                $content = str_replace('$' . $match, '@$' . $match, $content);
+                $content = str_replace(sprintf('$%s', $match), sprintf('@$%s', $match), $content);
             }
         }
         $this->html = html_entity_decode(htmlentities($content, ENT_QUOTES, "UTF-8"), ENT_QUOTES);
@@ -100,15 +100,14 @@ class email {
         
         foreach ($matches['name'] as $match) {
             if (isset($this->vars[$match])) {
-                $content = str_replace('$' . $match, $this->vars[$match], $content);
+                $content = str_replace(sprintf('$%s', $match), $this->vars[$match], $content);
             } else {
-                $content = str_replace('$' . $match, '@$' . $match, $content);
+                $content = str_replace(sprintf('$%s', $match), sprintf('@$%s', $match), $content);
             }
         }
         $this->html = html_entity_decode(htmlentities($content, ENT_QUOTES, "UTF-8"), ENT_QUOTES);
         $file = explode('/', $file);
         $file = explode('.', $file[sizeof($file) - 1]);
-        $mysql->statement('UPDATE emails SET sent = 1 WHERE template = :template;', array(':template' => $file[0]));
         $mysql->statement('SELECT subject, `from`, cc, bcc, attachment FROM emails WHERE template = :template;', array(':template' => $file[0]));
         $info = $mysql->singleline();
         if ($mysql->total) {
@@ -121,9 +120,9 @@ class email {
                 $result = preg_match_all($pattern, $subject, $matches);
                 foreach ($matches['name'] as $match) {
                     if (isset($this->vars[$match])) {
-                        $subject = str_replace('$' . $match, $this->vars[$match], $subject);
+                        $subject = str_replace(sprintf('$%s', $match), $this->vars[$match], $subject);
                     } else {
-                        $subject = str_replace('$' . $match, '', $subject);
+                        $subject = str_replace(sprintf('$%s', $match), '', $subject);
                     }
                 }
                 $this->subject = html_entity_decode($subject);
@@ -143,7 +142,7 @@ class email {
             if ($attachment != '[]') {
                 $attachments = json_decode($attachment, true);
                 foreach ($attachments as $attachment) {
-                    $attachment = '../attachments/' . $attachment;
+                    $attachment = sprintf('../attachments/', $attachment);
                     if (file_exists($attachment)) {
                         array_push($this->attachment, $attachment);
                         array_push($this->attachment_name, null);
@@ -215,7 +214,7 @@ class email {
             while ($cc = array_pop($this->cc)) {
                 $cc_name = array_pop($this->cc_name);
                 
-                $temp .= $cc_name ? $cc_name . " <" . $cc . ">, " : $cc . ", " ;
+                $temp .= $cc_name ? sprintf("%s <%s>, ", $cc_name, $cc) : sprintf("%s, ", $cc);
             }
             
             $header .= sprintf("cc: %s%s", substr($temp, 0, -2), $this->eol);
@@ -227,7 +226,7 @@ class email {
             while ($bcc = array_pop($this->bcc)) {
                 $bcc_name = array_pop($this->bcc_name);
                 
-                $temp .= $bcc_name ? $bcc_name . " <" . $bcc . ">, " : $bcc . ", ";
+                $temp .= $bcc_name ? sprintf("%s <%s>, ", $bcc_name, $bcc) : sprintf("%s, ", $bcc);
             }
             
             $header .= sprintf("bcc: %s%s",substr($temp, 0, -2), $this->eol);
@@ -242,7 +241,7 @@ class email {
             $body .= sprintf("--%s%s", $uid, $this->eol);
             $body .= sprintf("Content-type:text/plain; charset=\"UTF-8\"", $this->eol);
             $body .= sprintf("Content-Transfer-Encoding: 8bit%s%s", $this->eol, $this->eol);
-            $body .= sprintf($this->text . "%s", $this->eol);
+            $body .= sprintf("%s%s", $this->text, $this->eol);
         }
         if (strlen($this->html)) {
             
@@ -254,7 +253,7 @@ class email {
             $body .= sprintf("--%s%s", $uid, $this->eol);
             $body .= sprintf("Content-type:text/html; charset=\"UTF-8\"", $this->eol);
             $body .= sprintf("Content-Transfer-Encoding: 8bit%s%s", $this->eol, $this->eol);
-            $body .= $message . $this->eol;
+            $body .= sprintf("%s%s", $message, $this->eol);
         }
         if (sizeof($this->attachment)) {
             while ($attachment = array_pop($this->attachment)) {
