@@ -1,10 +1,13 @@
 <?php
+
 	/*************************************
 	* File with mySQL class information *
 	*************************************/
+
 	class mySQL {
+        
 		private $conn, $query, $result, $db, $host, $user, $pass, $prepared;
-		public $querylist, $total, $errnum, $errmsg;
+		public $querylist, $total, $errnum, $errmsg, $executed;
 
 		public
 		// -- Function Name : __construct
@@ -22,22 +25,44 @@
 		// -- Function Name : connect
 		// -- Params :
 		// -- Purpose : connects to the database
-		function connect () {
+		function connect ($withdb = true) {
 			try {
 				ini_set('memory_limit', '512M');
-				$this->conn = new PDO('mysql:host=' . $this->host . ';dbname=' . $this->db, $this->user, $this->pass, array(      PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true));
-				$this->conn->exec("SET CHARACTER SET utf8;");
-				$this->conn->exec("SET time_zone = '+1:00'");
+                
+                $db = $withdb ? sprintf('dbname=%s', $this->db) : '';
+                
+				$this->conn = new PDO('mysql:host=' . $this->host . ';charset=UTF-8;' . $db, $this->user, $this->pass, array(      PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true));
+				$this->conn->exec("SET CHARACTER SET utf8;SET time_zone = 'Europe/London'");
 
 			}
 
 			catch (PDOException $error) {
-				//echo $error->getMessage();
+                //echo $error->getMessage();
+                echo $error->getCode();
+                switch ($error->getCode()) {
+                    case '2002':
+                        printf('<span style="color: red;">Could not connect to database. Check host</span><br>');
+                    break;
+                    case '1044':
+                        printf('<span style="color: red;">Could not connect to database. Check permissions</span><br>');
+                    break;
+                    case '1045':
+                        printf('<span style="color: red;">Could not connect to database. Check credentials</span><br>');
+                    break;
+                    case '1049':
+                        $this->connect(false);
+                    break;
+                    exit;
+                }
 			}
 
 		}
 
-        protected function formatDates ($values) {
+        protected
+		// -- Function Name : formatDates
+		// -- Params : $values
+		// -- Purpose : Format dates to be in a mysql format validation
+        function formatDates ($values) {
             $express = '/^([\d]{1,2})-([\d]{1,2})-([\d]{4})$/';
 
             foreach ($values as $key => $value) {
@@ -50,7 +75,11 @@
             return $values;
         }
 
-        protected function formatOutputDates ($values) {
+        protected
+		// -- Function Name : formatOutputDates
+		// -- Params : $values
+		// -- Purpose : Format dates to be in Europe format reading
+        function formatOutputDates ($values) {
             $express = '/^([\d]{4})-([\d]{1,2})-([\d]{1,2})$/';
 
             foreach ($values as $key => $value) {
@@ -106,7 +135,7 @@
             }
 
 		}
-
+        
 		public
 		// -- Function Name : execute
 		// -- Params : $values = null
@@ -114,7 +143,7 @@
 		function execute ($values = null) {
 			global $user, $userId, $tpl;
 			try {
-              $returned = $this->prepared->execute($values);
+              $this->executed = $this->prepared->execute($values);
             }
 
             catch(PDOException $e) {

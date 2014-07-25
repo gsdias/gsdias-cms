@@ -1,0 +1,29 @@
+{
+    "name": "development-repo",
+    "version": "0.1.0",
+    "devDependencies": {
+        "grunt-contrib-connect": "",
+        "grunt-saucelabs": "",
+        "grunt-contrib-qunit": "",
+        "grunt-contrib-nodeunit": "",
+        "grunt-usemin": "",
+        "grunt-contrib-compass": "",
+        "grunt-contrib-uglify": "",
+        "grunt-contrib-jshint": "",
+        "grunt-contrib-watch": "",
+        "grunt-contrib-concat": "",
+        "grunt-contrib-copy": "",
+        "grunt-modernizr": "",
+        "grunt-contrib-htmlmin": ""
+    },
+    "description": "ERROR: No README.md file found!",
+    "main": "Gruntfile.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": "",
+    "author": "",
+    "license": "BSD",
+    "dependencies": {
+    }
+}

@@ -1,0 +1,13 @@
+/*========================================================================
+        Icons and sprites
+==========================================================================*/
+
+.icon {
+    display: block;
+    float: left;
+}
+
+.icon-cms-logo {
+    @extend .icon;
+    @include retina-sprite(cms-logo);
+}

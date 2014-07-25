@@ -1,0 +1,12 @@
+<!-- LOOP TABLE_EXISTS -->
+Checking table '{TABLE_EXISTS_NAME}': {TABLE_EXISTS_STATUS}<br>
+<!-- ENDLOOP TABLE_EXISTS -->
+
+<!-- IF CREATETABLES -->
+
+Creating missing tables: <br>
+<!-- LOOP CREATETABLES -->
+table '{CREATETABLES_NAME}': {CREATETABLES_STATUS}<br>
+<!-- ENDLOOP CREATETABLES -->
+
+<!-- ENDIF CREATETABLES -->

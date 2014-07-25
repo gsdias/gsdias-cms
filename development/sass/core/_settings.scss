@@ -1,0 +1,47 @@
+$font-arial: 'Arial';
+$font-montserrat: 'Montserrat';
+
+// Used as background of website
+$bg-white: #ccc;
+// Used for background on buttons
+$bg-color: #5591b7;
+// Used for hover on buttons
+$bg-color-hover: #81b0cd;
+// normal text
+$text-color: #262626;
+// normal text with dark background
+$text-color-dark: #c0bfbf;
+// normal titles
+$title-color: #414141;
+
+//form delimiter
+$delimiter: #c8c8c8;
+
+$defeitos: webkit moz ms o;
+
+$tablet-portrait: 768px;
+$tablet-landscape: 1024px;
+
+@mixin prefixs($propriedade, $valor, $prefixos: $defeitos) {
+    @each $prefixo in $prefixos {
+        -#{$prefixo}-#{$propriedade}: #{$valor};
+    }
+    #{$propriedade}: #{$valor};
+}
+
+@mixin gradient($first: #000, $last: #fff) {
+    background: $first;
+	background: -moz-linear-gradient(center top, #{$first} 1%, #{$last} 100%) repeat scroll 0 0 transparent;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(1%, #{$first}), color-stop(100%, #{$last}));
+	background: -webkit-linear-gradient(top, #{$first} 0%, #{$last} 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#{$first}', endColorstr = '#{$last}', GradientType = 0);
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr = '#{$first}', endColorstr = '#{$last}', GradientType = 0)";
+    background: -o-linear-gradient(top, #{$first} 0%, #{$last} 100%);
+	background: -ms-linear-gradient(top, #{$first} 0%, #{$last} 100%);
+}
+
+@mixin opacity($opacity) {
+    opacity: $opacity;
+    filter: alpha(opacity = $opacity);
+    -ms-filter: alpha(opacity = $opacity);
+}

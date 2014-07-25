@@ -40,8 +40,12 @@ class tpl {
       * @param array $value - given list
       * @return nothing
     */  
-    function setArray ($id, $value) {
-        $this->config['array'][$id] = $value;
+    function setArray ($id, $value, $merge = false) {
+        if ($merge) {
+            $this->config['array'][$id] = array_merge($this->config['array'][$id], $value);
+        } else {
+            $this->config['array'][$id] = $value;
+        }
     }
     
     /** 
@@ -242,15 +246,20 @@ class tpl {
         $this->config['file'] = preg_replace('#\{([A-Z0-9_]*)\}#s', '', $this->config['file']);
     }
     
-    function includeFiles ($id, $file) {
+    function includeFiles ($id, $file = null) {
         $idFile = strtolower($file);
-        if ($filefound = $this->findFile($file, 1)) {
-            $this->config['files'][$id] = $filefound;
-            $line = sprintf("Foi incluido o ficheiro principal %s", $this->config['path'] . TPLPATH . $idFile . TPLEXT);
+        
+        if ($file) {
+            if ($filefound = $this->findFile($file, 1)) {
+                $this->config['files'][$id] = $filefound;
+                $line = sprintf("Foi incluido o ficheiro principal %s", $this->config['path'] . TPLPATH . $idFile . TPLEXT);
+            } else {
+                $line = sprintf("(principal) O ficheiro %s n&atilde;o existe", $this->config['path'] . TPLPATH . $idFile . TPLEXT);
+            }
+            array_push($this->config['error'], array('MSG' => $line));
         } else {
-            $line = sprintf("(principal) O ficheiro %s n&atilde;o existe", $this->config['path'] . TPLPATH . $idFile . TPLEXT);
+            unset($this->config['files'][$id]);
         }
-        array_push($this->config['error'], $line);
     }
     
     function includeHtml ($html) {
@@ -262,41 +271,40 @@ class tpl {
         $this->config['file'] = preg_replace('#\{([A-Z0-9_]*)\}#s', '', $this->config['file']);
     }
     
-    function sendOut () {
+    function __toString () {
         global $mysql;
         
         if (!defined('DEBUG') || !DEBUG) {
             $this->config['file'] = str_replace(array("\r\n", "\r", "\n"), array('', '', ''), $this->config['file']);
         }
         
+        ob_start();
+        
         eval(" ?>" . $this->config['file'] . "<?php ");
         
+        $output = ob_get_contents();
+        
+        ob_end_clean();                
+        
+        return $output;
+        
         if (defined('DEBUG') && DEBUG) {
-            echo '<div class="msgError"><table id="mysql">';
-            foreach ($this->config['error'] as $index => $error) {
-                printf('<tr><td>%s</td></tr>', $error);
-            }
+            $this->setarray('DEBUGLIST', $this->config['error']);
             $constants = get_defined_constants(true);
             foreach ($constants['user'] as $constant => $value) {
                 printf('<tr><td>%s: %s</td></tr>', $constant, $value);
             }
-            echo '</table></div>';
         }
     }
     
     function sendError () {
         $this->config['error'] = array_reverse($this->config['error']);
-        return;
-        while ($error = array_pop($this->config['error'])) {
-            if (constant('DEBUG') == '1')
-                $this->setVar('MSG_ERROR', sprintf('%s<br>', $error));
-            else 
-                $this->setVar('MSG_INFO', $error);
-        }
+        if (constant('DEBUG') == '1')
+            $this->setarray('DEBUGLIST', $this->config['error']);
     }
     
     function addError ($info) {
-        array_push($this->config['error'], $info);
+        array_push($this->config['error'], array('MSG' => $info));
     }
     
     function returnFile ($file) {
