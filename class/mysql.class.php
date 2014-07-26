@@ -31,8 +31,8 @@
                 
                 $db = $withdb ? sprintf('dbname=%s', $this->db) : '';
                 
-				$this->conn = new PDO('mysql:host=' . $this->host . ';charset=UTF-8;' . $db, $this->user, $this->pass, array(      PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true));
-				$this->conn->exec("SET CHARACTER SET utf8;SET time_zone = 'Europe/London'");
+				$this->conn = new PDO('mysql:host=' . $this->host . ';charset=utf8;' . $db, $this->user, $this->pass, array(      PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true));
+				$this->conn->exec("SET time_zone = 'Europe/London';");
 
 			}
 

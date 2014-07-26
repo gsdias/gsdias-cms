@@ -174,50 +174,50 @@ class tpl {
 
 
         if (file_exists($editable)) {
-            array_push($this->config['error'], sprintf('Foi adicionado o shared: %s', $editable));
+            //array_push($this->config['error'], sprintf('Foi adicionado o shared: %s', $editable));
             return $pathname ? $editable : file_get_contents($editable);
         }
         if (file_exists($subeditable)) {
-            array_push($this->config['error'], sprintf('Foi adicionado o shared: %s', $subeditable));
+            //array_push($this->config['error'], sprintf('Foi adicionado o shared: %s', $subeditable));
             return $pathname ? $subeditable : file_get_contents($subeditable);
         }
         if (file_exists($leveleditable)) {
-            array_push($this->config['error'], sprintf('Foi adicionado o shared: %s', $leveleditable));
+            //array_push($this->config['error'], sprintf('Foi adicionado o shared: %s', $leveleditable));
             return $pathname ? $leveleditable : file_get_contents($leveleditable);
         }
         if (file_exists($shared)) {
-            array_push($this->config['error'], sprintf('Foi adicionado o shared: %s', $shared));
+            //array_push($this->config['error'], sprintf('Foi adicionado o shared: %s', $shared));
             return $pathname ? $shared : file_get_contents($shared);
         }
         if (file_exists($core)) {
-            array_push($this->config['error'], sprintf('Foi adicionado o core: %s', $core));
+            //array_push($this->config['error'], sprintf('Foi adicionado o core: %s', $core));
             return $pathname ? $core : file_get_contents($core);
         }
         if (file_exists($subcore)) {
-            array_push($this->config['error'], sprintf('Foi adicionado o sub core: %s', $subcore));
+            //array_push($this->config['error'], sprintf('Foi adicionado o sub core: %s', $subcore));
             return $pathname ? $subcore : file_get_contents($subcore);
         }
         if (file_exists($levelcore)) {
-            array_push($this->config['error'], sprintf('Foi adicionado o level core: %s', $levelcore));
+            //array_push($this->config['error'], sprintf('Foi adicionado o level core: %s', $levelcore));
             return $pathname ? $levelcore : file_get_contents($levelcore);
         }
         if (file_exists($onarray)) {
-            array_push($this->config['error'], sprintf('Foi adicionado o array: %s', $onarray));
+            //array_push($this->config['error'], sprintf('Foi adicionado o array: %s', $onarray));
             return $pathname ? $onarray : file_get_contents($onarray);
         }
         if (file_exists($first)) {
-            array_push($this->config['error'], sprintf('Foi adicionado o primeiro: %s', $first));
+            //array_push($this->config['error'], sprintf('Foi adicionado o primeiro: %s', $first));
             return $pathname ? $first : file_get_contents($first);
         }
         if (file_exists($sub)) {
-            array_push($this->config['error'], sprintf('Foi adicionado o sub: %s', $sub));
+            //array_push($this->config['error'], sprintf('Foi adicionado o sub: %s', $sub));
             return $pathname ? $sub : file_get_contents($sub);
         }
         if (file_exists($level)) {
-            array_push($this->config['error'], sprintf('Foi adicionado o level: %s', $level));
+            //array_push($this->config['error'], sprintf('Foi adicionado o level: %s', $level));
             return $pathname ? $level : file_get_contents($level);
         }
-        array_push($this->config['error'], sprintf('Ficheiro nao encontrado: %s', $file));
+        //array_push($this->config['error'], sprintf('Ficheiro nao encontrado: %s', $file));
         return '';
     }
 

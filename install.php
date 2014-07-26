@@ -8,13 +8,13 @@ if (@$_REQUEST['save']) {
     
     $mysql->statement("INSERT INTO users (level, email, password, name) VALUES (100, :email, md5(:password), :name);", array(':email' => $_REQUEST['email'], ':password' => $_REQUEST['password'], ':name' => $_REQUEST['name']));
     if ($mysql->total) {
-        printf("Admin user saved with success. You can login now.");
+        $tpl->setvar('STEP2_MESSAGES', "Admin user saved with success. You can login now.");
     }
 
 } else {
     $main = 'STEP1';
     
-    $mysql->statement("SHOW DATABASES");
+    $mysql->statement("SHOW DATABASES;");
 
     $database[$_mysql['db']] = 1;
 
@@ -73,6 +73,12 @@ if (@$_REQUEST['save']) {
         $tpl->setarray('CREATETABLES', $table_exists);
     } else {
         $main = 'STEP2';
+        $mysql->statement("SELECT count(*) FROM users;");
+        if ($mysql->singleresult()) {
+            $tpl->setvar('STEP2_MESSAGES', "There is already an user on the database.");
+        } else {
+            define('NOUSER', 1);
+        }
     }
 }
 $tpl->includeFiles('MAIN', $main);

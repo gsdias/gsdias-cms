@@ -14,11 +14,10 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 -- Indexes for table `users`
 --
-ALTER TABLE `users`
- ADD PRIMARY KEY (`uid`);
+ALTER TABLE `users` ADD PRIMARY KEY (`uid`);
+ALTER TABLE `users` ADD UNIQUE(`email`);
 
 --
 -- AUTO_INCREMENT for table `users`
 --
-ALTER TABLE `users`
-MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `users` MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT;
