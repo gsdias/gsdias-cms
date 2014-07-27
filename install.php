@@ -1,6 +1,5 @@
 <?php
 
-include_once('settings.php');
 include_once('config' . PHPEXT);
 
 if (@$_REQUEST['save']) {
