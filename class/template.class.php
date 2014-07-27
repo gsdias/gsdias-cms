@@ -17,11 +17,8 @@ class tpl {
       * @param string $value - given value
       * @return nothing
     */  
-    function setVar ($id, $value) {
-        $this->config['vars'][$id] = isset($this->config['vars'][$id]) ? sprintf("%s%s", $this->config['vars'][$id], $value) : $value;
-        if (constant('DEBUG') == '1') {
-            //$this->adderror(sprintf('Added template key <strong>%s</strong>: %s', $id, $value));
-        }
+    function setVar ($id, $value = '') {
+        $this->config['vars'][$id] = sprintf("%s%s", @$this->config['vars'][$id], $value);
     }
     
     /** 
@@ -30,7 +27,7 @@ class tpl {
       * @param string $value - given value
       * @return nothing
     */  
-    function repVar ($id, $value) {
+    function repVar ($id, $value = '') {
         $this->config['vars'][$id] = $value;
     }
     
@@ -40,7 +37,7 @@ class tpl {
       * @param array $value - given list
       * @return nothing
     */  
-    function setArray ($id, $value, $merge = false) {
+    function setArray ($id, $value = array(), $merge = false) {
         if ($merge) {
             $this->config['array'][$id] = array_merge($this->config['array'][$id], $value);
         } else {
@@ -94,6 +91,7 @@ class tpl {
             $this->config['file'] = str_replace(sprintf("{%s}", $id), $value, $this->config['file']);
         }
     }
+
     private 
     /**
       *
@@ -174,50 +172,38 @@ class tpl {
 
 
         if (file_exists($editable)) {
-            //array_push($this->config['error'], sprintf('Foi adicionado o shared: %s', $editable));
             return $pathname ? $editable : file_get_contents($editable);
         }
         if (file_exists($subeditable)) {
-            //array_push($this->config['error'], sprintf('Foi adicionado o shared: %s', $subeditable));
             return $pathname ? $subeditable : file_get_contents($subeditable);
         }
         if (file_exists($leveleditable)) {
-            //array_push($this->config['error'], sprintf('Foi adicionado o shared: %s', $leveleditable));
             return $pathname ? $leveleditable : file_get_contents($leveleditable);
         }
         if (file_exists($shared)) {
-            //array_push($this->config['error'], sprintf('Foi adicionado o shared: %s', $shared));
             return $pathname ? $shared : file_get_contents($shared);
         }
         if (file_exists($core)) {
-            //array_push($this->config['error'], sprintf('Foi adicionado o core: %s', $core));
             return $pathname ? $core : file_get_contents($core);
         }
         if (file_exists($subcore)) {
-            //array_push($this->config['error'], sprintf('Foi adicionado o sub core: %s', $subcore));
             return $pathname ? $subcore : file_get_contents($subcore);
         }
         if (file_exists($levelcore)) {
-            //array_push($this->config['error'], sprintf('Foi adicionado o level core: %s', $levelcore));
             return $pathname ? $levelcore : file_get_contents($levelcore);
         }
         if (file_exists($onarray)) {
-            //array_push($this->config['error'], sprintf('Foi adicionado o array: %s', $onarray));
             return $pathname ? $onarray : file_get_contents($onarray);
         }
         if (file_exists($first)) {
-            //array_push($this->config['error'], sprintf('Foi adicionado o primeiro: %s', $first));
             return $pathname ? $first : file_get_contents($first);
         }
         if (file_exists($sub)) {
-            //array_push($this->config['error'], sprintf('Foi adicionado o sub: %s', $sub));
             return $pathname ? $sub : file_get_contents($sub);
         }
         if (file_exists($level)) {
-            //array_push($this->config['error'], sprintf('Foi adicionado o level: %s', $level));
             return $pathname ? $level : file_get_contents($level);
         }
-        //array_push($this->config['error'], sprintf('Ficheiro nao encontrado: %s', $file));
         return '';
     }
 
@@ -247,6 +233,7 @@ class tpl {
     }
     
     function includeFiles ($id, $file = null) {
+
         $idFile = strtolower($file);
         
         if ($file) {
@@ -264,11 +251,6 @@ class tpl {
     
     function includeHtml ($html) {
         $this->config['file'] .= $html;
-        $this->replaceVar();
-        $this->checkblocks('BLOCK');
-        $this->checkblocks('IF');
-        $this->checkblocks('LOOP');
-        $this->config['file'] = preg_replace('#\{([A-Z0-9_]*)\}#s', '', $this->config['file']);
     }
     
     function __toString () {
