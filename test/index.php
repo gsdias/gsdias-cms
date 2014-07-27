@@ -1,11 +1,6 @@
 <?php
 
-include_once('../class/htmltags.class.php');
-include_once('../class/template.class.php');
-
-define('DEBUG', 1);
-
-$tpl = new tpl();
+include_once('../config.php');
 
 $anchor1 = new anchor(array(
     'path' => '/vagas',
@@ -35,4 +30,4 @@ $select->object();
 
 $tpl->includeHtml(sprintf('%s%s<select><!-- LOOP SELECTTEST --><option value="{SELECTTEST_KEY}"{SELECTTEST_SELECTED}>{SELECTTEST_VALUE}</option><!-- ENDLOOP SELECTTEST --></select>%s%s', $image, $select, $anchor1, $anchor2));
 
-$tpl->sendout();
+echo $tpl;

@@ -1,5 +1,6 @@
 <?php
 
+include_once('settings.php');
 include_once(CLASSPATH . 'email.class' . PHPEXT);
 include_once(CLASSPATH . 'htmltags.class' . PHPEXT);
 include_once(CLASSPATH . 'menu.class' . PHPEXT);
