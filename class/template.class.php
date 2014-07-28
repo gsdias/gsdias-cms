@@ -6,6 +6,8 @@ class tpl {
         'files' => array(), 
         'error' => array(), 
         'array' => array(), 
+        'conditions' => array(), 
+        'paths' => array(), 
         'file' => '', 
         'path' => ''
     );
@@ -46,12 +48,22 @@ class tpl {
     }
     
     /** 
+      * @desc Saves an array of a template's loop
+      * @param string $id - given id
+      * @param array $value - given list
+      * @return nothing
+    */  
+    function setcondition ($id, $value = true) {
+        $this->config['conditions'][$id] = $value;
+    }
+    
+    /** 
       * @desc 
       * @param string $path - 
       * @return nothing
     */  
-    function path ($path) {
-        $this->config['path'] = $path;
+    function setpaths ($path = array()) {
+        $this->config['paths'] = $path;
     }
     
     private
@@ -128,10 +140,10 @@ class tpl {
             $list = explode(" ", $blockid);
             $detected = 0;
             foreach ($list as $blk) {
-                if (substr($blk,0,1) == "!")  {
-                    $detected = !defined(substr($blk, 1)) || $detected ? 1 : 0;
+                if (substr($blk, 0, 1) == "!")  {
+                    $detected = $this->config['conditions'][substr($blk, 1)] === false || $detected ? 1 : 0;
                 } else {
-                    $detected = defined($blk) || $detected ? 1 : 0;
+                    $detected = $this->config['conditions'][$blk] === true || $detected ? 1 : 0;
                 }
             }  
             return $detected ? $block : '';
@@ -142,87 +154,54 @@ class tpl {
             foreach ($list as $blk) {
                 if ($blk == "AND")
                     continue;
-                if (substr($blk, 0, 1) == "!") $detected = !defined(substr($blk, 1)) && $detected ? 1 : 0;
-                else $detected = defined($blk) && $detected ? 1 : 0;
+                if (substr($blk, 0, 1) == "!") $detected = $this->config['conditions'][substr($blk, 1)] === false && $detected ? 1 : 0;
+                else $detected = $this->config['conditions'][$blk] === true && $detected ? 1 : 0;
             }  
             return $detected ? $block : '';
         }
         
         if (substr($blockid,0,1) == "!") {
-            return !defined(substr($blockid,1)) ? $block : '';
+            return $this->config['conditions'][substr($blockid,1)] === false ? $block : '';
         } else {
-            return defined($blockid) ? $block : '';
+            return $this->config['conditions'][$blockid] === true ? $block : '';
         }
     }
 
     private function findFile ($file, $pathname = 0) {
         global $path;
-
-        $onarray = @$this->config['files'][$file];
-        $first = strtolower(TPLPATH . $file . TPLEXT);
-        $sub = strtolower(TPLPATH . $file . '/' . $file . TPLEXT);
-        $level = strtolower(TPLPATH . $path[0] . '/' . $file . TPLEXT);
-        $shared = strtolower(TPLPATH . '_shared/' . $file . TPLEXT);
-        $core = strtolower(COREPATH . 'tpl/' . $file . TPLEXT);
-        $subcore = strtolower(COREPATH . 'tpl/' . $file . '/' . $file . TPLEXT);
-        $levelcore = strtolower(COREPATH . 'tpl/' . $path[0] . '/' . $file . TPLEXT);
-        $editable = strtolower(TPLPATH . '_editable/' . $file . TPLEXT);
-        $subeditable = strtolower(TPLPATH . '_editable/' . $file . '/' . $file . TPLEXT);
-        $leveleditable = strtolower(TPLPATH . '_editable/' . $path[0] . '/' . $file . TPLEXT);
-
-        if (file_exists($editable)) {
-            $this->adderror('editable');
-            return $pathname ? $editable : file_get_contents($editable);
+        
+        if (isset($this->config['files'][$file])) {
+            $this->adderror('files ' . $cpath);
+            return $pathname ? '' : file_get_contents($this->config['files'][$file]);
         }
-        if (file_exists($subeditable)) {
-            $this->adderror('subeditable');
-            return $pathname ? $subeditable : file_get_contents($subeditable);
+        
+        $file = strtolower($file);
+        
+        foreach($this->config['paths'] as $_path) {
+            $cpath = sprintf($_path, $file, $file);
+            
+            if (file_exists($cpath)) {
+                return $pathname ? $cpath : file_get_contents($cpath);
+            }
+            
+            $cpath = sprintf($_path, $path[0], $file);
+            
+            if (file_exists($cpath)) {
+                return $pathname ? $cpath : file_get_contents($cpath);
+            }
         }
-        if (file_exists($leveleditable)) {
-            $this->adderror('leveleditable');
-            return $pathname ? $leveleditable : file_get_contents($leveleditable);
-        }
-        if (file_exists($shared)) {
-            $this->adderror('shared');
-            return $pathname ? $shared : file_get_contents($shared);
-        }
-        if (file_exists($core)) {
-            $this->adderror('core');
-            return $pathname ? $core : file_get_contents($core);
-        }
-        if (file_exists($subcore)) {
-            $this->adderror('subcore ' . $subcore);
-            return $pathname ? $subcore : file_get_contents($subcore);
-        }
-        if (file_exists($levelcore)) {
-            $this->adderror('levelcore');
-            return $pathname ? $levelcore : file_get_contents($levelcore);
-        }
-        if (file_exists($onarray)) {
-            $this->adderror('onarray');
-            return $pathname ? $onarray : file_get_contents($onarray);
-        }
-        if (file_exists($first)) {
-            $this->adderror('first');
-            return $pathname ? $first : file_get_contents($first);
-        }
-        if (file_exists($sub)) {
-            $this->adderror('sub');
-            return $pathname ? $sub : file_get_contents($sub);
-        }
-        if (file_exists($level)) {
-            $this->adderror('level');
-            return $pathname ? $level : file_get_contents($level);
-        }
-        $this->adderror('no match');
+        
         return '';
     }
 
     function setFile ($file) {
         global $path;
-        $this->sendError();
+        
         $file = strtolower($file);
         $this->config['file'] = $this->findFile($file);
+        
+        $this->sendError();
+        
         preg_match_all('*\[[A-Z_]+\]*', $this->config['file'], $matches);
         while(sizeof($matches[0]) > 0) {
             foreach ($matches[0] as $file) {
@@ -248,13 +227,9 @@ class tpl {
         $idFile = strtolower($file);
         
         if ($file) {
-            if ($filefound = $this->findFile($file, 1)) {
+            if ($filefound = $this->findFile($idFile, 1)) {
                 $this->config['files'][$id] = $filefound;
-                $line = sprintf("Foi incluido o ficheiro principal %s", $this->config['path'] . TPLPATH . $idFile . TPLEXT);
-            } else {
-                $line = sprintf("(principal) O ficheiro %s n&atilde;o existe", $this->config['path'] . TPLPATH . $idFile . TPLEXT);
             }
-            array_push($this->config['error'], array('MSG' => $line));
         } else {
             unset($this->config['files'][$id]);
         }

@@ -14,66 +14,50 @@ class email {
         return 0;
     }
     
-    public function reset () {		 
-        $this->to = array();
-        $this->to_name = array();
-        $this->from = "";
-        $this->from_name = "";
-        $this->reply_to = "";
-        $this->reply_to_name = "";
-        $this->cc = array();
-        $this->cc_name = array();
-        $this->bcc = array();
-        $this->bcc_name = array();
-        $this->attachment = array();
-        $this->attachment_name = array();
-        $this->text = "";
-        $this->html = "";
-        $this->template = "";
-        $this->subject = "";
-        $this->output = "";
+    public function reset () {
+        $this->output = $this->subject = $this->template = $this->html = $this->text = $this->reply_to_name = $this->reply_to = $this->from_name = $this->from = "";
+        $this->to = $this->to_name = $this->vars = $this->attachment_name = $this->attachment = $this->bcc_name = $this->bcc = $this->cc_name = $this->cc = array();
         $this->eol = "\r\n";
-        $this->vars = array();
         
     }
     
-    public function setTo ($email, $name = null) {
+    public function setto ($email, $name = null) {
         array_push($this->to, $email);
         array_push($this->to_name, $name);
                 
     }
-    public function getTo () {
+    public function getto () {
         return $this->to;
     }
-    public function setFrom ($email, $name = null) {
+    public function setfrom ($email, $name = null) {
         $this->from = $email;
         $this->from_name = $name;
     }
     
-    public function getFrom () {
+    public function getfrom () {
         return $this->from;
     }
-    public function setReplyTo ($email, $name = null) {
+    public function setreplyto ($email, $name = null) {
         $this->reply_to = $email;
         $this->reply_to_name = $name;
     }
     
-    public function setSubject ($text) {
-        $this->subject .= $text;
+    public function setsubject ($text) {
+        $this->subject = $text;
     }
     
-    public function getSubject () {
+    public function getsubject () {
         return $this->subject;
     }
-    public function setVar ($name, $value) {
+    public function setvar ($name, $value) {
         $this->vars[$name] = $value;
     }
     
-    public function setBody ($text) {
+    public function setbody ($text) {
         $this->text .= $text;
     }
     
-    public function setHtml ($text) {
+    public function sethtml ($text) {
         
         $content = $text;
         
@@ -87,11 +71,12 @@ class email {
                 $content = str_replace(sprintf('$%s', $match), sprintf('@$%s', $match), $content);
             }
         }
-        $this->html = html_entity_decode(htmlentities($content, ENT_QUOTES, "UTF-8"), ENT_QUOTES);
+        $this->html .= html_entity_decode(htmlentities($content, ENT_QUOTES, "UTF-8"), ENT_QUOTES);
     }
     
-    public function setTemplate ($file) {
+    public function settemplate ($file) {
         global $mysql;
+        
         $content = file_get_contents($file);
         
         $pattern = '/\$(?P<name>\w+)/i';
@@ -158,33 +143,33 @@ class email {
         }
     }
     
-    public function setCC ($email, $name = null) {
+    public function setcc ($email, $name = null) {
         array_push($this->cc, $email);
         array_push($this->cc_name, $name);
     }
     
-    public function setBCC ($email, $name = null) {
+    public function setbcc ($email, $name = null) {
         array_push($this->bcc, $email);
         array_push($this->bcc_name, $name);
     }
     
-    public function addAttachment ($file, $name = null) {
+    public function addattachment ($file, $name = null) {
         if (file_exists($file)) {
             array_push($this->attachment, $file);
             array_push($this->attachment_name, $name);
         }
     }
     
-    public function getAttachment () {
+    public function getattachment () {
         return $this->attachment_name;
     }
-    public function sendMail () {
+    public function sendmail () {
         global $tpl, $user;
         $body = "";
         $header = "";
         
         $uid = md5(uniqid(time()));
-        $subject = sprintf("=?utf-8?B?%s?=", base64_encode($this->subject));
+        $subject = $this->subject ? sprintf("=?utf-8?B?%s?=", base64_encode($this->subject)) : '';
         
         $header .= sprintf("From: %s <%s>%s", $this->from_name, $this->from, $this->eol);
         $header .= sprintf("Reply-To: %s <%s>%s", $this->reply_to_name, $this->reply_to, $this->eol);

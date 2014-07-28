@@ -31,4 +31,15 @@ define('COREPATH', '');
 
 define('MAINTENANCE', 0);
 
-error_reporting(0);
+error_reporting(1);
+
+
+$config['tplpath'] = array(
+    TPLPATH . '%s' . TPLEXT,
+    TPLPATH . '%s/%s' . TPLEXT,
+    TPLPATH . '_shared/%s' . TPLEXT,
+    COREPATH . 'tpl/%s' . TPLEXT,
+    COREPATH . 'tpl/%s/%s' . TPLEXT,
+    TPLPATH . '_editable/%s' . TPLEXT,
+    TPLPATH . '_editable/%s/%s' . TPLEXT
+);

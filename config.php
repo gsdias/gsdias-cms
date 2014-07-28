@@ -26,16 +26,19 @@ date_default_timezone_set('Europe/Lisbon');
 
 $tpl = class_exists('tpl') ? new tpl() : '';
 
-$_mysql = array();
-$_mysql['host'] = $mysql['host'];
-$_mysql['user'] = $mysql['user'];
-$_mysql['pass'] = $mysql['pass'];
-$_mysql['db'] = $mysql['db'];
+$tpl->setpaths($config['tplpath']);
+
+$_mysql = array(
+    'host' => $mysql['host'],
+    'user' => $mysql['user'],
+    'pass' => $mysql['pass'],
+    'db' => $mysql['db']
+);
 
 $temp_root = explode('/', $_SERVER['PHP_SELF']);
 $root = '';
 foreach ($temp_root as $id => $path) {
-    if ($id < (sizeof($temp_root)-1)) {
+    if ($id < (sizeof($temp_root) - 1)) {
         $root .= $path . '/';
     }
 }

@@ -1,7 +1,5 @@
 <?php
 
-include_once('config.php');
-
 if (@$_REQUEST['save']) {
     $main = 'STEP2';
     
@@ -61,7 +59,7 @@ if (@$_REQUEST['save']) {
         $tpl->setarray('TABLE_EXISTS', $table_exists);
     }
     if (in_array(1, $tables)) {
-        define('CREATETABLES', 1);
+        $tpl->setcondition('CREATETABLES');
         $table_exists = array();
         foreach($tables as $table => $value) {
             $table_exists[] = array(
@@ -76,7 +74,7 @@ if (@$_REQUEST['save']) {
         if ($mysql->singleresult()) {
             $tpl->setvar('STEP2_MESSAGES', "There is already an user on the database.");
         } else {
-            define('NOUSER', 1);
+            $tpl->setcondition('NOUSER');
         }
     }
 }
@@ -100,4 +98,3 @@ function createtable ($table) {
         return sprintf('<span style="color: red;">Something got wrong</span><br>');
     }
 }
-?>
