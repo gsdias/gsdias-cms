@@ -1,6 +1,6 @@
 <?php
 
-include_once('config' . PHPEXT);
+include_once('config.php');
 
 if (@$_REQUEST['save']) {
     $main = 'STEP2';

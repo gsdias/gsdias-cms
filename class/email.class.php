@@ -133,11 +133,17 @@ class email {
             }
             if ($cc != '') {
                 $this->cc = array();
-                array_push($this->cc, $cc);
+                $ccs = explode(',', str_replace(';', ',', $cc));
+                foreach ($ccs as $cc) {
+                    $this->setcc(trim($cc));
+                }
             }
             if ($bcc != '') {
                 $this->bcc = array();
-                array_push($this->bcc, $bcc);
+                $bccs = explode(',', str_replace(';', ',', $bcc));
+                foreach ($bccs as $bcc) {
+                    $this->setbcc(trim($bcc));
+                }
             }
             if ($attachment != '[]') {
                 $attachments = json_decode($attachment, true);

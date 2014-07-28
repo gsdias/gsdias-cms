@@ -170,40 +170,51 @@ class tpl {
         $subeditable = strtolower(TPLPATH . '_editable/' . $file . '/' . $file . TPLEXT);
         $leveleditable = strtolower(TPLPATH . '_editable/' . $path[0] . '/' . $file . TPLEXT);
 
-
         if (file_exists($editable)) {
+            $this->adderror('editable');
             return $pathname ? $editable : file_get_contents($editable);
         }
         if (file_exists($subeditable)) {
+            $this->adderror('subeditable');
             return $pathname ? $subeditable : file_get_contents($subeditable);
         }
         if (file_exists($leveleditable)) {
+            $this->adderror('leveleditable');
             return $pathname ? $leveleditable : file_get_contents($leveleditable);
         }
         if (file_exists($shared)) {
+            $this->adderror('shared');
             return $pathname ? $shared : file_get_contents($shared);
         }
         if (file_exists($core)) {
+            $this->adderror('core');
             return $pathname ? $core : file_get_contents($core);
         }
         if (file_exists($subcore)) {
+            $this->adderror('subcore ' . $subcore);
             return $pathname ? $subcore : file_get_contents($subcore);
         }
         if (file_exists($levelcore)) {
+            $this->adderror('levelcore');
             return $pathname ? $levelcore : file_get_contents($levelcore);
         }
         if (file_exists($onarray)) {
+            $this->adderror('onarray');
             return $pathname ? $onarray : file_get_contents($onarray);
         }
         if (file_exists($first)) {
+            $this->adderror('first');
             return $pathname ? $first : file_get_contents($first);
         }
         if (file_exists($sub)) {
+            $this->adderror('sub');
             return $pathname ? $sub : file_get_contents($sub);
         }
         if (file_exists($level)) {
+            $this->adderror('level');
             return $pathname ? $level : file_get_contents($level);
         }
+        $this->adderror('no match');
         return '';
     }
 

@@ -28,6 +28,9 @@ $select = new select(array(
 
 $select->object();
 
-$tpl->includeHtml(sprintf('%s%s<select><!-- LOOP SELECTTEST --><option value="{SELECTTEST_KEY}"{SELECTTEST_SELECTED}>{SELECTTEST_VALUE}</option><!-- ENDLOOP SELECTTEST --></select>%s%s', $image, $select, $anchor1, $anchor2));
+$main = 'TEST/TEST';
+
+$tpl->includeFiles('MAIN', $main);
+$tpl->setFile('INDEX');
 
 echo $tpl;
