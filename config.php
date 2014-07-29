@@ -43,6 +43,13 @@ foreach ($temp_root as $id => $path) {
     }
 }
 
+$path = isset($_SERVER['REQUEST_URI']) ? explode("/", $_SERVER['REQUEST_URI']) : '';
+
+array_shift($path);
+$path[0] = isset($path[0]) ? $path[0] : '';
+$path[1] = isset($path[1]) ? $path[1] : '';
+$path[2] = isset($path[2]) ? $path[2] : '';
+
 $sitemail = $config['email'];
 $pathsite = $config['url'];
 $resources = $config['resources'];
