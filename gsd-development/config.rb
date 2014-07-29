@@ -5,12 +5,12 @@ require "sass-globbing"
 
 # Set this to the root of your project when deployed:
 http_path = "/"
-css_dir = "../resources/css"
+css_dir = "../gsd-resources/css"
 sass_dir = "sass"
-images_dir = "../resources/css/img"
-generated_images_dir = "../resources/css/img"
-images_dir_source = "../resources/css/img"
-sprite_load_path = "../resources/css/img"
+images_dir = "../gsd-resources/css/img"
+generated_images_dir = "../gsd-resources/css/img"
+images_dir_source = "../gsd-resources/css/img"
+sprite_load_path = "../gsd-resources/css/img"
 
 # You can select your preferred output style here (can be overridden via the command line):
 # output_style = :expanded or :nested or :compact or :compressed

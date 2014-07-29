@@ -54,7 +54,7 @@ module.exports = function (grunt) {
                 "devFile" : "./js/libs/modernizr.js",
 
                 // [REQUIRED] Path to save out the built file.
-                "outputFile" : "../resources/js/libs/modernizr.min.js",
+                "outputFile" : "../gsd-resources/js/libs/modernizr.min.js",
 
                 // Based on default settings on http://modernizr.com/download/
                 "extra" : {

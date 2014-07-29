@@ -2,6 +2,8 @@
 
 include_once('gsd-config.php');
 
+$startpoint = 'index';
+
 if (file_exists('gsd-install' . PHPEXT)) {
     require_once('gsd-install.php');
 }
@@ -12,6 +14,6 @@ if ($path[0] == 'admin') {
 
 
 $tpl->includeFiles('MAIN', $main);
-$tpl->setFile('INDEX');
+$tpl->setFile($startpoint);
 
 echo $tpl;
