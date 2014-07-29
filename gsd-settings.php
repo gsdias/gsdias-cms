@@ -5,7 +5,7 @@ $config['keywords'] = '';
 $config['title'] = '';
 $config['url'] = '';
 $config['url_en'] = '';
-$config['resources'] = '/resources';
+$config['resources'] = '/gsd-resources';
 $config['email'] = '';
 $config['webmaster'] = '';
 $config['lang'] = 'pt';
@@ -25,14 +25,13 @@ $mysql['db'] = 'cms';
 define('DEBUG', 1);
 define('TPLEXT', '.html');
 define('PHPEXT', '.php');
-define('TPLPATH', dirname(__FILE__) . '/tpl/');
-define('CLASSPATH', dirname(__FILE__) . '/class/');
+define('TPLPATH', dirname(__FILE__) . '/gsd-tpl/');
+define('CLASSPATH', dirname(__FILE__) . '/gsd-class/');
 define('COREPATH', '');
 
 define('MAINTENANCE', 0);
 
 error_reporting(1);
-
 
 $config['tplpath'] = array(
     TPLPATH . '%s' . TPLEXT,

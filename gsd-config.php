@@ -1,6 +1,6 @@
 <?php
 
-include_once('settings.php');
+include_once('gsd-settings.php');
 include_once(CLASSPATH . 'email.class' . PHPEXT);
 include_once(CLASSPATH . 'htmltags.class' . PHPEXT);
 include_once(CLASSPATH . 'menu.class' . PHPEXT);
@@ -8,7 +8,7 @@ include_once(CLASSPATH . 'mysql.class' . PHPEXT);
 include_once(CLASSPATH . 'notification.class' . PHPEXT);
 include_once(CLASSPATH . 'template.class' . PHPEXT);
 include_once(CLASSPATH . 'user.class' . PHPEXT);
-include_once('functions' . PHPEXT);
+include_once('gsd-functions' . PHPEXT);
 
 /*
 ACCESS LEVEL

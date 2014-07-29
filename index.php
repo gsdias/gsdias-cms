@@ -1,13 +1,13 @@
 <?php
 
-include_once('config.php');
+include_once('gsd-config.php');
 
-if (file_exists('install' . PHPEXT)) {
-    require_once('install.php');
+if (file_exists('gsd-install' . PHPEXT)) {
+    require_once('gsd-install.php');
 }
 
 if ($path[0] == 'admin') {
-    require_once('admin/admin.php');
+    require_once('gsd-admin/index.php');
 }
 
 
