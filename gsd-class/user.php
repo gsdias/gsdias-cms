@@ -6,7 +6,7 @@
 interface iuser {
     public function reset ();
     public function islogged ();
-    public function login ($user, $password, $check = null);
+    public function login ($user, $password);
     public function logout ();
     public function getuser ($uid);
 }
@@ -36,8 +36,8 @@ class user implements iuser {
 
     public function islogged () { 
         global $mysql;
-        
-        $isLogged = $this->email != null;
+        echo 'teste: '.$this->id != null;
+        $isLogged = $this->id != null;
 
         if ($isLogged) {
             $mysql->statement('SELECT sync FROM users WHERE uid = :uid', array(':uid' => $this->id));
@@ -50,37 +50,43 @@ class user implements iuser {
         return $isLogged; 
     }
 
-    public function login ($email, $password, $check = null) {
+    public function login ($email, $password, $extrafields = array()) {
         global $mysql;
 
         $result = false;
-
-        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-
-            $mysql->statement('SELECT code, level, name, uid, email
-            FROM users
-            WHERE disabled IS NULL AND email = :email AND password = md5(:pass);', array(':email' => $email, ':pass' => $password));
-            $result = $mysql->total === 1;
-            if ($result) {
-                $this->code = md5($_SERVER['REMOTE_ADDR'] + '' + time());
-                $user = $mysql->singleline();
-                $names = explode(' ', $user['name']);
-                $this->id = $user['uid'];
-                $this->level = $user['level'];
-                $this->name = $user['name'];
-                $this->firstName = array_shift($names);
-                $this->lastName = array_pop($names);
-                $this->email = $user['email'];
-                $this->notifications = new notification($this->id);
-                $_SESSION['user'] = $this;
-
-                $mysql->statement('UPDATE users SET last_login = :time, code = :code WHERE uid = :uid;',
-                  array(':time' => time(), ':uid' => $this->id, ':code' => $this->code)
-                 );
+        $fields = 'code, level, name, uid, email';
+        
+        if (!empty($extrafields)) {
+            foreach ($extrafields as $field) {
+                $fields .= sprintf(", %s", $field);
             }
         }
+
+        $mysql->statement('SELECT ' . $fields . '
+        FROM users
+        WHERE disabled IS NULL AND email = :email AND password = md5(:pass);', array(':email' => $email, ':pass' => $password));
         
-        return $result;
+        $result = $mysql->total === 1;
+        
+        if ($result) {
+            $this->code = md5($_SERVER['REMOTE_ADDR'] + '' + time());
+            $user = $mysql->singleline();
+            $names = explode(' ', $user['name']);
+            $this->id = $user['uid'];
+            $this->level = $user['level'];
+            $this->name = $user['name'];
+            $this->firstName = array_shift($names);
+            $this->lastName = array_pop($names);
+            $this->email = $user['email'];
+            $this->notifications = new notification($this->id);
+            $_SESSION['user'] = $this;
+
+            $mysql->statement('UPDATE users SET last_login = CURRENT_TIMESTAMP(), code = :code WHERE uid = :uid;',
+              array(':uid' => $this->id, ':code' => $this->code)
+             );
+        }
+        
+        return !empty($extrafields) ? $user : $result;
     }
     
     public function logout(){

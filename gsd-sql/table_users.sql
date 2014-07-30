@@ -8,6 +8,10 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` varchar(32) NOT NULL,
   `name` varchar(120) NOT NULL,
   `level` int(11) NOT NULL,
+  `notifications` int(1) DEFAULT NULL,
+  `disabled` int(1) DEFAULT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `last_login` timestamp NULL DEFAULT NULL,
   `code` varchar(32) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 

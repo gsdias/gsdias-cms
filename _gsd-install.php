@@ -86,7 +86,7 @@ if (!DEBUG) {
 function createtable ($table) {
     global $mysql, $tpl;
     
-    $mysql->statement(file_get_contents(sprintf('sql/table_%s.sql', $table)));
+    $mysql->statement(file_get_contents(sprintf('gsd-sql/table_%s.sql', $table)));
     
     if ($mysql->executed) {
         return sprintf('<span style="color: green;">Created</span><br>');

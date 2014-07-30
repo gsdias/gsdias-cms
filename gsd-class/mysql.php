@@ -31,12 +31,16 @@
                 
                 $db = $withdb ? sprintf('dbname=%s', $this->db) : '';
                 
-				$this->conn = new PDO('mysql:host=' . $this->host . ';charset=utf8;' . $db, $this->user, $this->pass, array(      PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true));
+				$this->conn = new \PDO('mysql:host=' . $this->host . ';charset=utf8;' . $db, $this->user, $this->pass, array(
+                    \PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true,
+                    //\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
+                    //\PDO::ATTR_PERSISTENT => false
+                ));
 				$this->conn->exec("SET time_zone = 'Europe/London';");
-
+                
 			}
 
-			catch (PDOException $error) {
+			catch (\PDOException $error) {
                 //echo $error->getMessage();
                 echo $error->getCode();
                 switch ($error->getCode()) {

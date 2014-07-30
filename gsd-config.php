@@ -1,13 +1,6 @@
 <?php
 
 include_once('gsd-settings.php');
-include_once(CLASSPATH . 'email.class' . PHPEXT);
-include_once(CLASSPATH . 'htmltags.class' . PHPEXT);
-include_once(CLASSPATH . 'menu.class' . PHPEXT);
-include_once(CLASSPATH . 'mysql.class' . PHPEXT);
-include_once(CLASSPATH . 'notification.class' . PHPEXT);
-include_once(CLASSPATH . 'template.class' . PHPEXT);
-include_once(CLASSPATH . 'user.class' . PHPEXT);
 include_once('gsd-functions' . PHPEXT);
 
 /*
@@ -24,7 +17,16 @@ ADMIN_VIEW     10
 
 date_default_timezone_set('Europe/Lisbon');
 
-$tpl = class_exists('tpl') ? new tpl() : '';
+function GSDClassLoading($className) {
+    include_once(CLASSPATH . $className . PHPEXT);
+}
+ 
+// Next, register it with PHP.
+spl_autoload_register('GSDClassLoading');
+
+$tpl = new tpl();
+
+$user = @$_SESSION['user'] ? $_SESSION['user'] : new user();
 
 $tpl->setpaths($config['tplpath']);
 
@@ -65,4 +67,4 @@ $tpl->setVar('KEYWORDS', $config['keywords']);
 $tpl->setVar('CDN', $resources);
 $tpl->setVar('WEBMASTER', $config['webmaster']);
 
-$mysql = class_exists('mySQL') ? new mySQL($_mysql['db'], $_mysql['host'], $_mysql['user'], $_mysql['pass']) : null;
+$mysql = new mysql($_mysql['db'], $_mysql['host'], $_mysql['user'], $_mysql['pass']);
