@@ -81,8 +81,6 @@ class user implements iuser {
             $this->notifications = new notification($this->id);
             $_SESSION['user'] = $this;
 
-            //print_r($_SESSION);
-
             $mysql->statement('UPDATE users SET last_login = CURRENT_TIMESTAMP(), code = :code WHERE uid = :uid;',
               array(':uid' => $this->id, ':code' => $this->code)
              );
@@ -94,8 +92,7 @@ class user implements iuser {
     public function logout(){
         unset($_SESSION);
         @session_destroy();
-        @session_start();
-        $this->reset();
+        header('location: /');
     }
     
     public function getuser ($uid) {

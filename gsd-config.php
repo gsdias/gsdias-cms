@@ -16,28 +16,19 @@ ADMIN_VIEW     10
 */
 
 date_default_timezone_set('Europe/Lisbon');
-
-function GSDClassLoading($className) {
-    include_once(CLASSPATH . $className . PHPEXT);
-}
  
 // Next, register it with PHP.
 spl_autoload_register('GSDClassLoading');
 
-$tpl = new tpl();
+@session_start();
 
-print_r($_SESSION['user']);
+$tpl = new tpl();
 
 $user = @$_SESSION['user'] ? $_SESSION['user'] : (class_exists('clientuser') ? new clientuser() : new user());
 
-$tpl->setpaths($config['tplpath']);
+$mysql = new mysql($mysql['db'], $mysql['host'], $mysql['user'], $mysql['pass']);
 
-$_mysql = array(
-    'host' => $mysql['host'],
-    'user' => $mysql['user'],
-    'pass' => $mysql['pass'],
-    'db' => $mysql['db']
-);
+$tpl->setpaths($config['tplpath']);
 
 $temp_root = explode('/', $_SERVER['PHP_SELF']);
 $root = '';
@@ -50,9 +41,9 @@ foreach ($temp_root as $id => $path) {
 $path = isset($_SERVER['REQUEST_URI']) ? explode("/", $_SERVER['REQUEST_URI']) : '';
 
 array_shift($path);
-$path[0] = isset($path[0]) ? $path[0] : '';
-$path[1] = isset($path[1]) ? $path[1] : '';
-$path[2] = isset($path[2]) ? $path[2] : '';
+$path[0] = @$path[0];
+$path[1] = @$path[1];
+$path[2] = @$path[2];
 
 $sitemail = $config['email'];
 $pathsite = $config['url'];
@@ -68,5 +59,3 @@ $tpl->setVar('DESCRIPTION', $config['description']);
 $tpl->setVar('KEYWORDS', $config['keywords']);
 $tpl->setVar('CDN', $resources);
 $tpl->setVar('WEBMASTER', $config['webmaster']);
-
-$mysql = new mysql($_mysql['db'], $_mysql['host'], $_mysql['user'], $_mysql['pass']);

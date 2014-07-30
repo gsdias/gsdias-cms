@@ -1,2 +1,5 @@
 gsd-development/node_modules
+gsd-development/.tmp
+gsd-development/.sass-cache
 error_log
+gsd-client

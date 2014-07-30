@@ -9,5 +9,5 @@
 
 .icon-cms-logo {
     @extend .icon;
-    @include retina-sprite(cms-logo);
+    @include retina-sprite(logo_small);
 }

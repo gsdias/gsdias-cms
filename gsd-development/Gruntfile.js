@@ -26,23 +26,29 @@ module.exports = function (grunt) {
             }
         },
         watch: {
-            files: ['<%= jshint.files %>'],
-            tasks: ['sass']
+            js: {
+                files: ['./js/*.js', './js/*/.js'],
+                tasks: ['jshint']
+            },
+            css: {
+                files: ['./sass/*.scss', './sass/*/*.scss'],
+                tasks: ['compass']
+            }
         },
         compass: {
             config: './config.rb'
         },
         copy: {
             main: {
-                src: '../core/js/_scripts.html',
-                dest: '../core/tpl/_scripts.html'
+                src: '../gsd-js/_scripts.html',
+                dest: '../gsd-tpl/_scripts.html'
             }
         },
         usemin: {
-            html: '../core/tpl/_scripts.html'
+            html: '../gsd-tpl/_scripts.html'
         },
         useminPrepare: {
-            html: '../core/js/_scripts.html',
+            html: '../gsd-js/_scripts.html',
             options: {
                 dest: '../'
             }
@@ -102,7 +108,7 @@ module.exports = function (grunt) {
             }
 
         },
-htmlmin: {
+        htmlmin: {
             dist: {     
                 options: {
                     collapseWhitespace: true

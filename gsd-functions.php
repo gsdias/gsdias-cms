@@ -1,5 +1,9 @@
 <?php
 
+function GSDClassLoading($className) {
+    include_once(CLASSPATH . $className . PHPEXT);
+}
+
 function isuploaded ($folder, $filename) {
     $found = '';
     if ($handle = opendir($folder)) {

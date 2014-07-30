@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `name` varchar(120) NOT NULL,
   `level` int(11) NOT NULL,
   `notifications` int(1) DEFAULT NULL,
+  `sync` int(1) NOT NULL,
   `disabled` int(1) DEFAULT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `last_login` timestamp NULL DEFAULT NULL,
