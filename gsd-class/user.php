@@ -15,7 +15,7 @@ class user implements iuser {
     
     public $level, $email, $name, $firstName, $lastName, $id, $notifications, $code;
     
-    public function __construct($id = 0) { 
+    public function __construct ($id = 0) {
         
         $this->reset(); 
 
@@ -26,7 +26,7 @@ class user implements iuser {
         return 0; 
     }
     
-    public function reset() {
+    public function reset () {
         
         $this->level = -1;
         $this->email = $this->name = $this->id = null;
@@ -36,7 +36,7 @@ class user implements iuser {
 
     public function islogged () { 
         global $mysql;
-        echo 'teste: '.$this->id != null;
+
         $isLogged = $this->id != null;
 
         if ($isLogged) {
@@ -80,6 +80,8 @@ class user implements iuser {
             $this->email = $user['email'];
             $this->notifications = new notification($this->id);
             $_SESSION['user'] = $this;
+
+            //print_r($_SESSION);
 
             $mysql->statement('UPDATE users SET last_login = CURRENT_TIMESTAMP(), code = :code WHERE uid = :uid;',
               array(':uid' => $this->id, ':code' => $this->code)

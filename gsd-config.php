@@ -26,7 +26,9 @@ spl_autoload_register('GSDClassLoading');
 
 $tpl = new tpl();
 
-$user = @$_SESSION['user'] ? $_SESSION['user'] : new user();
+print_r($_SESSION['user']);
+
+$user = @$_SESSION['user'] ? $_SESSION['user'] : (class_exists('clientuser') ? new clientuser() : new user());
 
 $tpl->setpaths($config['tplpath']);
 
