@@ -3,9 +3,17 @@
 * File with user class information  *
 *************************************/
 
-class user {
+interface iuser {
+    public function reset ();
+    public function islogged ();
+    public function login ($user, $password, $check = null);
+    public function logout ();
+    public function getuser ($uid);
+}
+
+class user implements iuser {
     
-    public $level, $email, $name, $firstName, $lastName, $id, $notifications, $code, $forward;
+    public $level, $email, $name, $firstName, $lastName, $id, $notifications, $code;
     
     public function __construct($id = 0) { 
         
@@ -25,11 +33,7 @@ class user {
         $this->notifications = array();
         $this->code = md5(sprintf("%s%s", rand(), time()));
     }
-    
-    public function setforward($value) {
-        $this->forward = $value;
-    }
-    
+
     public function islogged () { 
         global $mysql;
         
@@ -46,32 +50,37 @@ class user {
         return $isLogged; 
     }
 
-    public function login ($user, $password, $check = null) {
-        global $mysql, $lang, $prefix2, $prefix;
-        if (!filter_var($user, FILTER_VALIDATE_EMAIL)) return 0;
-        $mysql->statement('SELECT code, level, name, uid, email
-        FROM users
-        WHERE email = :email AND password = :pass AND (disabled = 0 OR disabled IS NULL);', array(':email' => $user, ':pass' => md5($password)));
-        if ($mysql->total === 1) {
-            $this->code = md5($_SERVER['REMOTE_ADDR'] + '' + time());
-            $userfound = $mysql->singleline();
-            $names = explode(' ', $userfound['name']);
-            $this->id = $userfound['uid'];
-            $this->level = $userfound['level'];
-            $this->name = $userfound['name'];
-            $this->firstName = array_shift($names);
-            $this->lastName = array_pop($names);
-            $this->email = $userfound['email'];
-            $this->notifications = new notification($userfound['uid']);
-            $_SESSION['user'] = $this;
+    public function login ($email, $password, $check = null) {
+        global $mysql;
 
-            $mysql->statement('UPDATE users SET last_login = :time, code = :code WHERE uid = :uid;', 
-                              array(':time' => time(), ':uid' => $this->id, ':code' => $this->code)
-                             );
-            return 1;
+        $result = false;
+
+        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+
+            $mysql->statement('SELECT code, level, name, uid, email
+            FROM users
+            WHERE disabled IS NULL AND email = :email AND password = md5(:pass);', array(':email' => $email, ':pass' => $password));
+            $result = $mysql->total === 1;
+            if ($result) {
+                $this->code = md5($_SERVER['REMOTE_ADDR'] + '' + time());
+                $user = $mysql->singleline();
+                $names = explode(' ', $user['name']);
+                $this->id = $user['uid'];
+                $this->level = $user['level'];
+                $this->name = $user['name'];
+                $this->firstName = array_shift($names);
+                $this->lastName = array_pop($names);
+                $this->email = $user['email'];
+                $this->notifications = new notification($this->id);
+                $_SESSION['user'] = $this;
+
+                $mysql->statement('UPDATE users SET last_login = :time, code = :code WHERE uid = :uid;',
+                  array(':time' => time(), ':uid' => $this->id, ':code' => $this->code)
+                 );
+            }
         }
         
-        return 0;
+        return $result;
     }
     
     public function logout(){
@@ -81,19 +90,22 @@ class user {
         $this->reset();
     }
     
-    public function getuser ($user) {
-        global $mysql, $lang, $prefix;
-        $mysql->statement(sprintf('SELECT code, level, name, uid, email FROM users WHERE uid = :uid;'), array(':uid' => $user));
+    public function getuser ($uid) {
+        global $mysql;
+
+        $mysql->statement(sprintf('SELECT code, level, name, uid, email FROM users WHERE uid = :uid;'), array(':uid' => $uuid));
+
         if ($mysql->total === 1) {
-            $userfound = $mysql->singleline();
-            $names = explode(' ', $userfound['name']);
-            $this->id = $userfound['uid'];
-            $this->level = $userfound['level'];
-            $this->name = $userfound['name'];
+            $user = $mysql->singleline();
+            $names = explode(' ', $user['name']);
+
+            $this->id = $user['uid'];
+            $this->level = $user['level'];
+            $this->name = $user['name'];
             $this->firstName = array_shift($names);
             $this->lastName = array_pop($names);
-            $this->email = $userfound['email'];
-            $this->notifications = new notification($userfound['uid']);
+            $this->email = $user['email'];
+            $this->notifications = new notification($this->id);
         }
     }
 }

@@ -3,7 +3,14 @@
 * File with user class information  *
 *************************************/
 
-class notification {
+interface inotification {
+    public function reset ($uid);
+    public function mark ();
+    public function add ($message);
+    public function save ();
+}
+
+class notification implements inotification {
     public $total, $list, $read, $unread, $uid;
     
     public function __construct ($uid = null) {
@@ -62,11 +69,11 @@ class notification {
     }
     
     public function save () {
-        global $user, $mysql;
+        global $mysql;
         
         $notifications = json_encode($this->list);
         
-        $mysql->statement("INSERT IGNORE INTO users (uid, notifications) VALUES (:uid, :notifications); UPDATE users SET notifications = :notifications WHERE uid = :uid", array(':notifications' => $notifications, ':uid' => $this->uid));
+        $mysql->statement("UPDATE users SET notifications = :notifications WHERE uid = :uid", array(':notifications' => $notifications, ':uid' => $this->uid));
     }
 }
 
