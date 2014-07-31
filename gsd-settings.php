@@ -27,7 +27,7 @@ define('TPLEXT', '.html');
 define('PHPEXT', '.php');
 define('TPLPATH', dirname(__FILE__) . '/gsd-tpl/');
 define('CLASSPATH', dirname(__FILE__) . '/gsd-class/');
-define('COREPATH', '');
+define('CLIENTPATH', dirname(__FILE__) . '/gsd-client/htdocs');
 
 define('MAINTENANCE', 0);
 
@@ -42,3 +42,7 @@ $config['tplpath'] = array(
     TPLPATH . '_editable/%s' . TPLEXT,
     TPLPATH . '_editable/%s/%s' . TPLEXT
 );
+
+if (is_file (CLIENTPATH . 'settings' . PHPEXT)) {
+    include_once(CLIENTPATH . 'settings' . PHPEXT);
+}

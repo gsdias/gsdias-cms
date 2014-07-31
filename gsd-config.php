@@ -59,3 +59,7 @@ $tpl->setVar('DESCRIPTION', $config['description']);
 $tpl->setVar('KEYWORDS', $config['keywords']);
 $tpl->setVar('CDN', $resources);
 $tpl->setVar('WEBMASTER', $config['webmaster']);
+
+if (is_file (CLIENTPATH . 'config' . PHPEXT)) {
+    include_once(CLIENTPATH . 'config' . PHPEXT);
+}
