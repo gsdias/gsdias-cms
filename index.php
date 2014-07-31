@@ -17,7 +17,7 @@ if ($path[0] == 'logout') {
     $user->logout();
 }
 
-if (is_file('gsd-client/index.php')) {
+if (is_file('gsd-client/index.php') && $path[0] != 'admin') {
     require_once('gsd-client/index.php');
 }
 
