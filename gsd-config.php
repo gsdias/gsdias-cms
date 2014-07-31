@@ -1,5 +1,12 @@
 <?php
 
+$path = isset($_SERVER['REQUEST_URI']) ? explode("/", $_SERVER['REQUEST_URI']) : '';
+
+array_shift($path);
+$path[0] = @$path[0];
+$path[1] = @$path[1];
+$path[2] = @$path[2];
+
 include_once('gsd-settings.php');
 include_once('gsd-functions' . PHPEXT);
 
@@ -32,18 +39,11 @@ $tpl->setpaths($config['tplpath']);
 
 $temp_root = explode('/', $_SERVER['PHP_SELF']);
 $root = '';
-foreach ($temp_root as $id => $path) {
+foreach ($temp_root as $id => $_path) {
     if ($id < (sizeof($temp_root) - 1)) {
-        $root .= $path . '/';
+        $root .= $_path . '/';
     }
 }
-
-$path = isset($_SERVER['REQUEST_URI']) ? explode("/", $_SERVER['REQUEST_URI']) : '';
-
-array_shift($path);
-$path[0] = @$path[0];
-$path[1] = @$path[1];
-$path[2] = @$path[2];
 
 $sitemail = $config['email'];
 $pathsite = $config['url'];

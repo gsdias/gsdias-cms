@@ -22,6 +22,10 @@ $mysql['user'] = 'cms';
 $mysql['pass'] = 'cms';
 $mysql['db'] = 'cms';
 
+$mysql['user'] = 'corporat_iberica';
+$mysql['pass'] = 'UTFFvV@%WaGG';
+$mysql['db'] = 'corporat_iberica';
+
 define('DEBUG', 1);
 define('TPLEXT', '.html');
 define('PHPEXT', '.php');
