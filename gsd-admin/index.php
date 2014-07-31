@@ -1,5 +1,7 @@
 <?php
 
 if (!IS_LOGGED) {
-    $startpoint = 'ADMIN/LOGIN';
+    $startpoint = 'admin/login';
+} else {
+    $startpoint = 'admin/index';
 }
