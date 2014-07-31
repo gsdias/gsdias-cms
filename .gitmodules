@@ -1,4 +1,0 @@
-# CLIENT
-[submodule "gsd-client"]
-	path = gsd-client
-	url = git@bitbucket.org:gsdias/stock-iberico.git
