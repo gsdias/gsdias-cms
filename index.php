@@ -17,13 +17,8 @@ if ($path[0] == 'logout') {
     $user->logout();
 }
 
-<<<<<<< HEAD
-if (file_exists('gsd-client/htdocs/index' . PHPEXT)) {
-    require_once('gsd-client/htdocs/index' . PHPEXT);
-=======
 if (is_file('gsd-client/index.php')) {
     require_once('gsd-client/index.php');
->>>>>>> 203079ab37844e24cf7ff6dd58a5f3a14a074bb2
 }
 
 $tpl->includeFiles('MAIN', $main);

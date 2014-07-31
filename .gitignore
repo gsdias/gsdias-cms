@@ -4,3 +4,4 @@ gsd-development/.tmp
 gsd-development/.sass-cache
 error_log
 gsd-client
+gsd-tpl/_scripts.html
