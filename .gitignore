@@ -1,3 +1,4 @@
+.gitmodules
 gsd-development/node_modules
 gsd-development/.tmp
 gsd-development/.sass-cache
