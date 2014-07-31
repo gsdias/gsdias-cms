@@ -4,7 +4,7 @@ include_once('gsd-config.php');
 
 $startpoint = 'index';
 
-if (file_exists('gsd-install' . PHPEXT)) {
+if (is_file('gsd-install' . PHPEXT)) {
     require_once('gsd-install' . PHPEXT);
 }
 
@@ -17,6 +17,9 @@ if ($path[0] == 'logout') {
     $user->logout();
 }
 
+if (is_file('gsd-client/index.php')) {
+    require_once('gsd-client/index.php');
+}
 
 $tpl->includeFiles('MAIN', $main);
 $tpl->setFile($startpoint);

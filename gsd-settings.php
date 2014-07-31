@@ -27,7 +27,7 @@ define('TPLEXT', '.html');
 define('PHPEXT', '.php');
 define('TPLPATH', dirname(__FILE__) . '/gsd-tpl/');
 define('CLASSPATH', dirname(__FILE__) . '/gsd-class/');
-define('CLIENTPATH', dirname(__FILE__) . '/gsd-client/htdocs');
+define('CLIENTPATH', dirname(__FILE__) . '/gsd-client/');
 
 define('MAINTENANCE', 0);
 
