@@ -61,6 +61,6 @@ $tpl->setVar('CDN', $resources);
 $tpl->setVar('WEBMASTER', $config['webmaster']);
 $tpl->setVar('CLIENT_RESOURCES', $config['client_resources']);
 
-if (is_file (CLIENTPATH . 'config' . PHPEXT)) {
+if ($path[0] != 'admin' && is_file (CLIENTPATH . 'config' . PHPEXT)) {
     include_once(CLIENTPATH . 'config' . PHPEXT);
 }

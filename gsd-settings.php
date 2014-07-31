@@ -43,6 +43,6 @@ $config['tplpath'] = array(
     TPLPATH . '_editable/%s/%s' . TPLEXT
 );
 
-if (is_file (CLIENTPATH . 'settings' . PHPEXT)) {
+if ($path[0] != 'admin' && is_file (CLIENTPATH . 'settings' . PHPEXT)) {
     include_once(CLIENTPATH . 'settings' . PHPEXT);
 }

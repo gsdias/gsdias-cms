@@ -274,6 +274,6 @@ function removefile ($table, $field, $idfield, $value) {
     $mysql->statement(sprintf('UPDATE %s SET %s = NULL WHERE %s = "%s"', $table, $field, $idfield, $value));
 }
 
-if (is_file (CLIENTPATH . 'functions' . PHPEXT)) {
+if ($path[0] != 'admin' && is_file (CLIENTPATH . 'functions' . PHPEXT)) {
     include_once(CLIENTPATH . 'functions' . PHPEXT);
 }
