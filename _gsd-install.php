@@ -1,11 +1,16 @@
 <?php
 
+if (is_file(CLIENTPATH . 'install' . PHPEXT)) {
+    include_once(CLIENTPATH . 'install' . PHPEXT);
+}
+
 if (@$_REQUEST['save']) {
     $main = 'STEP2';
     
     $mysql->statement("INSERT INTO users (level, email, password, name) VALUES (100, :email, md5(:password), :name);", array(':email' => $_REQUEST['email'], ':password' => $_REQUEST['password'], ':name' => $_REQUEST['name']));
+    
     if ($mysql->total) {
-        $tpl->setvar('STEP2_MESSAGES', "Admin user saved with success. You can login now.");
+        $tpl->setvar('STEP2_MESSAGES', "Admin user saved with success. You can login now. Don't forget to remove install files.");
     }
 
 } else {
@@ -13,7 +18,7 @@ if (@$_REQUEST['save']) {
     
     $mysql->statement("SHOW DATABASES;");
 
-    $database[$_mysql['db']] = 1;
+    $database[@$_mysql['db']] = 1;
 
     if ($mysql->total) {
         foreach($mysql->result() as $db) {
@@ -64,7 +69,7 @@ if (@$_REQUEST['save']) {
         foreach($tables as $table => $value) {
             $table_exists[] = array(
                 'NAME' => $table,
-                'STATUS' => createtable($table)
+                'STATUS' => createtable($table) . addfieldstable ($table)
             );
         }
         $tpl->setarray('CREATETABLES', $table_exists);
@@ -84,7 +89,7 @@ if (!DEBUG) {
 }
 
 function createtable ($table) {
-    global $mysql, $tpl;
+    global $mysql;
     
     $mysql->statement(file_get_contents(sprintf('gsd-sql/table_%s.sql', $table)));
     

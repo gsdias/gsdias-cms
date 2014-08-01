@@ -12,18 +12,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
     <title>{PAGE_TITLE}</title>
     <link rel="shortcut icon" href="" />
-    <link rel="stylesheet" type="text/css" href="/gsd-client/resources/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="/gsd-resources/css/screen.css" />
     <link rel="canonical" href="" />
-    <script src="/gsd-client/gsd-resources/js/libs/modernizr.min.js"></script>
+    <script src="/gsd-resources/js/libs/modernizr.min.js"></script>
 </head>
-<body>
-    <form method="POST" action="/admin" class="login-admin">
-    <label>Email:</label>
-    <input name="email">
-    <label>Password:</label>
-    <input name="password" type="password">
-    <input type="submit" name="login" value="Login">
-</form>
-[_SCRIPTS]
+<body class="{EXTRACLASS}">
+    <section>
+        <header>
+            <i class="icon icon-cms-logo"></i>
+        </header>
+        <form method="POST" action="/admin/auth{REDIRECT}" class="login-admin">
+            <label>Email:</label>
+            <input name="email">
+            <label>Password:</label>
+            <input name="password" type="password">
+            <input type="submit" name="login" value="Login">
+        </form>
+    </section>
+    [_SCRIPTS]
 </body>
 </html>

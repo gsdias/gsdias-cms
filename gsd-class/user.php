@@ -55,6 +55,7 @@ class user implements iuser {
 
         $result = false;
         $fields = 'code, level, name, uid, email';
+        $user = array();
         
         if (!empty($extrafields)) {
             foreach ($extrafields as $field) {

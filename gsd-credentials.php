@@ -1,5 +1,9 @@
 <?php
 
+if ($uri == '/admin/auth' || $uri == '/admin/auth/') {
+    $startpoint = 'admin/login';
+}
+
 if (@$_REQUEST['login']) {
 
     if (filter_var($_REQUEST['email'], FILTER_VALIDATE_EMAIL)) {
@@ -7,7 +11,7 @@ if (@$_REQUEST['login']) {
         $logged = $user->login($_REQUEST['email'], $_REQUEST['password']);
         
         if ($logged) {
-            header('location: /');
+            header('location: ' . @$_REQUEST['redirect']);
         }
     } else {
 
@@ -19,6 +23,7 @@ if ($user->isLogged()) {
 
     $tpl->setcondition('IS_LOGGED');
     define('IS_LOGGED', 1);
+    $tpl->setvar('USER_NAME', $user->name);
     
 } else {
     define('IS_LOGGED', 0);

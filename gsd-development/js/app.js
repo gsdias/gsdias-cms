@@ -76,12 +76,14 @@ GSD.settings = {
         app.page.window.width = app.page.window.el.width();
         app.page.window.height = app.page.window.el.height();
         GSD.globalEvents.trigger(GSD.globalevents.resize);
+        app.page.window.el.trigger(GSD.globalevents.resize);
     });
 
     // Handle scroll to cache scrolls
     app.page.window.el.on('scroll', function () {
         app.page.window.scroll = app.page.body.el.scrollTop() || app.page.html.el.scrollTop();
         GSD.globalEvents.trigger(GSD.globalevents.scroll);
+        app.page.window.el.trigger(GSD.globalevents.scroll);
     });
 
     $().ready(function () {

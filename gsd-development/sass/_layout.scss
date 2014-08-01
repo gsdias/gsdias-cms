@@ -5,13 +5,6 @@
     padding: 0 3%;
     background: #fff;
 }
-.container:after {
-    content: ".";
-    display: block;
-    height: 0;
-    clear: both;
-    visibility: hidden;
-}
 
 .msgError {
     border: solid 1px $bg-color;

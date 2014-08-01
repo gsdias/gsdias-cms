@@ -1,7 +1,14 @@
 <?php
 
 if (!IS_LOGGED) {
-    $startpoint = 'admin/login';
+    if ($uri != '/admin/auth' && $uri != '/admin/auth/') {
+        header('location: /admin/auth?redirect=' . urlencode($uri));
+    } else {
+        $startpoint = 'login';
+    }
 } else {
-    $startpoint = 'admin/index';
+    if ($uri == '/admin/auth' || $uri == '/admin/auth/') {
+        //header('location: /admin');
+    }
+    $startpoint = 'index';
 }

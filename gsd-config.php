@@ -1,6 +1,9 @@
 <?php
 
-$path = isset($_SERVER['REQUEST_URI']) ? explode("/", $_SERVER['REQUEST_URI']) : '';
+$pattern = '/(\?)(.*)/';
+$uri = preg_replace($pattern, '', $_SERVER['REQUEST_URI']);
+
+$path = explode("/", $uri);
 
 array_shift($path);
 $path[0] = @$path[0];
@@ -33,7 +36,7 @@ $tpl = new tpl();
 
 $user = @$_SESSION['user'] ? $_SESSION['user'] : (class_exists('clientuser') ? new clientuser() : new user());
 
-$mysql = new mysql($mysql['db'], $mysql['host'], $mysql['user'], $mysql['pass']);
+$mysql = new mysql($_mysql['db'], $_mysql['host'], $_mysql['user'], $_mysql['pass']);
 
 $tpl->setpaths($config['tplpath']);
 
@@ -59,8 +62,10 @@ $tpl->setVar('DESCRIPTION', $config['description']);
 $tpl->setVar('KEYWORDS', $config['keywords']);
 $tpl->setVar('CDN', $resources);
 $tpl->setVar('WEBMASTER', $config['webmaster']);
-$tpl->setVar('CLIENT_RESOURCES', $config['client_resources']);
+$tpl->setVar('CLIENT_NAME', $config['client']);
+$tpl->setVar('CLIENT_RESOURCES', @$config['client_resources']);
+$tpl->setVar('REDIRECT', @$_REQUEST['redirect'] ? sprintf("?redirect=%s", $_REQUEST['redirect']) : '');
 
-if ($path[0] != 'admin' && is_file (CLIENTPATH . 'config' . PHPEXT)) {
+if ($path[0] != 'admin' && is_file (CLIENTPATH . 'config' . PHPEXT) && IS_INSTALLED) {
     include_once(CLIENTPATH . 'config' . PHPEXT);
 }

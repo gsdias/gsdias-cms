@@ -1,6 +1,5 @@
 body {
     font: 400 100% $font-arial;
-    background: $bg-white;
     color: $text-color;
 }
 
@@ -13,20 +12,9 @@ section {
 a {
     text-decoration: none;
     color: inherit;
-}
-
-h1 {
-    color: #444;
-    font: 700 250% $font-montserrat, "Comic Sans";
-    text-transform: uppercase;
-    margin: 10px auto 0;
-}
-
-hr {
-    background: #ebebeb;
-    height: 1px;
-    border: none;
-    margin: 30px 0 60px;
+    &:hover {
+        text-decoration: underline;
+    }
 }
 
 .clearfix:after {
@@ -35,10 +23,6 @@ hr {
     height: 0;
     clear: both;
     visibility: hidden;
-}
-
-.clear {
-    clear: both;
 }
 
 @media (max-width: 900px) {

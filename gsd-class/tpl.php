@@ -163,7 +163,7 @@ class tpl {
         if (substr($blockid,0,1) == "!") {
             return $this->config['conditions'][substr($blockid,1)] === false ? $block : '';
         } else {
-            return $this->config['conditions'][$blockid] === true ? $block : '';
+            return @$this->config['conditions'][$blockid] === true ? $block : '';
         }
     }
 
@@ -171,7 +171,6 @@ class tpl {
         global $path;
         
         if (isset($this->config['files'][$file])) {
-            $this->adderror('files ' . $cpath);
             return $pathname ? '' : file_get_contents($this->config['files'][$file]);
         }
         
