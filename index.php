@@ -28,6 +28,10 @@ if (is_file('gsd-install' . PHPEXT)) {
     }
 
     if (is_file('gsd-client/index.php') && $path[0] != 'admin') {
+        $mysql->statement('SELECT * FROM pages WHERE url = :uri', array(':uri' => $uri));
+        if (!$mysql->total) {
+            $startpoint = '404';
+        }
         require_once('gsd-client/index.php');
     }
 }

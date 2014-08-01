@@ -1,0 +1,27 @@
+<main>
+    <h1>Pages</h1>
+    <!-- IF PAGES_EXIST -->
+    <table width="100%">
+        <thead>
+            <tr>
+                <td width="30%">Name</td>
+                <td width="30%">Created by</td>
+                <td width="30%">Actions</td>
+            </tr>
+        </thead>
+        <!-- LOOP PAGES -->
+        <tr>
+            <td>
+                <a href="/admin/pages/{PAGES_ID}">{PAGES_NAME}</a> <em>({PAGES_CREATED})</em>
+            </td>
+            <td><a href="/admin/users/{PAGES_UID}">{PAGES_AUTHOR}</a></td>
+            <td></td>
+        </tr>
+        <!-- ENDLOOP PAGES -->
+    </table>
+    <!-- ENDIF PAGES_EXIST -->
+    
+    <!-- IF !PAGES_EXIST -->
+    <span class="warning">There are no pages</span>
+    <!-- ENDIF !PAGES_EXIST -->
+</main>

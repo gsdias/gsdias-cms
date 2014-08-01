@@ -1,0 +1,21 @@
+<main>
+    <h1>Users</h1>
+    <table width="100%">
+        <thead>
+            <tr>
+                <td width="30%">Name</td>
+                <td width="30%">Created by</td>
+                <td width="30%">Actions</td>
+            </tr>
+        </thead>
+        <!-- LOOP USERS -->
+        <tr>
+            <td>
+                <a href="/admin/users/{USERS_UID}">{USERS_NAME}</a> <em>({USERS_CREATED})</em>
+            </td>
+            <td><a href="/admin/users/{USERS_CID}">{USERS_AUTHOR}</a></td>
+            <td></td>
+        </tr>
+        <!-- ENDLOOP USERS -->
+    </table>
+</main>

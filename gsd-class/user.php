@@ -51,7 +51,7 @@ class user implements iuser {
     }
 
     public function login ($email, $password, $extrafields = array()) {
-        global $mysql;
+        global $mysql, $path;
 
         $result = false;
         $fields = 'code, level, name, uid, email';
@@ -70,8 +70,14 @@ class user implements iuser {
         $result = $mysql->total === 1;
         
         if ($result) {
+            
             $this->code = md5($_SERVER['REMOTE_ADDR'] + '' + time());
             $user = $mysql->singleline();
+            
+            if ($user['level'] == 1 && $path[0] == 'admin') {
+                return 0;
+            }
+            
             $names = explode(' ', $user['name']);
             $this->id = $user['uid'];
             $this->level = $user['level'];

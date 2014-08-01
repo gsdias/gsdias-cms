@@ -24,6 +24,10 @@ if (@$_REQUEST['login']) {
 
 if ($user->isLogged()) {
 
+    if ($path[0] == 'login') {
+        header('location: /');
+    }
+    
     $tpl->setcondition('IS_LOGGED');
     define('IS_LOGGED', 1);
     $tpl->setvar('USER_NAME', $user->name);

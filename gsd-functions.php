@@ -162,6 +162,12 @@ function dateDif ($first = null, $second = null) {
     return mktime('0', '0', '0', $second[1], $second[2], $second[0]) - mktime('0', '0', '0', $first[1], $first[2], $first[0]);
 }
 
+function timeago ($seconds = 0) {
+    $days = $seconds / 3600 / 24;
+    $months = $days > 30 ? $days / 30 : 0;
+    return $months > 1 ? sprintf('%d months ago', $months) : sprintf('%d days ago', $days);
+}
+
 /** 
   * @desc checks if the given input is a valid date
   * @param string $date - given date

@@ -31,3 +31,9 @@
     margin-bottom: 30px;
     clear: both;
 }
+
+.main:after {
+    content: '';
+    display: block;
+    clear: both;
+}

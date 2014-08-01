@@ -161,7 +161,7 @@ class tpl {
         }
         
         if (substr($blockid,0,1) == "!") {
-            return $this->config['conditions'][substr($blockid,1)] === false ? $block : '';
+            return !@$this->config['conditions'][substr($blockid,1)] || @$this->config['conditions'][substr($blockid,1)] === false ? $block : '';
         } else {
             return @$this->config['conditions'][$blockid] === true ? $block : '';
         }

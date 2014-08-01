@@ -1,0 +1,24 @@
+.btns {
+    clear: both;
+    overflow: hidden;
+    text-align: center;
+    width: 100%;
+    margin-top: 20px;
+    .btn {
+        border: solid 1px #ccc;
+        float: left;
+        text-align: center;
+        font-size: 12px;
+        padding: 5px;
+        margin-left: -1px;
+        &:first-child {
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+            margin-left: 0;
+        }
+        &:last-child {
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+    }
+}
