@@ -10,6 +10,7 @@ if (is_file('gsd-install.php')) {
 include_once('gsd-config.php');
 
 $startpoint = 'index';
+$main = '';
 
 if (is_file('gsd-install' . PHPEXT)) {
     
@@ -31,7 +32,7 @@ if (is_file('gsd-install' . PHPEXT)) {
     }
 }
 
-$tpl->includeFiles('MAIN', @$main);
+$tpl->includeFiles('MAIN', $main);
 $tpl->setFile($startpoint);
 
 echo $tpl;

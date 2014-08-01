@@ -12,9 +12,12 @@ if (@$_REQUEST['login']) {
         
         if ($logged) {
             header('location: ' . @$_REQUEST['redirect']);
+        } else {
+            $tpl->setvar('FORM_MESSAGES', 'Login errado');
+            $tpl->setvar('LOGIN_EMAIL', $_REQUEST['email']);
         }
     } else {
-
+        $tpl->setvar('FORM_MESSAGES', 'Verifique os dados.');
     }
 
 }

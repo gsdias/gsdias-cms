@@ -22,11 +22,17 @@
             <i class="icon icon-cms-logo"></i>
         </header>
         <form method="POST" action="/admin/auth{REDIRECT}" class="login-admin">
-            <label>Email:</label>
-            <input name="email">
-            <label>Password:</label>
-            <input name="password" type="password">
-            <input type="submit" name="login" value="Login">
+            <div class="colA">
+                <label>Email:</label>
+                <input name="email" value="{LOGIN_EMAIL}">
+            </div>
+            <div class="colA">
+                <label>Password:</label>
+                <input name="password" type="password">
+            </div>          
+            <div class="form-messages">{FORM_MESSAGES}</div>
+            <hr>  
+            <input type="submit" class="btn-submit" name="login" value="Login">
         </form>
     </section>
     [_SCRIPTS]

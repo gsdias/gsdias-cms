@@ -6,7 +6,7 @@
     "use strict";
 
     global.resizemain = function () {
-        var height = app.page.window.height - app.page.header.el.height() - app.page.footer.el.height();
+        var height = app.page.window.height - app.page.header.el.outerHeight(true) - app.page.footer.el.outerHeight(true);
         app.page.content.el.css({ height: height });
     };
     
