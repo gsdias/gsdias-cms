@@ -2,6 +2,8 @@
 gsd-development/node_modules
 gsd-development/.tmp
 gsd-development/.sass-cache
+gsd-resources/js/*
+gsd-resources/css/*.css
 error_log
 gsd-client
 gsd-tpl/_scripts.html
