@@ -1,0 +1,27 @@
+<main>
+    <h1>Documents</h1>
+    <!-- IF DOCUMENTS_EXIST -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Created by</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <!-- LOOP DOCUMENTS -->
+        <tr>
+            <td>
+                <a href="/admin/documents/{DOCUMENTS_ID}">{DOCUMENTS_NAME}</a> <em class="ago">({DOCUMENTS_CREATED})</em>
+            </td>
+            <td><a href="/admin/users/{DOCUMENTS_UID}">{DOCUMENTS_AUTHOR}</a></td>
+            <td class="actions"><a href="/admin/documents/{DOCUMENTS_UID}/settings">Settings</a><a href="/admin/documents/{DOCUMENTS_UID}/edit">Edit</a></td>
+        </tr>
+        <!-- ENDLOOP DOCUMENTS -->
+    </table>
+    <!-- ENDIF DOCUMENTS_EXIST -->
+    
+    <!-- IF !DOCUMENTS_EXIST -->
+    <span class="warning">There are no documents</span>
+    <!-- ENDIF !DOCUMENTS_EXIST -->
+</main>

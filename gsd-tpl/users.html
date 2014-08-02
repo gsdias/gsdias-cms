@@ -1,21 +1,26 @@
 <main>
     <h1>Users</h1>
-    <table width="100%">
+    <div class="btns">
+        <a href="/admin/users/create" class="btn">New user</a>
+    </div>
+    [_PAGINATOR]
+    <table class="table">
         <thead>
             <tr>
-                <td width="30%">Name</td>
-                <td width="30%">Created by</td>
-                <td width="30%">Actions</td>
+                <th>Name</th>
+                <th>Created by</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <!-- LOOP USERS -->
         <tr>
             <td>
-                <a href="/admin/users/{USERS_UID}">{USERS_NAME}</a> <em>({USERS_CREATED})</em>
+                <a href="/admin/users/{USERS_UID}">{USERS_NAME}</a> <em class="ago">({USERS_CREATED})</em>
             </td>
             <td><a href="/admin/users/{USERS_CID}">{USERS_AUTHOR}</a></td>
-            <td></td>
+            <td class="actions"></td>
         </tr>
         <!-- ENDLOOP USERS -->
     </table>
+    [_PAGINATOR]
 </main>

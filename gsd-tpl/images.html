@@ -1,0 +1,27 @@
+<main>
+    <h1>Images</h1>
+    <!-- IF IMAGES_EXIST -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Created by</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <!-- LOOP IMAGES -->
+        <tr>
+            <td>
+                <a href="/admin/images/{IMAGES_ID}">{IMAGES_NAME}</a> <em class="ago">({IMAGES_CREATED})</em>
+            </td>
+            <td><a href="/admin/users/{IMAGES_UID}">{IMAGES_AUTHOR}</a></td>
+            <td class="actions"><a href="/admin/images/{IMAGES_UID}/settings">Settings</a><a href="/admin/images/{IMAGES_UID}/edit">Edit</a></td>
+        </tr>
+        <!-- ENDLOOP IMAGES -->
+    </table>
+    <!-- ENDIF IMAGES_EXIST -->
+    
+    <!-- IF !IMAGES_EXIST -->
+    <span class="warning">There are no images</span>
+    <!-- ENDIF !IMAGES_EXIST -->
+</main>

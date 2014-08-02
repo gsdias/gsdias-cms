@@ -1,21 +1,21 @@
 <main>
     <h1>Pages</h1>
     <!-- IF PAGES_EXIST -->
-    <table width="100%">
+    <table class="table">
         <thead>
             <tr>
-                <td width="30%">Name</td>
-                <td width="30%">Created by</td>
-                <td width="30%">Actions</td>
+                <th>Name</th>
+                <th>Created by</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <!-- LOOP PAGES -->
         <tr>
             <td>
-                <a href="/admin/pages/{PAGES_ID}">{PAGES_NAME}</a> <em>({PAGES_CREATED})</em>
+                <a href="/admin/pages/{PAGES_ID}">{PAGES_NAME}</a> <em class="ago">({PAGES_CREATED})</em>
             </td>
             <td><a href="/admin/users/{PAGES_UID}">{PAGES_AUTHOR}</a></td>
-            <td></td>
+            <td class="actions"><a href="/admin/pages/{PAGES_UID}/settings">Settings</a><a href="/admin/pages/{PAGES_UID}/edit">Edit</a></td>
         </tr>
         <!-- ENDLOOP PAGES -->
     </table>

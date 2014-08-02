@@ -19,9 +19,9 @@ $config['ga'] = '';
 
 $_mysql['host'] = 'home.gsdias.pt';
 
-$_mysql['user'] = 'cms';
-$_mysql['pass'] = 'cms';
-$_mysql['db'] = 'cms';
+$_mysql['user'] = 'root';
+$_mysql['pass'] = '12348876';
+$_mysql['db'] = 'cmss';
 
 $_mysql['user'] = 'corporat_iberica';
 $_mysql['pass'] = 'UTFFvV@%WaGG';

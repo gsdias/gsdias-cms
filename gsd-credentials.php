@@ -1,9 +1,5 @@
 <?php
 
-if ($uri == '/admin/auth' || $uri == '/admin/auth/') {
-    $startpoint = 'admin/login';
-}
-
 if (@$_REQUEST['login']) {
 
     if (filter_var($_REQUEST['email'], FILTER_VALIDATE_EMAIL)) {
@@ -34,4 +30,11 @@ if ($user->isLogged()) {
     
 } else {
     define('IS_LOGGED', 0);
+}
+
+if ($uri == '/admin/auth' || $uri == '/admin/auth/') {
+    if (IS_LOGGED) {
+        header('location: /admin');
+    }
+    $startpoint = 'admin/login';
 }

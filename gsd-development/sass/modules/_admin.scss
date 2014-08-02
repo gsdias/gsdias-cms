@@ -19,6 +19,7 @@
 .login {
     margin: 50px auto 0;
     width: 450px;
+    font-size: 14px;
     i {
         margin-left: 10px;
     }
@@ -42,9 +43,14 @@
     }
     .btn-submit {
         float: right;
-        margin-right: 43px;
+        margin-right: 35px;
         width: 80px;
         cursor: pointer;
+    }
+    a {
+        width: 50%;
+        float: left;
+        margin-left: 35px;
     }
 }
 
@@ -54,4 +60,8 @@ main {
     float: left;
     margin-left: 2%;
     margin-top: 10px;
+}
+
+.ago {
+    font-size: 12px;
 }

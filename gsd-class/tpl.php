@@ -24,6 +24,20 @@ class tpl {
     }
     
     /** 
+      * @desc Saves the value of a template's variable
+      * @param string $id - given id
+      * @param string $value - given value
+      * @return nothing
+    */  
+    function setVars ($values = array()) {
+        if (!empty($values)) {
+            foreach ($values as $id => $value) {
+                $this->setvar($id, $value);
+            }
+        }
+    }
+    
+    /** 
       * @desc Replaces the value of a saved variable
       * @param string $id - given id
       * @param string $value - given value

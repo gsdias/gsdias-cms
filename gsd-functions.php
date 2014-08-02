@@ -1,7 +1,11 @@
 <?php
 
 function GSDClassLoading($className) {
-    include_once(CLASSPATH . $className . PHPEXT);
+    if (strpos($className, 'client') === false) {
+        include_once(CLASSPATH . $className . PHPEXT);
+    } else {
+        include_once(CLIENTPATH . 'class/' . $className . PHPEXT);
+    }
 }
 
 function isuploaded ($folder, $filename) {

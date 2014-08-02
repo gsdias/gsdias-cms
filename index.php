@@ -13,9 +13,11 @@ $startpoint = 'index';
 $main = '';
 
 if (is_file('gsd-install' . PHPEXT)) {
-    
+    $main = 'STEP1';
     require_once('gsd-install' . PHPEXT);
     
+} elseif ($path[0] == 'gsd-assets') {
+    require_once('gsd-assets' . PHPEXT);
 } else {
     
     require_once('gsd-credentials' . PHPEXT);

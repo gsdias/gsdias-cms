@@ -8,13 +8,15 @@ if (!IS_LOGGED) {
         $tpl->setvar('EXTRACLASS', 'login');
     }
 } else {
-    if ($uri == '/admin/auth' || $uri == '/admin/auth/') {
-        //header('location: /admin');
+    if ($path[2] && @$path[3] && is_numeric($path[2])) {
+        header('location: ' . $uri . '/details');
     }
     $startpoint = 'index';
     $main = $path[1] ? $path[1] : 'dashboard';
-    if (is_file('gsd-admin/' . $path[1] . PHPEXT)) {
-        include_once('gsd-admin/' . $path[1] . PHPEXT);
+    $file = sprintf('gsd-admin/%s/%s%s', $path[1], $path[1], PHPEXT);
+    
+    if (is_file($file)) {
+        include_once($file);
     }
     if (!$path[1]) {
         include_once('gsd-admin/dashboard' . PHPEXT);

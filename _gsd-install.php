@@ -1,9 +1,5 @@
 <?php
 
-if (is_file(CLIENTPATH . 'install' . PHPEXT)) {
-    include_once(CLIENTPATH . 'install' . PHPEXT);
-}
-
 if (@$_REQUEST['save']) {
     $main = 'STEP2';
     
@@ -69,7 +65,7 @@ if (@$_REQUEST['save']) {
         foreach($tables as $table => $value) {
             $table_exists[] = array(
                 'NAME' => $table,
-                'STATUS' => createtable($table) . addfieldstable ($table)
+                'STATUS' => createtable($table)
             );
         }
         $tpl->setarray('CREATETABLES', $table_exists);
@@ -80,6 +76,9 @@ if (@$_REQUEST['save']) {
             $tpl->setvar('STEP2_MESSAGES', "There is already an user on the database.");
         } else {
             $tpl->setcondition('NOUSER');
+        }
+        if (is_file(CLIENTPATH . 'install' . PHPEXT)) {
+            include_once(CLIENTPATH . 'install' . PHPEXT);
         }
     }
 }
