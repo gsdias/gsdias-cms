@@ -8,7 +8,7 @@ if (!IS_LOGGED) {
         $tpl->setvar('EXTRACLASS', 'login');
     }
 } else {
-    if ($path[2] && @$path[3] && is_numeric($path[2])) {
+    if ($path[2] && !@$path[3] && is_numeric($path[2])) {
         header('location: ' . $uri . '/details');
     }
     $startpoint = 'index';

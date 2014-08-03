@@ -33,6 +33,16 @@ if (is_file('gsd-install' . PHPEXT)) {
         $mysql->statement('SELECT * FROM pages WHERE url = :uri', array(':uri' => $uri));
         if (!$mysql->total) {
             $startpoint = '404';
+        } else {
+            $page = $mysql->singleline();
+            $tpl->setvars(array(
+                'PAGE_TITLE' => $page['title'],
+                'PAGE_DESCRIPTION' => $page['description'],
+                'PAGE_KEYWORDS' => $page['keywords'],
+                'PAGE_OG_TITLE' => $page['og_title'],
+                'PAGE_OG_DESCRIPTION' => $page['og_description'],
+                'PAGE_OG_IMAGE' => $page['og_image']
+            ));
         }
         require_once('gsd-client/index.php');
     }

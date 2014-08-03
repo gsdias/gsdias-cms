@@ -1,0 +1,19 @@
+label {
+    width: 150px;
+    display: inline-block;
+    text-align: right;
+    margin-right: 20px;
+}
+input {
+    border: solid 1px #ccc;
+    height: 30px;
+    border-radius: 3px;
+    width: 200px;
+    padding: 0 20px;
+}
+.btn-submit {
+    float: right;
+    margin-right: 35px;
+    width: 80px;
+    cursor: pointer;
+}

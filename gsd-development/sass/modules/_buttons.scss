@@ -4,6 +4,12 @@
     text-align: center;
     width: 100%;
     margin-top: 20px;
+    &.right {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: auto;
+    }
     .btn {
         border: solid 1px #ccc;
         float: left;
@@ -27,6 +33,24 @@
             @include gradient(#bfbfbf, #dfdfdf);
             text-decoration: none;
             text-shadow: none;
+        }
+    }
+    &.red {
+        .btn {
+            color: #8c0000;
+            @include gradient(#FF4C4C, #FF7373);
+            &:hover {
+                @include gradient(#FF7373, #FF4C4C);
+            }
+        }
+    }
+    &.blue {
+        .btn {
+            color: #8c0000;
+            @include gradient(#FF4C4C, #FF7373);
+            &:hover {
+                @include gradient(#FF7373, #FF4C4C);
+            }
         }
     }
 }
