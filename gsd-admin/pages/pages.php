@@ -1,16 +1,18 @@
 <?php
 
 if (@$path[3]) {
-    $mysql->statement('SELECT * FROM pages AS p JOIN users AS u ON p.uid = u.uid WHERE pid = :pid ORDER BY pid;', array(':pid' => $path[2]));
+    $mysql->statement('SELECT *, p.created FROM pages AS p JOIN users AS u ON p.uid = u.uid WHERE pid = :pid ORDER BY pid;', array(':pid' => $path[2]));
     
     $page = $mysql->singleline();
     
     $created = explode(' ', $page['created']);
     
     $tpl->setvars(array(
+        'CURRENT_PAGE_ID' => $page['pid'],
         'CURRENT_PAGE_TITLE' => $page['title'],
         'CURRENT_PAGE_DESCRIPTION' => $page['description'],
         'CURRENT_PAGE_KEYWORDS' => $page['keywords'],
+        'CURRENT_PAGE_TAGS' => $page['tags'],
         'CURRENT_PAGE_URL' => $page['url'],
         'CURRENT_PAGE_OG_TITLE' => $page['og_title'],
         'CURRENT_PAGE_OG_DESCRIPTION' => $page['og_description'],
@@ -26,7 +28,15 @@ if (@$path[3]) {
     $main = sprintf('%s/%s', $path[1], $path[3]);
 
 } else {
-    $mysql->statement('SELECT * FROM pages AS p JOIN users AS u ON p.uid = u.uid ORDER BY pid;');
+
+    if (@$path[2]) {
+        $main = sprintf('%s/%s', $path[1], $path[2]);
+        $file = sprintf('gsd-admin/%s/actions/%s%s', $path[1], $path[2], PHPEXT);
+
+        include_once($file);
+    }
+
+    $mysql->statement('SELECT *, p.created FROM pages AS p JOIN users AS u ON p.uid = u.uid WHERE p.disabled IS NULL ORDER BY pid;');
 
     $pages = array();
 

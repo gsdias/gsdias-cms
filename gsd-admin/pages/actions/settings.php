@@ -1,20 +1,12 @@
 <?php
 
-$mysql->statement('SELECT * FROM pages AS p JOIN users AS u ON p.uid = u.uid ORDER BY pid;');
+if (@$_REQUEST['save']) {
+    $tags = $_REQUEST['tags'];
 
-$pages = array();
-
-if ($mysql->total) {
-    $tpl->setcondition('PAGES_EXIST');
-    foreach ($mysql->result() as $pagelist) {
-        $created = explode(' ', $pagelist['created']);
-        $pages[] = array(
-            'ID' => $pagelist['pid'],
-            'NAME' => $pagelist['url'],
-            'UID' => $pagelist['uid'],
-            'AUTHOR' => $pagelist['name'],
-            'CREATED' => timeago(dateDif($created[0], date('Y-m-d',time())))
-        );
-    }
-    $tpl->setarray('PAGES', $pages);
+    $mysql->statement('UPDATE pages SET url = ?, tags = ? WHERE pid = ?;', array(
+        $_REQUEST['url'],
+        $_REQUEST['tags'],
+        $path[2]
+    ));
+    header("Location: /admin/pages", true, 302);
 }
