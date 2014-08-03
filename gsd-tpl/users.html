@@ -8,7 +8,8 @@
         <thead>
             <tr>
                 <th>Name</th>
-                <th>Created by</th>
+                <th>Last logged by</th>
+                <th>Created</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -17,8 +18,12 @@
             <td>
                 <a href="/admin/users/{USERS_UID}">{USERS_NAME}</a> <em class="ago">({USERS_CREATED})</em>
             </td>
-            <td><a href="/admin/users/{USERS_CID}">{USERS_AUTHOR}</a></td>
-            <td class="actions"></td>
+            <td>{USERS_LOGGED}</td>
+            <td>{USERS_CREATED}</td>
+            <td class="actions">
+                <a href="/admin/users/{USERS_UID}/edit">Edit</a>
+                <a href="/admin/users/{USERS_UID}/remove">Remove</a>
+            </td>
         </tr>
         <!-- ENDLOOP USERS -->
     </table>

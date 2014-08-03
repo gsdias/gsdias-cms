@@ -1,20 +1,26 @@
 <?php
 
-$mysql->statement('SELECT * FROM pages AS p JOIN users AS u ON p.uid = u.uid ORDER BY pid;');
+if (@$_REQUEST['save']) {
+    $defaultfields = array(
+        $_REQUEST['email'],
+        $_REQUEST['name']
+    );
+    $valuefields = array();
+    $sqlfields = '';
 
-$pages = array();
-
-if ($mysql->total) {
-    $tpl->setcondition('PAGES_EXIST');
-    foreach ($mysql->result() as $pagelist) {
-        $created = explode(' ', $pagelist['created']);
-        $pages[] = array(
-            'ID' => $pagelist['pid'],
-            'NAME' => $pagelist['url'],
-            'UID' => $pagelist['uid'],
-            'AUTHOR' => $pagelist['name'],
-            'CREATED' => timeago(dateDif($created[0], date('Y-m-d',time())))
-        );
+    foreach ($extrafields['list'] as $field) {
+        $valuefields[] = $_REQUEST[$field];
+        $sqlfields .= sprintf(', %s = ?', $field, $field);
     }
-    $tpl->setarray('PAGES', $pages);
+
+    $fields = array_merge($defaultfields, $valuefields);
+
+    array_push($fields, $user->id);
+    $mysql->statement(
+        sprintf('UPDATE users SET email = ?, name = ? %s WHERE uid = ?;', $sqlfields),
+        $fields);
+
+    if ($mysql->total) {
+        header("Location: /admin/users", true, 302);
+    }
 }
