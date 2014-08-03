@@ -4,6 +4,7 @@ gsd-development/.tmp
 gsd-development/.sass-cache
 gsd-resources/js/*
 gsd-resources/css/*.css
+gsd-resources/css/screen.css
 error_log
 gsd-client
 gsd-tpl/_scripts.html
