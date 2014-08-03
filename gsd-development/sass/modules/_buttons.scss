@@ -38,18 +38,18 @@
     &.red {
         .btn {
             color: #8c0000;
-            @include gradient(#FF4C4C, #FF7373);
+            @include gradient(#ff2424, #ff5a5a);
             &:hover {
-                @include gradient(#FF7373, #FF4C4C);
+                @include gradient(#ff5a5a, #ff2424);
             }
         }
     }
     &.blue {
         .btn {
             color: #8c0000;
-            @include gradient(#FF4C4C, #FF7373);
+            @include gradient(#2476ff, #5897ff);
             &:hover {
-                @include gradient(#FF7373, #FF4C4C);
+                @include gradient(#5897ff, #2476ff);
             }
         }
     }
