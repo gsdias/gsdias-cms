@@ -3,6 +3,9 @@ label {
     display: inline-block;
     text-align: right;
     margin-right: 20px;
+    &.error {
+        color: red;
+    }
 }
 input {
     border: solid 1px #ccc;
@@ -10,6 +13,9 @@ input {
     border-radius: 3px;
     width: 200px;
     padding: 0 20px;
+    &.error {
+        border-color: red;
+    }
 }
 .btn-submit {
     float: right;

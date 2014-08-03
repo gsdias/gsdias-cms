@@ -92,6 +92,15 @@ GSD.settings = {
             // Add validation to any new forms that have been included
             $("form").removeData("validator");
             $("form").removeData("unobtrusiveValidation");
+            $("form").validate({
+                debug: true,
+                rules: {
+                    email: {
+                        required: true,
+                        email: true
+                    }
+                }
+            });
             //$.validator.unobtrusive.parse("form");
         });
 
