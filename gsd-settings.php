@@ -9,7 +9,6 @@ $config['resources'] = '/gsd-resources';
 $config['email'] = '';
 $config['webmaster'] = '';
 $config['lang'] = 'pt';
-$config['client'] = 'Stock Iberico';
 
 $config['facebook']['appid'] = '';
 $config['facebook']['page'] = '';
@@ -46,6 +45,14 @@ $config['tplpath'] = array(
     TPLPATH . '_shared/%s' . TPLEXT,
     TPLPATH . '_editable/%s' . TPLEXT,
     TPLPATH . '_editable/%s/%s' . TPLEXT
+);
+
+$tables = array(
+    'users' => 1,
+    'pages' => 1,
+    'redirect' => 1,
+    'images' => 1,
+    'documents' => 1
 );
 
 if ($path[0] != 'admin' && is_file (CLIENTPATH . 'settings' . PHPEXT) && IS_INSTALLED) {

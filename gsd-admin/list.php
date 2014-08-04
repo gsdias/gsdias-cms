@@ -67,7 +67,7 @@ if ($action) {
         include_once($file);
         
     //LISTING
-    } else {
+    } else if (@$tables[$section]) {
         
         $mysql->statement(sprintf('SELECT %s.*, %s.creator AS creator_id, u.name AS creator_name FROM %s LEFT JOIN users AS u ON %s.creator = u.uid WHERE %s.disabled IS NULL ORDER BY %s.%sid;', $section, $section, $section, $section, $section, $section, substr($section, 0, 1)));
 

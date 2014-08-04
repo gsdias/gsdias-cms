@@ -1,6 +1,6 @@
 <?php
 
-$mysql->statement('SELECT * FROM users LIMIT 0, 4');
+$mysql->statement('SELECT * FROM users LIMIT 0, 3');
 
 $users = array();
 
@@ -14,7 +14,7 @@ foreach ($mysql->result() as $userlist) {
 }
 $tpl->setarray('USERS', $users);
 
-$mysql->statement('SELECT * FROM pages LIMIT 0, 4');
+$mysql->statement('SELECT * FROM pages LIMIT 0, 3');
 
 $pages = array();
 

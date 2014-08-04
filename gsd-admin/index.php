@@ -13,12 +13,23 @@ if (!IS_LOGGED) {
     }
     $startpoint = 'index';
     $main = $path[1] ? $path[1] : 'dashboard';
-    $file = 'gsd-admin/list' . PHPEXT;
+    
+    if (!$path[1]) {
+        include_once('gsd-admin/dashboard' . PHPEXT);
+    } else {
+        if ($path[1] == 'settings') {
+            $file = 'gsd-admin/settings' . PHPEXT;
+        } else {
+            $file = 'gsd-admin/list' . PHPEXT;
+            
+        }
+        if (is_file($file)) {
+            include_once($file);
+        }
+    }
+    $file = CLIENTPATH . 'include/admin/' . $path[1] . PHPEXT;
     
     if (is_file($file)) {
         include_once($file);
-    }
-    if (!$path[1]) {
-        include_once('gsd-admin/dashboard' . PHPEXT);
     }
 }

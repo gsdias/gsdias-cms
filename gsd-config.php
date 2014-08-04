@@ -39,6 +39,15 @@ $user = @$_SESSION['user'] ? $_SESSION['user'] : (class_exists('clientuser') ? n
 
 $mysql = new mysql($_mysql['db'], $_mysql['host'], $_mysql['user'], $_mysql['pass']);
 
+$site = new site();
+
+$tpl->setvars(array(
+    'SITE_NAME' => $site->name,
+    'SITE_EMAIL' => $site->email,
+    'SITE_GA' => $site->ga
+));
+
+
 $tpl->setpaths($config['tplpath']);
 
 $temp_root = explode('/', $_SERVER['PHP_SELF']);
@@ -65,7 +74,6 @@ $tpl->setVar('DESCRIPTION', $config['description']);
 $tpl->setVar('KEYWORDS', $config['keywords']);
 $tpl->setVar('CDN', $resources);
 $tpl->setVar('WEBMASTER', $config['webmaster']);
-$tpl->setVar('CLIENT_NAME', $config['client']);
 $tpl->setVar('CLIENT_RESOURCES', @$config['client_resources']);
 $tpl->setVar('REDIRECT', @$_REQUEST['redirect'] ? sprintf("?redirect=%s", $_REQUEST['redirect']) : '');
 

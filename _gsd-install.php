@@ -33,14 +33,6 @@ if (@$_REQUEST['save']) {
     }
 
     $mysql->statement('SHOW TABLES;');
-
-    $tables = array(
-        'users' => 1,
-        'pages' => 1,
-        'redirect' => 1,
-        'images' => 1,
-        'documents' => 1
-    );
     
     if ($mysql->total) {
         
