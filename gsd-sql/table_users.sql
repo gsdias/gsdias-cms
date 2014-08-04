@@ -20,5 +20,6 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 -- Indexes for table `users`
 --
-ALTER TABLE `users` ADD PRIMARY KEY (`uid`);
-ALTER TABLE `users` ADD UNIQUE(`email`);
+ALTER TABLE `users` ADD PRIMARY KEY (`uid`), 
+    MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT, 
+    ADD UNIQUE(`email`);
