@@ -93,10 +93,8 @@ GSD.settings = {
             $("form").removeData("validator");
             $("form").removeData("unobtrusiveValidation");
             $("form").validate({
-                debug: true,
                 rules: {
                     email: {
-                        required: true,
                         email: true
                     }
                 }

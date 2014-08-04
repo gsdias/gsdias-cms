@@ -18,7 +18,7 @@
         padding: 5px;
         margin-left: -1px;
         color: #000;
-        @include gradient(#dfdfdf, #bfbfbf);
+        @include gradient(#a1a1a1, #838383);
         text-shadow: rgba(255, 255, 255, .5) 1px 0 0;
         &:first-child {
             border-top-left-radius: 5px;
@@ -30,7 +30,7 @@
             border-bottom-right-radius: 5px;
         }
         &:hover {
-            @include gradient(#bfbfbf, #dfdfdf);
+            @include gradient(#838383, #a1a1a1);
             text-decoration: none;
             text-shadow: none;
         }
@@ -38,18 +38,18 @@
     &.red {
         .btn {
             color: #8c0000;
-            @include gradient(#ff2424, #ff5a5a);
+            @include gradient(#ff5e5e, #ff0808);
             &:hover {
-                @include gradient(#ff5a5a, #ff2424);
+                @include gradient(#ff0808, #ff5e5e);
             }
         }
     }
     &.blue {
         .btn {
-            color: #8c0000;
-            @include gradient(#2476ff, #5897ff);
+            color: #fff;
+            @include gradient(#3076ca, #245797);
             &:hover {
-                @include gradient(#5897ff, #2476ff);
+                @include gradient(#245797, #3076ca);
             }
         }
     }
