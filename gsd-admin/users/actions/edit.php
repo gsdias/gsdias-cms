@@ -8,14 +8,14 @@ if (@$_REQUEST['save']) {
     $valuefields = array();
     $sqlfields = '';
 
-    foreach ($extrafields['list'] as $field) {
+    foreach ($sectionextrafields['list'] as $field) {
         $valuefields[] = $_REQUEST[$field];
         $sqlfields .= sprintf(', %s = ?', $field, $field);
     }
 
     $fields = array_merge($defaultfields, $valuefields);
 
-    array_push($fields, $user->id);
+    array_push($fields, $path[2]);
     $mysql->statement(
         sprintf('UPDATE users SET email = ?, name = ? %s WHERE uid = ?;', $sqlfields),
         $fields);

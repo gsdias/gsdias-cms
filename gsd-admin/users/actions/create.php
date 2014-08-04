@@ -1,10 +1,13 @@
 <?php
 
-include_once(CLIENTPATH . 'include/admin/fields' . PHPEXT);
-
-$extrafields = userfields();
-
 if (@$_REQUEST['save']) {
+    
+    include_once(CLIENTPATH . 'include/admin/fields' . PHPEXT);
+
+    $sectionextrafields = sprintf('%sfields', $path[1]);
+    
+    $sectionextrafields = function_exists($sectionextrafields) ? $sectionextrafields() : array();
+
     $defaultfields = array(
         $_REQUEST['email'],
         $_REQUEST['password'],
@@ -12,26 +15,16 @@ if (@$_REQUEST['save']) {
         $user->id
     );
     $valuefields = array();
-    $questions = str_repeat(", ?", sizeof($extrafields['list']));
+    $questions = str_repeat(", ?", sizeof($sectionextrafields['list']));
 
-    foreach ($extrafields['list'] as $field) {
-        $valuefields[] = $_REQUEST[$field];
+    foreach ($sectionextrafields['list'] as $field) {
+        $valuefields[] = @$_REQUEST[$field];
     }
 
     $fields = array_merge($defaultfields, $valuefields);
-    $mysql->statement(sprintf('INSERT INTO users (email, password, name, level, creator %s) values(?, ?, ?, 1, ? %s);', $extrafields['label'], $questions), $fields);
+    $mysql->statement(sprintf('INSERT INTO users (email, password, name, creator, level %s) values(?, ?, ?, ?, 1 %s);', $sectionextrafields['label'], $questions), $fields);
 
     if ($mysql->total) {
         header("Location: /admin/users", true, 302);
     }
 }
-
-$fields = array();
-foreach ($extrafields['list'] as $key => $field) {
-    $fields[] = array(
-        'NAME' => $field,
-        'LABEL' => $extrafields['labels'][$key]
-    );
-}
-$tpl->setcondition('EXTRAFIELDS');
-$tpl->setarray('FIELD', $fields);
