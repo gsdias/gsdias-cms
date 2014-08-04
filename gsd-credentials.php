@@ -28,6 +28,10 @@ if ($user->isLogged()) {
     define('IS_LOGGED', 1);
     $tpl->setvar('USER_NAME', $user->name);
     
+    if ($user->level == 100) {
+        $tpl->setcondition('IS_ROOT');
+    }
+    
 } else {
     define('IS_LOGGED', 0);
 }

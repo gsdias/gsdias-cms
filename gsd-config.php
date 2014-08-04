@@ -11,6 +11,7 @@ $path[1] = @$path[1];
 $path[2] = @$path[2];
 
 include_once('gsd-settings.php');
+include_once('gsd-lang' . PHPEXT);
 include_once('gsd-functions' . PHPEXT);
 
 /*
@@ -55,6 +56,8 @@ $resources = $config['resources'];
 /* Facebook information */
 $fb = sprintf('var appId="%s", page="%s";', $config['facebook']['appid'], $config['facebook']['page']);
 $fbconfig = array('appId' => $config['facebook']['appid'], 'secret' => $config['facebook']['secret']);
+
+$tpl->setvars($lang[$config['lang']]);
 
 $tpl->setVar('SCRIPT', sprintf('server = "undefined" === typeof server ? { } : server;server.lang = "%s";%s', $config['lang'], $fb));
 $tpl->setVar('TITLE', $config['title']);

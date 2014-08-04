@@ -1,24 +1,32 @@
 <main>
     <h1>Images</h1>
     <!-- IF IMAGES_EXIST -->
+    [_PAGINATOR]
     <table class="table">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Created by</th>
+                <th>Image</th>
+                <th>Size</th>
+                <th>Description</th>
+                <th>Tags</th>
+                <th>Modified</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <!-- LOOP IMAGES -->
         <tr>
             <td>
-                <a href="/admin/images/{IMAGES_ID}">{IMAGES_NAME}</a> <em class="ago">({IMAGES_CREATED})</em>
+                <a href="/admin/images/{IMAGES_IID}">{IMAGES_NAME}</a> <em class="ago">({IMAGES_CREATED})</em>
             </td>
+            <td></td>
+            <td></td>
+            <td></td>
             <td><a href="/admin/users/{IMAGES_UID}">{IMAGES_AUTHOR}</a></td>
-            <td class="actions"><a href="/admin/images/{IMAGES_UID}/settings">Settings</a><a href="/admin/images/{IMAGES_UID}/edit">Edit</a></td>
+            <td class="actions"><a href="/admin/images/{IMAGES_IID}/edit">Edit</a><a href="/admin/images/{IMAGES_IID}/remove">Remove</a></td>
         </tr>
         <!-- ENDLOOP IMAGES -->
     </table>
+    [_PAGINATOR]
     <!-- ENDIF IMAGES_EXIST -->
     
     <!-- IF !IMAGES_EXIST -->

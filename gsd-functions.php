@@ -167,9 +167,11 @@ function dateDif ($first = null, $second = null) {
 }
 
 function timeago ($seconds = 0) {
+    global $lang, $config;
+    
     $days = $seconds / 3600 / 24;
     $months = $days > 30 ? $days / 30 : 0;
-    return $months > 1 ? sprintf('%d months ago', $months) : sprintf('%d days ago', $days);
+    return $months > 1 ? sprintf('%d months %s', $months, $lang[$config['lang']]['LANG_AGO']) : sprintf('%d days %s', $days, $lang[$config['lang']]['LANG_AGO']);
 }
 
 /** 

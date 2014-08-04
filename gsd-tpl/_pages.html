@@ -1,5 +1,5 @@
 <section class="list">
-    <h1>Pages</h1>
+    <h1>{LANG_PAGES}</h1>
     <!-- IF PAGES_EXIST -->
     <ul>
         <!-- LOOP PAGES -->
@@ -9,12 +9,12 @@
     <!-- ENDIF PAGES_EXIST -->
     
     <!-- IF !PAGES_EXIST -->
-    <span class="warning">There are no pages</span>
+    <span class="warning">{LANG_NO_PAGES}</span>
     <!-- ENDIF !PAGES_EXIST -->
     <div class="btns">
         <!-- IF PAGES_EXIST -->
-        <a href="/admin/pages" class="btn"><i></i>All pages</a>
+        <a href="/admin/pages" class="btn"><i></i>{LANG_ALL_PAGES}</a>
         <!-- ENDIF PAGES_EXIST -->
-        <a href="/admin/pages/create" class="btn"><i></i>New page</a>
+        <a href="/admin/pages/create" class="btn"><i></i>{LANG_NEW_PAGE}</a>
     </div>
 </section>

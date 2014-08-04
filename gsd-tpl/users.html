@@ -1,28 +1,28 @@
 <main>
-    <h1>Users</h1>
+    <h1>{LANG_USERS}</h1>
     <div class="btns right">
-        <a href="/admin/users/create" class="btn">New user</a>
+        <a href="/admin/users/create" class="btn">{LANG_NEW_USER}</a>
     </div>
     [_PAGINATOR]
     <table class="table">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Last logged by</th>
-                <th>Created</th>
-                <th>Actions</th>
+                <th>{LANG_NAME}</th>
+                <th>{LANG_LAST_LOGIN}</th>
+                <th>{LANG_CREATED}</th>
+                <th>{LANG_ACTIONS}</th>
             </tr>
         </thead>
         <!-- LOOP USERS -->
         <tr>
             <td>
-                <a href="/admin/users/{USERS_UID}">{USERS_NAME}</a> <em class="ago">({USERS_CREATED})</em>
+                <a href="/admin/users/{USERS_UID}">{USERS_NAME}</a>
             </td>
-            <td>{USERS_LOGGED}</td>
+            <td>{USERS_LAST_LOGIN}</td>
             <td>{USERS_CREATED}</td>
             <td class="actions">
-                <a href="/admin/users/{USERS_UID}/edit">Edit</a>
-                <a href="/admin/users/{USERS_UID}/remove">Remove</a>
+                <a href="/admin/users/{USERS_UID}/edit">{LANG_EDIT}</a>
+                <a href="/admin/users/{USERS_UID}/remove">{LANG_REMOVE}</a>
             </td>
         </tr>
         <!-- ENDLOOP USERS -->

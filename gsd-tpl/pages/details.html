@@ -9,7 +9,9 @@
     Tags: {CURRENT_PAGE_TAGS}<br>
     Created: {CURRENT_PAGE_CREATED} by {CURRENT_PAGE_AUTHOR}<br>
     <div class="btns red">
-        <a href="/admin/pages/{CURRENT_PAGE_ID}/remove" class="btn">Remove page</a>
+        <!-- IF IS_ROOT -->
+        <a href="/admin/pages/{CURRENT_PAGE_PID}/remove" class="btn">Remove page</a>
+        <!-- ENDIF IS_ROOT -->
         <a href="#" class="btn">Discard draft</a>
     </div>
 </main>

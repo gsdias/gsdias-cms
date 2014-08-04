@@ -7,7 +7,8 @@ CREATE TABLE IF NOT EXISTS `documents` (
   `name` varchar(100) NOT NULL,
   `extension` varchar(5) NOT NULL,
   `creator` int(11) NOT NULL,
-  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `disabled` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
