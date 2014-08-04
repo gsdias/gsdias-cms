@@ -3,8 +3,8 @@
 if (@$_REQUEST['save']) {
     $main = 'STEP2';
     
-    $mysql->statement("INSERT INTO users (level, email, password, name) VALUES (100, :email, md5(:password), :name);", array(':email' => $_REQUEST['email'], ':password' => $_REQUEST['password'], ':name' => $_REQUEST['name']));
-    
+    $mysql->statement("INSERT INTO users (level, email, password, name, creator) VALUES (100, :email, md5(:password), :name, 0);", array(':email' => $_REQUEST['email'], ':password' => $_REQUEST['password'], ':name' => $_REQUEST['name']));
+    echo $mysql->errmsg;
     if ($mysql->total) {
         $tpl->setvar('STEP2_MESSAGES', "Admin user saved with success. You can login now. Don't forget to remove install files.");
     }
@@ -35,7 +35,11 @@ if (@$_REQUEST['save']) {
     $mysql->statement('SHOW TABLES;');
 
     $tables = array(
-        'users' => 1
+        'users' => 1,
+        'pages' => 1,
+        'redirect' => 1,
+        'images' => 1,
+        'documents' => 1
     );
     
     if ($mysql->total) {

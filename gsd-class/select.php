@@ -9,6 +9,7 @@ class select {
             'id' => null,
             'name' => null,
             'class' => null,
+            'label' => '',
             'type' => null,
             'empty' => true,
             'valuecheck' => false,
@@ -25,7 +26,7 @@ class select {
         $class = $this->args['class'] ? sprintf(' class="%s"', $this->args['class'], $this->args['class']) : '';
         $type = $this->args['type'] ? sprintf(' data-type="%s"', $this->args['type'], $this->args['type']) : '';
         
-        $list = sprintf('<select%s%s%s>' . "\n\r", $name, $class, $type);
+        $list = sprintf('<label>%s</label><select%s%s%s>' . "\n\r", $this->args['label'], $name, $class, $type);
 
         if (gettype($this->args['list']) === 'array') {
 

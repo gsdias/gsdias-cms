@@ -32,6 +32,10 @@ if (is_file('gsd-install' . PHPEXT)) {
     if (is_file('gsd-client/index.php') && $path[0] != 'admin') {
         $mysql->statement('SELECT * FROM pages WHERE url = :uri', array(':uri' => $uri));
         if (!$mysql->total) {
+            $mysql->statement('SELECT destination FROM redirect WHERE `from` = :uri', array(':uri' => $uri));
+            if ($mysql->total) {
+                header("Location: " . $mysql->singleresult(), true, 301);
+            }
             $startpoint = '404';
         } else {
             $page = $mysql->singleline();

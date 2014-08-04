@@ -13,7 +13,7 @@ if (!IS_LOGGED) {
     }
     $startpoint = 'index';
     $main = $path[1] ? $path[1] : 'dashboard';
-    $file = sprintf('gsd-admin/%s/%s%s', $path[1], $path[1], PHPEXT);
+    $file = 'gsd-admin/list' . PHPEXT;
     
     if (is_file($file)) {
         include_once($file);
