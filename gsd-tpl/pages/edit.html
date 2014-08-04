@@ -1,10 +1,10 @@
 <main>
-    Edit page<br>
-    Details<br>
+    <h1>Edit page</h1>
     <form method="post">
-        <div class="colA"><label>Page title</label> <input name="title" value="{CURRENT_PAGE_TITLE}"></div>
+        <div class="colA"><label>Page title</label> <input name="title" value="{CURRENT_PAGE_TITLE}" required></div>
         <div class="colA"><label>Meta description</label> <input name="description" value="{CURRENT_PAGE_DESCRIPTION}"></div>
         <div class="colA"><label>Meta keywords</label> <input name="keywords" value="{CURRENT_PAGE_KEYWORDS}"></div>
+        <div class="colA"><label>Tags</label> <input name="tags" value="{CURRENT_PAGE_TAGS}"></div>
         Open graph
         <div class="colA"><label>Open graph title</label> <input name="og_title" value="{CURRENT_PAGE_OG_TITLE}"></div>
         <div class="colA"><label>Open graph description</label> <input name="og_description" value="{CURRENT_PAGE_OG_DESCRIPTION}"></div>
@@ -12,6 +12,12 @@
         Advanced
         <div class="colA"><input type="checkbox"><label>Show in menu</label></div>
         <div class="colA"><input type="checkbox"><label>Require auth</label></div>
+        <!-- IF EXTRAFIELDS -->
+        <h2>Extra information</h2>
+        <!-- LOOP FIELD -->
+        <div class="colA">{FIELD_FIELD}</div>
+        <!-- ENDLOOP FIELD -->
+        <!-- ENDIF EXTRAFIELDS -->
         <div class="btns blue">
             <input type="submit" class="btn" value="Salvar" name="save">
         </div>

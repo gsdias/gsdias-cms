@@ -1,14 +1,16 @@
 <main>
     <h1>Edit user</h1>
     <form method="post">
-        <div class="colA"><label>Name</label> <input name="name" value="{CURRENT_USER_NAME}"></div>
-        <div class="colA"><label>Email</label> <input name="email" value="{CURRENT_USER_EMAIL}"></div>
+        <div class="colA"><label>Name</label> <input name="name" value="{CURRENT_USER_NAME}" required></div>
+        <div class="colA"><label>Email</label> <input name="email" value="{CURRENT_USER_EMAIL}" required></div>
         <div class="colA"><label>Password</label> <input name="password" value="" type="password"></div>
         <div class="colA"><label>Re password:</label> <input name="repassword" value="" type="password"></div>
+        <!-- IF EXTRAFIELDS -->
         <h2>Extra information</h2>
         <!-- LOOP FIELD -->
-        <div class="colA"><label>{FIELD_LABEL}</label> <input name="{FIELD_NAME}" value="{FIELD_VALUE}"></div>
+        <div class="colA">{FIELD_FIELD}</div>
         <!-- ENDLOOP FIELD -->
+        <!-- ENDIF EXTRAFIELDS -->
         <div class="btns blue">
             <input type="submit" class="btn" value="Salvar" name="save">
         </div>

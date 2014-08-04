@@ -24,11 +24,11 @@
         <form method="POST" action="/admin/auth{REDIRECT}" class="login-admin">
             <div class="colA">
                 <label>Email:</label>
-                <input name="email" value="{LOGIN_EMAIL}">
+                <input name="email" value="{LOGIN_EMAIL}" required>
             </div>
             <div class="colA">
                 <label>Password:</label>
-                <input name="password" type="password">
+                <input name="password" type="password" required>
             </div>
             <div class="form-messages">{FORM_MESSAGES}</div>
             <hr>

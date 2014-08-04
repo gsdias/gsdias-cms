@@ -1,8 +1,18 @@
 <main>
     <h1>Create page</h1>
     <form method="post">
-        <div class="colA"><label>Title</label> <input name="title" required></div>
+        <div class="colA"><label>Page title</label> <input name="title" required></div>
         <div class="colA"><label>Url</label> <input name="url" required></div>
+        <div class="colA"><label>Meta description</label> <input name="description"></div>
+        <div class="colA"><label>Meta keywords</label> <input name="keywords"></div>
+        <div class="colA"><label>Tags</label> <input name="tags"></div>
+        Open graph
+        <div class="colA"><label>Open graph title</label> <input name="og_title"></div>
+        <div class="colA"><label>Open graph description</label> <input name="og_description"></div>
+        <div class="colA"><label>Open graph image</label> <input name="og_image" type="file"></div>
+        Advanced
+        <div class="colA"><input type="checkbox"><label>Show in menu</label></div>
+        <div class="colA"><input type="checkbox"><label>Require auth</label></div>
         <div class="btns blue">
             <input type="submit" class="btn" value="Salvar" name="save">
         </div>
