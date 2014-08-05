@@ -7,7 +7,7 @@ if (is_file('gsd-install.php')) {
     define('IS_INSTALLED', 1);
 }
 
-include_once('gsd-config.php');
+include_once('gsd-include/gsd-config.php');
 
 $startpoint = 'index';
 $main = '';
@@ -20,7 +20,7 @@ if (is_file('gsd-install' . PHPEXT)) {
     require_once('gsd-assets' . PHPEXT);
 } else {
     
-    require_once('gsd-credentials' . PHPEXT);
+    require_once(INCLUDEPATH . 'gsd-credentials' . PHPEXT);
 
     if ($path[0] == 'admin') {
         require_once('gsd-admin/index.php');

@@ -18,10 +18,6 @@ $config['ga'] = '';
 
 $_mysql['host'] = 'home.gsdias.pt';
 
-$_mysql['user'] = 'root';
-$_mysql['pass'] = '12348876';
-$_mysql['db'] = 'cmss';
-
 $_mysql['user'] = 'corporat_iberica';
 $_mysql['pass'] = 'UTFFvV@%WaGG';
 $_mysql['db'] = 'corporat_iberica';
@@ -31,6 +27,7 @@ define('TPLEXT', '.html');
 define('PHPEXT', '.php');
 define('TPLPATH', dirname(__FILE__) . '/gsd-tpl/');
 define('CLASSPATH', dirname(__FILE__) . '/gsd-class/');
+define('INCLUDEPATH', dirname(__FILE__) . '/gsd-include/');
 
 define('CLIENTPATH', dirname(__FILE__) . '/gsd-client/');
 define('CLIENTINCLUDEPATH', 'include/');

@@ -1,7 +1,5 @@
 <?php
 
-include_once('gsd-paginator' . PHPEXT);
-
 $section = $path[1];
 $id = $path[2];
 $action = @$path[3];
@@ -64,7 +62,9 @@ if ($action) {
         $main = sprintf('%s/%s', $path[1], $path[2]);
         $file = sprintf('gsd-admin/%s/actions/%s%s', $path[1], $path[2], PHPEXT);
 
-        include_once($file);
+        if (is_file($file)) {
+            include_once($file);
+        }
         
     //LISTING
     } else if (@$tables[$section]) {

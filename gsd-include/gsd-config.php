@@ -11,8 +11,9 @@ $path[1] = @$path[1];
 $path[2] = @$path[2];
 
 include_once('gsd-settings.php');
-include_once('gsd-lang' . PHPEXT);
-include_once('gsd-functions' . PHPEXT);
+include_once(INCLUDEPATH . 'gsd-lang' . PHPEXT);
+include_once(INCLUDEPATH . 'gsd-functions' . PHPEXT);
+include_once(INCLUDEPATH . 'gsd-paginator' . PHPEXT);
 
 /*
 ACCESS LEVEL

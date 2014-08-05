@@ -242,7 +242,7 @@ class tpl {
         if ($file) {
             if ($filefound = $this->findFile($idFile, 1)) {
                 $this->config['files'][$id] = $filefound;
-            } else {
+            } else if (is_file($file)) {
                 $this->config['files'][$id] = $file;
             }
         } else {
