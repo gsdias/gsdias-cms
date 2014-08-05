@@ -1,0 +1,14 @@
+.paginator {
+    vertical-align: middle;
+    text-align: center;
+    float: right;
+    margin: 20px 0;
+    font-size: 12px;
+    a {
+        border: solid 1px #ccc;
+        display: inline-block;
+        width: 22px;
+        height: 20px;
+        padding-top: 7px;
+    }
+}

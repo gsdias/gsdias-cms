@@ -4,6 +4,8 @@ $section = $path[1];
 $id = $path[2];
 $action = @$path[3];
 
+$numberPerPage = 10;
+
 //ACTION DETECTED
 if ($action) {
     include_once(CLIENTPATH . 'include/admin/fields' . PHPEXT);
@@ -69,7 +71,7 @@ if ($action) {
     //LISTING
     } else if (@$tables[$section]) {
         
-        $mysql->statement(sprintf('SELECT %s.*, %s.creator AS creator_id, u.name AS creator_name FROM %s LEFT JOIN users AS u ON %s.creator = u.uid WHERE %s.disabled IS NULL ORDER BY %s.%sid;', $section, $section, $section, $section, $section, $section, substr($section, 0, 1)));
+        $mysql->statement(sprintf('SELECT %s.*, %s.creator AS creator_id, u.name AS creator_name FROM %s LEFT JOIN users AS u ON %s.creator = u.uid WHERE %s.disabled IS NULL ORDER BY %s.%sid ' . pageLimit(pageNumber(), $numberPerPage), $section, $section, $section, $section, $section, $section, substr($section, 0, 1)));
 
         $list = array();
 

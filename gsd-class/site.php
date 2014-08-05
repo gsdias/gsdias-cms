@@ -13,7 +13,7 @@ class site {
         $mysql->statement('SELECT * FROM options;');
         
         foreach ($mysql->result() as $option) {
-            $this->{$option['name']} = $option['value'];
+            $this->{str_replace('gsd-', '', $option['name'])} = $option['value'];
         }
     }
     

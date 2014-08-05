@@ -13,9 +13,6 @@
             value = value.replace( new RegExp(" ", "gm"),"-").toLowerCase();
             url.val('/' + value);
         }
-        if (!value.length) {
-            $(this).focus();
-        }
     };
 
     $('[name="title"]').on('blur', generateurl);

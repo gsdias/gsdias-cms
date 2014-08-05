@@ -3,11 +3,13 @@
 function pageTotal ($sql, $numberPerPage) {
     global $mysql;
     $select = sprintf('SELECT floor(count(*) / %d), mod(count(*), %d) %s', $numberPerPage, $numberPerPage, $sql);
+    
     $mysql->statement($select);
-    $result = $mysql->result();
+    
+    $result = $mysql->singleline();
 
-    $pages = $result[0][0];
-    $remain = $result[0][1];
+    $pages = $result[0];
+    $remain = $result[1];
 
     $pages = $remain > 0 ? ++$pages : $pages;
     return $pages;
