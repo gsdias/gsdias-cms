@@ -18,9 +18,11 @@ $_mysql['db'] = 'corporat_iberica';
 define('DEBUG', 0);
 define('TPLEXT', '.html');
 define('PHPEXT', '.php');
+define('ROOTPATH', dirname(__FILE__));
 define('TPLPATH', dirname(__FILE__) . '/gsd-tpl/');
 define('CLASSPATH', dirname(__FILE__) . '/gsd-class/');
 define('INCLUDEPATH', dirname(__FILE__) . '/gsd-include/');
+define('ASSETPATH', dirname(__FILE__) . '/gsd-assets/');
 
 define('CLIENTPATH', dirname(__FILE__) . '/gsd-client/');
 define('CLIENTINCLUDEPATH', 'include/');

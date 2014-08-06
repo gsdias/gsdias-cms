@@ -33,6 +33,7 @@ class images implements isection {
                 $last_login = explode(' ', @$item['last_login']);
                 $fields['CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())));
                 $fields['LAST_LOGIN'] = sizeof($last_login) ? ($last_login[0] ? timeago(dateDif($last_login[0], date('Y-m-d',time()))) : 'Never') : '';
+                $fields['ASSET'] = @$item['width'] ? new image(array('path' => sprintf('/gsd-assets/images/%s/%s.%s', $item['iid'], $item['iid'], $item['extension']), 'width' => '100', 'height' => 'auto')) : '';
                 $list[] = $fields;
             }
             $tpl->setarray('IMAGES', $list);

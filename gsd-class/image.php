@@ -13,7 +13,7 @@ class image {
         
         $this->args = array_merge($defaults, $args);
         
-        if (!file_exists($this->args['path'])) {
+        if (!is_file(ROOTPATH . $this->args['path'])) {
             $width = is_numeric($this->args['width']) ? $this->args['width'] : $this->width;
             $height = is_numeric($this->args['height']) ? $this->args['height'] : $this->height;
             $this->args['path'] = sprintf("/image.php?width=%s&&height=%s", $width, $height);

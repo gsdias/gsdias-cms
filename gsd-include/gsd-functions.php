@@ -174,9 +174,9 @@ function timeago ($seconds = 0) {
     $months = round($months, 0);
     
     if ($months > 0) {
-        $label = sprintf('%d %s %s', $months, $months > 1 ? 'meses': 'mês', $lang[$config['lang']]['LANG_AGO']);
+        $label = sprintf('%d %s %s', $months, $months > 1 ? ' meses': 'mês', $lang[$config['lang']]['LANG_AGO']);
     } else {
-        $label = sprintf('%d %s %s', $days, $days > 1 ? 'dias': 'hoje', $lang[$config['lang']]['LANG_AGO']);
+        $label = $days > 0 ? $days . ( $days == 1 ? ' dia ' : ' dias ') . $lang[$config['lang']]['LANG_AGO'] : 'hoje';
     }
     
     return $label;
@@ -282,6 +282,10 @@ function savefile ($file, $path, $type = null, $nottype = null, $rename = null) 
                 $newfilename = filerename($file['name'], $rename);
             }
 
+            if (!is_dir($path)) {
+                mkdir($path, 0777);
+            }
+            
             move_uploaded_file($file["tmp_name"], $path . $newfilename);
             return $newfilename;
         }

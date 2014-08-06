@@ -1,5 +1,8 @@
 <main>
     <h1>Imagens</h1>
+    <div class="btns right">
+        <a href="/admin/images/upload" class="btn">{LANG_UPLOAD_IMAGE}</a>
+    </div>
     <!-- IF IMAGES_EXIST -->
     [_PAGINATOR]
     <table class="table">
@@ -16,7 +19,7 @@
         <!-- LOOP IMAGES -->
         <tr>
             <td>
-                <a href="/admin/images/{IMAGES_IID}">{IMAGES_NAME}</a> <em class="ago">({IMAGES_CREATED})</em>
+                <a href="/admin/images/{IMAGES_IID}">{IMAGES_ASSET}</a> <em class="ago">({IMAGES_CREATED})</em>
             </td>
             <td></td>
             <td></td>

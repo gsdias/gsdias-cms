@@ -13,6 +13,7 @@ $lang['pt'] = array(
     "LANG_NEW_USER" => "Adicionar utilizador",
     "LANG_ALL_USERS" => "Listar utilizadores",
     "LANG_IMAGES" => "Imagens",
+    "LANG_UPLOAD_IMAGE" => "Carregar imagem",
     "LANG_DOCUMENTS" => "Documentos",
     "LANG_AGO" => "atrás",
     "LANG_NAME" => "Nome",
