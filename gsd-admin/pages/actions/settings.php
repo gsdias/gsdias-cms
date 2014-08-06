@@ -1,7 +1,6 @@
 <?php
 
 if (@$_REQUEST['save']) {
-    $tags = $_REQUEST['tags'];
 
     $mysql->statement('SELECT url FROM pages WHERE pid = ?;', array($path[2]));
     
@@ -16,9 +15,8 @@ if (@$_REQUEST['save']) {
     } else {
         $mysql->statement('INSERT INTO redirect (`pid`, `from`, `destination`, `creator`) VALUES (?, ?, ?, ?);', array($path[2], $currenturl, $_REQUEST['url'], $user->id));
     }
-    $mysql->statement('UPDATE pages SET url = ?, tags = ? WHERE pid = ?;', array(
+    $mysql->statement('UPDATE pages SET url = ? WHERE pid = ?;', array(
         $_REQUEST['url'],
-        $_REQUEST['tags'],
         $path[2]
     ));
     

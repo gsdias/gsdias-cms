@@ -31,6 +31,9 @@ if ($action) {
 
         $fields['CURRENT_' . strtoupper(substr($section, 0, -1)) . '_CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())));
         
+        $fields['MENU_CHECKED'] = @$item['show_menu'] ? 'checked="checked"' : '';
+        $fields['AUTH_CHECKED'] = @$item['require_auth'] ? 'checked="checked"' : '';
+        
         $tpl->setvars($fields);
         
         if (sizeof($sectionextrafields)) {

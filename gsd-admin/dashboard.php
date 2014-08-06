@@ -1,6 +1,6 @@
 <?php
 
-$mysql->statement('SELECT * FROM users LIMIT 0, 3');
+$mysql->statement('SELECT * FROM users WHERE disabled IS NULL LIMIT 0, 3');
 
 $users = array();
 
@@ -14,7 +14,7 @@ foreach ($mysql->result() as $userlist) {
 }
 $tpl->setarray('USERS', $users);
 
-$mysql->statement('SELECT * FROM pages LIMIT 0, 3');
+$mysql->statement('SELECT * FROM pages WHERE disabled IS NULL LIMIT 0, 3');
 
 $pages = array();
 
@@ -29,4 +29,10 @@ if ($mysql->total) {
         );
     }
     $tpl->setarray('PAGES', $pages);
+}
+
+$file = CLIENTPATH . 'include/admin/dashboard' . PHPEXT;
+
+if (is_file($file)) {
+    include_once($file);
 }

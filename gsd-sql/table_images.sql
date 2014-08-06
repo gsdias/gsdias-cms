@@ -3,7 +3,7 @@
 --
 
 CREATE TABLE IF NOT EXISTS `images` (
-  `iid` int(11) NOT NULL,
+  `iid` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `extension` varchar(5) NOT NULL,
   `creator` int(11) NOT NULL,
@@ -14,5 +14,4 @@ CREATE TABLE IF NOT EXISTS `images` (
 --
 -- Indexes for table `images`
 --
-ALTER TABLE `images` ADD PRIMARY KEY (`iid`), 
-    MODIFY `iid` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `images` ADD PRIMARY KEY (`iid`);

@@ -171,7 +171,15 @@ function timeago ($seconds = 0) {
     
     $days = $seconds / 3600 / 24;
     $months = $days > 30 ? $days / 30 : 0;
-    return $months > 1 ? sprintf('%d months %s', $months, $lang[$config['lang']]['LANG_AGO']) : sprintf('%d days %s', $days, $lang[$config['lang']]['LANG_AGO']);
+    $months = round($months, 0);
+    
+    if ($months > 0) {
+        $label = sprintf('%d %s %s', $months, $months > 1 ? 'meses': 'mês', $lang[$config['lang']]['LANG_AGO']);
+    } else {
+        $label = sprintf('%d %s %s', $days, $days > 1 ? 'dias': 'hoje', $lang[$config['lang']]['LANG_AGO']);
+    }
+    
+    return $label;
 }
 
 /** 

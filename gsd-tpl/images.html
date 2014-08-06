@@ -1,5 +1,5 @@
 <main>
-    <h1>Images</h1>
+    <h1>Imagens</h1>
     <!-- IF IMAGES_EXIST -->
     [_PAGINATOR]
     <table class="table">
@@ -22,7 +22,10 @@
             <td></td>
             <td></td>
             <td><a href="/admin/users/{IMAGES_UID}">{IMAGES_AUTHOR}</a></td>
-            <td class="actions"><a href="/admin/images/{IMAGES_IID}/edit">Edit</a><a href="/admin/images/{IMAGES_IID}/remove">Remove</a></td>
+            <td class="actions">
+                <a href="/admin/images/{IMAGES_IID}/edit">Editar</a>
+                <a href="/admin/images/{IMAGES_IID}/remove">Remover</a>
+            </td>
         </tr>
         <!-- ENDLOOP IMAGES -->
     </table>
@@ -30,6 +33,6 @@
     <!-- ENDIF IMAGES_EXIST -->
     
     <!-- IF !IMAGES_EXIST -->
-    <span class="warning">There are no images</span>
+    <span class="warning">Não existem imagens</span>
     <!-- ENDIF !IMAGES_EXIST -->
 </main>

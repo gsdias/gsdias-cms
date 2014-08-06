@@ -9,7 +9,9 @@ if (@$_REQUEST['save']) {
         $_REQUEST['keywords'],
         $_REQUEST['og_title'],
         $_REQUEST['og_description'],
-        $_REQUEST['og_image']
+        $_REQUEST['og_image'],
+        @$_REQUEST['menu'] ? @$_REQUEST['menu'] : null,
+        @$_REQUEST['auth'] ? @$_REQUEST['auth'] : null
     );
     $valuefields = array();
     $sqlfields = '';
@@ -23,6 +25,6 @@ if (@$_REQUEST['save']) {
 
     array_push($fields, $path[2]);
     
-    $mysql->statement(sprintf('UPDATE pages SET title = ?, description = ?, tags = ?, keywords = ?, og_title = ?, og_description = ?, og_image = ? %s WHERE pid = ?;', $sqlfields), $fields);
+    $mysql->statement(sprintf('UPDATE pages SET title = ?, description = ?, tags = ?, keywords = ?, og_title = ?, og_description = ?, og_image = ?, show_menu = ?, require_auth = ? %s WHERE pid = ?;', $sqlfields), $fields);
     header("Location: /admin/pages", true, 302);
 }

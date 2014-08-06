@@ -12,4 +12,4 @@ CREATE TABLE IF NOT EXISTS `options` (
 --
 ALTER TABLE `options` ADD PRIMARY KEY (`name`);
 
-INSERT INTO options (`name`) VALUES ('name'), ('email');
+INSERT INTO options (`name`) VALUES ('gsd-name'), ('gsd-email'), ('gsd-ga');

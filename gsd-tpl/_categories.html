@@ -1,0 +1,20 @@
+<section class="list">
+    <h1>Categorias</h1>
+    <!-- IF CATEGORIES_EXIST -->
+    <ul>
+        <!-- LOOP CATEGORIES -->
+        <li><a href="/admin/categories/{CATEGORIES_ID}/edit">{CATEGORIES_NAME}</a> <em class="ago">({CATEGORIES_CREATED})</em></li>
+        <!-- ENDLOOP CATEGORIES -->
+    </ul>
+    <!-- ENDIF CATEGORIES_EXIST -->
+    
+    <!-- IF !CATEGORIES_EXIST -->
+    <span class="warning">Não existem categorias</span>
+    <!-- ENDIF !CATEGORIES_EXIST -->
+    <div class="btns">
+        <!-- IF CATEGORIES_EXIST -->
+        <a href="/admin/categories" class="btn"><i></i>Listas categorias</a>
+        <!-- ENDIF CATEGORIES_EXIST -->
+        <a href="/admin/categories/create" class="btn"><i></i>Nova categoria</a>
+    </div>
+</section>

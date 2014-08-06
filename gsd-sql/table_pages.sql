@@ -3,7 +3,7 @@
 --
 
 CREATE TABLE IF NOT EXISTS `pages` (
-  `pid` int(11) NOT NULL,
+  `pid` int(11) NOT NULL AUTO_INCREMENT,
   `url` varchar(60) NOT NULL,
   `title` varchar(120) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
@@ -12,11 +12,11 @@ CREATE TABLE IF NOT EXISTS `pages` (
   `og_title` varchar(120) DEFAULT NULL,
   `og_description` varchar(255) DEFAULT NULL,
   `og_image` varchar(100) DEFAULT NULL,
-  `disabled` tinyint(1) DEFAULT NULL,
   `show_menu` tinyint(1) DEFAULT 1,
   `require_auth` tinyint(1) DEFAULT NULL,
   `creator` int(11) NOT NULL,
-  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `disabled` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
@@ -27,6 +27,5 @@ CREATE TABLE IF NOT EXISTS `pages` (
 -- Indexes for table `pages`
 --
 ALTER TABLE `pages` ADD PRIMARY KEY (`pid`), 
-    MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, 
     ADD KEY `creator` (`creator`), 
     ADD UNIQUE(`url`);

@@ -3,7 +3,7 @@
 --
 
 CREATE TABLE IF NOT EXISTS `documents` (
-  `did` int(11) NOT NULL,
+  `did` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `extension` varchar(5) NOT NULL,
   `creator` int(11) NOT NULL,
@@ -14,5 +14,4 @@ CREATE TABLE IF NOT EXISTS `documents` (
 --
 -- Indexes for table `documents`
 --
-ALTER TABLE `documents` ADD PRIMARY KEY (`did`), 
-    MODIFY `did` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `documents` ADD PRIMARY KEY (`did`);

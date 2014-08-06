@@ -3,7 +3,7 @@
 --
 
 CREATE TABLE IF NOT EXISTS `redirect` (
-  `rid` int(11) NOT NULL,
+  `rid` int(11) NOT NULL AUTO_INCREMENT,
   `pid` int(11) NOT NULL,
   `from` varchar(120) NOT NULL,
   `destination` varchar(120) NOT NULL,
@@ -18,5 +18,4 @@ CREATE TABLE IF NOT EXISTS `redirect` (
 --
 -- Indexes for table `pages`
 --
-ALTER TABLE `redirect` ADD PRIMARY KEY (`rid`),
-    MODIFY `rid` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `redirect` ADD PRIMARY KEY (`rid`);
