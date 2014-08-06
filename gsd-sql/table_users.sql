@@ -3,11 +3,11 @@
 --
 
 CREATE TABLE IF NOT EXISTS `users` (
-  `uid` int(11) NOT NULL AUTO_INCREMENT,
+  `uid` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `email` varchar(255) NOT NULL,
-  `password` varchar(32) NOT NULL,
+  `password` varchar(32) DEFAULT NULL,
   `name` varchar(120) NOT NULL,
-  `level` int(11) NOT NULL,
+  `level` varchar(10) DEFAULT 'user',
   `notifications` int(1) DEFAULT NULL,
   `sync` int(1) DEFAULT NULL,
   `creator` int(11) NOT NULL,
@@ -20,5 +20,4 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 -- Indexes for table `users`
 --
-ALTER TABLE `users` ADD PRIMARY KEY (`uid`), 
-    ADD UNIQUE(`email`);
+ALTER TABLE `users` ADD UNIQUE(`email`);

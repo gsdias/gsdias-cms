@@ -1,20 +1,13 @@
 <?php
 
-$config['description'] = '';
-$config['keywords'] = '';
-$config['title'] = '';
-$config['url'] = '';
-$config['url_en'] = '';
+$pattern = '/(\?)(.*)/';
+$uri = preg_replace($pattern, '', $_SERVER['REQUEST_URI']);
+    
+$path = explode("/", $uri);
+array_shift($path);
+
 $config['resources'] = '/gsd-resources';
-$config['email'] = '';
-$config['webmaster'] = '';
 $config['lang'] = 'pt';
-
-$config['facebook']['appid'] = '';
-$config['facebook']['page'] = '';
-$config['facebook']['secret'] = '';
-
-$config['ga'] = '';
 
 $_mysql['host'] = 'home.gsdias.pt';
 

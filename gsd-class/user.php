@@ -3,14 +3,6 @@
 * File with user class information  *
 *************************************/
 
-interface iuser {
-    public function reset ();
-    public function islogged ();
-    public function login ($user, $password);
-    public function logout ();
-    public function getuser ($uid);
-}
-
 class user implements iuser {
     
     public $level, $email, $name, $firstName, $lastName, $id, $notifications, $code;
@@ -74,7 +66,7 @@ class user implements iuser {
             $this->code = md5($_SERVER['REMOTE_ADDR'] + '' + time());
             $user = $mysql->singleline();
             
-            if ($user['level'] == 1 && $path[0] == 'admin') {
+            if ($user['level'] == 'user' && $path[0] == 'admin') {
                 return 0;
             }
             

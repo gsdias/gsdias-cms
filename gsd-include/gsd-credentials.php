@@ -28,7 +28,7 @@ if ($user->isLogged()) {
     define('IS_LOGGED', 1);
     $tpl->setvar('USER_NAME', $user->name);
     
-    if ($user->level == 100) {
+    if ($user->level == 'admin') {
         $tpl->setcondition('IS_ROOT');
     }
     

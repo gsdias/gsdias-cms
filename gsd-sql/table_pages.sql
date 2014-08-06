@@ -3,7 +3,7 @@
 --
 
 CREATE TABLE IF NOT EXISTS `pages` (
-  `pid` int(11) NOT NULL AUTO_INCREMENT,
+  `pid` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `url` varchar(60) NOT NULL,
   `title` varchar(120) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
@@ -26,6 +26,5 @@ CREATE TABLE IF NOT EXISTS `pages` (
 --
 -- Indexes for table `pages`
 --
-ALTER TABLE `pages` ADD PRIMARY KEY (`pid`), 
-    ADD KEY `creator` (`creator`), 
+ALTER TABLE `pages` ADD KEY `creator` (`creator`), 
     ADD UNIQUE(`url`);

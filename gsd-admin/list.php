@@ -1,8 +1,8 @@
 <?php
 
-$section = $path[1];
-$id = $path[2];
-$action = @$path[3];
+$section = @$site->path[1];
+$id = @$site->path[2];
+$action = @$site->path[3];
 
 $numberPerPage = 10;
 
@@ -74,42 +74,7 @@ if ($action) {
     //LISTING
     } else if (@$tables[$section]) {
         
-        $mysql->statement(sprintf('SELECT %s.*, %s.creator AS creator_id, u.name AS creator_name FROM %s LEFT JOIN users AS u ON %s.creator = u.uid WHERE %s.disabled IS NULL ORDER BY %s.%sid ' . pageLimit(pageNumber(), $numberPerPage), $section, $section, $section, $section, $section, $section, substr($section, 0, 1)));
-
-        $list = array();
-
-        if ($mysql->total) {
-            
-            $tpl->setcondition(sprintf('%s_EXIST', strtoupper($section)));
-            foreach ($mysql->result() as $item) {
-                $fields = array();
-                foreach ($item as $field => $value) {
-                    if (is_numeric($field)) {
-                        continue;
-                    }
-                    $fields[strtoupper($field)] = $value;
-                }
-                $created = explode(' ', $item['created']);
-                $last_login = explode(' ', @$item['last_login']);
-                $fields['CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())));
-                $fields['LAST_LOGIN'] = sizeof($last_login) ? ($last_login[0] ? timeago(dateDif($last_login[0], date('Y-m-d',time()))) : 'Never') : '';
-                $list[] = $fields;
-            }
-            $tpl->setarray(strtoupper($section), $list);
-            $pages = pageGenerator(sprintf('FROM %s LEFT JOIN users AS u ON %s.creator = u.uid WHERE %s.disabled IS NULL ORDER BY %s.%sid;', $section, $section, $section, $section, substr($section, 0, 1)));
-            
-            $first_page = new anchor(array('text' => '&lt;&lt;', 'href' => '?page=1'));
-            $prev_page = new anchor(array('text' => '&lt;', 'href' => '?page=' . $pages['PREV']));
-            $next_page = new anchor(array('text' => '&gt;', 'href' => '?page=' . $pages['NEXT']));
-            $last_page = new anchor(array('text' => '&gt;&gt;', 'href' => '?page=' . $pages['LAST']));
-            $tpl->setvars(array(
-                'FIRST_PAGE' => $first_page,
-                'PREV_PAGE' => $prev_page,
-                'NEXT_PAGE' => $next_page,
-                'LAST_PAGE' => $last_page,
-                'CURRENT_PAGE' => $pages['CURRENT'],
-                'TOTAL_PAGES' => $pages['TOTAL']
-            ));
-        }
+        $sections = new $section ();
+        $sections->getlist($numberPerPage);
     }
 }

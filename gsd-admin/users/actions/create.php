@@ -10,7 +10,7 @@ if (@$_REQUEST['save']) {
 
     $defaultfields = array(
         $_REQUEST['email'],
-        $_REQUEST['password'],
+        $_REQUEST['level'],
         $_REQUEST['name'],
         $user->id
     );
@@ -22,7 +22,7 @@ if (@$_REQUEST['save']) {
     }
 
     $fields = array_merge($defaultfields, $valuefields);
-    $mysql->statement(sprintf('INSERT INTO users (email, password, name, creator, level %s) values(?, ?, ?, ?, 1 %s);', $sectionextrafields['label'], $questions), $fields);
+    $mysql->statement(sprintf('INSERT INTO users (email, level, name, creator %s) values(?, ?, ?, ? %s);', $sectionextrafields['label'], $questions), $fields);
 
     if ($mysql->total) {
         header("Location: /admin/users", true, 302);

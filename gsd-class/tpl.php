@@ -258,7 +258,7 @@ class tpl {
         global $mysql;
         
         if (!defined('DEBUG') || !DEBUG) {
-            $this->config['file'] = str_replace(array("\r\n", "\r", "\n"), array('', '', ''), $this->config['file']);
+            //$this->config['file'] = str_replace(array("\r\n", "\r", "\n"), array('', '', ''), $this->config['file']);
         }
         
         ob_start();
