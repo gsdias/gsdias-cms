@@ -54,5 +54,48 @@ class pages implements isection {
     }
     
     public function getcurrent ($id = 0) {
+        global $mysql, $tpl;
+    
+        $sectionextrafields = function_exists('pagesfields') ? pagesfields() : array();
+
+        $mysql->statement('SELECT pages.*, pages.created FROM pages LEFT JOIN users AS u ON pages.creator = u.uid WHERE pages.pid = ?;', array($id));
+
+        if ($mysql->total) {
+
+            $item = $mysql->singleline();
+            $created = explode(' ', $item['created']);
+
+            $fields = array();
+            foreach ($item as $field => $value) {
+                if (is_numeric($field)) {
+                    continue;
+                }
+                $fields['CURRENT_PAGE_'. strtoupper($field)] = $value;
+            }
+
+            $fields['CURRENT_PAGE_CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())));
+
+            $fields['MENU_CHECKED'] = @$item['show_menu'] ? 'checked="checked"' : '';
+            $fields['AUTH_CHECKED'] = @$item['require_auth'] ? 'checked="checked"' : '';
+
+            $tpl->setvars($fields);
+
+            if (sizeof($sectionextrafields)) {
+                $extrafields = array();
+
+                foreach ($sectionextrafields['list'] as $key => $extrafield) {
+
+                    if (sizeof(@$sectionextrafields['values'])) {
+                        $field = new select(array('id' => $extrafield, 'name' => $extrafield, 'list' => $sectionextrafields['values'], 'label' => $sectionextrafields['labels'][$key], 'selected' => @$item[$extrafield]));
+                    } else {
+                        $field = new input(array('id' => $extrafield, 'name' => $extrafield, 'value' => @$item[$extrafield], 'label' => $sectionextrafields['labels'][$key]));
+                    }
+                    $extrafields[] = array('FIELD' => $field);
+                }
+
+                $tpl->setarray('FIELD', $extrafields); 
+                $tpl->setcondition('EXTRAFIELDS'); 
+            }
+        }
     }
 }

@@ -271,7 +271,7 @@ function sendMailRecover ($to, $link) {
   * @return string - return new file name if given
 */  
 function savefile ($file, $path, $type = null, $nottype = null, $rename = null) {
-
+echo $path;
     if ($file['error'] == 0) {
         $newfilename = $file['name'];
         $typefile = explode("/", $file['type']);
@@ -293,9 +293,26 @@ function savefile ($file, $path, $type = null, $nottype = null, $rename = null) 
     return '';
 }
 
-function removefile ($table, $field, $idfield, $value) {
-    global $mysql;
-    $mysql->statement(sprintf('UPDATE %s SET %s = NULL WHERE %s = "%s"', $table, $field, $idfield, $value));
+#http://stackoverflow.com/questions/1334398/how-to-delete-a-folder-with-contents-using-php
+function removefile ($path) {
+    if (is_dir($path) === true)
+    {
+        $files = array_diff(scandir($path), array('.', '..'));
+
+        foreach ($files as $file)
+        {
+            removefile(realpath($path) . '/' . $file);
+        }
+
+        return rmdir($path);
+    }
+
+    else if (is_file($path) === true)
+    {
+        return unlink($path);
+    }
+
+    return false;
 }
 
 if ($path[0] != 'admin' && is_file (CLIENTPATH . 'functions' . PHPEXT) && IS_INSTALLED) {

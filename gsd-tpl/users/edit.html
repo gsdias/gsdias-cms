@@ -3,13 +3,8 @@
     <form method="post">
         <div class="colA"><label>Name</label> <input name="name" value="{CURRENT_USER_NAME}" required></div>
         <div class="colA"><label>Email</label> <input name="email" value="{CURRENT_USER_EMAIL}" required></div>
-        <div class="colA"><label>Permissao</label> 
-            <select name="level" required>
-                <option disabled="disabled">Escolha</option>
-                <option value="admin">Admin</option>
-                <option value="editor">Editor</option>
-                <option value="user">Utilizador</option>
-            </select>
+        <div class="colA"><label>Permissão</label> 
+            {PERMISSION}
         </div>
         
         <!-- IF EXTRAFIELDS -->

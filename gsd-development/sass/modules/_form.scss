@@ -16,6 +16,10 @@ input {
     &.error {
         border-color: red;
     }
+    &[type="file"] {
+        padding: 5px 20px;
+        height: 18px;
+    }
 }
 .btn-submit {
     float: right;

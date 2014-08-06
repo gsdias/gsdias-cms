@@ -8,19 +8,21 @@ if (@$_REQUEST['save']) {
     
     $fields = array(
         $_REQUEST['name'],
+        $_REQUEST['description'],
         $extension,
         $size[0],
         $size[1],
+        round(filesize($_FILES['asset']["tmp_name"]) / 1000, 0) . 'KB',
         $user->id
     );
     
-    $mysql->statement('INSERT INTO images (name, extension, width, height, creator) values(?, ?, ?, ?, ?);', $fields);
+    $mysql->statement('INSERT INTO images (name, description, extension, width, height, size, creator) values(?, ?, ?, ?, ?, ?, ?);', $fields);
 echo $mysql->errmsg;
     if ($mysql->total) {
         
         $id = $mysql->lastInserted();
         
-        $file = savefile ($_FILES['asset'], ASSETPATH . '/images/' . $id . '/', $type = null, $nottype = null, $id);
+        $file = savefile ($_FILES['asset'], ASSETPATH . 'images/' . $id . '/', $type = null, $nottype = null, $id);
         
         header("Location: /admin/images", true, 302);
     }

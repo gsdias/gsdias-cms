@@ -8,23 +8,21 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Image</th>
-                <th>Size</th>
-                <th>Description</th>
-                <th>Tags</th>
-                <th>Modified</th>
-                <th>Actions</th>
+                <th>Imagem</th>
+                <th>Dimensão</th>
+                <th>Descrição</th>
+                <th>Modificado</th>
+                <th>{LANG_ACTIONS}</th>
             </tr>
         </thead>
         <!-- LOOP IMAGES -->
         <tr>
             <td>
-                <a href="/admin/images/{IMAGES_IID}">{IMAGES_ASSET}</a> <em class="ago">({IMAGES_CREATED})</em>
+                <a href="/admin/images/{IMAGES_IID}">{IMAGES_ASSET}</a>
             </td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td><a href="/admin/users/{IMAGES_UID}">{IMAGES_AUTHOR}</a></td>
+            <td>{IMAGES_SIZE}</td>
+            <td>{IMAGES_DESCRIPTION}</td>
+            <td>{IMAGES_CREATED} <br>por <a href="/admin/users/{IMAGES_CREATOR_ID}">{IMAGES_CREATOR_NAME}</a></td>
             <td class="actions">
                 <a href="/admin/images/{IMAGES_IID}/edit">Editar</a>
                 <a href="/admin/images/{IMAGES_IID}/remove">Remover</a>

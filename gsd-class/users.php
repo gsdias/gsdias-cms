@@ -32,7 +32,7 @@ class users implements isection {
                 $created = explode(' ', $item['created']);
                 $last_login = explode(' ', @$item['last_login']);
                 $fields['CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())));
-                $fields['LAST_LOGIN'] = sizeof($last_login) ? ($last_login[0] ? timeago(dateDif($last_login[0], date('Y-m-d',time()))) : 'Never') : '';
+                $fields['LAST_LOGIN'] = sizeof($last_login) ? ($last_login[0] ? timeago(dateDif($last_login[0], date('Y-m-d',time()))) : 'Nunca') : '';
                 $list[] = $fields;
             }
             $tpl->setarray('USERS', $list);
@@ -54,5 +54,55 @@ class users implements isection {
     }
     
     public function getcurrent ($id = 0) {
+        global $tpl, $mysql;
+        
+        $sectionextrafields = function_exists('usersfields') ? usersfields() : array();
+
+        $mysql->statement('SELECT users.*, users.created FROM users LEFT JOIN users AS u ON users.creator = u.uid WHERE users.uid = ?;', array($id));
+
+        if ($mysql->total) {
+
+            $item = $mysql->singleline();
+            $created = explode(' ', $item['created']);
+
+            $fields = array();
+            foreach ($item as $field => $value) {
+                if (is_numeric($field)) {
+                    continue;
+                }
+                $fields['CURRENT_USER_'. strtoupper($field)] = $value;
+            }
+
+            $fields['PERMISSION'] = new select(array(
+                'list' => array(
+                    'admin' => 'admin',
+                    'editor' => 'editor',
+                    'user' => 'user'
+                ),
+                'selected' => $item['level'],
+                'name' => 'level'
+            ));
+
+            $fields['CURRENT_' . strtoupper(substr('users', 0, -1)) . '_CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())));
+
+            $tpl->setvars($fields);
+
+            if (sizeof($sectionextrafields)) {
+                $extrafields = array();
+
+                foreach ($sectionextrafields['list'] as $key => $extrafield) {
+
+                    if (sizeof(@$sectionextrafields['values'])) {
+                        $field = new select(array('id' => $extrafield, 'name' => $extrafield, 'list' => $sectionextrafields['values'], 'label' => $sectionextrafields['labels'][$key], 'selected' => @$item[$extrafield]));
+                    } else {
+                        $field = (string)new input(array('id' => $extrafield, 'name' => $extrafield, 'value' => @$item[$extrafield], 'label' => $sectionextrafields['labels'][$key]));
+                    }
+                    $extrafields[] = array('FIELD' => $field);
+                }
+
+                $tpl->setarray('FIELD', $extrafields); 
+                $tpl->setcondition('EXTRAFIELDS'); 
+            }
+        }
     }
 }
