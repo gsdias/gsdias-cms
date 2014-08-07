@@ -45,10 +45,10 @@ module.exports = function (grunt) {
             }
         },
         usemin: {
-            html: '../gsd-tpl/_scripts.html'
+            html: '../gsd-tpl/_shared/_scripts.html'
         },
         useminPrepare: {
-            html: '../gsd-js/_scripts.html',
+            html: './tpl/_scripts.html',
             options: {
                 dest: '../'
             }
