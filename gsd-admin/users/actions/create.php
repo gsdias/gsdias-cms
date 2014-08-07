@@ -36,7 +36,7 @@ if (@$_REQUEST['save']) {
         $email->setsubject('Registo no site');
         $email->setbody(sprintf('Foi criado um registo com este email. Para poder aceder use o seu email e a password: ', $password));
         
-        $email->sendmail();        
+        #$email->sendmail();        
         header("Location: /admin/users", true, 302);
     }
 }

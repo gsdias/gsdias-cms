@@ -7,4 +7,4 @@ gsd-resources/css/*.css
 gsd-resources/css/screen.css
 error_log
 gsd-client
-gsd-tpl/_scripts.html
+gsd-tpl/_shared/_scripts.html
