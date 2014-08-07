@@ -9,11 +9,11 @@ array_shift($path);
 $config['resources'] = '/gsd-resources';
 $config['lang'] = 'pt';
 
-$_mysql['host'] = 'home.gsdias.pt';
+$_mysql['host'] = 'localhost';
 
-$_mysql['user'] = 'corporat_iberica';
-$_mysql['pass'] = 'UTFFvV@%WaGG';
-$_mysql['db'] = 'corporat_iberica';
+$_mysql['user'] = 'LCN387585_cms';
+$_mysql['pass'] = '12348876';
+$_mysql['db'] = 'gsdias_pt_cms';
 
 define('DEBUG', 0);
 define('TPLEXT', '.html');
