@@ -40,7 +40,7 @@ module.exports = function (grunt) {
         },
         copy: {
             main: {
-                src: '../gsd-js/_scripts.html',
+                src: './tpl/_scripts.html',
                 dest: '../gsd-tpl/_shared/_scripts.html'
             }
         },
