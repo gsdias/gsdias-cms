@@ -2,9 +2,13 @@
 
 function GSDClassLoading($className) {
     if (strpos($className, 'client') === false) {
-        include_once(CLASSPATH . $className . PHPEXT);
+        if (is_file(CLASSPATH . $className . PHPEXT)) {
+            include_once(CLASSPATH . $className . PHPEXT);
+        }
     } else {
-        include_once(CLIENTPATH . 'class/' . $className . PHPEXT);
+        if (is_file(CLIENTPATH . 'class/' . $className . PHPEXT)) {
+            include_once(CLIENTPATH . 'class/' . $className . PHPEXT);
+        }
     }
 }
 
@@ -271,7 +275,7 @@ function sendMailRecover ($to, $link) {
   * @return string - return new file name if given
 */  
 function savefile ($file, $path, $type = null, $nottype = null, $rename = null) {
-echo $path;
+
     if ($file['error'] == 0) {
         $newfilename = $file['name'];
         $typefile = explode("/", $file['type']);

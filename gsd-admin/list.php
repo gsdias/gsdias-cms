@@ -9,7 +9,14 @@ if ($action) {
     include_once(CLIENTPATH . 'include/admin/fields' . PHPEXT);
     
     if (class_exists($section)) {
-        $sections = new $section ();
+
+        if (class_exists('client' . $section)) {
+            $section = 'client' . $section;
+            $sections = new $section ();
+        } else {
+            $sections = new $section ();
+        }
+
         $sections->getcurrent($id);
         
         $file = sprintf('gsd-admin/%s/actions/%s%s', $section, $action, PHPEXT);
@@ -33,7 +40,13 @@ if ($action) {
     } else if (@$tables[$section]) {
         $numberPerPage = 10;
         
-        $sections = new $section ();
+        if (class_exists('client' . $section)) {
+            $section = 'client' . $section;
+            $sections = new $section ();
+        } else {
+            $sections = new $section ();
+        }
+
         $sections->getlist($numberPerPage);
     }
 }

@@ -2,6 +2,8 @@
 
 if (@$_REQUEST['save']) {
     
+    $sectionextrafields = function_exists('pagesfields') ? pagesfields() : array();
+
     $defaultfields = array(
         $_REQUEST['title'],
         $_REQUEST['description'],
@@ -9,7 +11,7 @@ if (@$_REQUEST['save']) {
         $_REQUEST['keywords'],
         $_REQUEST['og_title'],
         $_REQUEST['og_description'],
-        $_REQUEST['og_image'],
+        @$_REQUEST['og_image'],
         @$_REQUEST['menu'] ? @$_REQUEST['menu'] : null,
         @$_REQUEST['auth'] ? @$_REQUEST['auth'] : null
     );

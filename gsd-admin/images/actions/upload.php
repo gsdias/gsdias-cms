@@ -17,12 +17,12 @@ if (@$_REQUEST['save']) {
     );
     
     $mysql->statement('INSERT INTO images (name, description, extension, width, height, size, creator) values(?, ?, ?, ?, ?, ?, ?);', $fields);
-echo $mysql->errmsg;
+
     if ($mysql->total) {
         
         $id = $mysql->lastInserted();
         
-        $file = savefile ($_FILES['asset'], ASSETPATH . 'images/' . $id . '/', $type = null, $nottype = null, $id);
+        $file = savefile ($_FILES['asset'], ASSETPATH . 'images/' . $id . '/', null, null, $id);
         
         header("Location: /admin/images", true, 302);
     }

@@ -1,0 +1,20 @@
+<section class="list">
+    <h1>Imagens</h1>
+    <!-- IF IMAGES_EXIST -->
+    <ul>
+        <!-- LOOP IMAGES -->
+        <li><a href="/admin/images/{IMAGES_ID}/edit">{IMAGES_NAME}</a> <em class="ago">({IMAGES_CREATED})</em></li>
+        <!-- ENDLOOP IMAGES -->
+    </ul>
+    <!-- ENDIF IMAGES_EXIST -->
+
+    <!-- IF !IMAGES_EXIST -->
+    <span class="warning">Não existem imagens</span>
+    <!-- ENDIF !IMAGES_EXIST -->
+    <div class="btns">
+        <!-- IF IMAGES_EXIST -->
+        <a href="/admin/images" class="btn"><i></i>Listar imagens</a>
+        <!-- ENDIF IMAGES_EXIST -->
+        <a href="/admin/images/upload" class="btn"><i></i>Carregar imagem</a>
+    </div>
+</section>

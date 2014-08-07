@@ -29,7 +29,7 @@ if ($user->isLogged()) {
     $tpl->setvar('USER_NAME', $user->name);
     
     if ($user->level == 'admin') {
-        $tpl->setcondition('IS_ROOT');
+        $tpl->setcondition('IS_ADMIN');
     }
     
 } else {

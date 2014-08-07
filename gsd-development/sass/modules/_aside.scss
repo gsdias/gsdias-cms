@@ -8,10 +8,19 @@
     }
     li {
         background: #ccc;
-        padding: 5px;
-        border-bottom: solid 1px #fff;
+        padding: 5px 0 0;
+        text-indent: 5px;
+        a {
+            padding: 0 0 5px;
+            display: block;
+            border-bottom: solid 1px #fff;
+        }
     }
     .submenu {
         display: none;
+        li {
+            background: #ebebeb;
+        }
+        margin-bottom: 0;
     }
 }
