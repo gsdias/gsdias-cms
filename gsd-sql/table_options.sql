@@ -10,4 +10,4 @@ CREATE TABLE IF NOT EXISTS `options` (
 --
 -- Indexes for table `options`
 --
-INSERT INTO options (`name`) VALUES ('gsd-name'), ('gsd-email'), ('gsd-ga');
+INSERT INTO options (`name`) VALUES ('gsd-name'), ('gsd-email'), ('gsd-ga'), ('gsd-fb');

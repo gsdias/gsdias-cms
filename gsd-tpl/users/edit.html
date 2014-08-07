@@ -1,14 +1,14 @@
 <main>
-    <h1>Edit user</h1>
+    <h1>Editar utilizador</h1>
     <form method="post">
-        <div class="colA"><label>Name</label> <input name="name" value="{CURRENT_USER_NAME}" required></div>
+        <div class="colA"><label>Nome</label> <input name="name" value="{CURRENT_USER_NAME}" required></div>
         <div class="colA"><label>Email</label> <input name="email" value="{CURRENT_USER_EMAIL}" required></div>
-        <div class="colA"><label>Permissão</label> 
+        <div class="colA">
             {PERMISSION}
         </div>
-        
+        <div class="colA"><label>Desativo</label> <input type="checkbox" name="disabled" value="1" {CURRENT_USER_DISABLED}></div>
         <!-- IF EXTRAFIELDS -->
-        <h2>Extra information</h2>
+        <h2>Informação adicional</h2>
         <!-- LOOP FIELD -->
         <div class="colA">{FIELD_FIELD}</div>
         <!-- ENDLOOP FIELD -->

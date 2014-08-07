@@ -74,17 +74,18 @@ class users implements isection {
                 $fields['CURRENT_USER_'. strtoupper($field)] = $value;
             }
 
+            $fields['CURRENT_USER_DISABLED'] = $item['disabled'] ? 'checked="checked"': '';
+
             $fields['PERMISSION'] = new select(array(
                 'list' => array(
                     'admin' => 'admin',
                     'editor' => 'editor',
                     'user' => 'user'
                 ),
+                'label' => 'Permissão',
                 'selected' => $item['level'],
                 'name' => 'level'
             ));
-
-            $fields['CURRENT_' . strtoupper(substr('users', 0, -1)) . '_CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())));
 
             $tpl->setvars($fields);
 

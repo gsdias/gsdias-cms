@@ -57,6 +57,7 @@ if (@$_REQUEST['save']) {
         }
         $tpl->setarray('TABLE_EXISTS', $table_exists);
     }
+
     if (in_array(1, $tables)) {
         $tpl->setcondition('CREATETABLES');
         $table_exists = array();
@@ -78,6 +79,14 @@ if (@$_REQUEST['save']) {
         if (is_file(CLIENTPATH . 'install' . PHPEXT)) {
             include_once(CLIENTPATH . 'install' . PHPEXT);
         }
+    }
+
+    $dir = ROOTPATH . 'gsd-assets';
+
+    if (!is_dir($dir)) {
+        mkdir($dir, 0755);
+        mkdir($dir . '/images', 0755);
+        mkdir($dir . '/documents', 0755);
     }
 }
 

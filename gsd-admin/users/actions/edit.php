@@ -2,11 +2,15 @@
 
 if (@$_REQUEST['save']) {
     
-    include_once(CLIENTPATH . 'include/admin/fields' . PHPEXT);
+    $file = CLIENTPATH . 'include/admin/fields' . PHPEXT;
+
+    if (is_file($file)) {
+        include_once($file);
+    }
     
     $extrafields = function_exists('usersfields') ? usersfields() : array();
 
-    $defaultfields = array('email', 'level', 'name');
+    $defaultfields = array('email', 'level', 'name', 'disabled');
     
     $extrafieldslist = sizeof(@$extrafields['list']) ? $extrafields['list'] : array();
     

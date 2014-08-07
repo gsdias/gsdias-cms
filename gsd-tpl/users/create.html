@@ -1,9 +1,9 @@
 <main>
-    <h1>Create user</h1>
+    <h1>Adicionar utilizador</h1>
     <form method="post">
-        <div class="colA"><label>Name</label> <input name="name" required></div>
+        <div class="colA"><label>Nome</label> <input name="name" required></div>
         <div class="colA"><label>Email</label> <input name="email" required></div>
-        <div class="colA"><label>Permissao</label> 
+        <div class="colA"><label>Permissão</label>
             <select name="level" required>
                 <option disabled="disabled">Escolha</option>
                 <option value="admin">Admin</option>
@@ -12,7 +12,7 @@
             </select>
         </div>
         <!-- IF EXTRAFIELDS -->
-        <h2>Extra information</h2>
+        <h2>Informação adicional</h2>
         <!-- LOOP FIELD -->
         <div class="colA"><label>{FIELD_LABEL}</label> <input name="{FIELD_NAME}"></div>
         <!-- ENDLOOP FIELD -->
