@@ -40,6 +40,7 @@ $config['tplpath'] = array(
 );
 
 $tables = array(
+    'options' => 1,
     'users' => 1,
     'pages' => 1,
     'redirect' => 1,

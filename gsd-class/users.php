@@ -13,7 +13,7 @@ class users implements isection {
         $mysql->statement('SELECT users.*, users.creator AS creator_id, u.name AS creator_name 
         FROM users 
         LEFT JOIN users AS u ON users.creator = u.uid 
-        WHERE users.disabled IS NULL ORDER BY users.uid ' . pageLimit(pageNumber(), $numberPerPage));
+        ORDER BY users.uid ' . pageLimit(pageNumber(), $numberPerPage));
 
         $list = array();
 
@@ -33,10 +33,11 @@ class users implements isection {
                 $last_login = explode(' ', @$item['last_login']);
                 $fields['CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())));
                 $fields['LAST_LOGIN'] = sizeof($last_login) ? ($last_login[0] ? timeago(dateDif($last_login[0], date('Y-m-d',time()))) : 'Nunca') : '';
+                $fields['DISABLED'] = $item['disabled'] ? '<br>(Desativo)' : '';
                 $list[] = $fields;
             }
             $tpl->setarray('USERS', $list);
-            $pages = pageGenerator('FROM users LEFT JOIN users AS u ON users.creator = u.uid WHERE users.disabled IS NULL ORDER BY users.uid;');
+            $pages = pageGenerator('FROM users LEFT JOIN users AS u ON users.creator = u.uid ORDER BY users.uid;');
             
             $first_page = new anchor(array('text' => '&lt;&lt;', 'href' => '?page=1'));
             $prev_page = new anchor(array('text' => '&lt;', 'href' => '?page=' . $pages['PREV']));

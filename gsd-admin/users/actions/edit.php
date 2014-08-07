@@ -1,28 +1,30 @@
 <?php
 
 if (@$_REQUEST['save']) {
-    $sectionextrafields = function_exists('usersfields') ? usersfields() : array();
+    
+    include_once(CLIENTPATH . 'include/admin/fields' . PHPEXT);
+    
+    $extrafields = function_exists('usersfields') ? usersfields() : array();
 
-    $defaultfields = array(
-        $_REQUEST['email'],
-        $_REQUEST['name'],
-        $_REQUEST['level']
-    );
-    $valuefields = array();
-    $sqlfields = '';
-
-    foreach ($sectionextrafields['list'] as $field) {
-        $valuefields[] = $_REQUEST[$field];
-        $sqlfields .= sprintf(', %s = ?', $field, $field);
+    $defaultfields = array('email', 'level', 'name');
+    
+    $extrafieldslist = sizeof(@$extrafields['list']) ? $extrafields['list'] : array();
+    
+    $values = array();
+    
+    $fields = '';
+    
+    $allfields = array_merge($defaultfields, $extrafieldslist);
+    
+    foreach ($allfields as $field) {
+        $fields .= sprintf(", %s = ?", $field);
+        $values[] = @$_REQUEST[$field];
     }
-
-    $fields = array_merge($defaultfields, $valuefields);
-
-    array_push($fields, $path[2]);
-    $mysql->statement(
-        sprintf('UPDATE users SET email = ?, name = ?, level = ? %s WHERE uid = ?;', $sqlfields),
-        $fields);
-
+        
+    $values[] = $site->path[2];
+    
+    $mysql->statement(sprintf('UPDATE users SET %s WHERE uid = ?;', substr($fields, 2)), $values);
+    
     if ($mysql->total) {
         header("Location: /admin/users", true, 302);
     }

@@ -1,10 +1,12 @@
 <?php
 
+$startpoint = 'index';
+
 if (@$_REQUEST['save']) {
     $main = 'STEP2';
     
     $mysql->statement("INSERT INTO users (level, email, password, name, creator) VALUES (100, :email, md5(:password), :name, 0);", array(':email' => $_REQUEST['email'], ':password' => $_REQUEST['password'], ':name' => $_REQUEST['name']));
-    echo $mysql->errmsg;
+    
     if ($mysql->total) {
         $tpl->setvar('STEP2_MESSAGES', "Admin user saved with success. You can login now. Don't forget to remove install files.");
     }
@@ -87,7 +89,7 @@ function createtable ($table) {
     global $mysql;
     
     $mysql->statement(file_get_contents(sprintf('gsd-sql/table_%s.sql', $table)));
-    
+    echo $mysql->errmsg;
     if ($mysql->executed) {
         return sprintf('<span style="color: green;">Created</span><br>');
     } else {

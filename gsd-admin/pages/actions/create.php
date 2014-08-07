@@ -15,15 +15,10 @@ if (@$_REQUEST['save']) {
         $user->id
     );
     $valuefields = array();
-    //$questions = str_repeat(", ?", sizeof($extrafields['list']));
-
-    //foreach ($extrafields['list'] as $field) {
-    //    $valuefields[] = $_REQUEST[$field];
-    //}
 
     $fields = array_merge($defaultfields, $valuefields);
-    $mysql->statement('INSERT INTO pages (title, url, description, keywords, tags, og_title, og_description, creator) values(?, ?, ?, ?, ?, ?, ?);', $fields);
-echo $mysql->errmsg;
+    $mysql->statement('INSERT INTO pages (title, url, description, keywords, tags, og_title, og_description, creator) values(?, ?, ?, ?, ?, ?, ?, ?);', $defaultfields);
+    
     if ($mysql->total) {
         header("Location: /admin/pages", true, 302);
     }
