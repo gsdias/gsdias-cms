@@ -6,8 +6,10 @@ $action = @$site->path[3];
 
 //ACTION DETECTED
 if ($action) {
-    include_once(CLIENTPATH . 'include/admin/fields' . PHPEXT);
-    
+    $file = CLIENTPATH . 'include/admin/fields' . PHPEXT;
+    if (is_file($file)) {
+        include_once($file);
+    }
     if (class_exists($section)) {
 
         if (class_exists('client' . $section)) {

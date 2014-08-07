@@ -15,10 +15,8 @@
         }
     };
 
-    $('[name="title"]').on('blur', generateurl);
-
     $(document).bind(GSD.globalevents.init, function () {
-
+        $('[name="title"]').on('blur', generateurl);
     });
 
 }(GSD.Pages = GSD.Pages || {}, GSD.App, jQuery, _, Backbone));

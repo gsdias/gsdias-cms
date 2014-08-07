@@ -13,7 +13,7 @@ class images implements isection {
         $mysql->statement('SELECT images.*, images.creator AS creator_id, u.name AS creator_name 
         FROM images 
         LEFT JOIN users AS u ON images.creator = u.uid 
-        WHERE images.disabled IS NULL ORDER BY images.iid ' . pageLimit(pageNumber(), $numberPerPage));
+        ORDER BY images.iid ' . pageLimit(pageNumber(), $numberPerPage));
 
         $list = array();
 
@@ -37,7 +37,7 @@ class images implements isection {
                 $list[] = $fields;
             }
             $tpl->setarray('IMAGES', $list);
-            $pages = pageGenerator('FROM images LEFT JOIN users AS u ON images.creator = u.uid WHERE images.disabled IS NULL ORDER BY images.iid;');
+            $pages = pageGenerator('FROM images LEFT JOIN users AS u ON images.creator = u.uid ORDER BY images.iid;');
             
             $first_page = new anchor(array('text' => '&lt;&lt;', 'href' => '?page=1'));
             $prev_page = new anchor(array('text' => '&lt;', 'href' => '?page=' . $pages['PREV']));

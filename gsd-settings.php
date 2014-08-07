@@ -9,7 +9,7 @@ array_shift($path);
 $config['resources'] = '/gsd-resources';
 $config['lang'] = 'pt';
 
-$_mysql['host'] = 'localhost';
+$_mysql['host'] = 'database.lcn.com';
 
 $_mysql['user'] = 'LCN387585_cms';
 $_mysql['pass'] = '12348876';
@@ -29,7 +29,7 @@ define('CLIENTINCLUDEPATH', 'include/');
 
 define('MAINTENANCE', 0);
 
-//error_reporting(1);
+error_reporting(E_ALL);
 
 $config['tplpath'] = array(
     TPLPATH . '%s' . TPLEXT,
