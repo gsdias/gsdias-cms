@@ -1,8 +1,10 @@
 <main>
     <h1>{LANG_PAGES}</h1>
+    <!-- IF IS_ADMIN -->
     <div class="btns right">
         <a href="/admin/pages/create" class="btn">{LANG_NEW_PAGE}</a>
     </div>
+    <!-- ENDIF IS_ADMIN -->
     <!-- IF PAGES_EXIST -->
     [_PAGINATOR]
     <table class="table">

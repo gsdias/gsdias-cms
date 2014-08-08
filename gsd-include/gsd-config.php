@@ -27,7 +27,7 @@ $resources = $config['resources'];
 
 $tpl->setvars($lang[$config['lang']]);
 
-$tpl->setVar('SCRIPT', sprintf('server = "undefined" === typeof server ? { } : server;server.lang = "%s";server.ga = "%s"', $config['lang'], $site->ga));
+$tpl->setVar('SCRIPT', sprintf('server = "undefined" === typeof server ? { } : server;server.lang = "%s";server.ga = "%s";server.fb = "%s";', $config['lang'], $site->ga, $site->fb));
 $tpl->setVar('CDN', $resources);
 $tpl->setVar('CLIENT_RESOURCES', @$config['client_resources']);
 $tpl->setVar('REDIRECT', @$_REQUEST['redirect'] ? sprintf("?redirect=%s", $_REQUEST['redirect']) : '');
