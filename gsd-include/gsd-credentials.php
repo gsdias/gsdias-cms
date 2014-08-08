@@ -24,12 +24,23 @@ if ($user->isLogged()) {
         header('location: /');
     }
     
-    $tpl->setcondition('IS_LOGGED');
-    define('IS_LOGGED', 1);
-    $tpl->setvar('USER_NAME', $user->name);
+    if ($path[0] == 'admin') {
+        if ($user->level != 'user') {
+            if ($user->level == 'admin') {
+                $tpl->setcondition('IS_ADMIN');
+            }
+            $tpl->setcondition('IS_LOGGED');
+            define('IS_LOGGED', 1);
+            $tpl->setvar('USER_NAME', $user->name);
+        } else {
+            $user->logout();
+        }
+    } else {
     
-    if ($user->level == 'admin') {
-        $tpl->setcondition('IS_ADMIN');
+        $tpl->setcondition('IS_LOGGED');
+        define('IS_LOGGED', 1);
+        $tpl->setvar('USER_NAME', $user->name);
+
     }
     
 } else {

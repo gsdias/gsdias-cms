@@ -25,7 +25,7 @@
     $(document).bind(GSD.globalevents.init, function () {
         global.resizemain();
 
-        menu.on('click', 'a', submenu);
+        //menu.on('click', 'a', submenu);
     });
 
 }(GSD.Global = GSD.Global || {}, GSD.App, jQuery, _, Backbone));

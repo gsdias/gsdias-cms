@@ -96,4 +96,6 @@ class images implements isection {
             }
         }
     }
+    
+    public function generatefields ($id = 0) {}
 }

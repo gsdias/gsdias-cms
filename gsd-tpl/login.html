@@ -1,42 +1,42 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt" lang="pt">
-<head>
-    <meta name="description" content="{PAGE_DESCRIPTON}" />
-    <meta name="keywords" content="{PAGE_KEYWORDS}" />
-    <meta name="author" content="{PAGE_AUTHOR}" />
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta property="og:image" content="" />
-    <meta property="og:title" content="" />
-    <meta property="og:url" content="" />
-    <meta property="og:description" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-    <title>{PAGE_TITLE}</title>
-    <link rel="shortcut icon" href="" />
-    <link rel="stylesheet" type="text/css" href="/gsd-resources/css/screen.css" />
-    <link rel="canonical" href="" />
-    <script src="/gsd-resources/js/libs/modernizr.min.js"></script>
-</head>
-<body class="{EXTRACLASS}">
-    <section>
-        <header>
-            <i class="icon icon-cms-logo"></i><span>{PAGE_TITLE}</span>
-        </header>
-        <form method="POST" action="/admin/auth{REDIRECT}" class="login-admin">
-            <div class="colA">
-                <label>Email:</label>
-                <input name="email" value="{LOGIN_EMAIL}" required>
-            </div>
-            <div class="colA">
-                <label>Password:</label>
-                <input name="password" type="password" required>
-            </div>
-            <div class="form-messages">{FORM_MESSAGES}</div>
-            <hr>
-            <input type="submit" class="btn-submit" name="login" value="Login">
-            <a href="#">Recuperar password</a>
-            <a href="/">&lt; Voltar a {PAGE_TITLE}</a>
-        </form>
-    </section>
-    [_SCRIPTS]
-</body>
+    <head>
+        <meta name="description" content="{PAGE_DESCRIPTON}" />
+        <meta name="keywords" content="{PAGE_KEYWORDS}" />
+        <meta name="author" content="{PAGE_AUTHOR}" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta property="og:image" content="" />
+        <meta property="og:title" content="" />
+        <meta property="og:url" content="" />
+        <meta property="og:description" content="" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+        <title>{PAGE_TITLE}</title>
+        <link rel="shortcut icon" href="" />
+        <link rel="stylesheet" type="text/css" href="/gsd-resources/css/screen.css" />
+        <link rel="canonical" href="{PAGE_CANONICAL}" />
+        <script src="/gsd-resources/js/libs/modernizr.min.js"></script>
+    </head>
+    <body class="{EXTRACLASS}">
+        <section>
+            <header>
+                <i class="icon icon-cms-logo"></i><span>{PAGE_TITLE}</span>
+            </header>
+            <form method="POST" action="/admin/auth{REDIRECT}" class="login-admin">
+                <div class="colA">
+                    <label>Email:</label>
+                    <input name="email" value="{LOGIN_EMAIL}" required>
+                </div>
+                <div class="colA">
+                    <label>Password:</label>
+                    <input name="password" type="password" required>
+                </div>
+                <div class="form-messages">{FORM_MESSAGES}</div>
+                <hr>
+                <input type="submit" class="btn-submit" name="login" value="Login">
+                <a href="#">Recuperar password</a>
+                <a href="/">&lt; Voltar a {PAGE_TITLE}</a>
+            </form>
+        </section>
+        [_SCRIPTS]
+    </body>
 </html>

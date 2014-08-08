@@ -21,15 +21,9 @@ if (!IS_LOGGED) {
             $file = 'gsd-admin/settings' . PHPEXT;
         } else {
             $file = 'gsd-admin/list' . PHPEXT;
-            
         }
         if (is_file($file)) {
             include_once($file);
         }
-    }
-    $file = CLIENTPATH . 'include/admin/' . @$site->path[1] . PHPEXT;
-    
-    if (is_file($file)) {
-        include_once($file);
     }
 }

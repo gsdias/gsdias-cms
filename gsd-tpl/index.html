@@ -1,32 +1,36 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt" lang="pt">
-<head>
-    <meta name="description" content="{PAGE_DESCRIPTON}" />
-    <meta name="keywords" content="{PAGE_KEYWORDS}" />
-    <meta name="author" content="{PAGE_AUTHOR}" />
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta property="og:image" content="" />
-    <meta property="og:title" content="" />
-    <meta property="og:url" content="" />
-    <meta property="og:description" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-    <title>{PAGE_TITLE}</title>
-    <link rel="shortcut icon" href="" />
-    <link rel="stylesheet" type="text/css" href="/gsd-resources/css/screen.css" />
-    <link rel="canonical" href="{PAGE_CANONICAL}" />
-    <script src="/gsd-resources/js/libs/modernizr.min.js"></script>
-</head>
-<body class="{EXTRACLASS}">
-    <div id="wrapper">
-        [_HEADER]
-        <div class="main">
+    <head>
+        <meta name="description" content="{PAGE_DESCRIPTON}" />
+        <meta name="keywords" content="{PAGE_KEYWORDS}" />
+        <meta name="author" content="{PAGE_AUTHOR}" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta property="og:image" content="" />
+        <meta property="og:title" content="" />
+        <meta property="og:url" content="" />
+        <meta property="og:description" content="" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+        <title>{PAGE_TITLE}</title>
+        <link rel="shortcut icon" href="" />
+        <link rel="stylesheet" type="text/css" href="/gsd-resources/css/screen.css" />
+        <link rel="canonical" href="{PAGE_CANONICAL}" />
+        <script src="/gsd-resources/js/libs/modernizr.min.js"></script>
+    </head>
+    <body class="{EXTRACLASS}">
+        <div id="perspective" class="perspective effect-rotateleft">
+            <div class="navcontainer">
+                <div class="wrapper">
+                    [_HEADER]
+                    <div class="main">
+                        [MAIN]
+                    </div>
+                    [_FOOTER]
+                </div>
+            </div>
             <!-- IF IS_LOGGED -->
             [_ASIDE]
             <!-- ENDIF IS_LOGGED -->
-            [MAIN]
         </div>
-        [_FOOTER]
-    </div>
-    [_SCRIPTS]
-</body>
+        [_SCRIPTS]
+    </body>
 </html>

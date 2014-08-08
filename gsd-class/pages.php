@@ -98,4 +98,6 @@ class pages implements isection {
             }
         }
     }
+    
+    public function generatefields ($id = 0) {}
 }

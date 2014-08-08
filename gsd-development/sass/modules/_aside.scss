@@ -1,26 +1,14 @@
 .menu {
-    width: 18%;
-    float: left;
-    margin: 10px 0 0 1%;
-    min-width: 200px;
-    ul {
-        margin-bottom: 30px;
-    }
     li {
-        background: #ccc;
         padding: 5px 0 0;
         text-indent: 5px;
         a {
             padding: 0 0 5px;
             display: block;
-            border-bottom: solid 1px #fff;
         }
     }
     .submenu {
         display: none;
-        li {
-            background: #ebebeb;
-        }
         margin-bottom: 0;
     }
 }

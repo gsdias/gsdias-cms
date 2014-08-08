@@ -6,18 +6,6 @@ include_once(INCLUDEPATH . 'gsd-lang' . PHPEXT);
 include_once(INCLUDEPATH . 'gsd-functions' . PHPEXT);
 include_once(INCLUDEPATH . 'gsd-paginator' . PHPEXT);
 
-/*
-ACCESS LEVEL
-
-ROOT          100
-ADMIN_MODIFY   90
-ORG            20
-AVIAGENS       16
-TRADUTOR       15
-ADMIN_VIEW     10
-
-*/
-
 date_default_timezone_set('Europe/Lisbon');
  
 // Next, register it with PHP.
@@ -47,5 +35,3 @@ $tpl->setVar('REDIRECT', @$_REQUEST['redirect'] ? sprintf("?redirect=%s", $_REQU
 if ($path[0] != 'admin' && is_file (CLIENTPATH . 'config' . PHPEXT) && IS_INSTALLED) {
     include_once(CLIENTPATH . 'config' . PHPEXT);
 }
-$tpl->includefiles('_CLIENTASIDE', CLIENTPATH . 'tpl/admin/_clientaside' . TPLEXT);
-$tpl->includefiles('_CLIENTDASHBOARD', CLIENTPATH . 'tpl/admin/_clientdashboard' . TPLEXT);

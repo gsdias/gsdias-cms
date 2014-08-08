@@ -107,4 +107,6 @@ class users implements isection {
             }
         }
     }
+    
+    public function generatefields ($id = 0) {}
 }

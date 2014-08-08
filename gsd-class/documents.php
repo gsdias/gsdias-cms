@@ -95,4 +95,6 @@ class documents implements isection {
             }
         }
     }
+    
+    public function generatefields ($id = 0) {}
 }

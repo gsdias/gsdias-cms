@@ -1,5 +1,6 @@
 header {
     background: #efefef;
+    
     .bar {
         background: #1b1b1b;
         color: #fff;
@@ -7,5 +8,17 @@ header {
     }
     i {
         margin-left: 10px;
+    }
+    .logo {
+        display: inline-block;
+    }
+    #showMenu {
+        background: grey;
+        width: 40px;
+        height: 40px;
+        position: absolute;
+        top: 5px;
+        right: 10px;
+        text-indent: -9999px;
     }
 }
