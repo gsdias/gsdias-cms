@@ -29,6 +29,13 @@ header {
     }
     nav {
         float: left;
+        a {
+            border-left: solid 1px #fff;
+            padding-left: 4px;
+            &:first-child {
+                border: none;
+            }
+        }
     }
     @include respond-max($tablet-port) {
         nav {
