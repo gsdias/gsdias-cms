@@ -28,8 +28,10 @@ if ($user->isLogged()) {
         if ($user->level != 'user') {
             if ($user->level == 'admin') {
                 $tpl->setcondition('IS_ADMIN');
+
             }
             $tpl->setcondition('IS_LOGGED');
+            define('IS_ADMIN', $user->level == 'admin');
             define('IS_LOGGED', 1);
             $tpl->setvar('USER_NAME', $user->name);
             $tpl->setvar('USER_ID', $user->id);
