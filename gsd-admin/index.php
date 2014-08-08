@@ -14,6 +14,11 @@ if (!IS_LOGGED) {
     $startpoint = 'index';
     $main = @$site->path[1] ? @$site->path[1] : 'dashboard';
     
+    $clientfields = CLIENTPATH . 'include/admin/fields' . PHPEXT;
+    if (is_file($clientfields)) {
+        include_once($clientfields);
+    }
+
     if (!@$site->path[1]) {
         include_once('gsd-admin/dashboard' . PHPEXT);
     } else {

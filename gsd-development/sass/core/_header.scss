@@ -1,10 +1,12 @@
 header {
     background: #efefef;
-    
+    padding: 10px 0 0;
     .bar {
         background: #1b1b1b;
         color: #fff;
         padding: 5px 0 5px 10px;
+        margin-top: 10px;
+        overflow: hidden;
     }
     i {
         margin-left: 10px;
@@ -21,4 +23,16 @@ header {
         right: 10px;
         text-indent: -9999px;
     }
+    .right {
+        float: right;
+        margin-right: 10px;
+    }
+    nav {
+        float: left;
+    }
+    @include respond-max($tablet-port) {
+        nav {
+            display: none;
+        }
+	}
 }

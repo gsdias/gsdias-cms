@@ -32,6 +32,7 @@ if ($user->isLogged()) {
             $tpl->setcondition('IS_LOGGED');
             define('IS_LOGGED', 1);
             $tpl->setvar('USER_NAME', $user->name);
+            $tpl->setvar('USER_ID', $user->id);
         } else {
             $user->logout();
         }
@@ -39,7 +40,7 @@ if ($user->isLogged()) {
     
         $tpl->setcondition('IS_LOGGED');
         define('IS_LOGGED', 1);
-        $tpl->setvar('USER_NAME', $user->name);
+        $tpl->setvar('USER_ID', $user->id);
 
     }
     

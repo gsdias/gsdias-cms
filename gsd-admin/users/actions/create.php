@@ -1,9 +1,7 @@
 <?php
 
 if (@$_REQUEST['save']) {
-    
-    include_once(CLIENTPATH . 'include/admin/fields' . PHPEXT);
-    
+
     $extrafields = function_exists('usersfields') ? usersfields() : array();
     
     $password = substr(str_shuffle(sha1(rand() . time() . "gsdias-cms")), 2, 10);
@@ -18,9 +16,11 @@ if (@$_REQUEST['save']) {
         $user->id
     );    
     
-    foreach ($extrafields['list'] as $key => $field) {
-        $fields[] = $extrafields['list'][$key];
-        $values[] = @$_REQUEST[$field];
+    if (sizeof(@$extrafields['list'])) {
+        foreach ($extrafields['list'] as $key => $field) {
+            $fields[] = $extrafields['list'][$key];
+            $values[] = @$_REQUEST[$field];
+        }
     }
         
     $questions = str_repeat(", ? ", sizeof($fields));

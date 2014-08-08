@@ -1,11 +1,11 @@
 .list {
     background: #efefef;
-    padding: 10px;
+    padding: 10px 1%;
     border: solid 1px #ccc;
     border-radius: 3px;
     margin: 0 1% 10px;
-    float: left;
-    width: 28%;
+    width: 96%;
+    max-width: none;
     h1 {
         font-size: 20px;
         font-weight: 700;
@@ -26,6 +26,16 @@
     a {
         color: #0076cf;
     }
+    @include respond-min($tablet-port) {
+		float: left;
+        width: 45%;
+	}
+    @include respond-min($tablet-land) {
+        width: 29.1%;
+	}
+    @include respond-min(1200px) {
+        width: 20.8%;
+	}
 }
 .warning {
     background: #fcf8e3;

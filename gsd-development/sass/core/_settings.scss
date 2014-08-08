@@ -18,8 +18,8 @@ $delimiter: #c8c8c8;
 
 $defeitos: webkit moz ms o;
 
-$tablet-portrait: 768px;
-$tablet-landscape: 1024px;
+$tablet-port: 768px;
+$tablet-land: 1024px;
 
 @mixin prefixs($propriedade, $valor, $prefixos: $defeitos) {
     @each $prefixo in $prefixos {
@@ -43,4 +43,71 @@ $tablet-landscape: 1024px;
     opacity: $opacity;
     filter: alpha(opacity = $opacity);
     -ms-filter: alpha(opacity = $opacity);
+}
+
+// Adapted from http://jakearchibald.github.io/sass-ie/
+$mq-support: true !default;
+$mq-max-width: 1200px;
+@mixin respond-min($width) {
+
+	// Check for units on the width
+	@if unitless($width){
+		@warn "Assuming #{$width} to be in pixels, change to #{$width}px or another unit of measurement";
+		$width: $width * 1px;
+	}
+
+	@if $mq-support {
+		@media screen and (min-width: em($width)) {
+            @content;
+        }
+	} @else {
+
+		// Check media query applies
+		@if (em($width) <= em($mq-max-width)) {
+			@content;
+		}
+	}
+}
+
+@mixin respond-max($width) {
+
+	// Check for units on the width
+	@if unitless($width){
+		@warn "Assuming #{$width} to be in pixels, change to #{$width}px or another unit of measurement";
+		$width: $width * 1px;
+	}
+
+	@if $mq-support {
+		@media screen and (max-width: em($width)) {
+            @content;
+        }
+	} @else {
+
+		// Check media query applies
+		@if (em($width) >= em($mq-max-width)) {
+			@content;
+		}
+	}
+}
+
+
+// Converts px to em from a base context. Adapted from http://web-design-weekly.com/blog/snippets/converts-pixels-to-ems-with-sass/
+$browser-context: 16; // Default
+@function em($pixels, $context: $browser-context) {
+	@if unitless($pixels){
+		@return ($pixels/$context) * 1em
+	}
+	@elseif (unit($pixels) == "px") {
+		@return (strip-units($pixels)/$context) * 1em
+	}
+	@elseif (unit($pixels) == "em") {
+		@return $pixels
+	} @else {
+		@return $pixels * 1em
+	}
+}
+
+// Removes units from a size string, e.g. strip-units(13.48cm) gives 13.48. See http://stackoverflow.com/a/12335841/486434
+@function strip-units($number) {
+  @return $number / ($number * 0 + 1);
 }

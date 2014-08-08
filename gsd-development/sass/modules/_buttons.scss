@@ -19,8 +19,9 @@
         padding: 5px;
         margin-left: -1px;
         color: #000;
-        @include gradient(#a1a1a1, #838383);
-        text-shadow: rgba(255, 255, 255, .5) 1px 0 0;
+        background: #a1a1a1;
+        cursor: pointer;
+        border: none;
         &:first-child {
             border-top-left-radius: 5px;
             border-bottom-left-radius: 5px;
@@ -31,7 +32,7 @@
             border-bottom-right-radius: 5px;
         }
         &:hover {
-            @include gradient(#838383, #a1a1a1);
+            background: #838383;
             text-decoration: none;
             text-shadow: none;
         }
@@ -39,18 +40,18 @@
     &.red {
         .btn {
             color: #8c0000;
-            @include gradient(#ff5e5e, #ff0808);
+            background: #ff5e5e;
             &:hover {
-                @include gradient(#ff0808, #ff5e5e);
+                background: #ff0808;
             }
         }
     }
     &.blue {
         .btn {
             color: #fff;
-            @include gradient(#3076ca, #245797);
+            background: #3076ca;
             &:hover {
-                @include gradient(#245797, #3076ca);
+                background: #245797;
             }
         }
     }

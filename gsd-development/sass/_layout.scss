@@ -33,7 +33,8 @@
 }
 
 .main {
-    overflow: auto;
+    width: 95%;
+    margin: 20px auto;
     &:after {
         content: '';
         display: block;
