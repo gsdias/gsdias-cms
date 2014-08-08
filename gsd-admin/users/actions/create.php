@@ -1,5 +1,9 @@
 <?php
 
+if (!IS_ADMIN) {
+    header("Location: /admin/pages", true, 302);
+}
+
 if (@$_REQUEST['save']) {
 
     $extrafields = function_exists('usersfields') ? usersfields() : array();

@@ -1,8 +1,10 @@
 <main>
     <h1>{LANG_USERS}</h1>
+    <!-- IF IS_ADMIN -->
     <div class="btns right">
         <a href="/admin/users/create" class="btn">{LANG_NEW_USER}</a>
     </div>
+    <!-- ENDIF IS_ADMIN -->
     [_PAGINATOR]
     <table class="table">
         <thead>
@@ -21,8 +23,10 @@
             <td>{USERS_LAST_LOGIN}</td>
             <td>{USERS_CREATED}</td>
             <td class="actions">
+               <!-- IF IS_ADMIN -->
                 <a href="/admin/users/{USERS_UID}/edit">{LANG_EDIT}</a>
                 <a href="/admin/users/{USERS_UID}/remove">{LANG_REMOVE}</a>
+                <!-- ENDIF IS_ADMIN -->
             </td>
         </tr>
         <!-- ENDLOOP USERS -->

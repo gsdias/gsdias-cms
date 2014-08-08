@@ -59,7 +59,7 @@ class users implements isection {
         
         $sectionextrafields = function_exists('usersfields') ? usersfields() : array();
 
-        $mysql->statement('SELECT users.*, users.created FROM users LEFT JOIN users AS u ON users.creator = u.uid WHERE users.uid = ?;', array($id));
+        $mysql->statement('SELECT users.*, users.created, users.creator AS creator_id, u.name AS creator_name FROM users LEFT JOIN users AS u ON users.creator = u.uid WHERE users.uid = ?;', array($id));
 
         if ($mysql->total) {
 
@@ -75,6 +75,7 @@ class users implements isection {
             }
 
             $fields['CURRENT_USER_DISABLED'] = $item['disabled'] ? 'checked="checked"': '';
+            $fields['CURRENT_USER_STATUS'] = !$item['disabled'] ? 'Ativo': 'Desativo';
 
             $fields['PERMISSION'] = new select(array(
                 'list' => array(
