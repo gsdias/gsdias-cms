@@ -26,6 +26,7 @@ define('ASSETPATH', dirname(__FILE__) . '/gsd-assets/');
 
 define('CLIENTPATH', dirname(__FILE__) . '/gsd-client/');
 define('CLIENTINCLUDEPATH', 'include/');
+define('CLIENTTPLPATH', 'tpl/');
 
 define('MAINTENANCE', 0);
 
@@ -36,7 +37,9 @@ $config['tplpath'] = array(
     TPLPATH . '%s/%s' . TPLEXT,
     TPLPATH . '_shared/%s' . TPLEXT,
     TPLPATH . '_editable/%s' . TPLEXT,
-    TPLPATH . '_editable/%s/%s' . TPLEXT
+    TPLPATH . '_editable/%s/%s' . TPLEXT,
+    CLIENTPATH . CLIENTTPLPATH . 'admin/%s' . TPLEXT,
+    CLIENTPATH . CLIENTTPLPATH . 'admin/%s/%s' . TPLEXT
 );
 
 $tables = array(
