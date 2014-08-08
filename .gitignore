@@ -8,3 +8,5 @@ gsd-resources/css/screen.css
 error_log
 gsd-client
 gsd-tpl/_shared/_scripts.html
+gsd-assets/images/*
+gsd-assets/documents/*
