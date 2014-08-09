@@ -4,35 +4,35 @@
 *************************************/
 
 class site {
-    
-    public $name, $email, $ga, $uri;
-    
+
+    public $name, $email, $ga, $fb, $uri;
+
     public function __construct () {
         global $mysql, $tpl;
-        
+
         $mysql->statement('SELECT * FROM options;');
-        
+
         foreach ($mysql->result() as $option) {
             $name = str_replace('gsd-', '', $option['name']);
             $this->{$name} = $option['value'];
             $tpl->setvar('SITE_' . strtoupper($name), $option['value']);
         }
-        
+
         $pattern = '/(\?)(.*)/';
         $this->uri = preg_replace($pattern, '', $_SERVER['REQUEST_URI']);
-        
+
         $this->path();
         $this->page();
     }
-    
+
     public function path () {
         $path = explode("/", $this->uri);
 
         array_shift($path);
-    
+
         $this->path = $path;
     }
-    
+
     public function page () {
         global $tpl, $mysql, $startpoint;
 
