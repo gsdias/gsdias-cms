@@ -28,7 +28,7 @@ module.exports = function (grunt) {
         watch: {
             js: {
                 files: ['./js/*.js', './js/*/*.js'],
-                tasks: ['jshint', 'copy']
+                tasks: ['jshint']
             },
             css: {
                 files: ['./sass/*.scss', './sass/*/*.scss'],
@@ -95,9 +95,9 @@ module.exports = function (grunt) {
 
                 // When parseFiles = true, this task will crawl all *.js, *.css, *.scss files, except files that are in node_modules/.
                 // You can override this by defining a "files" array below.
-                 "files" : {
-                 "src": ['./sass/*.scss', './sass/*/*.scss', './js/*.js', './js/*/*.js']
-                 },
+                "files" : {
+                    "src": ['./sass/*.scss', './sass/*/*.scss', './js/*.js', './js/*/*.js']
+                },
 
                 // When parseFiles = true, matchCommunityTests = true will attempt to
                 // match user-contributed tests.
@@ -109,25 +109,25 @@ module.exports = function (grunt) {
 
         },
         htmlmin: {
-            dist: {     
+            dist: {
                 options: {
                     collapseWhitespace: true
-                },                                                                                                                 
+                },
                 files: [{
                     expand: true,
-                    dot: false,  
+                    dot: false,
                     cwd: './',
                     dest: 'dist',
-                    src: '../core/js/*.html', 
-                },{
+                    src: '../core/js/*.html'
+                }, {
                     expand: true,
                     dot: false,
                     cwd: './',
                     dest: 'dist',
                     src: '../core/tpl/*.html'
                 }]
-            }  
-        }  
+            }
+        }
     });
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -140,7 +140,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-modernizr');
     grunt.loadNpmTasks('grunt-contrib-htmlmin');
 
-    //grunt.registerTask('default', ['copy', 'jshint', 'compass', 'watch']);
-    grunt.registerTask('default', ['compass', 'watch']);
+    grunt.registerTask('default', ['compass', 'jshint', 'copy', 'watch']);
     grunt.registerTask('build', ['copy', 'useminPrepare', 'concat', 'uglify', 'usemin', 'compass', 'modernizr']);
 };
