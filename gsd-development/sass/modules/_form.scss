@@ -5,6 +5,9 @@ label {
     margin-right: 20px;
     &.error {
         color: red;
+        width: auto;
+        text-align: left;
+        text-indent: 20px;
     }
 }
 input {
@@ -26,4 +29,11 @@ input {
     margin-right: 35px;
     width: 80px;
     cursor: pointer;
+}
+.errors {
+    border: solid 1px red;
+    background: red + 100;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 30px;
 }

@@ -96,6 +96,9 @@ GSD.settings = {
                 rules: {
                     email: {
                         email: true
+                    },
+                    'gsd-email': {
+                        email: true
                     }
                 }
             });

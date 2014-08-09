@@ -42,5 +42,7 @@ if (@$_REQUEST['save']) {
         
         #$email->sendmail();        
         header("Location: /admin/users", true, 302);
+    } else {
+        $tpl->setvar('FORM_ERRORS', 'There are already a user with that email.');
     }
 }
