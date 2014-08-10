@@ -29,5 +29,6 @@ if (@$_REQUEST['save']) {
         header("Location: /admin/pages", true, 302);
     } else {
         $tpl->setvar('FORM_ERRORS', 'There are already a page with that url.');
+        $tpl->setcondition('ERRORS');
     }
 }
