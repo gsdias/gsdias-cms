@@ -1,5 +1,5 @@
 <?php
-echo 1;
+
 define('ROOTPATH', dirname(__FILE__) . '/');
 
 if (is_file('gsd-install.php')) {
