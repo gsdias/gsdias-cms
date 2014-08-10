@@ -3,6 +3,7 @@
 if (!IS_LOGGED) {
     if ($site->uri != '/admin/auth' && $site->uri != '/admin/auth/') {
         header('location: /admin/auth?redirect=' . urlencode($site->uri));
+        exit;
     } else {
         $startpoint = 'login';
         $tpl->setvar('EXTRACLASS', 'login');
@@ -10,6 +11,7 @@ if (!IS_LOGGED) {
 } else {
     if (@$site->path[2] && !@$site->path[3] && is_numeric(@$site->path[2])) {
         header('location: ' . $site->uri . '/details');
+        exit;
     }
     $startpoint = 'index';
     $main = @$site->path[1] ? @$site->path[1] : 'dashboard';

@@ -31,5 +31,6 @@ if (@$_REQUEST['save']) {
     
     if ($mysql->total) {
         header("Location: /admin/users", true, 302);
+        exit;
     }
 }

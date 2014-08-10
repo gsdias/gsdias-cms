@@ -1,9 +1,11 @@
 <?php
 
-if (!IS_ADMIN) {
-    header("Location: /admin/pages", true, 302);
+if (!IS_ADMIN || $site->path[2] == 1) {
+    header("Location: /admin/users", true, 302);
+    exit;
 }
 
-$mysql->statement('DELETE FROM users WHERE uid = ?;', array($path[2]));
+$mysql->statement('DELETE FROM users WHERE uid = ?;', array($site->path[2]));
 
 header("Location: /admin/users", true, 302);
+exit;

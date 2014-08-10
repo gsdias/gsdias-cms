@@ -2,6 +2,7 @@
 
 if (!IS_ADMIN) {
     header("Location: /admin/pages", true, 302);
+    exit;
 }
 
 if (@$_REQUEST['save']) {
@@ -27,6 +28,7 @@ if (@$_REQUEST['save']) {
     
     if ($mysql->total) {
         header("Location: /admin/pages", true, 302);
+        exit;
     } else {
         $tpl->setvar('FORM_ERRORS', 'There are already a page with that url.');
         $tpl->setcondition('ERRORS');

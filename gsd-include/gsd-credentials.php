@@ -8,6 +8,7 @@ if (@$_REQUEST['login']) {
         
         if ($logged) {
             header('location: ' . @$_REQUEST['redirect']);
+            exit;
         } else {
             $tpl->setvar('FORM_MESSAGES', 'Login errado');
             $tpl->setvar('LOGIN_EMAIL', $_REQUEST['email']);
@@ -22,6 +23,7 @@ if ($user->isLogged()) {
 
     if ($path[0] == 'login') {
         header('location: /');
+        exit;
     }
     
     if ($path[0] == 'admin') {
@@ -53,6 +55,7 @@ if ($user->isLogged()) {
 if ($uri == '/admin/auth' || $uri == '/admin/auth/') {
     if (IS_LOGGED) {
         header('location: /admin');
+        exit;
     }
     $startpoint = 'admin/login';
 }

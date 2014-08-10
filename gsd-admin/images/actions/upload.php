@@ -23,7 +23,8 @@ if (@$_REQUEST['save']) {
         $id = $mysql->lastInserted();
         
         $file = savefile ($_FILES['asset'], ASSETPATH . 'images/' . $id . '/', null, null, $id);
-        
+
         header("Location: /admin/images", true, 302);
+        exit;
     }
 }

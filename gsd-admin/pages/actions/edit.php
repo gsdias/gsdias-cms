@@ -29,4 +29,5 @@ if (@$_REQUEST['save']) {
     
     $mysql->statement(sprintf('UPDATE pages SET title = ?, description = ?, tags = ?, keywords = ?, og_title = ?, og_description = ?, og_image = ?, show_menu = ?, require_auth = ? %s WHERE pid = ?;', $sqlfields), $fields);
     header("Location: /admin/pages", true, 302);
+    exit;
 }

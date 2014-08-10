@@ -23,4 +23,5 @@ if (@$_REQUEST['save']) {
     ));
     
     header("Location: /admin/pages", true, 302);
+    exit;
 }

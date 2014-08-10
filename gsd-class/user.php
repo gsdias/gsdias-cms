@@ -92,6 +92,7 @@ class user implements iuser {
         unset($_SESSION);
         @session_destroy();
         header('location: /');
+        exit;
     }
     
     public function getuser ($uid) {

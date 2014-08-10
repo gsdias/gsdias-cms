@@ -9,4 +9,5 @@ if (@$_REQUEST['save']) {
     }
     
     header("Location: /admin", true, 302);
+    exit;
 }

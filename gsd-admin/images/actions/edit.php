@@ -32,4 +32,5 @@ if (@$_REQUEST['save']) {
         $mysql->statement('UPDATE images SET extension = ?, width = ?, height = ?, size = ? WHERE iid = ?;', $fields);
     }
     header("Location: /admin/images", true, 302);
+    exit;
 }

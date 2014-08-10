@@ -2,6 +2,7 @@
 
 if (!IS_ADMIN) {
     header("Location: /admin/pages", true, 302);
+    exit;
 }
 
 if (@$_REQUEST['save']) {
@@ -42,6 +43,7 @@ if (@$_REQUEST['save']) {
         
         #$email->sendmail();        
         header("Location: /admin/users", true, 302);
+        exit;
     } else {
         $tpl->setvar('FORM_ERRORS', 'There are already a user with that email.');
         $tpl->setcondition('ERRORS');

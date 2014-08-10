@@ -1,0 +1,57 @@
+.login {
+    margin: 50px auto 0;
+    max-width: 450px;
+    width: 95%;
+    font-size: 14px;
+    header {
+        position: relative;
+        padding-bottom: 10px;
+        span {
+            position: absolute;
+            display: block;
+            right: 2%;
+            top: 20px;
+        }
+    }
+    form {
+        padding: 20px 0;
+        margin: auto;
+        box-shadow: 0px 2px 2px 1px #ccc;
+        overflow: hidden;
+    }
+    i {
+        margin-left: 2%;
+    }
+    hr {
+        border: none;
+        border-top: solid 1px #ccc;
+        margin-bottom: 20px;
+    }
+    .btn-submit {
+        float: right;
+        margin-right: 2%;
+        width: 80px;
+        cursor: pointer;
+    }
+    a {
+        width: 50%;
+        float: left;
+        margin-left: 2%;
+    }
+    @include respond-min($tablet-port) {
+        i {
+            margin-left: 35px;
+        }
+        header {
+            span {
+                right: 40px;
+            }
+        }
+        .btn-submit {
+            margin-right: 35px;
+        }
+        a {
+            margin-left: 35px;
+        }
+    }
+}
