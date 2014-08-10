@@ -1,22 +1,32 @@
 <main>
     <h1>Documentos</h1>
+    <div class="btns right">
+        <a href="/admin/documents/upload" class="btn">Carregar documento</a>
+    </div>
     <!-- IF DOCUMENTS_EXIST -->
     [_PAGINATOR]
     <table class="table">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Created by</th>
-                <th>Actions</th>
+                <th>Documento</th>
+                <th>Dimensão</th>
+                <th>Descrição</th>
+                <th>Modificado</th>
+                <th>{LANG_ACTIONS}</th>
             </tr>
         </thead>
         <!-- LOOP DOCUMENTS -->
         <tr>
             <td>
-                <a href="/admin/documents/{DOCUMENTS_ID}">{DOCUMENTS_NAME}</a> <em class="ago">({DOCUMENTS_CREATED})</em>
+                <a href="/admin/documents/{DOCUMENTS_IID}">{DOCUMENTS_ASSET}</a>
             </td>
-            <td><a href="/admin/users/{DOCUMENTS_UID}">{DOCUMENTS_AUTHOR}</a></td>
-            <td class="actions"><a href="/admin/documents/{DOCUMENTS_UID}/settings">Settings</a><a href="/admin/documents/{DOCUMENTS_UID}/edit">Editar</a></td>
+            <td>{DOCUMENTS_SIZE}</td>
+            <td>{DOCUMENTS_DESCRIPTION}</td>
+            <td>{DOCUMENTS_CREATED} <br>por <a href="/admin/users/{DOCUMENTS_CREATOR_ID}">{DOCUMENTS_CREATOR_NAME}</a></td>
+            <td class="actions">
+                <a href="/admin/images/{DOCUMENTS_DID}/edit">Editar</a>
+                <a href="/admin/images/{DOCUMENTS_DID}/remove">Remover</a>
+            </td>
         </tr>
         <!-- ENDLOOP DOCUMENTS -->
     </table>

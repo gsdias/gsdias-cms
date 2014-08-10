@@ -1,5 +1,6 @@
 <?php
-
+echo 1;
+define('ROOTPATH', dirname(__FILE__) . '/');
 
 if (is_file('gsd-install.php')) {
     define('IS_INSTALLED', 0);
@@ -31,6 +32,11 @@ if (is_file('gsd-install' . PHPEXT)) {
 
     if (is_file('gsd-client/index.php') && $path[0] != 'admin') {
         require_once('gsd-client/index.php');
+    }
+    if (@$_SESSION['error']) {
+        $tpl->setvar('ERRORS', $_SESSION['error']);
+        $tpl->setcondition('ERRORS');
+        unset($_SESSION['error']);
     }
 }
 

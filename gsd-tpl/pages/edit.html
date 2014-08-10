@@ -8,7 +8,12 @@
         <h2>Open graph</h2>
         <div class="colA"><label>Título</label> <input name="og_title" value="{CURRENT_PAGE_OG_TITLE}"></div>
         <div class="colA"><label>Descrição</label> <input name="og_description" value="{CURRENT_PAGE_OG_DESCRIPTION}"></div>
-        <div class="colA"><label>Imagem</label> <input name="og_image" type="file"></div>
+        <div class="colA"><label>Imagem</label>
+            <div class="btns">
+                <a href="#" class="btn">Find an image</a>
+                <a href="#" class="btn">Clear image</a>
+            </div>
+        </div>
         <h2>Advanced</h2>
         <div class="colA"><label>Mostrar no menu</label><input type="checkbox" {MENU_CHECKED} value="1" name="menu"></div>
         <div class="colA"><label>Requer autenticação</label><input type="checkbox" {AUTH_CHECKED} value="1" name="auth"></div>

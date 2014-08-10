@@ -22,6 +22,7 @@ Header set Cache-Control "public, no-transform"
 RewriteEngine On
 RewriteBase /
 
+RewriteCond %{REQUEST_URI} !gsd-api/*
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule . /index.php [L]
 

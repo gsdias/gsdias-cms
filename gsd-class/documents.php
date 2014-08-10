@@ -13,7 +13,7 @@ class documents implements isection {
         $mysql->statement('SELECT documents.*, documents.creator AS creator_id, u.name AS creator_name 
         FROM documents 
         LEFT JOIN users AS u ON documents.creator = u.uid 
-        WHERE documents.disabled IS NULL ORDER BY documents.did ' . pageLimit(pageNumber(), $numberPerPage));
+        ORDER BY documents.did ' . pageLimit(pageNumber(), $numberPerPage));
 
         $list = array();
 
@@ -30,13 +30,14 @@ class documents implements isection {
                     $fields[strtoupper($field)] = $value;
                 }
                 $created = explode(' ', $item['created']);
-                $last_login = explode(' ', @$item['last_login']);
                 $fields['CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())));
-                $fields['LAST_LOGIN'] = sizeof($last_login) ? ($last_login[0] ? timeago(dateDif($last_login[0], date('Y-m-d',time()))) : 'Never') : '';
+
+                $fields['ASSET'] = $item['name'];
+                $fields['SIZE'] = sprintf('<strong>%s x %s</strong><br>%s', $item['width'], $item['height'], $item['size']);
                 $list[] = $fields;
             }
             $tpl->setarray('DOCUMENTS', $list);
-            $pages = pageGenerator('FROM documents LEFT JOIN users AS u ON documents.creator = u.uid WHERE documents.disabled IS NULL ORDER BY documents.did;');
+            $pages = pageGenerator('FROM documents LEFT JOIN users AS u ON documents.creator = u.uid ORDER BY documents.did;');
             
             $first_page = new anchor(array('text' => '&lt;&lt;', 'href' => '?page=1'));
             $prev_page = new anchor(array('text' => '&lt;', 'href' => '?page=' . $pages['PREV']));
@@ -54,11 +55,11 @@ class documents implements isection {
     }
     
     public function getcurrent ($id = 0) {
-        global $tpl, $mysql;
-    
+        global $mysql, $tpl;
+
         $sectionextrafields = function_exists('documentsfields') ? documentsfields() : array();
 
-        $mysql->statement('SELECT documents.*, documents.created FROM documents LEFT JOIN users AS u ON documents.creator = u.uid WHERE documents.did = ?', array($id));
+        $mysql->statement('SELECT documents.*, documents.created FROM documents LEFT JOIN users AS u ON documents.creator = u.uid WHERE documents.did = ?;', array($id));
 
         if ($mysql->total) {
 
@@ -70,10 +71,10 @@ class documents implements isection {
                 if (is_numeric($field)) {
                     continue;
                 }
-                $fields['CURRENT_DOCUMENT_'. strtoupper($field)] = $value;
+                $fields['CURRENT_IMAGE_'. strtoupper($field)] = $value;
             }
 
-            $fields['CURRENT_DOCUMENT_CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())));
+            $fields['CURRENT_IMAGE_CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())));
 
             $tpl->setvars($fields);
 

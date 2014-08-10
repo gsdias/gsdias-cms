@@ -166,7 +166,8 @@
 
         perspectiveWrapper.addEventListener( clickevent, function( ev ) { return false; } );
     }
-
-    init();
+    if (document.getElementById( 'showMenu' )) {
+        init();
+    }
 
 })();

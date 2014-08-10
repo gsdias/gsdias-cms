@@ -1,14 +1,11 @@
 <main>
-    Edit page<br>
-    Details<br>
-    Page title <input value="{PAGE_TITLE}"><br>
-    Meta description <input value="{PAGE_DESCRIPTION}"><br>
-    Meta keywords <input value="{PAGE_KEYWORDS}"><br>
-    Open graph<br>
-    Open graph title <input value="{PAGE_OG_TITLE}"><br>
-    Open graph description <input value="{PAGE_OG_DESCRIPTION}"><br>
-    Open graph image <input type="file"><br>
-    Advanced<br>
-    <input type="checkbox">Show in menu<br>
-    <input type="checkbox">Require auth
+    <h1>{LANG_UPLOAD_IMAGE}</h1>
+    <form method="post" enctype="multipart/form-data">
+        <div class="colA"><label>Imagem</label> <input name="asset" type="file"></div>
+        <div class="colA"><label>Nome do ficheiro</label> <input name="name" value="{CURRENT_IMAGE_NAME}" required></div>
+        <div class="colA"><label>Descrição</label> <input name="description" value="{CURRENT_IMAGE_DESCRIPTION}"></div>
+        <div class="btns blue">
+            <input type="submit" class="btn" value="Salvar" name="save">
+        </div>
+    </form>
 </main>

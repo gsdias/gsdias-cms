@@ -1,20 +1,36 @@
 <?php
 
-$mysql->statement('SELECT * FROM pages AS p JOIN users AS u ON p.uid = u.uid ORDER BY pid;');
+if (@$_REQUEST['save']) {
 
-$pages = array();
+    $defaultfields = array(
+        $_REQUEST['name'],
+        $_REQUEST['description'],
+        $path[2]
+    );
 
-if ($mysql->total) {
-    $tpl->setcondition('PAGES_EXIST');
-    foreach ($mysql->result() as $pagelist) {
-        $created = explode(' ', $pagelist['created']);
-        $pages[] = array(
-            'ID' => $pagelist['pid'],
-            'NAME' => $pagelist['url'],
-            'UID' => $pagelist['uid'],
-            'AUTHOR' => $pagelist['name'],
-            'CREATED' => timeago(dateDif($created[0], date('Y-m-d',time())))
+    $mysql->statement('UPDATE images SET name = ?, description = ? WHERE iid = ?;', $defaultfields);
+
+    if ($_FILES['asset']['error'] == 0) {
+
+        removefile(ASSETPATH . 'images/' . $path[2]);
+
+        $name = explode('.', $_FILES['asset']['name']);
+        $extension = end($name);
+
+        $size = getimagesize($_FILES['asset']["tmp_name"]);
+
+        $fields = array(
+            $extension,
+            $size[0],
+            $size[1],
+            round(filesize($_FILES['asset']["tmp_name"]) / 1000, 0) . 'KB',
+            $path[2]
         );
+
+        $file = savefile ($_FILES['asset'], ASSETPATH . 'images/' . $path[2] . '/', null, null, $path[2]);
+
+        $mysql->statement('UPDATE images SET extension = ?, width = ?, height = ?, size = ? WHERE iid = ?;', $fields);
     }
-    $tpl->setarray('PAGES', $pages);
+    header("Location: /admin/images", true, 302);
+    exit;
 }
