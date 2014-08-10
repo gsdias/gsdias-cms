@@ -18,9 +18,11 @@ if (@$_REQUEST['save']) {
     $valuefields = array();
     $sqlfields = '';
 
-    foreach ($sectionextrafields['list'] as $field) {
-        $valuefields[] = $_REQUEST[$field];
-        $sqlfields .= sprintf(', %s = ?', $field, $field);
+    if (sizeof($sectionextrafields['list'])) {
+        foreach ($sectionextrafields['list'] as $field) {
+            $valuefields[] = $_REQUEST[$field];
+            $sqlfields .= sprintf(', %s = ?', $field, $field);
+        }
     }
 
     $fields = array_merge($defaultfields, $valuefields);
