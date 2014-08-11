@@ -12,6 +12,9 @@ class tpl {
         'path' => ''
     );
     
+    function __construct () {
+        $this->config['path'] = array(ROOTPATH . 'tpl/_shared/%s' . TPLEXT);
+    }
     
     /** 
       * @desc Saves the value of a template's variable

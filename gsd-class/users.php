@@ -102,7 +102,17 @@ class users implements isection {
                         case 'image':
                         $mysql->statement('SELECT * FROM images WHERE iid = ?;', array($item[$extrafield]));
                         $image = $mysql->singleline();
-                        $field = sprintf('<label>Imagem</label><input type="hidden" name="%s">%s<div class="btns"><a href="#" class="btn findimage">Escolher imagem</a><a href="#" class="btn clearimage">Limpar imagem</a></div>', $extrafield, new image(array('path' => sprintf('/gsd-assets/images/%s/%s.%s', @$image['iid'], @$image['iid'], @$image['extension']), 'height' => '100', 'width' => 'auto', 'class' => 'preview')));
+                        $image = new image(array('path' => sprintf('/gsd-assets/images/%s/%s.%s', @$image['iid'], @$image['iid'], @$image['extension']), 'height' => '100', 'width' => 'auto', 'class' => 'preview'));
+
+                        $partial = new tpl();
+                        $partial->setvars(array(
+                            'LABEL' => $extrafield,
+                            'NAME' => $sectionextrafields['label'][$key],
+                            'IMAGE' => $image
+                        ));
+                        $partial->setfile('image');
+
+                        $field = $partial;
                         $extraclass = 'image';
                         break;
                         case 'select':
