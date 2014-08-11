@@ -12,8 +12,8 @@ class tpl {
         'path' => ''
     );
     
-    function __construct () {
-        $this->config['path'] = array(ROOTPATH . 'tpl/_shared/%s' . TPLEXT);
+    public function __construct () {
+        $this->config['paths'] = array(ROOTPATH . 'gsd-tpl/_shared/%s' . TPLEXT);
     }
     
     /** 

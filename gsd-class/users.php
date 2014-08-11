@@ -106,11 +106,11 @@ class users implements isection {
 
                         $partial = new tpl();
                         $partial->setvars(array(
-                            'LABEL' => $extrafield,
-                            'NAME' => $sectionextrafields['label'][$key],
+                            'LABEL' => $sectionextrafields['labels'][$key],
+                            'NAME' => $extrafield,
                             'IMAGE' => $image
                         ));
-                        $partial->setfile('image');
+                        $partial->setfile('_image');
 
                         $field = $partial;
                         $extraclass = 'image';
