@@ -33,16 +33,18 @@ class documents implements isection {
                 $fields['CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())));
 
                 $fields['ASSET'] = $item['name'];
-                $fields['SIZE'] = sprintf('<strong>%s x %s</strong><br>%s', $item['width'], $item['height'], $item['size']);
+                $fields['SIZE'] = sprintf('%s', $item['size']);
                 $list[] = $fields;
             }
             $tpl->setarray('DOCUMENTS', $list);
             $pages = pageGenerator('FROM documents LEFT JOIN users AS u ON documents.creator = u.uid ORDER BY documents.did;');
             
-            $first_page = new anchor(array('text' => '&lt;&lt;', 'href' => '?page=1'));
-            $prev_page = new anchor(array('text' => '&lt;', 'href' => '?page=' . $pages['PREV']));
-            $next_page = new anchor(array('text' => '&gt;', 'href' => '?page=' . $pages['NEXT']));
-            $last_page = new anchor(array('text' => '&gt;&gt;', 'href' => '?page=' . $pages['LAST']));
+            $tpl->setcondition('PAGINATOR', $pages['TOTAL'] > 1);
+            
+            $first_page = new anchor(array('text' => '&lt; Primeira', 'href' => '?page=1'));
+            $prev_page = new anchor(array('text' => 'Anterior', 'href' => '?page=' . $pages['PREV']));
+            $next_page = new anchor(array('text' => 'Seguinte', 'href' => '?page=' . $pages['NEXT']));
+            $last_page = new anchor(array('text' => 'Ultima &gt;', 'href' => '?page=' . $pages['LAST']));
             $tpl->setvars(array(
                 'FIRST_PAGE' => $first_page,
                 'PREV_PAGE' => $prev_page,

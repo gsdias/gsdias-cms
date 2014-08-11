@@ -1,15 +1,15 @@
 <?php
 
 class users implements isection {
-    
+
     public function __construct ($id = null) {
-        
+
         return 0; 
     }
-    
+
     public function getlist ($numberPerPage = 10) {
         global $mysql, $tpl;
-        
+
         $mysql->statement('SELECT users.*, users.creator AS creator_id, u.name AS creator_name 
         FROM users 
         LEFT JOIN users AS u ON users.creator = u.uid 
@@ -18,9 +18,9 @@ class users implements isection {
         $list = array();
 
         $tpl->setcondition('USERS_EXIST', $mysql->total > 0);
-        
+
         if ($mysql->total) {
-            
+
             foreach ($mysql->result() as $item) {
                 $fields = array();
                 foreach ($item as $field => $value) {
@@ -38,11 +38,13 @@ class users implements isection {
             }
             $tpl->setarray('USERS', $list);
             $pages = pageGenerator('FROM users LEFT JOIN users AS u ON users.creator = u.uid ORDER BY users.uid;');
-            
-            $first_page = new anchor(array('text' => '&lt;&lt;', 'href' => '?page=1'));
-            $prev_page = new anchor(array('text' => '&lt;', 'href' => '?page=' . $pages['PREV']));
-            $next_page = new anchor(array('text' => '&gt;', 'href' => '?page=' . $pages['NEXT']));
-            $last_page = new anchor(array('text' => '&gt;&gt;', 'href' => '?page=' . $pages['LAST']));
+
+            $tpl->setcondition('PAGINATOR', $pages['TOTAL'] > 1);
+
+            $first_page = new anchor(array('text' => '&lt; Primeira', 'href' => '?page=1'));
+            $prev_page = new anchor(array('text' => 'Anterior', 'href' => '?page=' . $pages['PREV']));
+            $next_page = new anchor(array('text' => 'Seguinte', 'href' => '?page=' . $pages['NEXT']));
+            $last_page = new anchor(array('text' => 'Ultima &gt;', 'href' => '?page=' . $pages['LAST']));
             $tpl->setvars(array(
                 'FIRST_PAGE' => $first_page,
                 'PREV_PAGE' => $prev_page,
@@ -53,10 +55,10 @@ class users implements isection {
             ));
         }
     }
-    
+
     public function getcurrent ($id = 0) {
         global $tpl, $mysql;
-        
+
         $sectionextrafields = function_exists('usersfields') ? usersfields() : array();
 
         $mysql->statement('SELECT users.*, users.created, users.creator AS creator_id, u.name AS creator_name FROM users LEFT JOIN users AS u ON users.creator = u.uid WHERE users.uid = ?;', array($id));
@@ -94,13 +96,24 @@ class users implements isection {
                 $extrafields = array();
 
                 foreach ($sectionextrafields['list'] as $key => $extrafield) {
-
-                    if (sizeof(@$sectionextrafields['values'])) {
+                    $extraclass = '';
+                    
+                    switch ($sectionextrafields['types'][$key]) {
+                        case 'image':
+                        $mysql->statement('SELECT * FROM images WHERE iid = ?;', array($item[$extrafield]));
+                        $image = $mysql->singleline();
+                        $field = sprintf('<label>Imagem</label><input type="hidden" name="%s">%s<div class="btns"><a href="#" class="btn findimage">Escolher imagem</a><a href="#" class="btn clearimage">Limpar imagem</a></div>', $extrafield, new image(array('path' => sprintf('/gsd-assets/images/%s/%s.%s', @$image['iid'], @$image['iid'], @$image['extension']), 'height' => '100', 'width' => 'auto', 'class' => 'preview')));
+                        $extraclass = 'image';
+                        break;
+                        case 'select':
                         $field = new select(array('id' => $extrafield, 'name' => $extrafield, 'list' => $sectionextrafields['values'], 'label' => $sectionextrafields['labels'][$key], 'selected' => @$item[$extrafield]));
-                    } else {
+                        break;
+                        default:
                         $field = (string)new input(array('id' => $extrafield, 'name' => $extrafield, 'value' => @$item[$extrafield], 'label' => $sectionextrafields['labels'][$key]));
+                        break;
                     }
-                    $extrafields[] = array('FIELD' => $field);
+
+                    $extrafields[] = array('FIELD' => $field, 'EXTRACLASS' => $extraclass);
                 }
 
                 $tpl->setarray('FIELD', $extrafields); 
@@ -108,6 +121,6 @@ class users implements isection {
             }
         }
     }
-    
+
     public function generatefields ($id = 0) {}
 }

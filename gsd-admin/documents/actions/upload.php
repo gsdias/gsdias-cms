@@ -10,13 +10,11 @@ if (@$_REQUEST['save']) {
         $_REQUEST['name'],
         $_REQUEST['description'],
         $extension,
-        $size[0],
-        $size[1],
         round(filesize($_FILES['asset']["tmp_name"]) / 1000, 0) . 'KB',
         $user->id
     );
 
-    $mysql->statement('INSERT INTO documents (name, description, extension, width, height, size, creator) values(?, ?, ?, ?, ?, ?, ?);', $fields);
+    $mysql->statement('INSERT INTO documents (name, description, extension, size, creator) values(?, ?, ?, ?, ?);', $fields);
 echo $mysql->errmsg;
     if ($mysql->total) {
 

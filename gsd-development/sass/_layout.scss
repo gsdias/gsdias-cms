@@ -30,6 +30,14 @@
     width: 100%;
     margin-bottom: 30px;
     clear: both;
+    &.image {
+        label {
+            vertical-align: top;
+        }
+        .btns {
+            margin-left: 170px;
+        }
+    }
 }
 
 .main {

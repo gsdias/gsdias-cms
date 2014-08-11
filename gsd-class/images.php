@@ -39,10 +39,12 @@ class images implements isection {
             $tpl->setarray('IMAGES', $list);
             $pages = pageGenerator('FROM images LEFT JOIN users AS u ON images.creator = u.uid ORDER BY images.iid;');
             
-            $first_page = new anchor(array('text' => '&lt;&lt;', 'href' => '?page=1'));
-            $prev_page = new anchor(array('text' => '&lt;', 'href' => '?page=' . $pages['PREV']));
-            $next_page = new anchor(array('text' => '&gt;', 'href' => '?page=' . $pages['NEXT']));
-            $last_page = new anchor(array('text' => '&gt;&gt;', 'href' => '?page=' . $pages['LAST']));
+            $tpl->setcondition('PAGINATOR', $pages['TOTAL'] > 1);
+            
+            $first_page = new anchor(array('text' => '&lt; Primeira', 'href' => '?page=1'));
+            $prev_page = new anchor(array('text' => 'Anterior', 'href' => '?page=' . $pages['PREV']));
+            $next_page = new anchor(array('text' => 'Seguinte', 'href' => '?page=' . $pages['NEXT']));
+            $last_page = new anchor(array('text' => 'Ultima &gt;', 'href' => '?page=' . $pages['LAST']));
             $tpl->setvars(array(
                 'FIRST_PAGE' => $first_page,
                 'PREV_PAGE' => $prev_page,

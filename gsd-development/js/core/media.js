@@ -12,11 +12,23 @@
     var MediaView = Backbone.View.extend({
         el: '#overlay',
         events: {
-            'click this': 'closeoverlay'
+            'click .close': 'closeoverlay',
+            'click .use': 'useasset'
         },
+        
+        useasset: function (e) {
+            e.preventDefault();
+            var use = $(e.currentTarget);
+            
+            $(overlay.$el.data('elm')).val(use.attr('href').substr(1));
+            $(overlay.$el.data('preview')).attr('src', use.data('image'));
+            this.closeoverlay();
+        },
+        
         closeoverlay: function () {
-
+            this.$el.removeClass('is-visible');
         },
+        
         render: function () {
             this.$el.addClass('is-visible');
             return this;
@@ -28,10 +40,25 @@
         $('.findimage').on('click', function (e) {
             e.preventDefault();
 
+            overlay.$el.data('elm', $(this).closest('.colA').find('input[type="hidden"]'));
+            overlay.$el.data('preview', $(this).closest('.colA').find('img'));
+            
             api.call($(this), 'GET', 'images', {}, function (data) {
+                var datacontent = $('#overlay div');
+                
+                datacontent.append('<table><thead><tr><th>Imagem</th><th>Nome</th><th>Accao</th></tr></thead><tbody></tbody></table>');
+                
+                _.each(data, function (item) {
+                    datacontent.find('tbody').append('<tr><td><image src="/gsd-assets/images/' + item.iid + '/' + item.iid + '.' + item.extension + '" height="100"></td><td>' + item.name + '</td><td><a href="#' + item.iid + '" data-image="/gsd-assets/images/' + item.iid + '/' + item.iid + '.' + item.extension + '" class="use">Usar</a></td></tr>');
+                });
+                
                 overlay.render();
-                $('#overlay section div').html(data);
             });
+        });
+        $('.clearimage').on('click', function (e) {
+            e.preventDefault();
+            $(this).closest('.colA').find('input[type="hidden"]').val(0);
+            $(this).closest('.colA').find('img').attr('src', '/gsd-image.php?width=auto&&height=100');
         });
     });
 

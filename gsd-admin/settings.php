@@ -11,3 +11,18 @@ if (@$_REQUEST['save']) {
     header("Location: /admin", true, 302);
     exit;
 }
+
+$mysql->statement('SELECT * FROM options ORDER BY `index`;');
+
+$options = array();
+foreach ($mysql->result() as $item) {
+    $options[] = array(
+        'INPUT' => new input(array(
+            'name' => $item['name'],
+            'label' => $item['label'],
+            'value' => $item['value'])
+        )
+    );
+}
+
+$tpl->setarray('SETTINGS', $options);

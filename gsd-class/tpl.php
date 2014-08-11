@@ -193,13 +193,13 @@ class tpl {
         foreach($this->config['paths'] as $_path) {
             $cpath = sprintf($_path, $file, $file);
             
-            if (file_exists($cpath)) {
+            if (is_file($cpath)) {
                 return $pathname ? $cpath : file_get_contents($cpath);
             }
             
             $cpath = sprintf($_path, $path[0], $file);
             
-            if (file_exists($cpath)) {
+            if (is_file($cpath)) {
                 return $pathname ? $cpath : file_get_contents($cpath);
             }
         }

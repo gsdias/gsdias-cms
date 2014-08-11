@@ -32,6 +32,13 @@ $tpl->setVar('CDN', $resources);
 $tpl->setVar('CLIENT_RESOURCES', @$config['client_resources']);
 $tpl->setVar('REDIRECT', @$_REQUEST['redirect'] ? sprintf("?redirect=%s", $_REQUEST['redirect']) : '');
 
+$file = CLIENTPATH . 'resources/js/core/admin.js';
+
+if (is_file($file)) {
+    $tpl->setVar('CLIENT_SCRIPT', sprintf('<script src="%s"></script>', '/gsd-client/resources/js/core/admin.js'));
+}
+
+
 if ($path[0] != 'admin' && is_file (CLIENTPATH . 'config' . PHPEXT) && IS_INSTALLED) {
     include_once(CLIENTPATH . 'config' . PHPEXT);
 }

@@ -1,15 +1,19 @@
 <?php
 
-$width = @$_REQUEST['width'] ? $_REQUEST['width'] : 50;
-$height = @$_REQUEST['height'] ? $_REQUEST['height'] : 50;
+$width = is_numeric(@$_REQUEST['width']) ? $_REQUEST['width'] : 100;
+$height = is_numeric(@$_REQUEST['height']) ? $_REQUEST['height'] : 100;
 
-header("Content-type: image/gif");
+header("Content-type: image/png");
 
-$img = imagecreatetruecolor($width, $height);
-$white = imagecolorallocate($img, 255, 255, 255);
+$out = imagecreatetruecolor($width, $height);
+$white = imagecolorallocate($out, 255, 255, 255);
 
-imagefill($img, 0, 0, $white);
+imagefill($out, 0, 0, $white);
 
-imagegif($img);
+$png = imagecreatefrompng('gsd-resources/css/img/icons/normal/logo_small.png');
+list($newwidth, $newheight) = getimagesize('gsd-resources/css/img/icons/normal/logo_small.png');
 
-imagedestroy($img);
+imagecopyresampled($out, $png, 25, 30, 0, 0, $newwidth, $newheight, $newwidth, $newheight);
+imagejpeg($out);
+
+imagedestroy($out);

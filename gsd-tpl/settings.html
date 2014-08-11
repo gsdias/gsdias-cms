@@ -1,10 +1,9 @@
 <main>
     <h1>Definições</h1>
     <form method="post">
-        <div class="colA"><label>Google Analytics</label> <input name="gsd-ga" value="{SITE_GA}"></div>
-        <div class="colA"><label>Facebook</label> <input name="gsd-fb" value="{SITE_FB}"></div>
-        <div class="colA"><label>Company name</label> <input name="gsd-name" required value="{SITE_NAME}"></div>
-        <div class="colA"><label>Email</label> <input name="gsd-email" value="{SITE_EMAIL}"></div>
+        <!-- LOOP SETTINGS -->
+        <div class="colA">{SETTINGS_INPUT}</div>
+        <!-- ENDLOOP SETTINGS -->
         <div class="btns blue">
             <input type="submit" class="btn" value="Salvar" name="save">
         </div>

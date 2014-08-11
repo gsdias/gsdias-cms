@@ -47,6 +47,12 @@ input {
     color: #ce3e3e;
 }
 
+.preview {
+    padding: 3px;
+    border: solid 1px #ccc;
+    box-shadow: 0 0 1px #ccc;
+}
+
 @include respond-min($tablet-port) {
     label {
         display: inline-block;
