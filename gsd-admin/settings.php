@@ -17,7 +17,7 @@ $mysql->statement('SELECT * FROM options ORDER BY `index`;');
 $options = array();
 foreach ($mysql->result() as $item) {
     $extraclass = '';
-    if (strpos($item['name'], '-image') === false) {
+    if (strpos($item['name'], '_image') === false) {
         $field = (string)new input(array('name' => $item['name'], 'value' => @$item['value'], 'label' => $item['label']));
     } else {
         $mysql->statement('SELECT * FROM images WHERE iid = ?;', array($item['value']));

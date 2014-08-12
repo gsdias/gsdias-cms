@@ -21,7 +21,7 @@ if (@$_REQUEST['save']) {
     $allfields = array_merge($defaultfields, $extrafieldslist);
     
     foreach ($allfields as $field) {
-        $fields .= sprintf(", %s = ?", $field);
+        $fields .= sprintf(", `%s` = ?", $field);
         $values[] = @$_REQUEST[$field];
     }
         

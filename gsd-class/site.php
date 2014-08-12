@@ -15,7 +15,7 @@ class site {
         foreach ($mysql->result() as $option) {
             $name = str_replace('gsd-', '', $option['name']);
             $this->{$name} = $option['value'];
-            if (strpos($name, '-image') !== false) {
+            if (strpos($name, '_image') !== false) {
                 $mysql->statement('SELECT * FROM images WHERE iid = ?;', array($option['value']));
                 $image = $mysql->singleline();
                 $image = new image(array('path' => sprintf('/gsd-assets/images/%s/%s.%s', @$image['iid'], @$image['iid'], @$image['extension']), 'width' => @$image['width'], 'height' => @$image['height']));

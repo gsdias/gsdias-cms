@@ -46,6 +46,8 @@
             api.call($(this), 'GET', 'images', {}, function (data) {
                 var datacontent = $('#overlay div');
                 
+                datacontent.find('*').remove();
+                
                 datacontent.append('<table><thead><tr><th>Imagem</th><th>Nome</th><th>Accao</th></tr></thead><tbody></tbody></table>');
                 
                 _.each(data, function (item) {

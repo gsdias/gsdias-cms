@@ -102,6 +102,7 @@ class users implements isection {
                         case 'image':
                         $mysql->statement('SELECT * FROM images WHERE iid = ?;', array($item[$extrafield]));
                         $image = $mysql->singleline();
+                        
                         $image = new image(array('path' => sprintf('/gsd-assets/images/%s/%s.%s', @$image['iid'], @$image['iid'], @$image['extension']), 'height' => '100', 'width' => 'auto', 'class' => 'preview'));
 
                         $partial = new tpl();

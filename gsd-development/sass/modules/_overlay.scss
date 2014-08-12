@@ -24,9 +24,26 @@
     }
     div {
         background: #fff;
-        width: 95%;
+        width: 91%;
         max-width: 960px;
         min-height: 200px;
         margin: auto;
+        padding: 2%;
+    }
+    table {
+        width: 100%;
+        thead {
+            background: #ccc;
+        }
+        th, td {
+            padding: 10px 0;
+            text-align: center;
+        }
+        
+        img {
+            padding: 3px;
+            border: solid 1px #ccc;
+            box-shadow: 0 0 1px #ccc;
+        }
     }
 }
