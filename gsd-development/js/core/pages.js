@@ -9,7 +9,7 @@
         var value = this.value,
             url = $('[name="url"]');
 
-        if (!url.val().length && value.length) {
+        if (url.length && !url.val().length && value.length) {
             value = value.replace( new RegExp(" ", "gm"),"-").toLowerCase();
             url.val('/' + value);
         }

@@ -21,7 +21,7 @@ if (@$_REQUEST['save']) {
     if (sizeof($sectionextrafields['list'])) {
         foreach ($sectionextrafields['list'] as $field) {
             $valuefields[] = $_REQUEST[$field];
-            $sqlfields .= sprintf(', %s = ?', $field, $field);
+            $sqlfields .= sprintf(', `%s` = ?', $field, $field);
         }
     }
 

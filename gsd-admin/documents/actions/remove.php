@@ -1,10 +1,10 @@
 <?php
 
-removefile(ASSETPATH . 'images/' . $path[2]);
+removefile(ASSETPATH . 'documents/' . $path[2]);
 
-$mysql->statement('DELETE FROM images WHERE iid = ?;', array($path[2]));
+$mysql->statement('DELETE FROM documents WHERE did = ?;', array($path[2]));
 
 if ($mysql->total) {
-    header("Location: /admin/images", true, 302);
+    header("Location: /admin/documents", true, 302);
     exit;
 }

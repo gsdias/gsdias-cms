@@ -1,6 +1,8 @@
 <?php
 
 class users implements isection {
+    
+    private $item = array();
 
     public function __construct ($id = null) {
 
@@ -59,13 +61,12 @@ class users implements isection {
     public function getcurrent ($id = 0) {
         global $tpl, $mysql;
 
-        $sectionextrafields = function_exists('usersfields') ? usersfields() : array();
-
         $mysql->statement('SELECT users.*, users.created, users.creator AS creator_id, u.name AS creator_name FROM users LEFT JOIN users AS u ON users.creator = u.uid WHERE users.uid = ?;', array($id));
 
         if ($mysql->total) {
 
             $item = $mysql->singleline();
+            $this->item = $item;
             $created = explode(' ', $item['created']);
 
             $fields = array();
@@ -92,46 +93,51 @@ class users implements isection {
 
             $tpl->setvars($fields);
 
-            if (sizeof($sectionextrafields)) {
-                $extrafields = array();
-
-                foreach ($sectionextrafields['list'] as $key => $extrafield) {
-                    $extraclass = '';
-                    
-                    switch ($sectionextrafields['types'][$key]) {
-                        case 'image':
-                        $mysql->statement('SELECT * FROM images WHERE iid = ?;', array($item[$extrafield]));
-                        $image = $mysql->singleline();
-                        
-                        $image = new image(array('path' => sprintf('/gsd-assets/images/%s/%s.%s', @$image['iid'], @$image['iid'], @$image['extension']), 'height' => '100', 'width' => 'auto', 'class' => 'preview'));
-
-                        $partial = new tpl();
-                        $partial->setvars(array(
-                            'LABEL' => $sectionextrafields['labels'][$key],
-                            'NAME' => $extrafield,
-                            'IMAGE' => $image
-                        ));
-                        $partial->setfile('_image');
-
-                        $field = $partial;
-                        $extraclass = 'image';
-                        break;
-                        case 'select':
-                        $field = new select(array('id' => $extrafield, 'name' => $extrafield, 'list' => $sectionextrafields['values'], 'label' => $sectionextrafields['labels'][$key], 'selected' => @$item[$extrafield]));
-                        break;
-                        default:
-                        $field = (string)new input(array('id' => $extrafield, 'name' => $extrafield, 'value' => @$item[$extrafield], 'label' => $sectionextrafields['labels'][$key]));
-                        break;
-                    }
-
-                    $extrafields[] = array('FIELD' => $field, 'EXTRACLASS' => $extraclass);
-                }
-
-                $tpl->setarray('FIELD', $extrafields); 
-                $tpl->setcondition('EXTRAFIELDS'); 
-            }
         }
     }
 
-    public function generatefields ($id = 0) {}
+    public function generatefields ($id = 0) {
+        global $tpl, $mysql;
+        
+        $sectionextrafields = function_exists('usersfields') ? usersfields() : array();
+        if (sizeof($sectionextrafields)) {
+            $extrafields = array();
+
+            foreach ($sectionextrafields['list'] as $key => $extrafield) {
+
+                $extraclass = '';
+                    
+                switch ($sectionextrafields['types'][$key]) {
+                    case 'image':
+                    $mysql->statement('SELECT * FROM images WHERE iid = ?;', array(@$this->item[$extrafield]));
+                    $image = $mysql->singleline();
+
+                    $image = new image(array('path' => sprintf('/gsd-assets/images/%s/%s.%s', @$image['iid'], @$image['iid'], @$image['extension']), 'height' => '100', 'width' => 'auto', 'class' => 'preview'));
+
+                    $partial = new tpl();
+                    $partial->setvars(array(
+                        'LABEL' => $sectionextrafields['labels'][$key],
+                        'NAME' => $extrafield,
+                        'IMAGE' => $image
+                    ));
+                    $partial->setfile('_image');
+
+                    $field = $partial;
+                    $extraclass = 'image';
+                    break;
+                    case 'select':
+                    $field = new select(array('id' => $extrafield, 'name' => $extrafield, 'list' => $sectionextrafields['values'], 'label' => $sectionextrafields['labels'][$key], 'selected' => @$this->item[$extrafield]));
+                    break;
+                    default:
+                    $field = (string)new input(array('id' => $extrafield, 'name' => $extrafield, 'value' => @$this->item[$extrafield], 'label' => $sectionextrafields['labels'][$key]));
+                    break;
+                }
+
+                $extrafields[] = array('FIELD' => $field, 'EXTRACLASS' => $extraclass);
+            }
+
+            $tpl->setarray('FIELD', $extrafields); 
+            $tpl->setcondition('EXTRAFIELDS'); 
+        }
+    }
 }

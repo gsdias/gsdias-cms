@@ -7,24 +7,29 @@ if (!IS_ADMIN) {
 
 if (@$_REQUEST['save']) {
 
-    $sectionextrafields = function_exists('pagesfields') ? pagesfields() : array();
+    $defaultfields = array('title', 'url', 'description', 'keywords', 'tags', 'og_title', 'og_image', 'og_description');
+    
+    $extrafields = function_exists('pagesfields') ? pagesfields() : array('list' => array());
+    
+    $fields = array_merge($defaultfields, $extrafields['list']);
 
-    $defaultfields = array(
-        $_REQUEST['title'],
-        $_REQUEST['url'],
-        $_REQUEST['description'],
-        $_REQUEST['keywords'],
-        $_REQUEST['tags'],
-        $_REQUEST['og_title'],
-        $_REQUEST['og_description'],
-        @$_REQUEST['menu'] ? @$_REQUEST['menu'] : null,
+    $values = array();
+    
+    foreach ($fields as $field) {
+        $values[] = $_REQUEST[$field];
+    }
+    
+    $fields = array_merge($fields, array('creator', 'require_auth', 'show_menu'));
+    
+    $values = array_merge($values, array(
+        $user->id,
         @$_REQUEST['auth'] ? @$_REQUEST['auth'] : null,
-        $user->id
-    );
-    $valuefields = array();
+        @$_REQUEST['menu'] ? @$_REQUEST['menu'] : null
+    ));    
+        
+    $questions = str_repeat(", ? ", sizeof($fields));
 
-    $fields = array_merge($defaultfields, $valuefields);
-    $mysql->statement('INSERT INTO pages (title, url, description, keywords, tags, og_title, og_description, show_menu, require_auth, creator) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);', $defaultfields);
+    $mysql->statement(sprintf('INSERT INTO pages (%s) values(%s);', implode(', ', $fields), substr($questions, 2)), $values);
     
     if ($mysql->total) {
         header("Location: /admin/pages", true, 302);

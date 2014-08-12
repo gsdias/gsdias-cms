@@ -2,6 +2,8 @@
 
 class pages implements isection {
     
+    private $item = array();
+    
     public function __construct ($id = null) {
         
         return 0; 
@@ -30,9 +32,8 @@ class pages implements isection {
                     $fields[strtoupper($field)] = $value;
                 }
                 $created = explode(' ', $item['created']);
-                $last_login = explode(' ', @$item['last_login']);
                 $fields['CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())));
-                $fields['LAST_LOGIN'] = sizeof($last_login) ? ($last_login[0] ? timeago(dateDif($last_login[0], date('Y-m-d',time()))) : 'Never') : '';
+                
                 $list[] = $fields;
             }
             $tpl->setarray('PAGES', $list);
@@ -58,13 +59,12 @@ class pages implements isection {
     public function getcurrent ($id = 0) {
         global $mysql, $tpl;
     
-        $sectionextrafields = function_exists('pagesfields') ? pagesfields() : array();
-
         $mysql->statement('SELECT pages.*, pages.created FROM pages LEFT JOIN users AS u ON pages.creator = u.uid WHERE pages.pid = ?;', array($id));
 
         if ($mysql->total) {
 
             $item = $mysql->singleline();
+            $this->item = $item;
             $created = explode(' ', $item['created']);
 
             $fields = array();
@@ -86,24 +86,51 @@ class pages implements isection {
 
             $tpl->setvars($fields);
 
-            if (sizeof($sectionextrafields)) {
-                $extrafields = array();
-
-                foreach ($sectionextrafields['list'] as $key => $extrafield) {
-
-                    if (sizeof(@$sectionextrafields['values'])) {
-                        $field = new select(array('id' => $extrafield, 'name' => $extrafield, 'list' => $sectionextrafields['values'], 'label' => $sectionextrafields['labels'][$key], 'selected' => @$item[$extrafield]));
-                    } else {
-                        $field = new input(array('id' => $extrafield, 'name' => $extrafield, 'value' => @$item[$extrafield], 'label' => $sectionextrafields['labels'][$key]));
-                    }
-                    $extrafields[] = array('FIELD' => $field);
-                }
-
-                $tpl->setarray('FIELD', $extrafields); 
-                $tpl->setcondition('EXTRAFIELDS'); 
-            }
         }
     }
     
-    public function generatefields ($id = 0) {}
+    public function generatefields ($id = 0) {
+        global $tpl;
+        
+        $sectionextrafields = function_exists('pagesfields') ? pagesfields() : array();
+        if (sizeof($sectionextrafields)) {
+            $extrafields = array();
+
+            foreach ($sectionextrafields['list'] as $key => $extrafield) {
+
+                $extraclass = '';
+                    
+                switch ($sectionextrafields['types'][$key]) {
+                    case 'image':
+                    $mysql->statement('SELECT * FROM images WHERE iid = ?;', array(@$this->item[$extrafield]));
+                    $image = $mysql->singleline();
+
+                    $image = new image(array('path' => sprintf('/gsd-assets/images/%s/%s.%s', @$image['iid'], @$image['iid'], @$image['extension']), 'height' => '100', 'width' => 'auto', 'class' => 'preview'));
+
+                    $partial = new tpl();
+                    $partial->setvars(array(
+                        'LABEL' => $sectionextrafields['labels'][$key],
+                        'NAME' => $extrafield,
+                        'IMAGE' => $image
+                    ));
+                    $partial->setfile('_image');
+
+                    $field = $partial;
+                    $extraclass = 'image';
+                    break;
+                    case 'select':
+                    $field = new select(array('id' => $extrafield, 'name' => $extrafield, 'list' => $sectionextrafields['values'], 'label' => $sectionextrafields['labels'][$key], 'selected' => @$this->item[$extrafield]));
+                    break;
+                    default:
+                    $field = (string)new input(array('id' => $extrafield, 'name' => $extrafield, 'value' => @$this->item[$extrafield], 'label' => $sectionextrafields['labels'][$key]));
+                    break;
+                }
+
+                $extrafields[] = array('FIELD' => $field, 'EXTRACLASS' => $extraclass);
+            }
+
+            $tpl->setarray('FIELD', $extrafields); 
+            $tpl->setcondition('EXTRAFIELDS'); 
+        }
+    }
 }

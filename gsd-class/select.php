@@ -73,6 +73,7 @@ class select {
                     'KEY' => $value,
                     'VALUE' => $label
                 );
+                
                 if ($check == $this->args['selected']) {
                     $list[$value]['SELECTED'] = ' selected="selected"';
                 }

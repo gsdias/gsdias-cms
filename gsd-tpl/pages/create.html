@@ -12,7 +12,11 @@
         <h2>Open graph</h2>
         <div class="colA"><label>Título</label> <input name="og_title"></div>
         <div class="colA"><label>Descrição</label> <input name="og_description"></div>
-        <div class="colA"><label>Imagem</label> <input name="og_image" type="file"></div>
+        <div class="colA image">
+            <label>Imagem</label><input type="hidden" name="og_image">
+            <img src="/gsd-image.php?width=auto&amp;&amp;height=100" width="auto" height="100" alt="" class="preview">
+            <div class="btns"><a href="#" class="btn findimage">Escolher imagem</a><a href="#" class="btn clearimage">Limpar imagem</a></div>
+        </div>
         <h2>Avançadas</h2>
         <div class="colA"><label>Mostrar no menu</label><input name="menu" value="1" type="checkbox"></div>
         <div class="colA"><label>Requer autenticação</label><input name="auth" value="1" type="checkbox"></div>

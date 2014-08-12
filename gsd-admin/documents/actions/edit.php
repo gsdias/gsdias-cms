@@ -8,7 +8,7 @@ if (@$_REQUEST['save']) {
         $path[2]
     );
 
-    $mysql->statement('UPDATE images SET name = ?, description = ? WHERE iid = ?;', $defaultfields);
+    $mysql->statement('UPDATE documents SET name = ?, description = ? WHERE did = ?;', $defaultfields);
 
     if ($_FILES['asset']['error'] == 0) {
 
@@ -29,8 +29,8 @@ if (@$_REQUEST['save']) {
 
         $file = savefile ($_FILES['asset'], ASSETPATH . 'images/' . $path[2] . '/', null, null, $path[2]);
 
-        $mysql->statement('UPDATE images SET extension = ?, width = ?, height = ?, size = ? WHERE iid = ?;', $fields);
+        $mysql->statement('UPDATE documents SET extension = ?, width = ?, height = ?, size = ? WHERE did = ?;', $fields);
     }
-    header("Location: /admin/images", true, 302);
+    header("Location: /admin/documents", true, 302);
     exit;
 }
