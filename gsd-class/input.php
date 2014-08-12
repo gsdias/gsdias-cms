@@ -8,14 +8,16 @@ class input {
             'name' => '',
             'id' => '',
             'label' => '',
-            'value' => ''
+            'value' => '',
+            'type' => 'text'
         );
         
         $this->args = array_merge($defaults, $args);
     }
     
     public function __toString () {
+        $output = $this->args['label'] ? sprintf('<label>%s</label>', $this->args['label']) : '';
         
-        return sprintf('<label>%s</label><input id="%s" name="%s" value="%s">', $this->args['label'], $this->args['id'], $this->args['name'], $this->args['value']);
+        return sprintf('%s<input type="%s" id="%s" name="%s" value="%s">', $output, $this->args['type'], $this->args['id'], $this->args['name'], $this->args['value']);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-class documents implements isection {
+class documents extends section implements isection {
     
     public function __construct ($id = null) {
         
@@ -98,6 +98,4 @@ class documents implements isection {
             }
         }
     }
-    
-    public function generatefields ($id = 0) {}
 }

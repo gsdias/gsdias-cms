@@ -9,9 +9,7 @@
         <div class="colA"><label>Título</label> <input name="og_title" value="{CURRENT_PAGE_OG_TITLE}"></div>
         <div class="colA"><label>Descrição</label> <input name="og_description" value="{CURRENT_PAGE_OG_DESCRIPTION}"></div>
         <div class="colA image">
-            <label>Imagem</label><input type="hidden" name="og_image">
             {CURRENT_PAGE_OG_IMAGE}
-            <div class="btns"><a href="#" class="btn findimage">Escolher imagem</a><a href="#" class="btn clearimage">Limpar imagem</a></div>
         </div>
         
         <h2>Advanced</h2>
@@ -20,7 +18,7 @@
         <!-- IF EXTRAFIELDS -->
         <h2>Informação adicional</h2>
         <!-- LOOP FIELD -->
-        <div class="colA">{FIELD_FIELD}</div>
+        <div class="colA {FIELD_EXTRACLASS}">{FIELD_FIELD}</div>
         <!-- ENDLOOP FIELD -->
         <!-- ENDIF EXTRAFIELDS -->
         <div class="btns blue">

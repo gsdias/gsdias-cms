@@ -24,7 +24,7 @@ if ($action) {
         
         $csection->getcurrent($id);
         
-        $csection->generatefields($id);
+        $csection->generatefields($section);
         
         $main = sprintf('%s/%s', $section, $action);
         
@@ -53,7 +53,7 @@ if ($action) {
 
         $csection = new $classsection ();
         
-        $csection->generatefields($id);
+        $csection->generatefields($section);
         
         $main = sprintf('%s/%s', $section, $id);
         

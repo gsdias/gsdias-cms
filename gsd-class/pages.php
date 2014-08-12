@@ -1,8 +1,6 @@
 <?php
 
-class pages implements isection {
-    
-    private $item = array();
+class pages extends section implements isection {
     
     public function __construct ($id = null) {
         
@@ -64,7 +62,8 @@ class pages implements isection {
         if ($mysql->total) {
 
             $item = $mysql->singleline();
-            $this->item = $item;
+
+            parent::$item = $item;
             $created = explode(' ', $item['created']);
 
             $fields = array();
@@ -82,55 +81,22 @@ class pages implements isection {
             
             $mysql->statement('SELECT * FROM images WHERE iid = ?;', array($item['og_image']));
             $image = $mysql->singleline();
-            $fields['CURRENT_PAGE_OG_IMAGE'] = new image(array('path' => sprintf('/gsd-assets/images/%s/%s.%s', @$image['iid'], @$image['iid'], @$image['extension']), 'height' => '100', 'width' => 'auto', 'class' => 'preview'));
+
+            $image = new image(array('path' => sprintf('/gsd-assets/images/%s/%s.%s', @$image['iid'], @$image['iid'], @$image['extension']), 'height' => '100', 'width' => 'auto', 'class' => 'preview'));
+
+            $partial = new tpl();
+            $partial->setvars(array(
+                'LABEL' => 'Imagem',
+                'NAME' => 'og_image',
+                'VALUE' => $item['og_image'],
+                'IMAGE' => $image
+            ));
+            $partial->setfile('_image');
+
+            $fields['CURRENT_PAGE_OG_IMAGE'] = $partial;
 
             $tpl->setvars($fields);
 
-        }
-    }
-    
-    public function generatefields ($id = 0) {
-        global $tpl;
-        
-        $sectionextrafields = function_exists('pagesfields') ? pagesfields() : array();
-        if (sizeof($sectionextrafields)) {
-            $extrafields = array();
-
-            foreach ($sectionextrafields['list'] as $key => $extrafield) {
-
-                $extraclass = '';
-                    
-                switch ($sectionextrafields['types'][$key]) {
-                    case 'image':
-                    $mysql->statement('SELECT * FROM images WHERE iid = ?;', array(@$this->item[$extrafield]));
-                    $image = $mysql->singleline();
-
-                    $image = new image(array('path' => sprintf('/gsd-assets/images/%s/%s.%s', @$image['iid'], @$image['iid'], @$image['extension']), 'height' => '100', 'width' => 'auto', 'class' => 'preview'));
-
-                    $partial = new tpl();
-                    $partial->setvars(array(
-                        'LABEL' => $sectionextrafields['labels'][$key],
-                        'NAME' => $extrafield,
-                        'IMAGE' => $image
-                    ));
-                    $partial->setfile('_image');
-
-                    $field = $partial;
-                    $extraclass = 'image';
-                    break;
-                    case 'select':
-                    $field = new select(array('id' => $extrafield, 'name' => $extrafield, 'list' => $sectionextrafields['values'], 'label' => $sectionextrafields['labels'][$key], 'selected' => @$this->item[$extrafield]));
-                    break;
-                    default:
-                    $field = (string)new input(array('id' => $extrafield, 'name' => $extrafield, 'value' => @$this->item[$extrafield], 'label' => $sectionextrafields['labels'][$key]));
-                    break;
-                }
-
-                $extrafields[] = array('FIELD' => $field, 'EXTRACLASS' => $extraclass);
-            }
-
-            $tpl->setarray('FIELD', $extrafields); 
-            $tpl->setcondition('EXTRAFIELDS'); 
         }
     }
 }

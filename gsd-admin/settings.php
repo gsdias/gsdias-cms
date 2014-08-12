@@ -2,14 +2,20 @@
 
 if (@$_REQUEST['save']) {
     
+    $fields = 0;
     foreach ($_REQUEST as $name => $value) {
         if (strpos($name, 'gsd-') !== false) {
+            $fields++;
             $mysql->statement('UPDATE options SET value = ? WHERE name = ?', array($value, $name));
+            $fields += !$mysql->errnum ? -1 : 0;
         }
     }
     
-    header("Location: /admin", true, 302);
-    exit;
+    if ($fields == 0) {
+        $_SESSION['error'] = 'Definições salvas.';
+        header("Location: /admin", true, 302);
+        exit;
+    }
 }
 
 $mysql->statement('SELECT * FROM options ORDER BY `index`;');

@@ -28,7 +28,7 @@
         max-width: 960px;
         min-height: 200px;
         margin: auto;
-        padding: 2%;
+        padding: 2.001%;
     }
     table {
         width: 100%;
@@ -45,5 +45,8 @@
             border: solid 1px #ccc;
             box-shadow: 0 0 1px #ccc;
         }
+    }
+    a {
+        color: #0076cf;
     }
 }

@@ -30,12 +30,12 @@ if (@$_REQUEST['save']) {
     $questions = str_repeat(", ? ", sizeof($fields));
 
     $mysql->statement(sprintf('INSERT INTO pages (%s) values(%s);', implode(', ', $fields), substr($questions, 2)), $values);
-    
+
     if ($mysql->total) {
         header("Location: /admin/pages", true, 302);
         exit;
     } else {
-        $tpl->setvar('FORM_ERRORS', 'There are already a page with that url.');
+        $tpl->setvar('ERRORS', 'There are already a page with that url.');
         $tpl->setcondition('ERRORS');
     }
 }

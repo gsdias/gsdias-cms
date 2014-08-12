@@ -7,26 +7,26 @@ if (!IS_ADMIN) {
 
 if (@$_REQUEST['save']) {
 
+    $defaultfields = array('email', 'level', 'name');
+
     $extrafields = function_exists('usersfields') ? usersfields() : array();
     
     $password = substr(str_shuffle(sha1(rand() . time() . "gsdias-cms")), 2, 10);
 
-    $fields = array('email', 'password', 'level', 'name', 'creator');
+    $fields = array_merge($defaultfields, $extrafields['list']);
     
-    $values = array(
-        $_REQUEST['email'],
-        md5($password),
-        $_REQUEST['level'],
-        $_REQUEST['name'],
-        $user->id
-    );    
+    $values = array();
     
-    if (sizeof(@$extrafields['list'])) {
-        foreach ($extrafields['list'] as $key => $field) {
-            $fields[] = $extrafields['list'][$key];
-            $values[] = @$_REQUEST[$field];
-        }
+    foreach ($fields as $field) {
+        $values[] = $_REQUEST[$field];
     }
+
+    $fields = array_merge($fields, array('creator', 'password'));
+
+    $values = array_merge($values, array(
+        $user->id,
+        md5($password)
+    ));
         
     $questions = str_repeat(", ? ", sizeof($fields));
 

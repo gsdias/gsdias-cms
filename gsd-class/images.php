@@ -1,6 +1,6 @@
 <?php
 
-class images implements isection {
+class images extends section implements isection {
     
     public function __construct ($id = null) {
         
@@ -98,6 +98,4 @@ class images implements isection {
             }
         }
     }
-    
-    public function generatefields ($id = 0) {}
 }
