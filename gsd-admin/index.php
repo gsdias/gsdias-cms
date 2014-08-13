@@ -9,22 +9,22 @@ if (!IS_LOGGED) {
         $tpl->setvar('EXTRACLASS', 'login');
     }
 } else {
-    if (@$site->path[2] && !@$site->path[3] && is_numeric(@$site->path[2])) {
+    if ($site->arg(2) && !$site->arg(3) && is_numeric($site->arg(2))) {
         header('location: ' . $site->uri . '/details');
         exit;
     }
     $startpoint = 'index';
-    $main = @$site->path[1] ? @$site->path[1] : 'dashboard';
+    $main = $site->arg(1) ? $site->arg(1) : 'dashboard';
     
     $clientfields = CLIENTPATH . 'include/admin/fields' . PHPEXT;
     if (is_file($clientfields)) {
         include_once($clientfields);
     }
 
-    if (!@$site->path[1]) {
+    if (!$site->arg(1)) {
         include_once('gsd-admin/dashboard' . PHPEXT);
     } else {
-        if ($site->path[1] == 'settings') {
+        if ($site->arg(1) == 'settings') {
             $file = 'gsd-admin/settings' . PHPEXT;
         } else {
             $file = 'gsd-admin/list' . PHPEXT;

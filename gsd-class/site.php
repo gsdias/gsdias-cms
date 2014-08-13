@@ -18,7 +18,7 @@ class site {
             if (strpos($name, '_image') !== false) {
                 $mysql->statement('SELECT * FROM images WHERE iid = ?;', array($option['value']));
                 $image = $mysql->singleline();
-                $image = new image(array('path' => sprintf('/gsd-assets/images/%s/%s.%s', @$image['iid'], @$image['iid'], @$image['extension']), 'width' => @$image['width'], 'height' => @$image['height']));
+                $image = new image(array('src' => sprintf('/gsd-assets/images/%s/%s.%s', @$image['iid'], @$image['iid'], @$image['extension']), 'width' => @$image['width'], 'height' => @$image['height']));
 
                 $tpl->setvar('SITE_' . strtoupper($name), $image);
             } else {
@@ -89,5 +89,10 @@ class site {
                 'PAGE_CANONICAL' => (stripos($_SERVER['SERVER_PROTOCOL'],'https') === true ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . $this->uri
             ));
         }
+    }
+
+    public function arg ($pos) {
+
+        return @$this->path[$pos];
     }
 }

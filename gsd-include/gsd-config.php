@@ -39,6 +39,6 @@ if (is_file($file)) {
 }
 
 
-if ($path[0] != 'admin' && is_file (CLIENTPATH . 'config' . PHPEXT) && IS_INSTALLED) {
+if ($site->arg(0) != 'admin' && is_file (CLIENTPATH . 'config' . PHPEXT) && IS_INSTALLED) {
     include_once(CLIENTPATH . 'config' . PHPEXT);
 }

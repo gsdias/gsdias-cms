@@ -32,7 +32,7 @@ class images extends section implements isection {
                 $created = explode(' ', $item['created']);
                 $fields['CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())));
                 
-                $fields['ASSET'] = @$item['width'] ? new image(array('path' => sprintf('/gsd-assets/images/%s/%s.%s', $item['iid'], $item['iid'], $item['extension']), 'height' => '100', 'width' => 'auto')) : '';
+                $fields['ASSET'] = @$item['width'] ? new image(array('src' => sprintf('/gsd-assets/images/%s/%s.%s', $item['iid'], $item['iid'], $item['extension']), 'height' => '100', 'width' => 'auto')) : '';
                 $fields['SIZE'] = sprintf('<strong>%s x %s</strong><br>%s', $item['width'], $item['height'], $item['size']);
                 $list[] = $fields;
             }
@@ -41,25 +41,12 @@ class images extends section implements isection {
             
             $tpl->setcondition('PAGINATOR', $pages['TOTAL'] > 1);
             
-            $first_page = new anchor(array('text' => '&lt; Primeira', 'href' => '?page=1'));
-            $prev_page = new anchor(array('text' => 'Anterior', 'href' => '?page=' . $pages['PREV']));
-            $next_page = new anchor(array('text' => 'Seguinte', 'href' => '?page=' . $pages['NEXT']));
-            $last_page = new anchor(array('text' => 'Ultima &gt;', 'href' => '?page=' . $pages['LAST']));
-            $tpl->setvars(array(
-                'FIRST_PAGE' => $first_page,
-                'PREV_PAGE' => $prev_page,
-                'NEXT_PAGE' => $next_page,
-                'LAST_PAGE' => $last_page,
-                'CURRENT_PAGE' => $pages['CURRENT'],
-                'TOTAL_PAGES' => $pages['TOTAL']
-            ));
+            $this->generatepaginator($pages);
         }
     }
     
     public function getcurrent ($id = 0) {
         global $mysql, $tpl;
-        
-        $sectionextrafields = function_exists('imagesfields') ? imagesfields() : array();
 
         $mysql->statement('SELECT images.*, images.created FROM images LEFT JOIN users AS u ON images.creator = u.uid WHERE images.iid = ?;', array($id));
 
@@ -80,22 +67,6 @@ class images extends section implements isection {
 
             $tpl->setvars($fields);
 
-            if (sizeof($sectionextrafields)) {
-                $extrafields = array();
-
-                foreach ($sectionextrafields['list'] as $key => $extrafield) {
-
-                    if (sizeof(@$sectionextrafields['values'])) {
-                        $field = new select(array('id' => $extrafield, 'name' => $extrafield, 'list' => $sectionextrafields['values'], 'label' => $sectionextrafields['labels'][$key], 'selected' => @$item[$extrafield]));
-                    } else {
-                        $field = new input(array('id' => $extrafield, 'name' => $extrafield, 'value' => @$item[$extrafield], 'label' => $sectionextrafields['labels'][$key]));
-                    }
-                    $extrafields[] = array('FIELD' => $field);
-                }
-
-                $tpl->setarray('FIELD', $extrafields); 
-                $tpl->setcondition('EXTRAFIELDS'); 
-            }
         }
     }
 }

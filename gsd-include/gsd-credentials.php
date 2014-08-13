@@ -21,12 +21,12 @@ if (@$_REQUEST['login']) {
 
 if ($user->isLogged()) {
 
-    if ($path[0] == 'login') {
+    if ($site->arg(0) == 'login') {
         header('location: /');
         exit;
     }
     
-    if ($path[0] == 'admin') {
+    if ($site->arg(0) == 'admin') {
         if ($user->level != 'user') {
             if ($user->level == 'admin') {
                 $tpl->setcondition('IS_ADMIN');

@@ -185,7 +185,7 @@ class tpl {
     }
 
     private function findFile ($file, $pathname = 0) {
-        global $path;
+        global $site;
         
         if (isset($this->config['files'][$file])) {
             return $pathname ? '' : file_get_contents($this->config['files'][$file]);
@@ -200,7 +200,7 @@ class tpl {
                 return $pathname ? $cpath : file_get_contents($cpath);
             }
             
-            $cpath = sprintf($_path, $path[0], $file);
+            $cpath = sprintf($_path, $site->arg(0), $file);
             
             if (is_file($cpath)) {
                 return $pathname ? $cpath : file_get_contents($cpath);
@@ -211,7 +211,6 @@ class tpl {
     }
 
     function setFile ($file) {
-        global $path;
         
         $file = strtolower($file);
         $this->config['file'] = $this->findFile($file);

@@ -1,8 +1,8 @@
 <?php
 
-$section = @$site->path[1];
-$id = @$site->path[2];
-$action = @$site->path[3];
+$section = $site->arg(1);
+$id = $site->arg(2);
+$action = $site->arg(3);
 
 $file = CLIENTPATH . 'include/admin/fields' . PHPEXT;
 if (is_file($file)) {

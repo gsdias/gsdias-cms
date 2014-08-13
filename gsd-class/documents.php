@@ -41,25 +41,12 @@ class documents extends section implements isection {
             
             $tpl->setcondition('PAGINATOR', $pages['TOTAL'] > 1);
             
-            $first_page = new anchor(array('text' => '&lt; Primeira', 'href' => '?page=1'));
-            $prev_page = new anchor(array('text' => 'Anterior', 'href' => '?page=' . $pages['PREV']));
-            $next_page = new anchor(array('text' => 'Seguinte', 'href' => '?page=' . $pages['NEXT']));
-            $last_page = new anchor(array('text' => 'Ultima &gt;', 'href' => '?page=' . $pages['LAST']));
-            $tpl->setvars(array(
-                'FIRST_PAGE' => $first_page,
-                'PREV_PAGE' => $prev_page,
-                'NEXT_PAGE' => $next_page,
-                'LAST_PAGE' => $last_page,
-                'CURRENT_PAGE' => $pages['CURRENT'],
-                'TOTAL_PAGES' => $pages['TOTAL']
-            ));
+            $this->generatepaginator($pages);
         }
     }
     
     public function getcurrent ($id = 0) {
         global $mysql, $tpl;
-
-        $sectionextrafields = function_exists('documentsfields') ? documentsfields() : array();
 
         $mysql->statement('SELECT documents.*, documents.created FROM documents LEFT JOIN users AS u ON documents.creator = u.uid WHERE documents.did = ?;', array($id));
 
@@ -80,22 +67,6 @@ class documents extends section implements isection {
 
             $tpl->setvars($fields);
 
-            if (sizeof($sectionextrafields)) {
-                $extrafields = array();
-
-                foreach ($sectionextrafields['list'] as $key => $extrafield) {
-
-                    if (sizeof(@$sectionextrafields['values'])) {
-                        $field = new select(array('id' => $extrafield, 'name' => $extrafield, 'list' => $sectionextrafields['values'], 'label' => $sectionextrafields['labels'][$key], 'selected' => @$item[$extrafield]));
-                    } else {
-                        $field = new input(array('id' => $extrafield, 'name' => $extrafield, 'value' => @$item[$extrafield], 'label' => $sectionextrafields['labels'][$key]));
-                    }
-                    $extrafields[] = array('FIELD' => $field);
-                }
-
-                $tpl->setarray('FIELD', $extrafields); 
-                $tpl->setcondition('EXTRAFIELDS'); 
-            }
         }
     }
 }

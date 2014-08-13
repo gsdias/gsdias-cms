@@ -1,5 +1,8 @@
 <main>
     <h1>{LANG_USERS}</h1>
+    <!-- IF ERRORS -->
+    <div class="errors messages">{ERRORS}</div>
+    <!-- ENDIF ERRORS -->
     <!-- IF IS_ADMIN -->
     <div class="btns right">
         <a href="/admin/users/create" class="btn">{LANG_NEW_USER}</a>
@@ -32,7 +35,4 @@
         <!-- ENDLOOP USERS -->
     </table>
     [_PAGINATOR]
-    <!-- IF ERRORS -->
-    <div class="errors">{ERRORS}</div>
-    <!-- ENDIF ERRORS -->
 </main>

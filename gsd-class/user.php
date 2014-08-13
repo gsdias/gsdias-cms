@@ -43,7 +43,7 @@ class user implements iuser {
     }
 
     public function login ($email, $password, $extrafields = array()) {
-        global $mysql, $path;
+        global $mysql, $site;
 
         $result = false;
         $fields = 'code, level, name, uid, email';
@@ -66,7 +66,7 @@ class user implements iuser {
             $this->code = md5($_SERVER['REMOTE_ADDR'] + '' + time());
             $user = $mysql->singleline();
             
-            if ($user['level'] == 'user' && $path[0] == 'admin') {
+            if ($user['level'] == 'user' && $site->arg(0) == 'admin') {
                 return 0;
             }
             

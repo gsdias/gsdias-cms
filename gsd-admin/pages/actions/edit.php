@@ -2,34 +2,30 @@
 
 if (@$_REQUEST['save']) {
     
-    $sectionextrafields = function_exists('pagesfields') ? pagesfields() : array();
+    $extrafields = function_exists('pagesfields') ? pagesfields() : array();
 
-    $defaultfields = array(
-        $_REQUEST['title'],
-        $_REQUEST['description'],
-        $_REQUEST['tags'],
-        $_REQUEST['keywords'],
-        $_REQUEST['og_title'],
-        $_REQUEST['og_description'],
-        @$_REQUEST['og_image'],
-        @$_REQUEST['menu'] ? @$_REQUEST['menu'] : null,
-        @$_REQUEST['auth'] ? @$_REQUEST['auth'] : null
-    );
-    $valuefields = array();
-    $sqlfields = '';
+    $defaultfields = array('title', 'description', 'tags', 'keywords', 'og_title', 'og_description', 'og_image');
 
-    if (sizeof($sectionextrafields['list'])) {
-        foreach ($sectionextrafields['list'] as $field) {
-            $valuefields[] = $_REQUEST[$field];
-            $sqlfields .= sprintf(', `%s` = ?', $field, $field);
-        }
+    $extrafieldslist = sizeof(@$extrafields['list']) ? $extrafields['list'] : array();
+
+    $values = array();
+    $fields = '';
+
+    $allfields = array_merge($defaultfields, $extrafieldslist);
+
+    foreach ($allfields as $field) {
+        $fields .= sprintf(", `%s` = ?", $field);
+        $values[] = @$_REQUEST[$field];
     }
 
-    $fields = array_merge($defaultfields, $valuefields);
+    $fields .= ', `show_menu` = ?, `require_auth` = ?';
 
-    array_push($fields, $path[2]);
-    
-    $mysql->statement(sprintf('UPDATE pages SET title = ?, description = ?, tags = ?, keywords = ?, og_title = ?, og_description = ?, og_image = ?, show_menu = ?, require_auth = ? %s WHERE pid = ?;', $sqlfields), $fields);
+    $values[] = @$_REQUEST['menu'] ? @$_REQUEST['menu'] : null;
+    $values[] = @$_REQUEST['auth'] ? @$_REQUEST['auth'] : null;
+    $values[] = $site->arg(2);
+
+    $mysql->statement(sprintf('UPDATE pages SET %s WHERE pid = ?;', substr($fields, 2)), $values);
+
     header("Location: /admin/pages", true, 302);
     exit;
 }

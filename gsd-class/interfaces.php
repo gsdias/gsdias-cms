@@ -15,4 +15,5 @@ interface isection {
     public function getlist ($numberPerPage);
     public function getcurrent ($id);
     public function generatefields ($id);
+    public function generatepaginator ($pages);
 }

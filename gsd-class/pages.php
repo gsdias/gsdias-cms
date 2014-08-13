@@ -39,18 +39,7 @@ class pages extends section implements isection {
             
             $tpl->setcondition('PAGINATOR', $pages['TOTAL'] > 1);
             
-            $first_page = new anchor(array('text' => '&lt; Primeira', 'href' => '?page=1'));
-            $prev_page = new anchor(array('text' => 'Anterior', 'href' => '?page=' . $pages['PREV']));
-            $next_page = new anchor(array('text' => 'Seguinte', 'href' => '?page=' . $pages['NEXT']));
-            $last_page = new anchor(array('text' => 'Ultima &gt;', 'href' => '?page=' . $pages['LAST']));
-            $tpl->setvars(array(
-                'FIRST_PAGE' => $first_page,
-                'PREV_PAGE' => $prev_page,
-                'NEXT_PAGE' => $next_page,
-                'LAST_PAGE' => $last_page,
-                'CURRENT_PAGE' => $pages['CURRENT'],
-                'TOTAL_PAGES' => $pages['TOTAL']
-            ));
+            $this->generatepaginator($pages);
         }
     }
     
@@ -82,7 +71,7 @@ class pages extends section implements isection {
             $mysql->statement('SELECT * FROM images WHERE iid = ?;', array($item['og_image']));
             $image = $mysql->singleline();
 
-            $image = new image(array('path' => sprintf('/gsd-assets/images/%s/%s.%s', @$image['iid'], @$image['iid'], @$image['extension']), 'height' => '100', 'width' => 'auto', 'class' => 'preview'));
+            $image = new image(array('src' => sprintf('/gsd-assets/images/%s/%s.%s', @$image['iid'], @$image['iid'], @$image['extension']), 'height' => '100', 'width' => 'auto', 'class' => 'preview'));
 
             $partial = new tpl();
             $partial->setvars(array(

@@ -1,6 +1,6 @@
 <?php
 
-if (@$site->path[1] == 'images') {
+if (@$site->arg(1) == 'images') {
     $iid = explode('_', @$site->path[2]);
 
     $mysql->statement('SELECT extension FROM images WHERE iid = :iid;', array(':iid' => $iid[0]));

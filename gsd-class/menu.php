@@ -30,7 +30,7 @@ class menu {
             $url = $config['lang'] == 'en' ? $menu['url_en']: $menu['url'];
             $name = $config['lang'] == 'en' ? $menu['name_en'] : $menu['name'];
             if ($menu['parent_id'] == '') {
-                $list .= sprintf('<dd>%s</dd>', new anchor(array('path' => $url, 'text' => $name)));
+                $list .= sprintf('<dd>%s</dd>', new anchor(array('href' => $url, 'text' => $name)));
             }
         }
         
