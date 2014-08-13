@@ -1,7 +1,7 @@
 <?php
 
 class image {
-    private $args, $width = 910, $height = 455;
+    private $args, $width = 100, $height = 100;
 
     public function __construct ($args = array()) {
         $defaults = array(

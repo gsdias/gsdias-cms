@@ -12,9 +12,12 @@ if (@$_REQUEST['save']) {
     }
     
     if ($fields == 0) {
-        $_SESSION['error'] = 'Definições salvas.';
+        $_SESSION['message'] = 'Definições salvas.';
         header("Location: /admin", true, 302);
         exit;
+    } else {
+        $tpl->setvar('ERRORS', 'Houve um problema ao salvar as definicoes. Verifique os dados e tente novamente');
+        $tpl->setcondition('ERRORS');
     }
 }
 

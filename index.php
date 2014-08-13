@@ -38,6 +38,11 @@ if (is_file('gsd-install' . PHPEXT)) {
         $tpl->setcondition('ERRORS');
         unset($_SESSION['error']);
     }
+    if (@$_SESSION['message']) {
+        $tpl->setvar('MESSAGES', $_SESSION['message']);
+        $tpl->setcondition('MESSAGES');
+        unset($_SESSION['message']);
+    }
 }
 
 $tpl->includeFiles('MAIN', $main);

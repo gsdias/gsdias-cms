@@ -6,8 +6,10 @@ if (@$_REQUEST['save']) {
     $condition = $mysql->singleline();
     
     if ($condition[0] > 0 && $condition[1] != $site->arg(2)) {
+        
         $tpl->setvar('ERRORS', 'There are already a page with that url.');
         $tpl->setcondition('ERRORS');
+        
     } else {
     
         $mysql->statement('SELECT url FROM pages WHERE pid = ?;', array($site->arg(2)));

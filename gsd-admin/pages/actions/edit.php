@@ -26,6 +26,17 @@ if (@$_REQUEST['save']) {
 
     $mysql->statement(sprintf('UPDATE pages SET %s WHERE pid = ?;', substr($fields, 2)), $values);
 
-    header("Location: /admin/pages", true, 302);
-    exit;
+    if ($mysql->errnum) {
+    
+        $tpl->setvar('ERRORS', 'Houve um problema ao salvar as definicoes. Verifique os dados e tente novamente');
+        $tpl->setcondition('ERRORS');
+        
+    } else {
+    
+        $_SESSION['message'] = 'Pagina salva.';
+
+        header("Location: /admin/pages", true, 302);
+        exit;
+        
+    }
 }

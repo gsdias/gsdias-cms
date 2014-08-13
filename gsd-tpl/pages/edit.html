@@ -1,5 +1,8 @@
 <main>
     <h1>Editar página</h1>
+    <!-- IF ERRORS -->
+    <div class="errors">{ERRORS}</div>
+    <!-- ENDIF ERRORS -->
     <form method="post" enctype="multipart/form-data">
         <div class="colA"><label>Título</label> <input name="title" value="{CURRENT_PAGE_TITLE}" required></div>
         <div class="colA"><label>Descrição</label> <input name="description" value="{CURRENT_PAGE_DESCRIPTION}"></div>

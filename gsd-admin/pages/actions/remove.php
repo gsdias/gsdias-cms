@@ -1,6 +1,9 @@
 <?php
 
 if (!IS_ADMIN) {
+    
+    $_SESSION['error'] = 'Nao tem permissao para apagar paginas.';
+    
     header("Location: /admin/pages", true, 302);
     exit;
 }
@@ -13,5 +16,16 @@ $mysql->statement('DELETE FROM redirect WHERE `destination` = ?;', array($curren
 
 $mysql->statement('DELETE FROM pages WHERE pid = ?;', array($site->arg(2)));
 
-header("Location: /admin/pages", true, 302);
-exit;
+if ($mysql->errnum) {
+    
+    $tpl->setvar('ERRORS', 'Houve um problema ao apagar a pagina.');
+    $tpl->setcondition('ERRORS');
+
+} else {
+
+    $_SESSION['message'] = 'Pagina apagada.';
+
+    header("Location: /admin/pages", true, 302);
+    exit;
+
+}

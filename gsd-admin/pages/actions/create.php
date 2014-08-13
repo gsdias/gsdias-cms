@@ -32,10 +32,11 @@ if (@$_REQUEST['save']) {
     $mysql->statement(sprintf('INSERT INTO pages (%s) values(%s);', implode(', ', $fields), substr($questions, 2)), $values);
 
     if ($mysql->total) {
+        $_SESSION['message'] = sprintf('Pagina "%s" criada.', $_REQUEST['title']);
         header("Location: /admin/pages", true, 302);
         exit;
     } else {
-        $tpl->setvar('ERRORS', 'There are already a page with that url.');
+        $tpl->setvar('ERRORS', 'Ja\' existe uma pagina com esse endereco.');
         $tpl->setcondition('ERRORS');
     }
 }
