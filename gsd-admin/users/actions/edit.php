@@ -23,11 +23,15 @@ if (@$_REQUEST['save']) {
     
     $mysql->statement(sprintf('UPDATE users SET %s WHERE uid = ?;', substr($fields, 2)), $values);
     
-    if ($mysql->total) {
+    if ($mysql->errnum) {
+
+        $tpl->setvar('ERRORS', 'Já existe um utilizador com esse email.');
+        $tpl->setcondition('ERRORS');
+    } else {
+
+        $_SESSION['message'] = 'Utilizador salvo.';
+
         header("Location: /admin/users", true, 302);
         exit;
-    } else {
-        $tpl->setvar('ERRORS', 'There are already a user with that email.');
-        $tpl->setcondition('ERRORS');
     }
 }

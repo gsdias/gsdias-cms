@@ -52,7 +52,7 @@ class pages extends section implements isection {
 
             $item = $mysql->singleline();
 
-            parent::$item = $item;
+            $this->item = $item;
             $created = explode(' ', $item['created']);
 
             $fields = array();

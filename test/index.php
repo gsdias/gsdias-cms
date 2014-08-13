@@ -1,36 +1,27 @@
 <?php
 
-include_once('../config.php');
+abstract class A {
+    static $c = 2;
+    protected $d = 3;
+    public $e = 4;
+}
 
-$anchor1 = new anchor(array(
-    'path' => '/vagas',
-    'title' => 'abc',
-    'text' => 'Vagas'
-));
-$anchor2= new anchor(array(
-    'path' => '/about',
-    'text' => 'About',
-    'external' => true
-));
+class B extends A {
+    public function __construct () {
+        print '<pre>';
+        echo parent::$c;
+        echo $this->d;
+        echo $this->e;
+        print '<pre>';
+        $this->d = 22;
+    }
 
-$image = new image(array(
-    'path' => '2560x11440.jpg',
-    'width' => 300,
-    'alt' => 'Some cool text',
-    'height' => 'auto'
-));
+    public function o () {
+        echo $this->d;
+    }
+}
 
-$select = new select(array(
-    'list' => array(1 => 'a', 2 => 'b', '' => 'e', 3 => 'c', 4 => 'd', 5 => ''),
-    'selected' => '3',
-    'id' => 'selecttest'
-));
-
-$select->object();
-
-$main = 'TEST/TEST';
-
-$tpl->includeFiles('MAIN', $main);
-$tpl->setFile('INDEX');
-
-echo $tpl;
+$o = new B();
+$o->o();
+print_r($o);
+print '<pre>';

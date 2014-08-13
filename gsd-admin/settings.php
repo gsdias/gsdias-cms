@@ -37,7 +37,8 @@ foreach ($mysql->result() as $item) {
         $partial->setvars(array(
             'LABEL' => $item['label'],
             'NAME' => $item['name'],
-            'IMAGE' => $image
+            'IMAGE' => $image,
+            'VALUE' => $item['value']
         ));
         $partial->setfile('_image');
 

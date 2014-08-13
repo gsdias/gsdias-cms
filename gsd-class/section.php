@@ -1,8 +1,8 @@
 <?php
 
-class section implements isection {
+abstract class section implements isection {
 
-    public static $item = array();
+    protected $item = array();
 
     public function __construct ($id = null) {
 
@@ -17,7 +17,7 @@ class section implements isection {
         global $tpl, $mysql;
 
         $func = $section . 'fields';
-        $item = self::$item;
+        $item = $this->item;
 
         $sectionextrafields = function_exists($func) ? $func() : array();
         if (sizeof($sectionextrafields)) {
