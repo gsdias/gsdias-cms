@@ -1,13 +1,15 @@
 <?php
 
-if (@$_REQUEST['login']) {
+if (@$_REQUEST['login'] && !$user->isLogged()) {
 
     if (filter_var($_REQUEST['email'], FILTER_VALIDATE_EMAIL)) {
 
         $logged = $user->login($_REQUEST['email'], $_REQUEST['password']);
         
         if ($logged) {
-            header('location: ' . @$_REQUEST['redirect']);
+            $uri = @$_REQUEST['redirect'] ? $_REQUEST['redirect'] : ($site->arg(0) == 'admin' ? '/admin' : '/');
+
+            header('location: ' . $uri);
             exit;
         } else {
             $tpl->setvar('FORM_MESSAGES', 'Login errado');

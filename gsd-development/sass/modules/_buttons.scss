@@ -31,6 +31,11 @@
             @include gradient(#adadad, #c7c7c7);
             text-decoration: none;
         }
+        &[type="submit"] {
+            border-radius: 0;
+            width: auto;
+            padding: 5px 15px;
+        }
         &:active {
             background: #adadad;
         }
@@ -43,9 +48,7 @@
             border-top-right-radius: 5px;
             border-bottom-right-radius: 5px;
         }
-    }
-    &.red {
-        .btn {
+        &.red {
             color: #fff;
             @include gradient(#e23333, #bf2b2b);
             border: solid 1px #c75d5d;
@@ -58,9 +61,7 @@
                 background: #bf2b2b;
             }
         }
-    }
-    &.blue {
-        .btn {
+        &.blue {
             color: #fff;
             @include gradient(#7faee9, #387ed3);
             border: solid 1px #567fb0;

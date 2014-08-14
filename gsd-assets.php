@@ -1,11 +1,11 @@
 <?php
 
 if (@$site->arg(1) == 'images') {
-    $iid = explode('_', @$site->path[2]);
+    $iid = explode('_', @$site->arg(2));
 
     $mysql->statement('SELECT extension FROM images WHERE iid = :iid;', array(':iid' => $iid[0]));
 
-    $asset = sprintf('gsd-assets/images/%d/%d.%s', $iid[0], $iid[0], $mysql->singleresult());
+    $asset = sprintf('gsd-assets/images/%d.%s', $iid[0], $mysql->singleresult());
 
     if ($mysql->total) {
         $size = getimagesize($asset);

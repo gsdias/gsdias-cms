@@ -31,6 +31,10 @@ if (is_file('gsd-install' . PHPEXT)) {
     }
 
     if (is_file(ROOTPATH . 'gsd-client/index.php') && $site->arg(0) != 'admin') {
+        if (!IS_LOGGED && $site->page['require_auth']) {
+            header('location: /login?redirect=' . urlencode($site->uri));
+            exit;
+        }
         require_once(ROOTPATH . 'gsd-client/index.php');
     }
     if (@$_SESSION['error']) {

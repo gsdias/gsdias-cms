@@ -60,10 +60,10 @@ class documents extends section implements isection {
                 if (is_numeric($field)) {
                     continue;
                 }
-                $fields['CURRENT_IMAGE_'. strtoupper($field)] = $value;
+                $fields['CURRENT_DOCUMENT_'. strtoupper($field)] = $value;
             }
 
-            $fields['CURRENT_IMAGE_CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())));
+            $fields['CURRENT_DOCUMENT_CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())));
 
             $tpl->setvars($fields);
 
