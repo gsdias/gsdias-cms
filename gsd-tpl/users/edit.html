@@ -5,7 +5,7 @@
     <!-- ENDIF ERRORS -->
     <form method="post">
         <div class="colA"><label>Nome</label> <input name="name" value="{CURRENT_USER_NAME}" required></div>
-        <div class="colA"><label>Email</label> <input name="email" value="{CURRENT_USER_EMAIL}" required></div>
+        <div class="colA"><label>Email</label> <input name="email" value="{CURRENT_USER_EMAIL}" data-rule-email="true" required></div>
         <div class="colA">
             {PERMISSION}
         </div>

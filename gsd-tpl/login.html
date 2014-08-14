@@ -24,7 +24,7 @@
             <form method="POST" action="/admin/auth{REDIRECT}">
                 <div class="colA">
                     <label>Email:</label>
-                    <input name="email" value="{LOGIN_EMAIL}" title="required field here" required>
+                    <input name="email" value="{LOGIN_EMAIL}" data-rule-email="true" data-msg-email="Formato de email invalido." required>
                 </div>
                 <div class="colA">
                     <label>Password:</label>
