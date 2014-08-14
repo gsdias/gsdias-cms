@@ -1,12 +1,27 @@
 <?php
 
-if (!IS_ADMIN || $site->arg(2) == 1) {
-    $_SESSION['error'] = 'You can\'t remove the default user.';
+if (!IS_ADMIN) {
+    $_SESSION['error'] = 'Não tem permissão para remover utilizadores.';
+    header("Location: /admin/users", true, 302);
+    exit;
+}
+
+if ($site->arg(2) == 1) {
+    $_SESSION['error'] = 'Não pode remover o utilizador padrão.';
     header("Location: /admin/users", true, 302);
     exit;
 }
 
 $mysql->statement('DELETE FROM users WHERE uid = ?;', array($site->arg(2)));
 
-header("Location: /admin/users", true, 302);
-exit;
+if ($mysql->errnum) {
+
+    $tpl->setvar('ERRORS', 'Houve um erro. Tente mais tarde.');
+    $tpl->setcondition('ERRORS');
+} else {
+
+    $_SESSION['message'] = 'Utilizador apagado.';
+
+    header("Location: /admin/users", true, 302);
+    exit;
+}

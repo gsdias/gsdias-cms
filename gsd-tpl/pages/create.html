@@ -6,6 +6,14 @@
     <form method="post">
         <div class="colA"><label>Título</label> <input name="title" required></div>
         <div class="colA"><label>Url</label> <input name="url" required></div>
+        <div class="colA"><label>Layout</label>
+            <select name="lid">
+                <option value="0">Escolha</option>
+                <!-- LOOP LAYOUT -->
+                <option value="{LAYOUT_KEY">{LAYOUT_VALUE}</option>
+                <!-- ENDLOOP LAYOUT -->
+            </select>
+        </div>
         <div class="colA"><label>Descrição</label> <input name="description"></div>
         <div class="colA"><label>keywords</label> <input name="keywords"></div>
         <div class="colA"><label>Tags</label> <input name="tags"></div>

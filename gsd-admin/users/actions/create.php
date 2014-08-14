@@ -32,7 +32,11 @@ if (@$_REQUEST['save']) {
 
     $mysql->statement(sprintf('INSERT INTO users (%s) values(%s);', implode(', ', $fields), substr($questions, 2)), $values);
     
-    if ($mysql->total) {
+    if ($mysql->errnum) {
+        $tpl->setvar('ERRORS', 'Já existe um utilizador com esse email.');
+        $tpl->setcondition('ERRORS');
+
+    } else {
         $email = new email();
         
         $email->setto($_REQUEST['email']);
@@ -42,10 +46,10 @@ if (@$_REQUEST['save']) {
         $email->setbody(sprintf('Foi criado um registo com este email. Para poder aceder use o seu email e a password: ', $password));
         
         #$email->sendmail();        
+
+        $_SESSION['message'] = 'Utilizador criado.';
+
         header("Location: /admin/users", true, 302);
         exit;
-    } else {
-        $tpl->setvar('ERRORS', 'There are already a user with that email.');
-        $tpl->setcondition('ERRORS');
     }
 }

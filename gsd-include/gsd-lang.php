@@ -20,5 +20,7 @@ $lang['pt'] = array(
     "LANG_CREATED" => "Criado",
     "LANG_CREATED_BY" => "Criado por",
     "LANG_ACTIONS" => "Acções",
-    "LANG_LAST_LOGIN" => "Último Login a"
+    "LANG_LAST_LOGIN" => "Último Login a",
+    "LANG_LAYOUTS" => "Layouts",
+    "LANG_NO_LAYOUTS" => "Não existem layouts"
 );
