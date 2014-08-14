@@ -32,7 +32,7 @@ abstract class section implements isection {
                     $mysql->statement('SELECT * FROM images WHERE iid = ?;', array(@$item[$extrafield]));
                     $image = $mysql->singleline();
 
-                    $image = new image(array('src' => sprintf('/gsd-assets/images/%s/%s.%s', @$image['iid'], @$image['iid'], @$image['extension']), 'height' => '100', 'width' => 'auto', 'class' => 'preview'));
+                    $image = new image(array('src' => sprintf('/gsd-assets/images/%s.%s', @$image['iid'], @$image['extension']), 'height' => '100', 'width' => 'auto', 'class' => 'preview'));
 
                     $partial = new tpl();
                     $partial->setvars(array(

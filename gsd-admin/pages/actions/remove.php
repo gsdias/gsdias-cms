@@ -8,24 +8,31 @@ if (!IS_ADMIN) {
     exit;
 }
 
-$mysql->statement('SELECT url FROM pages WHERE pid = ?;', array($site->arg(2)));
+if (@$_REQUEST['confirm'] == 'Sim') {
+    $mysql->statement('SELECT url FROM pages WHERE pid = ?;', array($site->arg(2)));
 
-$currenturl = $mysql->singleresult();
+    $currenturl = $mysql->singleresult();
 
-$mysql->statement('DELETE FROM redirect WHERE `destination` = ?;', array($currenturl));
+    $mysql->statement('DELETE FROM redirect WHERE `destination` = ?;', array($currenturl));
 
-$mysql->statement('DELETE FROM pages WHERE pid = ?;', array($site->arg(2)));
+    $mysql->statement('DELETE FROM pages WHERE pid = ?;', array($site->arg(2)));
 
-if ($mysql->errnum) {
-    
-    $tpl->setvar('ERRORS', 'Houve um problema ao apagar a pagina.');
-    $tpl->setcondition('ERRORS');
+    if ($mysql->errnum) {
 
-} else {
+        $tpl->setvar('ERRORS', 'Houve um problema ao apagar a pagina.');
+        $tpl->setcondition('ERRORS');
 
-    $_SESSION['message'] = 'Pagina apagada.';
+    } else {
 
+        $_SESSION['message'] = 'Pagina apagada.';
+
+        header("Location: /admin/pages", true, 302);
+        exit;
+
+    }
+}
+
+if (@$_REQUEST['confirm'] == 'Nao') {
     header("Location: /admin/pages", true, 302);
     exit;
-
 }

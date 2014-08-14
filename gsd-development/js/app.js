@@ -93,13 +93,9 @@ GSD.settings = {
             $("form").removeData("validator");
             $("form").removeData("unobtrusiveValidation");
             $("form").validate({
-                rules: {
-                    email: {
-                        email: true
-                    },
-                    'gsd-email': {
-                        email: true
-                    }
+                onkeyup: false,
+                messages: {
+                    required: "Campo de preenchimento obrigatorio"
                 }
             });
             //$.validator.unobtrusive.parse("form");

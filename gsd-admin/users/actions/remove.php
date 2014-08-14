@@ -12,16 +12,23 @@ if ($site->arg(2) == 1) {
     exit;
 }
 
-$mysql->statement('DELETE FROM users WHERE uid = ?;', array($site->arg(2)));
+if (@$_REQUEST['confirm'] == 'Sim') {
+    $mysql->statement('DELETE FROM users WHERE uid = ?;', array($site->arg(2)));
+    if ($mysql->errnum) {
 
-if ($mysql->errnum) {
+        $tpl->setvar('ERRORS', 'Houve um erro. Tente mais tarde.');
+        $tpl->setcondition('ERRORS');
+    } else {
 
-    $tpl->setvar('ERRORS', 'Houve um erro. Tente mais tarde.');
-    $tpl->setcondition('ERRORS');
-} else {
+        $_SESSION['message'] = 'Utilizador apagado.';
 
-    $_SESSION['message'] = 'Utilizador apagado.';
+        header("Location: /admin/users", true, 302);
+        exit;
+    }
 
+}
+
+if (@$_REQUEST['confirm'] == 'Nao') {
     header("Location: /admin/users", true, 302);
     exit;
 }

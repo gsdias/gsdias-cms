@@ -5,7 +5,8 @@
 
 class site {
 
-    public $name, $email, $ga, $fb, $uri;
+    public $name, $email, $ga, $fb, $uri, $page;
+    protected $path;
 
     public function __construct () {
         global $mysql, $tpl;
@@ -18,7 +19,7 @@ class site {
             if (strpos($name, '_image') !== false) {
                 $mysql->statement('SELECT * FROM images WHERE iid = ?;', array($option['value']));
                 $image = $mysql->singleline();
-                $image = new image(array('src' => sprintf('/gsd-assets/images/%s/%s.%s', @$image['iid'], @$image['iid'], @$image['extension']), 'width' => @$image['width'], 'height' => @$image['height']));
+                $image = new image(array('src' => sprintf('/gsd-assets/images/%s.%s', @$image['iid'], @$image['extension']), 'width' => @$image['width'], 'height' => @$image['height']));
 
                 $tpl->setvar('SITE_' . strtoupper($name), $image);
             } else {
@@ -71,6 +72,8 @@ class site {
         if ($mysql->total) {
 
             $page = $mysql->singleline();
+
+            $this->page = $page;
 
             $tpl->setvars(array(
                 'PAGE_TITLE' => $page['title'],
