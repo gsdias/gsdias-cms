@@ -5,7 +5,7 @@ $startpoint = 'index';
 if (@$_REQUEST['save']) {
     $main = 'STEP2';
     
-    $mysql->statement("INSERT INTO users (level, email, password, name, creator) VALUES (100, :email, md5(:password), :name, 0);", array(':email' => $_REQUEST['email'], ':password' => $_REQUEST['password'], ':name' => $_REQUEST['name']));
+    $mysql->statement("INSERT INTO users (level, email, password, name, creator) VALUES ('admin', :email, md5(:password), :name, 0);", array(':email' => $_REQUEST['email'], ':password' => $_REQUEST['password'], ':name' => $_REQUEST['name']));
     
     if ($mysql->total) {
         $tpl->setvar('STEP2_MESSAGES', "Admin user saved with success. You can login now. Don't forget to remove install files.");
