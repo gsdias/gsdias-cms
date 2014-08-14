@@ -20,7 +20,7 @@ echo $mysql->errmsg;
 
         $id = $mysql->lastInserted();
 
-        $file = savefile ($_FILES['asset'], ASSETPATH . 'documents/' . $id . '/', null, null, $id);
+        $file = savefile ($_FILES['asset'], ASSETPATH . 'documents/', null, null, $id);
 
         header("Location: /admin/documents", true, 302);
         exit;
