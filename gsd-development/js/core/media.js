@@ -51,7 +51,7 @@
                 datacontent.append('<table><thead><tr><th>Imagem</th><th>Nome</th><th>Accao</th></tr></thead><tbody></tbody></table>');
                 
                 _.each(data, function (item) {
-                    datacontent.find('tbody').append('<tr><td><image src="/gsd-assets/images/' + item.iid + '/' + item.iid + '.' + item.extension + '" height="100"></td><td>' + item.name + '</td><td><a href="#' + item.iid + '" data-image="/gsd-assets/images/' + item.iid + '/' + item.iid + '.' + item.extension + '" class="use">Usar</a></td></tr>');
+                    datacontent.find('tbody').append('<tr><td><image src="/gsd-assets/images/' + item.iid + '.' + item.extension + '" height="100"></td><td>' + item.name + '</td><td><a href="#' + item.iid + '" data-image="/gsd-assets/images/' + item.iid + '.' + item.extension + '" class="use">Usar</a></td></tr>');
                 });
                 
                 overlay.render();
