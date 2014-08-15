@@ -1,9 +1,7 @@
 <?php
 
-$startpoint = 'index';
-
 if (@$_REQUEST['save']) {
-    $main = 'STEP2';
+    $site->main = 'STEP2';
     
     $mysql->statement("INSERT INTO users (level, email, password, name, creator) VALUES ('admin', :email, md5(:password), :name, 0);", array(':email' => $_REQUEST['email'], ':password' => $_REQUEST['password'], ':name' => $_REQUEST['name']));
     
@@ -12,7 +10,7 @@ if (@$_REQUEST['save']) {
     }
 
 } else {
-    $main = 'STEP1';
+    $site->main = 'STEP1';
     
     $mysql->statement("SHOW DATABASES;");
 
@@ -69,7 +67,7 @@ if (@$_REQUEST['save']) {
         }
         $tpl->setarray('CREATETABLES', $table_exists);
     } else {
-        $main = 'STEP2';
+        $site->main = 'STEP2';
         $mysql->statement("SELECT count(*) FROM users;");
         if ($mysql->singleresult()) {
             $tpl->setvar('STEP2_MESSAGES', "There is already an user on the database.");

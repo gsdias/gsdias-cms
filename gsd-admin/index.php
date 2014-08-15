@@ -5,7 +5,7 @@ if (!IS_LOGGED) {
         header('location: /admin/auth?redirect=' . urlencode($site->uri));
         exit;
     } else {
-        $startpoint = 'login';
+        $site->startpoint = 'login';
         $tpl->setvar('EXTRACLASS', 'login');
     }
 } else {
@@ -13,8 +13,8 @@ if (!IS_LOGGED) {
         header('location: ' . $site->uri . '/details');
         exit;
     }
-    $startpoint = 'index';
-    $main = $site->arg(1) ? $site->arg(1) : 'dashboard';
+    $site->main = $site->arg(1) ? $site->arg(1) : 'dashboard';
+    $site->startpoint = 'index';
     
     $clientfields = CLIENTPATH . 'include/admin/fields' . PHPEXT;
     if (is_file($clientfields)) {

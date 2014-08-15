@@ -5,11 +5,14 @@
 
 class site {
 
-    public $name, $email, $ga, $fb, $uri, $page;
+    public $name, $email, $ga, $fb, $uri, $page, $main, $startpoint;
     protected $path;
 
     public function __construct () {
         global $mysql, $tpl;
+        
+        $this->startpoint = 'index';
+        $this->main = '';
 
         $mysql->statement('SELECT * FROM options;');
 
@@ -43,7 +46,7 @@ class site {
     }
 
     public function page () {
-        global $tpl, $mysql, $startpoint;
+        global $tpl, $mysql;
 
         $mysql->statement('SELECT destination FROM redirect WHERE `from` = :uri', array(':uri' => $this->uri));
         if ($mysql->total) {
@@ -86,7 +89,7 @@ class site {
             ));
 
         } else {
-            $startpoint = '404';
+            $this->startpoint = '404';
             $tpl->setvar('PAGE_TITLE', $this->name);
         }
         $tpl->setvar('PAGE_CANONICAL', (stripos($_SERVER['SERVER_PROTOCOL'],'https') === true ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . $this->uri

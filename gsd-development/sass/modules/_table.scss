@@ -1,9 +1,9 @@
 .table {
     width: 100%;
-    border: solid 1px #ccc;
+    border: solid 1px $border-color;
     margin-top: 30px;
     thead {
-        border-bottom: solid 1px #ccc;
+        border-bottom: solid 1px $border-color;
     }
     th {
         font-weight: 700;
@@ -12,7 +12,7 @@
         padding: 10px;
     }
     tr {
-        border-bottom: dashed 1px #ccc;
+        border-bottom: dashed 1px $border-color;
     }
     .actions {
         a {
@@ -20,11 +20,11 @@
         }
     }
     a {
-        color: #0076cf;
+        color: #276876;
     }
     img {
         padding: 3px;
-        border: solid 1px #ccc;
-        box-shadow: 0 0 1px #ccc;
+        border: solid 1px $border-color;
+        box-shadow: 0 0 1px $border-color;
     }
 }

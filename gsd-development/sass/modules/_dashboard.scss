@@ -1,5 +1,5 @@
 .list {
-    background: #efefef;
+    background: rgba(117, 140, 145, .1);
     padding: 10px 1%;
     border: solid 1px #ccc;
     border-radius: 3px;
@@ -24,7 +24,7 @@
         }
     }
     a {
-        color: #0076cf;
+        color: #276876;
     }
     @include respond-min($tablet-port) {
 		float: left;

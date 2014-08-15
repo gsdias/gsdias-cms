@@ -13,7 +13,7 @@ input {
     width: 91%;
     display: block;
     margin: auto;
-    border: solid 1px #ccc;
+    border: solid 1px $border-color;
     height: 30px;
     border-radius: 3px;
     padding: 0 2%;
@@ -59,8 +59,8 @@ input {
 
 .preview {
     padding: 3px;
-    border: solid 1px #ccc;
-    box-shadow: 0 0 1px #ccc;
+    border: solid 1px $border-color;
+    box-shadow: 0 0 1px $border-color;
 }
 
 @include respond-min($tablet-port) {

@@ -60,5 +60,5 @@ if ($uri == '/admin/auth' || $uri == '/admin/auth/') {
         header('location: /admin');
         exit;
     }
-    $startpoint = 'admin/login';
+    $site->startpoint = 'admin/login';
 }

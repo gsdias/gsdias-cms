@@ -8,13 +8,10 @@ if (is_file('gsd-install.php')) {
     define('IS_INSTALLED', 1);
 }
 
-$startpoint = 'index';
-$main = '';
-
 include_once('gsd-include/gsd-config.php');
 
 if (is_file('gsd-install' . PHPEXT)) {
-    $main = 'STEP1';
+    $site->main = 'STEP1';
     require_once('gsd-install' . PHPEXT);
     
 } elseif ($site->arg(0) == 'gsd-assets') {
@@ -49,7 +46,7 @@ if (is_file('gsd-install' . PHPEXT)) {
     }
 }
 
-$tpl->includeFiles('MAIN', $main);
-$tpl->setFile($startpoint);
+$tpl->includeFiles('MAIN', $site->main);
+$tpl->setFile($site->startpoint);
 
 echo $tpl;
