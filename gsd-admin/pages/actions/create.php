@@ -6,10 +6,12 @@ if (!IS_ADMIN) {
 }
 
 if (@$_REQUEST['save']) {
+    
+    $.fields = $section . 'fields';
 
     $defaultfields = array('title', 'url', 'description', 'keywords', 'tags', 'og_title', 'og_image', 'og_description');
     
-    $extrafields = function_exists('pagesfields') ? pagesfields() : array('list' => array());
+    $extrafields = function_exists($.fields) ? $.fields() : array('list' => array());
     
     $fields = array_merge($defaultfields, $extrafields['list']);
 

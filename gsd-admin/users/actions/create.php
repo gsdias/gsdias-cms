@@ -6,14 +6,16 @@ if (!IS_ADMIN) {
 }
 
 if (@$_REQUEST['save']) {
+    
+    $.fields = $section . 'fields';
 
     $defaultfields = array('email', 'level', 'name');
 
-    $extrafields = function_exists('usersfields') ? usersfields() : array();
+    $extrafields = function_exists($.fields) ? $.fields() : array('list' => array());
     
     $password = substr(str_shuffle(sha1(rand() . time() . "gsdias-cms")), 2, 10);
 
-    $fields = array_merge($defaultfields, $extrafields['list']);
+    $fields = array_merge($defaultfields, @$extrafields['list']);
     
     $values = array();
     

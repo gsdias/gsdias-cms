@@ -22,6 +22,10 @@
             cursor: pointer;
         }
     }
+    section {
+        height: 100%;
+        position: relative;
+    }
     div {
         background: #fff;
         width: 91%;
@@ -29,6 +33,8 @@
         min-height: 200px;
         margin: auto;
         padding: 2.001%;
+        overflow: auto;
+        height: 70%;
     }
     table {
         width: 100%;

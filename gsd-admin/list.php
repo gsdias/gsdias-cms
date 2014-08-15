@@ -26,7 +26,7 @@ if ($action) {
         
         $csection->generatefields($section);
         
-        $main = sprintf('%s/%s', $section, $action);
+        $site->main = sprintf('%s/%s', $section, $action);
         
         $file = sprintf('gsd-admin/%s/actions/%s%s', $section, $action, PHPEXT);
         if (is_file($file)) {
@@ -55,7 +55,7 @@ if ($action) {
         
         $csection->generatefields($section);
         
-        $main = sprintf('%s/%s', $section, $id);
+        $site->main = sprintf('%s/%s', $section, $id);
         
         $file = sprintf('gsd-admin/%s/actions/%s%s', $section, $id, PHPEXT);
 
