@@ -5,7 +5,7 @@ $mysql->statement('SELECT * FROM users WHERE disabled IS NULL LIMIT 0, 3');
 $users = array();
 
 foreach ($mysql->result() as $userlist) {
-    $created = explode(' ', $userlist['created']);
+    $created = explode(' ', $userlist['last_login']);
     $users[] = array(
         'ID' => $userlist['uid'],
         'NAME' => $userlist['name'],
@@ -14,7 +14,7 @@ foreach ($mysql->result() as $userlist) {
 }
 $tpl->setarray('USERS', $users);
 
-$mysql->statement('SELECT * FROM pages WHERE disabled IS NULL LIMIT 0, 3');
+$mysql->statement('SELECT * FROM pages WHERE published IS NOT NULL LIMIT 0, 3');
 
 $pages = array();
 

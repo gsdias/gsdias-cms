@@ -1,13 +1,28 @@
 <?php
 
+if (!IS_ADMIN) {
+    
+    $_SESSION['error'] = 'Nao tem permissao para apagar layouts.';
+    
+    header("Location: /admin/layouts", true, 302);
+    exit;
+}
+
 if (@$_REQUEST['confirm'] == 'Sim') {
-    removefile(ASSETPATH . 'images/' . $site->arg(2));
+    $mysql->statement('DELETE FROM layouts WHERE lid = ?;', array($site->arg(2)));
 
-    $mysql->statement('DELETE FROM images WHERE iid = ?;', array($site->arg(2)));
+    if ($mysql->errnum) {
 
-    if ($mysql->total) {
-        header("Location: /admin/images", true, 302);
+        $tpl->setvar('ERRORS', 'Houve um problema ao apagar o layout.');
+        $tpl->setcondition('ERRORS');
+
+    } else {
+
+        $_SESSION['message'] = 'Layout apagado.';
+
+        header("Location: /admin/layouts", true, 302);
         exit;
+
     }
 }
 
