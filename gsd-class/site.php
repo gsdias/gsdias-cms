@@ -67,7 +67,7 @@ class site {
         $questions = str_repeat('url = ? OR ', sizeof($urls) - 1);
         $questions .= 'url = ?';
 
-        $mysql->statement(sprintf('SELECT * FROM pages WHERE %s LIMIT 0, 1;', $questions), $urls);
+        $mysql->statement(sprintf('SELECT * FROM pages WHERE published IS NOT NULL AND (%s) LIMIT 0, 1;', $questions), $urls);
 
         if ($mysql->total) {
 

@@ -13,7 +13,7 @@ class pages extends section implements isection {
         $mysql->statement('SELECT pages.*, pages.creator AS creator_id, u.name AS creator_name 
         FROM pages 
         LEFT JOIN users AS u ON pages.creator = u.uid 
-        WHERE pages.disabled IS NULL ORDER BY pages.pid ' . pageLimit(pageNumber(), $numberPerPage));
+        ORDER BY pages.pid ' . pageLimit(pageNumber(), $numberPerPage));
 
         $list = array();
 
@@ -35,7 +35,7 @@ class pages extends section implements isection {
                 $list[] = $fields;
             }
             $tpl->setarray('PAGES', $list);
-            $pages = pageGenerator('FROM pages LEFT JOIN users AS u ON pages.creator = u.uid WHERE pages.disabled IS NULL ORDER BY pages.pid;');
+            $pages = pageGenerator('FROM pages LEFT JOIN users AS u ON pages.creator = u.uid ORDER BY pages.pid;');
             
             $tpl->setcondition('PAGINATOR', $pages['TOTAL'] > 1);
             
@@ -67,6 +67,7 @@ class pages extends section implements isection {
 
             $fields['MENU_CHECKED'] = @$item['show_menu'] ? 'checked="checked"' : '';
             $fields['AUTH_CHECKED'] = @$item['require_auth'] ? 'checked="checked"' : '';
+            $fields['PUBLISHED_CHECKED'] = @$item['published'] ? 'checked="checked"' : '';
             
             $mysql->statement('SELECT * FROM images WHERE iid = ?;', array($item['og_image']));
             $image = $mysql->singleline();

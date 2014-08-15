@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS `pages` (
   `require_auth` tinyint(1) DEFAULT NULL,
   `creator` int(11) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `disabled` tinyint(1) DEFAULT NULL
+  `published` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --

@@ -18,10 +18,11 @@ if (@$_REQUEST['save']) {
         $values[] = @$_REQUEST[$field];
     }
 
-    $fields .= ', `show_menu` = ?, `require_auth` = ?';
+    $fields .= ', `show_menu` = ?, `require_auth` = ?, `published` = ?';
 
     $values[] = @$_REQUEST['menu'] ? @$_REQUEST['menu'] : null;
     $values[] = @$_REQUEST['auth'] ? @$_REQUEST['auth'] : null;
+    $values[] = @$_REQUEST['published'] ? @$_REQUEST['published'] : null;
     $values[] = $site->arg(2);
 
     $mysql->statement(sprintf('UPDATE pages SET %s WHERE pid = ?;', substr($fields, 2)), $values);
