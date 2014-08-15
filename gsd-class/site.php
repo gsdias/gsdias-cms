@@ -87,11 +87,10 @@ class site {
 
         } else {
             $startpoint = '404';
-            $tpl->setvars(array(
-                'PAGE_TITLE' => $this->name,
-                'PAGE_CANONICAL' => (stripos($_SERVER['SERVER_PROTOCOL'],'https') === true ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . $this->uri
-            ));
+            $tpl->setvar('PAGE_TITLE', $this->name);
         }
+        $tpl->setvar('PAGE_CANONICAL', (stripos($_SERVER['SERVER_PROTOCOL'],'https') === true ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . $this->uri
+        );
     }
 
     public function arg ($pos) {
