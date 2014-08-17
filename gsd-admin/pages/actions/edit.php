@@ -25,16 +25,22 @@ if (@$_REQUEST['save']) {
     $values[] = @$_REQUEST['published'] ? @$_REQUEST['published'] : null;
     $values[] = $site->arg(2);
 
+    foreach ($_REQUEST as $module => $value) {
+        if (strpos($module, 'pm_') !== false) {
+            $mysql->statement('UPDATE pagemodules SET data = ? WHERE pmid = ?;', array($value, substr($module, 3)));
+        }
+    }
+
     $mysql->statement(sprintf('UPDATE pages SET %s WHERE pid = ?;', substr($fields, 2)), $values);
 
     if ($mysql->errnum) {
     
-        $tpl->setvar('ERRORS', 'Houve um problema ao salvar as definicoes. Verifique os dados e tente novamente');
+        $tpl->setvar('ERRORS', 'Houve um problema ao salvar as definicoes. Verifique os dados e tente novamente. ' . $mysql->errmsg);
         $tpl->setcondition('ERRORS');
         
     } else {
     
-        $_SESSION['message'] = 'Pagina salva.';
+        $_SESSION['message'] = 'Página salva';
 
         header("Location: /admin/pages", true, 302);
         exit;

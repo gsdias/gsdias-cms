@@ -57,7 +57,7 @@ class tpl {
       * @return nothing
     */  
     function setArray ($id, $value = array(), $merge = false) {
-        if ($merge) {
+        if ($merge && !empty(@$this->config['array'][$id])) {
             $this->config['array'][$id] = array_merge($this->config['array'][$id], $value);
         } else {
             $this->config['array'][$id] = $value;
@@ -90,6 +90,7 @@ class tpl {
       * @return nothing
     */  
     function checkblocks ($type = 'BLOCK') {
+        global $mysql, $site;
         $list = array();
         
         $type = strtoupper($type);
@@ -99,12 +100,17 @@ class tpl {
         foreach ($matches as $match) array_push($list, $match[1]);
         
         while ($key = array_pop($list)) {
-            preg_match_all(sprintf('#<!-- %s %s -->(.*?)<!-- END%s %s -->#s', $type, $key, $type, $key), $this->config['file'], $matches, PREG_SET_ORDER);
-            for ($i = 0; $i < count($matches); $i++) {
-                if ($type === 'LOOP') {
-                    $this->config['file'] = preg_replace(sprintf('#<!-- %s %s -->.*?<!-- END%s %s -->#s', $type, $key, $type, $key), $this->loopBlock($key, $matches[$i][1]), $this->config['file'], 1);
-                } else {
-                    $this->config['file'] = preg_replace(sprintf('#<!-- %s %s -->.*?<!-- END%s %s -->#s', $type, $key, $type, $key), $this->ifBlock($key, $matches[$i][1]), $this->config['file'], 1);
+            if ($type == 'PLACEHOLDER') {
+                $placeholder = explode(' ', $key);
+                $this->config['file'] = preg_replace(sprintf('#<!-- %s %s -->#s', $type, $key), $site->pagemodules[$placeholder[0]], $this->config['file'], 1);
+            } else {
+                preg_match_all(sprintf('#<!-- %s %s -->(.*?)<!-- END%s %s -->#s', $type, $key, $type, $key), $this->config['file'], $matches, PREG_SET_ORDER);
+                for ($i = 0; $i < count($matches); $i++) {
+                    if ($type === 'LOOP') {
+                        $this->config['file'] = preg_replace(sprintf('#<!-- %s %s -->.*?<!-- END%s %s -->#s', $type, $key, $type, $key), $this->loopBlock($key, $matches[$i][1]), $this->config['file'], 1);
+                    } else {
+                        $this->config['file'] = preg_replace(sprintf('#<!-- %s %s -->.*?<!-- END%s %s -->#s', $type, $key, $type, $key), $this->ifBlock($key, $matches[$i][1]), $this->config['file'], 1);
+                    }
                 }
             }
         }
@@ -224,6 +230,7 @@ class tpl {
                 $files = $this->findFile($value);
                 $this->config['file'] = str_replace(sprintf("[%s]", $value), $files, $this->config['file']);
                 $this->replaceVar();
+                $this->checkblocks('PLACEHOLDER');
                 $this->checkblocks('BLOCK');
                 $this->checkblocks('IF');
                 $this->checkblocks('LOOP');
@@ -231,6 +238,7 @@ class tpl {
             preg_match_all('*\[[A-Z_]+\]*', $this->config['file'], $matches);
         }
         $this->replaceVar();
+        $this->checkblocks('PLACEHOLDER');
         $this->checkblocks('BLOCK');
         $this->checkblocks('IF');
         $this->checkblocks('LOOP');

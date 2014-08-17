@@ -6,6 +6,14 @@
     <form method="post" enctype="multipart/form-data">
         <div class="colA"><label>Nome</label> <input name="name" required></div>
         <div class="colA"><label>Ficheiro</label> <input name="layout" type="file" required></div>
+        <div class="colA"><label>Tipo</label>
+            <select name="ltid" required>
+                <option value="" disabled="disabled">Escolha</option>
+                <!-- LOOP LAYOUTTYPE -->
+                    <option value="{LAYOUTTYPE_KEY}">{LAYOUTTYPE_VALUE}</option>
+                <!-- ENDLOOP LAYOUTTYPE -->
+            </select>
+        </div>
         <div class="btns">
             <input type="submit" class="btn blue" value="Salvar" name="save">
         </div>

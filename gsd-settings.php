@@ -17,9 +17,9 @@ $_mysql['db'] = 'gsdias_pt_cms';
 
 $_mysql['host'] = 'home.gsdias.pt';
 
-$_mysql['user'] = 'corporat_iberica';
-$_mysql['pass'] = 'UTFFvV@%WaGG';
-$_mysql['db'] = 'corporat_iberica';
+$_mysql['user'] = 'gsdias';
+$_mysql['pass'] = '12348876';
+$_mysql['db'] = 'portfolio';
 
 define('DEBUG', 0);
 define('TPLEXT', '.html');

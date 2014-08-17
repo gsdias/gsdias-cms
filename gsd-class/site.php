@@ -5,7 +5,7 @@
 
 class site {
 
-    public $name, $email, $ga, $fb, $uri, $page, $main, $startpoint;
+    public $name, $email, $ga, $fb, $uri, $page, $main, $startpoint, $pagemodules;
     protected $path;
 
     public function __construct () {
@@ -70,7 +70,10 @@ class site {
         $questions = str_repeat('url = ? OR ', sizeof($urls) - 1);
         $questions .= 'url = ?';
 
-        $mysql->statement(sprintf('SELECT * FROM pages WHERE published IS NOT NULL AND (%s) LIMIT 0, 1;', $questions), $urls);
+        $mysql->statement(sprintf('SELECT *
+        FROM pages
+        LEFT JOIN layouts ON layouts.lid = pages.lid
+        WHERE published IS NOT NULL AND (%s) LIMIT 0, 1;', $questions), $urls);
 
         if ($mysql->total) {
 
@@ -87,6 +90,20 @@ class site {
                 'PAGE_OG_IMAGE' => $page['og_image'],
                 'PAGE_CANONICAL' => $_SERVER['HTTP_HOST'] . '/' . $this->uri
             ));
+            $this->main = trim(str_replace('.html', '', $page['file']));
+
+            $mysql->statement('SELECT *
+            FROM pagemodules AS pm
+            JOIN layoutsections AS ls ON ls.lsid = pm.lsid
+            WHERE pid = ?;', array($page['pid']));
+
+            if ($mysql->total) {
+                $pagemodules = array();
+                foreach ($mysql->result() as $module) {
+                    $pagemodules[$module['name']] = $module['data'];
+                }
+                $this->pagemodules = $pagemodules;
+            }
 
         } else {
             $this->startpoint = '404';

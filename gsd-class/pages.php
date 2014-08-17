@@ -89,4 +89,33 @@ class pages extends section implements isection {
 
         }
     }
+    public function generatefields ($section) {
+        global $tpl, $mysql;
+
+        parent::generatefields ($section);
+
+        $extrafields = array();
+
+        if (!empty($this->item)) {
+            $mysql->statement('SELECT *, ls.name AS lsname
+            FROM pagemodules AS pm
+LEFT JOIN layoutsections as ls on ls.lsid = pm.lsid
+LEFT JOIN moduletypes as mt on mt.mtid = pm.mtid
+WHERE pid = ?', array($this->item['pid']));
+            foreach ($mysql->result() as $item) {
+                $partial = new tpl();
+                $partial->setvars(array(
+                    'LABEL' => ucwords(strtolower($item['lsname'])),
+                    'NAME' => $item['pmid'],
+                    'VALUE' => $item['data']
+                ));
+                $partial->setfile($item['file']);
+
+                $extrafields[] = array(
+                    'FIELD' => $partial
+                );
+            }
+            $tpl->setarray('FIELD', $extrafields, true);
+        }
+    }
 }

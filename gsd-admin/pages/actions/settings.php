@@ -27,8 +27,9 @@ if (@$_REQUEST['save']) {
         } else {
             $mysql->statement('INSERT INTO redirect (`pid`, `from`, `destination`, `creator`) VALUES (?, ?, ?, ?);', array($site->arg(2), $currenturl, $_REQUEST['url'], $user->id));
         }
-        $mysql->statement('UPDATE pages SET url = ? WHERE pid = ?;', array(
+        $mysql->statement('UPDATE pages SET url = ?, lid = ? WHERE pid = ?;', array(
             $_REQUEST['url'],
+            $_REQUEST['lid'],
             $site->arg(2)
         ));
 

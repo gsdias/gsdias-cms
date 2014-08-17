@@ -2,7 +2,7 @@
 
 abstract class section implements isection {
 
-    protected $item = array();
+    public $item = array();
 
     public function __construct ($id = null) {
 
@@ -39,7 +39,7 @@ abstract class section implements isection {
                         'LABEL' => $sectionextrafields['labels'][$key],
                         'NAME' => $extrafield,
                         'IMAGE' => $image,
-                        'VALUE' => @$item[$extrafield]
+                        'VALUE' => @$item[$extrafield] ? $item[$extrafield] : 0
                     ));
                     $partial->setfile('_image');
 

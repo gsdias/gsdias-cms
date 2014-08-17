@@ -4,12 +4,16 @@
     <div class="errors">{ERRORS}</div>
     <!-- ENDIF ERRORS -->
     <form method="post">
-    <div class="colA">Url <input name="url" value="{CURRENT_PAGE_URL}"></div>
-    <!--<div class="colA">Web directory
-        <select>
-            <option>Merchandising</option>
-        </select>
-    </div>-->
+        <div class="colA">Url <input name="url" value="{CURRENT_PAGE_URL}"></div>
+        <div class="colA">
+           <label>Layout</label>
+            <select name="lid" required>
+                <option disabled="disabled">Escolha</option>
+                <!-- LOOP LAYOUT -->
+                <option value="{LAYOUT_KEY}" {LAYOUT_SELECTED}>{LAYOUT_VALUE}</option>
+                <!-- ENDLOOP LAYOUT -->
+            </select>
+        </div>
 
         <div class="btns blue">
             <input type="submit" class="btn" value="Salvar" name="save">

@@ -51,6 +51,8 @@ class layouts extends section implements isection {
         if ($mysql->total) {
 
             $item = $mysql->singleline();
+
+            $this->item = $item;
             $created = explode(' ', $item['created']);
 
             $fields = array();
