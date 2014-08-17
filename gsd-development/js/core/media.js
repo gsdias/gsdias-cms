@@ -19,9 +19,10 @@
         useasset: function (e) {
             e.preventDefault();
             var use = $(e.currentTarget);
-            
             $(overlay.$el.data('elm')).val(use.attr('href').substr(1));
+            $(overlay.$el.data('elm')).next().addClass('is-hidden');
             $(overlay.$el.data('preview')).attr('src', use.data('image'));
+            $(overlay.$el.data('preview')).removeClass('is-hidden');
             this.closeoverlay();
         },
         
@@ -59,8 +60,10 @@
         });
         $('.clearimage').on('click', function (e) {
             e.preventDefault();
-            $(this).closest('.colA').find('input[type="hidden"]').val(0);
+            $(this).closest('.colA').find('input[type="hidden"]').val('0');
+            $(this).closest('.colA').find('input[type="text"]').removeClass('is-hidden');
             $(this).closest('.colA').find('img').attr('src', '/gsd-image.php?width=auto&&height=100');
+            $(this).closest('.colA').find('img').addClass('is-hidden');
         });
     });
 

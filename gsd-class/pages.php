@@ -72,14 +72,20 @@ class pages extends section implements isection {
             $mysql->statement('SELECT * FROM images WHERE iid = ?;', array($item['og_image']));
             $image = $mysql->singleline();
 
-            $image = new image(array('src' => sprintf('/gsd-assets/images/%s.%s', @$image['iid'], @$image['extension']), 'height' => '100', 'width' => 'auto', 'class' => 'preview'));
+            $image = new image(array(
+                'src' => sprintf('/gsd-assets/images/%s.%s', @$image['iid'], @$image['extension']),
+                'height' => '100',
+                'width' => 'auto',
+                'class' => sprintf('preview %s', $item['og_image'] ? '' : 'is-hidden')
+            ));
 
             $partial = new tpl();
             $partial->setvars(array(
                 'LABEL' => 'Imagem',
                 'NAME' => 'og_image',
-                'VALUE' => $item['og_image'],
-                'IMAGE' => $image
+                'VALUE' => $item['og_image'] ? $item['og_image'] : 0,
+                'IMAGE' => $image,
+                'EMPTY' => $item['og_image'] ? 'is-hidden' : ''
             ));
             $partial->setfile('_image');
 

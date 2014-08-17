@@ -9,3 +9,4 @@ gsd-tpl/_shared/_scripts.html
 gsd-assets/images/*
 gsd-assets/documents/*
 gsd-settings.php
+/gsd-settings.php

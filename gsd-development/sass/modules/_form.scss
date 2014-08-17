@@ -24,6 +24,14 @@ input {
         padding: 5px 20px;
         height: 18px;
     }
+    &.is-hidden {
+        display: none;
+    }
+    &.box {
+        background: #ffc;
+        color: #9B870C;
+        border-color: #9B870C;
+    }
 }
 .btn-submit {
     float: right;
@@ -61,6 +69,9 @@ input {
     padding: 3px;
     border: solid 1px $border-color;
     box-shadow: 0 0 1px $border-color;
+    &.is-hidden {
+        display: none;
+    }
 }
 
 @include respond-min($tablet-port) {

@@ -32,14 +32,20 @@ abstract class section implements isection {
                     $mysql->statement('SELECT * FROM images WHERE iid = ?;', array(@$item[$extrafield]));
                     $image = $mysql->singleline();
 
-                    $image = new image(array('src' => sprintf('/gsd-assets/images/%s.%s', @$image['iid'], @$image['extension']), 'height' => '100', 'width' => 'auto', 'class' => 'preview'));
+                    $image = new image(array(
+                        'src' => sprintf('/gsd-assets/images/%s.%s', @$image['iid'], @$image['extension']),
+                        'height' => '100',
+                        'width' => 'auto',
+                        'class' => sprintf('preview %s', @$item['og_image'] ? '' : 'is-hidden')
+                    ));
 
                     $partial = new tpl();
                     $partial->setvars(array(
                         'LABEL' => $sectionextrafields['labels'][$key],
                         'NAME' => $extrafield,
                         'IMAGE' => $image,
-                        'VALUE' => @$item[$extrafield] ? $item[$extrafield] : 0
+                        'VALUE' => @$item[$extrafield] ? @$item[$extrafield] : 0,
+                        'EMPTY' => @$item[$extrafield] ? 'is-hidden' : ''
                     ));
                     $partial->setfile('_image');
 
@@ -47,10 +53,21 @@ abstract class section implements isection {
                     $extraclass = 'image';
                     break;
                     case 'select':
-                    $field = new select(array('id' => $extrafield, 'name' => $extrafield, 'list' => $sectionextrafields['values'], 'label' => $sectionextrafields['labels'][$key], 'selected' => @$item[$extrafield]));
+                    $field = new select(array(
+                        'id' => $extrafield,
+                        'name' => $extrafield,
+                        'list' => $sectionextrafields['values'],
+                        'label' => $sectionextrafields['labels'][$key],
+                        'selected' => @$item[$extrafield]
+                    ));
                     break;
                     default:
-                    $field = (string)new input(array('id' => $extrafield, 'name' => $extrafield, 'value' => @$item[$extrafield], 'label' => $sectionextrafields['labels'][$key]));
+                    $field = (string)new input(array(
+                        'id' => $extrafield,
+                        'name' => $extrafield,
+                        'value' => @$item[$extrafield],
+                        'label' => $sectionextrafields['labels'][$key]
+                    ));
                     break;
                 }
 

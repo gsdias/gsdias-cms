@@ -9,12 +9,6 @@ array_shift($path);
 $config['resources'] = '/gsd-resources';
 $config['lang'] = 'pt';
 
-$_mysql['host'] = 'database.lcn.com';
-
-$_mysql['user'] = 'LCN387585_cms';
-$_mysql['pass'] = '12348876';
-$_mysql['db'] = 'gsdias_pt_cms';
-
 $_mysql['host'] = 'home.gsdias.pt';
 
 $_mysql['user'] = 'gsdias';
