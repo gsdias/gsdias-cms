@@ -41,8 +41,8 @@
 }
 
 .main {
-    width: 95%;
-    margin: 20px auto;
+    margin-left: 64px;
+    min-height: 384px;
     &:after {
         content: '';
         display: block;

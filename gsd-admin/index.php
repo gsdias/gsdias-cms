@@ -23,7 +23,9 @@ if (!IS_LOGGED) {
 
     if (!$site->arg(1)) {
         include_once('gsd-admin/dashboard' . PHPEXT);
+        $tpl->setvar('DASHBOARD_ACTIVE', 'active');
     } else {
+        $tpl->setvar(strtoupper($site->arg(1)) . '_ACTIVE', 'active');
         if ($site->arg(1) == 'settings') {
             $file = 'gsd-admin/settings' . PHPEXT;
         } else {

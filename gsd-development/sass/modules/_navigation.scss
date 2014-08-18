@@ -1,18 +1,92 @@
 .nav {
     position: fixed;
     left: 0;
-    top: 0;
-    a:hover {
+    top: 79px;
+    z-index: 5;
+    background: #aaa;
+    height: 100%;
+    .icon {
+        @include prefixs('transform', 'scale(.7) translatez(0)');
+        @include prefixs('transition', 'all .3s ease');
+    }
+    a {
+        text-indent: -9999px;
+        overflow: hidden;
+        text-decoration: none;
+        display: block;
+        font-size: 0;
+        text-align: start;
+        display: block;
         position: relative;
-        i:after {
+        &:hover {
+            &:after {
+                right: 0;
+                border: solid 8px transparent;
+                content: " ";
+                height: 0;
+                width: 0;
+                position: absolute;
+                border-right-color: #fff;
+                top: 28%;
+            }
+        }
+        &.active {
+            &:after {
+                right: 0;
+                border: solid 8px transparent;
+                content: " ";
+                height: 0;
+                width: 0;
+                position: absolute;
+                border-right-color: #fff;
+                top: 28%;
+            }
+        }
+    }
+    div {
+        position: relative;
+    }
+    li:hover {
+        position: relative;
+        ul {
+            display: block;
+        }
+        .icon {
+            @include prefixs('transform', 'scale(1)');
+        }
+    }
+    ul ul {
+        display: none;
+        position: absolute;
+        left: 100%;
+        top: 0;
+        background: #ccc;
+        width: 90px;
+        padding: 10px;
+        box-shadow: 2px 2px 3px 0px rgba(0, 0, 0, .3);
+        border-radius: 0 5px 5px 0;
+        a {
+            text-indent: 0;
+            text-decoration: none;
+            font-size: 100%;
+            text-align: start;
+            &:after {
+                display: none;
+            }
+        }
+        li {
+            padding: 5px;
+        }
+        &:after {
             right: 0;
             border: solid 8px transparent;
             content: " ";
             height: 0;
             width: 0;
             position: absolute;
-            border-right-color: #fff;
-            top: 50%;
+            border-right-color: #ccc;
+            top: 18px;
+            left: -16px;
         }
     }
 }

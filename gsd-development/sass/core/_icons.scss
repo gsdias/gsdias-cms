@@ -10,3 +10,38 @@
     @extend .icon;
     @include retina-sprite(logo_small);
 }
+
+.icon-dashboard {
+    @extend .icon;
+    @include retina-sprite(Dashboard);
+}
+
+.icon-documents {
+    @extend .icon;
+    @include retina-sprite(Briefcase);
+}
+
+.icon-media {
+    @extend .icon;
+    @include retina-sprite(Camera);
+}
+
+.icon-pages {
+    @extend .icon;
+    @include retina-sprite(Copy);
+}
+
+.icon-layouts {
+    @extend .icon;
+    @include retina-sprite(Database);
+}
+
+.icon-settings {
+    @extend .icon;
+    @include retina-sprite(Gears);
+}
+
+.icon-users {
+    @extend .icon;
+    @include retina-sprite(Users);
+}

@@ -49,7 +49,7 @@ if (@$_REQUEST['save']) {
             ));
         }
 
-        $_SESSION['message'] = sprintf('Pagina "%s" criada.', $_REQUEST['title']);
+        $_SESSION['message'] = sprintf($lang[$config['lang']]['LANG_PAGE_CREATED'], $_REQUEST['title']);
         header("Location: /admin/pages", true, 302);
         exit;
     } else {

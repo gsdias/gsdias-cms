@@ -1,59 +1,64 @@
-    
-    <a href="/admin"><i class="icon-dashboard"></i>{LANG_DASHBOARD}</a>
-    <div>
-        <a href="/admin/layouts"><i class="icon-layouts"></i>{LANG_LAYOUTS}</a>
+<ul>
+    <li>
+        <a href="/admin" class="{DASHBOARD_ACTIVE}"><i class="icon icon-dashboard"></i>{LANG_DASHBOARD}</a>
+    </li>
+    <li>
+        <a href="/admin/layouts" class="{LAYOUTS_ACTIVE}"><i class="icon icon-layouts"></i>{LANG_LAYOUTS}</a>
         <ul>
             <li>
-                <a href="">All layouts</a>
+                <a href="/admin/layouts">All layouts</a>
             </li>
             <li>
-                <a href="">Add new</a>
+                <a href="/admin/layouts/create">Add new</a>
             </li>
         </ul>
-    </div>
-    <div>
-        <a href="/admin/pages"><i class="icon-pages"></i>{LANG_PAGES}</a>
+    </li>
+    <li>
+        <a href="/admin/pages" class="{PAGES_ACTIVE}"><i class="icon icon-pages"></i>{LANG_PAGES}</a>
         <ul>
             <li>
-                <a href="">All pages</a>
+                <a href="/admin/pages">All pages</a>
             </li>
             <li>
-                <a href="">Add new</a>
+                <a href="/admin/pages/create">Add new</a>
             </li>
         </ul>
-    </div>    
-    <div>
-        <a href="/admin/images"><i class="icon-images"></i>{LANG_IMAGES}</a>
+    </li>
+    <li>
+        <a href="/admin/images" class="{IMAGES_ACTIVE}"><i class="icon icon-images"></i>{LANG_IMAGES}</a>
         <ul>
             <li>
-                <a href="">Media</a>
+                <a href="/admin/images">Media</a>
             </li>
             <li>
-                <a href="">Upload new</a>
+                <a href="/admin/images/upload">Upload new</a>
             </li>
         </ul>
-    </div>    
-    <div>
-        <a href="/admin/documents"><i class="icon-documents"></i>{LANG_DOCUMENTS}</a>
+    </li>
+    <li>
+        <a href="/admin/documents" class="{DOCUMENTS_ACTIVE}"><i class="icon icon-documents"></i>{LANG_DOCUMENTS}</a>
         <ul>
             <li>
-                <a href="">Documents</a>
+                <a href="/admin/documents">Documents</a>
             </li>
             <li>
-                <a href="">Upload new</a>
+                <a href="/admin/documents/upload">Upload new</a>
             </li>
         </ul>
-    </div>    
-    <div>
-        <a href="/admin/users"><i class="icon-users"></i>{LANG_USERS}</a>
+    </li>
+    <li>
+        <a href="/admin/users" class="{USERS_ACTIVE}"><i class="icon icon-users"></i>{LANG_USERS}</a>
         <ul>
             <li>
-                <a href="">All users</a>
+                <a href="/admin/users">All users</a>
             </li>
             <li>
-                <a href="">Add new</a>
+                <a href="/admin/users/create">Add new</a>
             </li>
         </ul>
-    </div>    
+    </li>
     [_CLIENTASIDE]
-    <a href="/admin/settings"><i class="icon-settings"></i>{LANG_SETTINGS}</a>
+    <li>
+        <a href="/admin/settings" class="{SETTINGS_ACTIVE}"><i class="icon icon-settings"></i>{LANG_SETTINGS}</a>
+    </li>
+</ul>

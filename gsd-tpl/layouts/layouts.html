@@ -28,7 +28,10 @@
                 <a href="/admin/layouts/{LAYOUTS_LID}">{LAYOUTS_URL}</a>
             </td>
             <td><em class="ago">({LAYOUTS_CREATED})</em> <br>por <a href="/admin/users/{LAYOUTS_CREATOR_ID}">{LAYOUTS_CREATOR_NAME}</a></td>
-            <td class="actions"><a href="/admin/layouts/{LAYOUTS_LID}/settings">{LANG_SETTINGS}</a><a href="/admin/layouts/{LAYOUTS_LID}/edit">{LANG_EDIT}</a></td>
+            <td class="actions">
+                <a href="/admin/layouts/{LAYOUTS_LID}/edit">{LANG_EDIT}</a>
+                <a href="/admin/layouts/{LAYOUTS_LID}/remove">{LANG_REMOVE}</a>
+            </td>
         </tr>
         <!-- ENDLOOP LAYOUTS -->
     </table>
