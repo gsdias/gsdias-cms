@@ -2,10 +2,7 @@
 
 if (@$_REQUEST['save']) {
     
-    $content = file_get_contents($_FILES['layout']["tmp_name"]);
-
-//    $file = savefile ($_FILES['asset'], TPLPATH . 'layouts/', null, null, $id);
-//        
+    $content = file_get_contents(sprintf(CLIENTPATH . 'tpl/_layouts/%s', $_FILES['layout']["name"]));
 
     $fields = array(
         $_REQUEST['name'],
