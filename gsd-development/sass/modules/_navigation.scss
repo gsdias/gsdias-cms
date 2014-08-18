@@ -2,6 +2,19 @@
     position: fixed;
     left: 0;
     top: 0;
+    a:hover {
+        position: relative;
+        i:after {
+            right: 0;
+            border: solid 8px transparent;
+            content: " ";
+            height: 0;
+            width: 0;
+            position: absolute;
+            border-right-color: #fff;
+            top: 50%;
+        }
+    }
 }
 
 html, body, .perspective {
