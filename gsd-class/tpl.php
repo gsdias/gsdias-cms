@@ -57,7 +57,7 @@ class tpl {
       * @return nothing
     */  
     function setArray ($id, $value = array(), $merge = false) {
-        if ($merge && !empty(@$this->config['array'][$id])) {
+        if ($merge && !empty($this->config['array'][$id])) {
             $this->config['array'][$id] = array_merge($this->config['array'][$id], $value);
         } else {
             $this->config['array'][$id] = $value;

@@ -18,7 +18,7 @@ if (@$_REQUEST['confirm'] == 'Sim') {
 
     } else {
 
-        $_SESSION['message'] = 'Layout apagado.';
+        $_SESSION['message'] = '{LANG_LAYOUT_REMOVED}';
 
         header("Location: /admin/layouts", true, 302);
         exit;

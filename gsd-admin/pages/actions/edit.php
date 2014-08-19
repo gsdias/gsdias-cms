@@ -9,6 +9,7 @@ if (@$_REQUEST['save']) {
     $extrafieldslist = sizeof(@$extrafields['list']) ? $extrafields['list'] : array();
 
     $values = array();
+    
     $fields = '';
 
     $allfields = array_merge($defaultfields, $extrafieldslist);
@@ -40,7 +41,7 @@ if (@$_REQUEST['save']) {
         
     } else {
     
-        $_SESSION['message'] = 'Página salva';
+        $_SESSION['message'] = '{LANG_PAGE_SAVED}';
 
         header("Location: /admin/pages", true, 302);
         exit;

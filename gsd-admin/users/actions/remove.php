@@ -20,7 +20,7 @@ if (@$_REQUEST['confirm'] == 'Sim') {
         $tpl->setcondition('ERRORS');
     } else {
 
-        $_SESSION['message'] = 'Utilizador apagado.';
+        $_SESSION['message'] = '{LANG_USER_REMOVED}';
 
         header("Location: /admin/users", true, 302);
         exit;

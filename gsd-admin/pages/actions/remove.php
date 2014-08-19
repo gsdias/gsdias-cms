@@ -24,7 +24,7 @@ if (@$_REQUEST['confirm'] == 'Sim') {
 
     } else {
 
-        $_SESSION['message'] = 'Pagina apagada.';
+        $_SESSION['message'] = '{LANG_PAGE_REMOVED}';
 
         header("Location: /admin/pages", true, 302);
         exit;

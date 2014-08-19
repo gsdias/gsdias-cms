@@ -1,5 +1,10 @@
 <?php
 
+if (!IS_ADMIN) {
+    header("Location: /admin/pages", true, 302);
+    exit;
+}
+
 if (@$_REQUEST['save']) {
     
     $content = file_get_contents(sprintf(CLIENTPATH . 'tpl/_layouts/%s', $_FILES['layout']["name"]));

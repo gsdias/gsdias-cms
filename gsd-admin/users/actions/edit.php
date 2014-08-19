@@ -25,11 +25,11 @@ if (@$_REQUEST['save']) {
     
     if ($mysql->errnum) {
 
-        $tpl->setvar('ERRORS', 'Já existe um utilizador com esse email.');
+        $tpl->setvar('ERRORS', '{LANG_USER_ALREADY_EXISTS}');
         $tpl->setcondition('ERRORS');
     } else {
 
-        $_SESSION['message'] = 'Utilizador salvo.';
+        $_SESSION['message'] = '{LANG_USER_SAVED}';
 
         header("Location: /admin/users", true, 302);
         exit;

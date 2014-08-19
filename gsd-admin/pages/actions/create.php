@@ -7,34 +7,19 @@ if (!IS_ADMIN) {
 
 if (@$_REQUEST['save']) {
     
-    $_fields = $section . 'fields';
-
     $defaultfields = array('title', 'url', 'lid', 'description', 'keywords', 'tags', 'og_title', 'og_image', 'og_description');
     
-    $extrafields = function_exists($_fields) ? $_fields() : array('list' => array());
+    $fields = array('creator');
     
-    $fields = array_merge($defaultfields, $extrafields['list']);
+    $values = array($user->id);        
+    
+    $_REQUEST['auth'] = @$_REQUEST['auth'] ? @$_REQUEST['auth'] : null;
+    $_REQUEST['menu'] = @$_REQUEST['menu'] ? @$_REQUEST['menu'] : null;
+    
+    $result = $csection->add($defaultfields, $fields, $values);
 
-    $values = array();
-    
-    foreach ($fields as $field) {
-        $values[] = $_REQUEST[$field];
-    }
-    
-    $fields = array_merge($fields, array('creator', 'require_auth', 'show_menu'));
-    
-    $values = array_merge($values, array(
-        $user->id,
-        @$_REQUEST['auth'] ? @$_REQUEST['auth'] : null,
-        @$_REQUEST['menu'] ? @$_REQUEST['menu'] : null
-    ));    
-        
-    $questions = str_repeat(", ? ", sizeof($fields));
-
-    $mysql->statement(sprintf('INSERT INTO pages (%s) values(%s);', implode(', ', $fields), substr($questions, 2)), $values);
-
-    if ($mysql->total) {
-        $pid = $mysql->lastinserted();
+    if ($result['total']) {
+        $pid = $result['id'];
         $mysql->statement('SELECT *
         FROM layoutsections AS ls
         JOIN layoutsectionmoduletypes AS lsmt ON lsmt.lsid = ls.lsid
@@ -53,7 +38,7 @@ if (@$_REQUEST['save']) {
         header("Location: /admin/pages", true, 302);
         exit;
     } else {
-        $tpl->setvar('ERRORS', 'Já existe uma página com esse endereço.' . $mysql->errmsg);
+        $tpl->setvar('ERRORS', '{LANG_PAGE_ALREADY_EXISTS}' . $mysql->errmsg);
         $tpl->setcondition('ERRORS');
     }
 }

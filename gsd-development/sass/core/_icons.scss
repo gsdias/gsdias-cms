@@ -45,3 +45,13 @@
     @extend .icon;
     @include retina-sprite(Users);
 }
+
+.icon-email {
+    @extend .icon;
+    @include retina-sprite(Message);
+}
+
+.icon-lock {
+    @extend .icon;
+    @include retina-sprite(Lock);
+}

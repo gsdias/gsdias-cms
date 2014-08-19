@@ -95,4 +95,66 @@ abstract class section implements isection {
             'TOTAL_PAGES' => $pages['TOTAL']
         ));
     }
+    
+    protected function extrafields () {
+        
+        $section = str_replace('client', '', get_class($this));
+        
+        $_fields = $section . 'fields';
+        
+        $fields = function_exists($_fields) ? $_fields() : array('list' => array());
+
+        return $fields['list'];
+    }
+    
+    public function add ($defaultfields, $defaultsafter, $defaultvalues) {
+        global $mysql;
+        
+        $section = str_replace('client', '', get_class($this));
+
+        $extrafields = $this->extrafields ();
+
+        $fields = array_merge($defaultfields, $extrafields);
+
+        $values = array();
+
+        foreach ($fields as $field) {
+            $values[] = $_REQUEST[$field];
+        }
+
+        $fields = array_merge($fields, $defaultsafter);
+
+        $values = array_merge($values, $defaultvalues);    
+
+        $questions = str_repeat(", ? ", sizeof($fields));
+
+        $mysql->statement(sprintf('INSERT INTO %s (%s) values (%s);', $section, implode(', ', $fields), substr($questions, 2)), $values);
+        
+        return array('total' => $mysql->total, 'errnum' => $mysql->errnum, 'id' => $mysql->lastinserted());
+    }
+    
+    public function edit ($defaultfields) {
+        global $mysql, $site;
+        
+        $section = str_replace('client', '', get_class($this));
+        
+        $extrafields = $this->extrafields ();
+
+        $fields = '';
+
+        $values = array();
+
+        $allfields = array_merge($defaultfields, $extrafieldslist);
+
+        foreach ($allfields as $field) {
+            $fields .= sprintf(", `%s` = ?", $field);
+            $values[] = @$_REQUEST[$field];
+        }
+
+        $values[] = $site->arg(2);
+
+        $mysql->statement(sprintf('UPDATE %s SET %s WHERE %sid = ?;', $section, substr($fields, 2), substr($section, 0, 1)), $values);
+        
+        return array('total' => $mysql->total, 'errnum' => $mysql->errnum, 'id' => $site->arg(2));
+    }
 }

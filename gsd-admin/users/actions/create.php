@@ -7,35 +7,18 @@ if (!IS_ADMIN) {
 
 if (@$_REQUEST['save']) {
     
-    $.fields = $section . 'fields';
+    $defaultfields = array('email', 'password', 'level', 'name');
 
-    $defaultfields = array('email', 'level', 'name');
+    $fields = array('creator');
 
-    $extrafields = function_exists($.fields) ? $.fields() : array('list' => array());
+    $values = array($user->id);
     
-    $password = substr(str_shuffle(sha1(rand() . time() . "gsdias-cms")), 2, 10);
-
-    $fields = array_merge($defaultfields, @$extrafields['list']);
-    
-    $values = array();
-    
-    foreach ($fields as $field) {
-        $values[] = $_REQUEST[$field];
-    }
-
-    $fields = array_merge($fields, array('creator', 'password'));
-
-    $values = array_merge($values, array(
-        $user->id,
-        md5($password)
-    ));
+    $_REQUEST['password'] = substr(str_shuffle(sha1(rand() . time() . "gsdias-cms")), 2, 10);
         
-    $questions = str_repeat(", ? ", sizeof($fields));
-
-    $mysql->statement(sprintf('INSERT INTO users (%s) values(%s);', implode(', ', $fields), substr($questions, 2)), $values);
+    $result = $csection->add($defaultfields, $fields, $values);
     
-    if ($mysql->errnum) {
-        $tpl->setvar('ERRORS', 'Já existe um utilizador com esse email.');
+    if ($result['errnum']) {
+        $tpl->setvar('ERRORS', '{LANG_USER_ALREADY_EXISTS}');
         $tpl->setcondition('ERRORS');
 
     } else {
@@ -49,7 +32,7 @@ if (@$_REQUEST['save']) {
         
         #$email->sendmail();        
 
-        $_SESSION['message'] = 'Utilizador criado.';
+        $_SESSION['message'] = '{LANG_USER_CREATED}';
 
         header("Location: /admin/users", true, 302);
         exit;
