@@ -36,7 +36,7 @@ abstract class section implements isection {
                         'src' => sprintf('/gsd-assets/images/%s.%s', @$image['iid'], @$image['extension']),
                         'height' => '100',
                         'width' => 'auto',
-                        'class' => sprintf('preview %s', @$item['og_image'] ? '' : 'is-hidden')
+                        'class' => sprintf('preview %s', @$item[$extrafield] ? '' : 'is-hidden')
                     ));
 
                     $partial = new tpl();

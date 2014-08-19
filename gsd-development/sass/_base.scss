@@ -19,6 +19,20 @@ main {
 h1 {
     font-size: 24px;
     margin-bottom: 20px;
+    a {
+        font-size: 14px;
+        margin-left: 20px;
+        background: #276876;
+        color: #fff;
+        padding: 5px;
+        vertical-align: middle;
+        border-radius: 3px;
+        display: inline-block;
+        margin-top: -1px;
+        &:hover {
+            text-decoration: none;
+        }
+    }
 }
 h2 {
     font-size: 20px;

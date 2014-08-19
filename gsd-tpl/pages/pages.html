@@ -1,16 +1,15 @@
 <main>
-    <h1>{LANG_PAGES}</h1>
+    <h1>{LANG_PAGES}
+        <!-- IF IS_ADMIN -->
+        <a href="/admin/pages/create" class="btn">{LANG_NEW_PAGE}</a>
+        <!-- ENDIF IS_ADMIN -->
+    </h1>
     <!-- IF ERRORS -->
     <div class="errors">{ERRORS}</div>
     <!-- ENDIF ERRORS -->
     <!-- IF MESSAGES -->
     <div class="errors messages">{MESSAGES}</div>
     <!-- ENDIF MESSAGES -->
-    <!-- IF IS_ADMIN -->
-    <div class="btns right">
-        <a href="/admin/pages/create" class="btn">{LANG_NEW_PAGE}</a>
-    </div>
-    <!-- ENDIF IS_ADMIN -->
     <!-- IF PAGES_EXIST -->
     [_PAGINATOR]
     <table class="table">

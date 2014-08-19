@@ -3,18 +3,21 @@ header {
     padding: 10px 0 0;
     position: relative;
     z-index: 10;
+    box-shadow: 0 0 10px 0px rgba(0, 0, 0, .5);
     .bar {
         background: #276876;
         color: #fff;
         padding: 5px 0 5px 10px;
         margin-top: 10px;
         overflow: hidden;
+        display: none;
     }
     i {
         margin-left: 10px;
     }
     .logo {
         display: inline-block;
+        margin-bottom: 11px;
     }
     #showMenu {
         background: grey;

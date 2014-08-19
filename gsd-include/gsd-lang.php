@@ -7,13 +7,13 @@ $lang['pt'] = array(
     "LANG_DASHBOARD" => "Painel",
 
     "LANG_LAYOUTS" => "Layouts",
-    "LANG_NEW_LAYOUT" => "Adicionar layout",
+    "LANG_NEW_LAYOUT" => "Adicionar novo",
     "LANG_ALL_LAYOUTS" => "Listar layouts",
     "LANG_NO_LAYOUTS" => "Não existem layouts",
     "LANG_LAYOUT_CREATED" => "Layout %s criado",
 
     "LANG_PAGES" => "Páginas",
-    "LANG_NEW_PAGE" => "Adicionar página",
+    "LANG_NEW_PAGE" => "Adicionar nova",
     "LANG_ALL_PAGES" => "Listar páginas",
     "LANG_NO_PAGES" => "Não existem páginas",
     "LANG_PAGE_CREATED" => "Página %s criada",
@@ -22,7 +22,7 @@ $lang['pt'] = array(
     "LANG_USER_REMOVED" => "Página apagada",
 
     "LANG_USERS" => "Utilizadores",
-    "LANG_NEW_USER" => "Adicionar utilizador",
+    "LANG_NEW_USER" => "Adicionar novo",
     "LANG_ALL_USERS" => "Listar utilizadores",
     "LANG_USER_CREATED" => "Utilizador %s criado",
     "LANG_USER_SAVED" => "Utilizador salvo",

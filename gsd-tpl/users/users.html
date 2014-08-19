@@ -1,16 +1,15 @@
 <main>
-    <h1>{LANG_USERS}</h1>
+    <h1>{LANG_USERS}
+        <!-- IF IS_ADMIN -->
+        <a href="/admin/users/create" class="btn">{LANG_NEW_USER}</a>
+        <!-- ENDIF IS_ADMIN -->
+    </h1>
     <!-- IF ERRORS -->
     <div class="errors">{ERRORS}</div>
     <!-- ENDIF ERRORS -->
     <!-- IF MESSAGES -->
     <div class="errors messages">{MESSAGES}</div>
     <!-- ENDIF MESSAGES -->
-    <!-- IF IS_ADMIN -->
-    <div class="btns right">
-        <a href="/admin/users/create" class="btn">{LANG_NEW_USER}</a>
-    </div>
-    <!-- ENDIF IS_ADMIN -->
     [_PAGINATOR]
     <table class="table">
         <thead>

@@ -24,16 +24,16 @@
             <form method="POST" action="/admin/auth{REDIRECT}">
                 <div class="colA">
                     <label><i class="icon-email"></i>Email:</label>
-                    <input name="email" value="{LOGIN_EMAIL}" data-rule-email="true" data-msg-email="Formato de email invalido." required>
+                    <input name="email" value="{LOGIN_EMAIL}" data-rule-email="true" required>
                 </div>
                 <div class="colA">
                     <label><i class="icon-lock"></i>Password:</label>
                     <input name="password" type="password" required>
                 </div>
-                <input type="submit" class="btn-submit" name="login" value="Login">
-                <a href="#">Recuperar password</a>
-                <a href="/">&lt; Voltar a {PAGE_TITLE}</a>
                 <div class="form-messages">{FORM_MESSAGES}</div>
+                <input type="submit" class="btn-submit" name="login" value="Login">
+                <a href="/">&lt; Voltar a {PAGE_TITLE}</a>
+                <a href="#" class="right">Recuperar password</a>
             </form>
         </section>
         [_SCRIPTS]

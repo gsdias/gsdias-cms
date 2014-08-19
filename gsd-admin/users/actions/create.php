@@ -32,7 +32,7 @@ if (@$_REQUEST['save']) {
         
         #$email->sendmail();        
 
-        $_SESSION['message'] = '{LANG_USER_CREATED}';
+        $_SESSION['message'] = sprintf($lang[$config['lang']]['LANG_USER_CREATED'], $_REQUEST['name']);
 
         header("Location: /admin/users", true, 302);
         exit;

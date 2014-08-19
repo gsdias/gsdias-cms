@@ -9,7 +9,7 @@
         span {
             position: absolute;
             display: block;
-            right: 2%;
+            right: 4%;
             top: 20px;
         }
     }
@@ -18,9 +18,10 @@
         margin: auto;
         box-shadow: 0px 2px 2px 1px #ccc;
         overflow: hidden;
+        text-align: center;
     }
     i {
-        margin-left: 2%;
+        margin-left: 4%;
     }
     hr {
         border: none;
@@ -29,25 +30,38 @@
     }
     .btn-submit {
         float: none;
-        margin: 0 0 0 4.5%;
+        margin: 0 auto 20px;
         width: 80px;
         cursor: pointer;
         padding: 0 2%;
         border: none;
     }
     a {
-        width: 50%;
         float: left;
-        margin-left: 2%;
+        margin-left: 5%;
+        text-align: left;
+        &.right {
+            text-align: right;
+            float: right;
+            margin-right: 5%;
+        }
     }
     label {
         position: absolute;
         left: 6%;
-        top: 20%;
+        top: 4px;
         font-size: 0;
         width: auto;
+        margin: 0;
         .icon {
             margin-left: 0;
+        }
+        &.error {
+            position: relative;
+            top: auto;
+            left: auto;
+            font-size: 100%;
+            margin-top: 10px;
         }
     }
     input {
@@ -56,20 +70,7 @@
         display: block;
         padding: 0 8%;
     }
-    @include respond-min($tablet-port) {
-        header {
-            i {
-                margin-left: 35px;
-            }
-            span {
-                right: 40px;
-            }
-        }
-        .btn-submit {
-            margin-right: 35px;
-        }
-        a {
-            margin-left: 35px;
-        }
+    .form-messages {
+        margin: 10px auto 20px;
     }
 }
