@@ -2,9 +2,12 @@
     position: fixed;
     left: 0;
     top: 54px;
-    z-index: 10;
+    z-index: 5;
     background: #efefef;
     height: 100%;
+    > ul {
+        box-shadow: inset -5px 0px 10px -5px rgba(0, 0, 0, 0.5);
+    }
     .icon {
         @include prefixs('transform', 'scale(.7) translatez(0)');
         @include prefixs('transition', 'all .3s ease');
@@ -60,7 +63,7 @@
         position: absolute;
         left: 100%;
         top: 0;
-        background: #ccc;
+        background: #276876;
         width: 90px;
         padding: 10px;
         box-shadow: 2px 2px 3px 0px rgba(0, 0, 0, .3);
@@ -70,6 +73,7 @@
             text-decoration: none;
             font-size: 100%;
             text-align: start;
+            color: #fff;
             &:after {
                 display: none;
             }
@@ -84,7 +88,7 @@
             height: 0;
             width: 0;
             position: absolute;
-            border-right-color: #ccc;
+            border-right-color: #276876;
             top: 18px;
             left: -16px;
         }

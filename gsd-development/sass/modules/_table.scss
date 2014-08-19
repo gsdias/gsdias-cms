@@ -1,18 +1,19 @@
 .table {
     width: 100%;
-    border: solid 1px $border-color;
     margin-top: 30px;
-    thead {
-        border-bottom: solid 1px $border-color;
-    }
     th {
         font-weight: 700;
     }
     td, th {
         padding: 10px;
     }
-    tr {
-        border-bottom: dashed 1px $border-color;
+    tbody {
+        tr:nth-child(odd) {
+            background: #ededed;
+        }
+        tr:nth-child(even) {
+            background: #d7d7d7;
+        }
     }
     .actions {
         a {
@@ -24,6 +25,7 @@
     }
     img {
         padding: 3px;
+        background: #fff;
         border: solid 1px $border-color;
         box-shadow: 0 0 1px $border-color;
     }
