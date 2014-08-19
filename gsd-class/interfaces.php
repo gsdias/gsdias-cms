@@ -16,4 +16,7 @@ interface isection {
     public function getcurrent ($id);
     public function generatefields ($id);
     public function generatepaginator ($pages);
+    public function add ($defaultfields, $defaultsafter, $defaultvalues);
+    public function edit ($defaultfields);
+    public function remove ();
 }

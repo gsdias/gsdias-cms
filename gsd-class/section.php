@@ -157,4 +157,14 @@ abstract class section implements isection {
         
         return array('total' => $mysql->total, 'errnum' => $mysql->errnum, 'id' => $site->arg(2));
     }
+    
+    public function remove () {
+        global $mysql, $site;
+        
+        $section = str_replace('client', '', get_class($this));
+        
+        $mysql->statement(sprintf('DELETE FROM %s WHERE %sid = ?;', $section, substr($section, 0, 1)), array($site->arg(2)));
+        
+        return array('total' => $mysql->total, 'errnum' => $mysql->errnum, 'id' => $site->arg(2));
+    }
 }
