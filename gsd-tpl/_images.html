@@ -1,14 +1,12 @@
 <section class="list">
     <h1>Imagens</h1>
-    <!-- IF IMAGES_EXIST -->
     <ul>
         <!-- LOOP IMAGES -->
         <li><a href="/admin/images/{IMAGES_ID}/edit">{IMAGES_NAME}</a> <em class="ago">({IMAGES_CREATED})</em></li>
         <!-- ENDLOOP IMAGES -->
+        <!-- IF !IMAGES_EXIST -->
+        <li>Não existem imagens</li>
+        <!-- ENDIF !IMAGES_EXIST -->
     </ul>
-    <!-- ENDIF IMAGES_EXIST -->
 
-    <!-- IF !IMAGES_EXIST -->
-    <span class="warning">Não existem imagens</span>
-    <!-- ENDIF !IMAGES_EXIST -->
 </section>

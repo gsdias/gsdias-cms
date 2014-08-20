@@ -9,8 +9,10 @@
         box-shadow: inset -5px 0px 10px -5px rgba(0, 0, 0, 0.5);
     }
     .icon {
+        -webkit-backface-visibility: hidden;
         @include prefixs('transform', 'scale(.7) translatez(0)');
         @include prefixs('transition', 'all .3s ease');
+        @include prefixs('image-rendering', 'crisp-edges');
     }
     a {
         text-indent: -9999px;
@@ -55,7 +57,7 @@
             display: block;
         }
         .icon {
-            @include prefixs('transform', 'scale(1)');
+            @include prefixs('transform', 'scale(1) translatez(0)');
         }
     }
     ul ul {

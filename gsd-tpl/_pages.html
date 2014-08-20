@@ -1,14 +1,11 @@
 <section class="list">
     <h1>{LANG_PAGES}</h1>
-    <!-- IF PAGES_EXIST -->
     <ul>
         <!-- LOOP PAGES -->
         <li><a href="/admin/pages/{PAGES_ID}">{PAGES_NAME}</a> <em class="ago">({PAGES_CREATED})</em></li>
         <!-- ENDLOOP PAGES -->
+        <!-- IF !PAGES_EXIST -->
+        <li>{LANG_NO_PAGES}</li>
+        <!-- ENDIF !PAGES_EXIST -->
     </ul>
-    <!-- ENDIF PAGES_EXIST -->
-    
-    <!-- IF !PAGES_EXIST -->
-    <span class="warning">{LANG_NO_PAGES}</span>
-    <!-- ENDIF !PAGES_EXIST -->
 </section>

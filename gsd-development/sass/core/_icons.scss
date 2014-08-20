@@ -55,3 +55,8 @@
     @extend .icon;
     @include retina-sprite(Lock);
 }
+
+.icon-client {
+    @extend .icon;
+    @include retina-sprite(Application);
+}
