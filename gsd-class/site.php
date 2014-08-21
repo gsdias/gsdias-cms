@@ -5,7 +5,7 @@
 
 class site {
 
-    public $name, $email, $ga, $fb, $uri, $page, $main, $startpoint, $pagemodules;
+    public $name, $email, $ga, $fb, $uri, $page, $main, $startpoint, $pagemodules, $layout;
     protected $path;
 
     public function __construct () {
@@ -80,6 +80,7 @@ class site {
             $page = $mysql->singleline();
 
             $this->page = $page;
+            $this->layout = $page['file'];
 
             $tpl->setvars(array(
                 'PAGE_TITLE' => $page['title'],

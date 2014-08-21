@@ -31,14 +31,21 @@ foreach ($mysql->result() as $item) {
     } else {
         $mysql->statement('SELECT * FROM images WHERE iid = ?;', array($item['value']));
         $image = $mysql->singleline();
-        $image = new image(array('src' => sprintf('/gsd-assets/images/%s.%s', @$image['iid'], @$image['extension']), 'height' => '100', 'width' => 'auto', 'class' => 'preview'));
+
+        $image = new image(array(
+            'src' => sprintf('/gsd-assets/images/%s.%s', @$image['iid'], @$image['extension']),
+            'height' => '100',
+            'width' => 'auto',
+            'class' => sprintf('preview %s', $item['value'] ? '' : 'is-hidden')
+        ));
 
         $partial = new tpl();
         $partial->setvars(array(
             'LABEL' => $item['label'],
             'NAME' => $item['name'],
             'IMAGE' => $image,
-            'VALUE' => $item['value']
+            'VALUE' => @$item['value'] ? @$item['value'] : 0,
+            'EMPTY' => @$item['value'] ? 'is-hidden' : ''
         ));
         $partial->setfile('_image');
 

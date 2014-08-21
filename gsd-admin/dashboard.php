@@ -1,6 +1,6 @@
 <?php
 
-$mysql->statement('SELECT * FROM users WHERE disabled IS NULL LIMIT 0, 3');
+$mysql->statement('SELECT * FROM users WHERE disabled IS NULL LIMIT 0, 5');
 
 $users = array();
 
@@ -14,7 +14,7 @@ foreach ($mysql->result() as $userlist) {
 }
 $tpl->setarray('USERS', $users);
 
-$mysql->statement('SELECT * FROM pages WHERE published IS NOT NULL LIMIT 0, 3');
+$mysql->statement('SELECT * FROM pages WHERE published IS NOT NULL LIMIT 0, 5');
 
 $pages = array();
 
@@ -31,7 +31,7 @@ if ($mysql->total) {
     $tpl->setarray('PAGES', $pages);
 }
 
-$mysql->statement('SELECT * FROM images LIMIT 0, 3');
+$mysql->statement('SELECT * FROM images LIMIT 0, 5');
 
 $images = array();
 
@@ -48,7 +48,7 @@ if ($mysql->total) {
     $tpl->setarray('IMAGES', $images);
 }
 
-$mysql->statement('SELECT * FROM documents LIMIT 0, 3');
+$mysql->statement('SELECT * FROM documents LIMIT 0, 5');
 
 $documents = array();
 
