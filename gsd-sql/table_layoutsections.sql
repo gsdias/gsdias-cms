@@ -7,5 +7,11 @@ CREATE TABLE IF NOT EXISTS `layoutsections` (
   `lid` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `creator` int(11) NOT NULL,
-  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (creator)
+    REFERENCES users(uid)
+    ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (lid)
+    REFERENCES layouts(lid)
+    ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;

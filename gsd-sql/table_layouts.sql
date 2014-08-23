@@ -8,7 +8,12 @@ CREATE TABLE IF NOT EXISTS `layouts` (
   `name` varchar(100) NOT NULL,
   `file` varchar(100) NOT NULL,
   `creator` int(11) NOT NULL,
-  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (creator)
+    REFERENCES users(uid)
+    ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (ltid)
+    REFERENCES layouttypes(ltid)
+    ON UPDATE CASCADE ON DELETE RESTRICT,
+    UNIQUE KEY `file` (`file`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
-ALTER TABLE `layouts` ADD UNIQUE(`file`);

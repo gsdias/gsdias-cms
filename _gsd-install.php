@@ -66,6 +66,10 @@ if (@$_REQUEST['save']) {
             );
         }
         $tpl->setarray('CREATETABLES', $table_exists);
+
+        if (is_file(CLIENTPATH . 'install' . PHPEXT)) {
+            include_once(CLIENTPATH . 'install' . PHPEXT);
+        }
     } else {
         $site->main = 'STEP2';
         $mysql->statement("SELECT count(*) FROM users;");
@@ -73,9 +77,6 @@ if (@$_REQUEST['save']) {
             $tpl->setvar('STEP2_MESSAGES', "There is already an user on the database.");
         } else {
             $tpl->setcondition('NOUSER');
-        }
-        if (is_file(CLIENTPATH . 'install' . PHPEXT)) {
-            include_once(CLIENTPATH . 'install' . PHPEXT);
         }
     }
 
@@ -94,12 +95,13 @@ if (!DEBUG) {
 
 function createtable ($table) {
     global $mysql;
+    $sentence = file_get_contents(sprintf('gsd-sql/table_%s.sql', $table));
+    $mysql->statement($sentence);
     
-    $mysql->statement(file_get_contents(sprintf('gsd-sql/table_%s.sql', $table)));
-    echo $mysql->errmsg;
+    printf('<pre>%s%s</pre><br>', $sentence, $mysql->errmsg);
     if ($mysql->executed) {
-        return sprintf('<span style="color: green;">Created</span><br>');
+        return sprintf('<span style="color: green;">Created</span><pre>%s</pre><br>', $mysql->errmsg);
     } else {
-        return sprintf('<span style="color: red;">Something got wrong</span><br>');
+        return sprintf('<span style="color: red;">Something got wrong</span><pre>%s</pre><br>', $mysql->errmsg);
     }
 }

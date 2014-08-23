@@ -7,7 +7,10 @@ CREATE TABLE IF NOT EXISTS `moduletypes` (
   `name` varchar(100) NOT NULL,
   `file` varchar(100) NOT NULL,
   `creator` int(11) NOT NULL,
-  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (creator)
+    REFERENCES users(uid)
+    ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --

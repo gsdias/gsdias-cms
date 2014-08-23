@@ -14,10 +14,6 @@ CREATE TABLE IF NOT EXISTS `users` (
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `disabled` int(1) DEFAULT NULL,
   `last_login` timestamp NULL DEFAULT NULL,
-  `code` varchar(32) DEFAULT NULL
+  `code` varchar(32) DEFAULT NULL,
+    UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
---
--- Indexes for table `users`
---
-ALTER TABLE `users` ADD UNIQUE(`email`);

@@ -17,15 +17,12 @@ CREATE TABLE IF NOT EXISTS `pages` (
   `require_auth` tinyint(1) DEFAULT NULL,
   `creator` int(11) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `published` tinyint(1) DEFAULT NULL
+  `published` tinyint(1) DEFAULT NULL,
+  FOREIGN KEY (creator)
+    REFERENCES users(uid)
+    ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (lid)
+    REFERENCES layouts(lid)
+    ON UPDATE CASCADE ON DELETE RESTRICT,
+    UNIQUE KEY `url` (`url`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `pages`
---
-ALTER TABLE `pages` ADD KEY `creator` (`creator`), 
-    ADD UNIQUE(`url`);
