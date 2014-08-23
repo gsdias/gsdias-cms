@@ -36,7 +36,7 @@ if (@$_REQUEST['save']) {
 
     if ($mysql->errnum) {
     
-        $tpl->setvar('ERRORS', 'Houve um problema ao salvar as definicoes. Verifique os dados e tente novamente. ' . $mysql->errmsg);
+        $tpl->setvar('ERRORS', '{LANG_PAGE_ERROR}');
         $tpl->setcondition('ERRORS');
         
     } else {

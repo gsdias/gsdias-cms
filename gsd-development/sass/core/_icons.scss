@@ -60,3 +60,8 @@
     @extend .icon;
     @include retina-sprite(Application);
 }
+
+.icon-power {
+    @extend .icon;
+    @include retina-sprite(Power);
+}

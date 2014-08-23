@@ -11,7 +11,7 @@ if (@$_REQUEST['save']) {
 
     $fields = array(
         $_REQUEST['name'],
-        $_FILES['layout']["name"],
+        str_replace('.html', '', $_FILES['layout']["name"]),
         $_REQUEST['ltid'],
         $user->id
     );
@@ -41,7 +41,7 @@ if (@$_REQUEST['save']) {
         }
     } else {
 
-            $tpl->setvar('ERRORS', 'Já existe um layout associado a esse ficheiro');
+            $tpl->setvar('ERRORS', '{LANG_LAYOUT_ALREADY_EXISTS}');
             $tpl->setcondition('ERRORS');
 
     }

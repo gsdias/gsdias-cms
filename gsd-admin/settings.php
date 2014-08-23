@@ -16,7 +16,7 @@ if (@$_REQUEST['save']) {
         header("Location: /admin", true, 302);
         exit;
     } else {
-        $tpl->setvar('ERRORS', 'Houve um problema ao salvar as definicoes. Verifique os dados e tente novamente');
+        $tpl->setvar('ERRORS', '{LANG_SETTINGS_ERROR}');
         $tpl->setcondition('ERRORS');
     }
 }

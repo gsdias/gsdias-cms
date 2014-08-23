@@ -19,6 +19,17 @@ header {
         display: inline-block;
         margin-bottom: 11px;
     }
+    .logout {
+        text-indent: -9999px;
+        overflow: hidden;
+        text-decoration: none;
+        display: block;
+        font-size: 0;
+        text-align: start;
+        position: relative;
+        float: right;
+        margin-right: 11px;
+    }
     #showMenu {
         background: grey;
         width: 40px;

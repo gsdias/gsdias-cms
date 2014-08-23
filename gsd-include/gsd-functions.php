@@ -1,14 +1,10 @@
 <?php
 
 function GSDClassLoading($className) {
-    if (strpos($className, 'client') === false) {
-        if (is_file(CLASSPATH . $className . PHPEXT)) {
-            include_once(CLASSPATH . $className . PHPEXT);
-        }
-    } else {
-        if (is_file(CLIENTPATH . 'class/' . $className . PHPEXT)) {
-            include_once(CLIENTPATH . 'class/' . $className . PHPEXT);
-        }
+    if (is_file(CLIENTCLASSPATH . $className . PHPEXT)) {
+        include_once(CLIENTCLASSPATH . $className . PHPEXT);
+    } elseif (is_file(CLASSPATH . $className . PHPEXT)) {
+        include_once(CLASSPATH . $className . PHPEXT);
     }
 }
 

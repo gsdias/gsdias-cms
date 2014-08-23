@@ -2,7 +2,7 @@
 
 if (!IS_ADMIN) {
     
-    $_SESSION['error'] = 'Nao tem permissao para apagar paginas.';
+    $_SESSION['error'] = '{LANG_PAGE_NOPERMISSION}';
     
     header("Location: /admin/pages", true, 302);
     exit;
@@ -19,7 +19,7 @@ if (@$_REQUEST['confirm'] == 'Sim') {
 
     if ($mysql->errnum) {
 
-        $tpl->setvar('ERRORS', 'Houve um problema ao apagar a pagina.');
+        $tpl->setvar('ERRORS', '{LANG_PAGE_ERROR}');
         $tpl->setcondition('ERRORS');
 
     } else {

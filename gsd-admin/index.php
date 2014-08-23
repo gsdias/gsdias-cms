@@ -25,13 +25,18 @@ if (!IS_LOGGED) {
         include_once('gsd-admin/dashboard' . PHPEXT);
         $tpl->setvar('DASHBOARD_ACTIVE', 'active');
     } else {
+        $file = '';
         $tpl->setvar(strtoupper($site->arg(1)) . '_ACTIVE', 'active');
         if ($site->arg(1) == 'settings') {
             $file = 'gsd-admin/settings' . PHPEXT;
         } else {
-            $file = 'gsd-admin/list' . PHPEXT;
+            if (class_exists($site->arg(1)) || class_exists('client' . $site->arg(1))) {
+                $file = 'gsd-admin/list' . PHPEXT;
+            } else {
+                $site->main = '404';
+            }
         }
-        if (is_file($file)) {
+        if ($file && is_file($file)) {
             include_once($file);
         }
     }

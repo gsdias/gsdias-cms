@@ -7,7 +7,7 @@ if (@$_REQUEST['save']) {
     
     if ($condition[0] > 0 && $condition[1] != $site->arg(2)) {
         
-        $tpl->setvar('ERRORS', 'There are already a page with that url.');
+        $tpl->setvar('ERRORS', '{LANG_PAGE_ALREADY_EXISTS}');
         $tpl->setcondition('ERRORS');
         
     } else {
