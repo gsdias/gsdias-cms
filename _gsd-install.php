@@ -96,7 +96,7 @@ if (!DEBUG) {
 function createtable ($table) {
     global $mysql;
     $sentence = file_get_contents(sprintf('gsd-sql/table_%s.sql', $table));
-    $mysql->statement($sentence);
+    $mysql->statement('SET foreign_key_checks = 0;' . $sentence . 'SET foreign_key_checks = 1;');
     
     printf('<pre>%s%s</pre><br>', $sentence, $mysql->errmsg);
     if ($mysql->executed) {

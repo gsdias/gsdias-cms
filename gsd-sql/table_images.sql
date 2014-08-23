@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS `images` (
   `height` int(11) NOT NULL,
   `size` varchar(10) NOT NULL,
   `creator` int(11) NOT NULL,
-  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (creator)
     REFERENCES users(uid)
     ON UPDATE CASCADE ON DELETE RESTRICT
