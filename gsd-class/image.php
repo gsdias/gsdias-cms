@@ -25,7 +25,8 @@ class image {
     }
     public function __toString () {
         $class = $this->args['class'] ? sprintf(' class="%s"', $this->args['class']) : '';
+        $extra = @$this->args['max-height'] ? sprintf(' style="max-height: %spx"', $this->args['max-height']) : '';
 
-        return sprintf('<img src="%s"%s%s alt="%s"%s />', $this->args['src'], $this->args['width'], $this->args['height'], $this->args['alt'], $class);
+        return sprintf('<img src="%s"%s%s alt="%s"%s%s />', $this->args['src'], $this->args['width'], $this->args['height'], $this->args['alt'], $class, $extra);
     }
 }
