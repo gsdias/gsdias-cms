@@ -2,28 +2,13 @@
 
 if (@$_REQUEST['save']) {
 
-    $extrafields = function_exists('usersfields') ? usersfields() : array();
-
     $defaultfields = array('email', 'level', 'name', 'disabled');
     
-    $extrafieldslist = sizeof(@$extrafields['list']) ? $extrafields['list'] : array();
+    $_REQUEST['disabled'] = @$_REQUEST['disabled'] ? @$_REQUEST['disabled'] : null;
     
-    $values = array();
+    $result = $csection->edit($defaultfields);
     
-    $fields = '';
-    
-    $allfields = array_merge($defaultfields, $extrafieldslist);
-    
-    foreach ($allfields as $field) {
-        $fields .= sprintf(", `%s` = ?", $field);
-        $values[] = @$_REQUEST[$field];
-    }
-        
-    $values[] = $site->arg(2);
-    
-    $mysql->statement(sprintf('UPDATE users SET %s WHERE uid = ?;', substr($fields, 2)), $values);
-    
-    if ($mysql->errnum) {
+    if ($result['errnum']) {
 
         $tpl->setvar('ERRORS', '{LANG_USER_ALREADY_EXISTS}');
         $tpl->setcondition('ERRORS');

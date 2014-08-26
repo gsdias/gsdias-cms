@@ -38,7 +38,7 @@ if (@$_REQUEST['save']) {
         header("Location: /admin/pages", true, 302);
         exit;
     } else {
-        $tpl->setvar('ERRORS', '{LANG_PAGE_ALREADY_EXISTS}' . $mysql->errmsg);
+        $tpl->setvar('ERRORS', '{LANG_PAGE_ALREADY_EXISTS}');
         $tpl->setcondition('ERRORS');
     }
 }

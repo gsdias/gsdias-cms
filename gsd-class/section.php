@@ -107,7 +107,7 @@ abstract class section implements isection {
         return $fields['list'];
     }
     
-    public function add ($defaultfields, $defaultsafter, $defaultvalues) {
+    public function add ($defaultfields, $defaultsafter = array(), $defaultvalues = array()) {
         global $mysql;
         
         $section = str_replace('client', '', get_class($this));
@@ -144,7 +144,7 @@ abstract class section implements isection {
 
         $values = array();
 
-        $allfields = array_merge($defaultfields, $extrafieldslist);
+        $allfields = array_merge($defaultfields, $extrafields);
 
         foreach ($allfields as $field) {
             $fields .= sprintf(", `%s` = ?", $field);

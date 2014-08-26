@@ -54,5 +54,5 @@ $lang['pt'] = array(
     "LANG_CREATED" => "Criado",
     "LANG_CREATED_BY" => "Criado por",
     "LANG_ACTIONS" => "Acções",
-    "LANG_LAST_LOGIN" => "Último Login a"
+    "LANG_LAST_LOGIN" => "Último Login"
 );

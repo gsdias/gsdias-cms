@@ -16,7 +16,6 @@
         <thead>
             <tr>
                 <th>Caminho</th>
-                <th>Tags</th>
                 <th>{LANG_CREATED}</th>
                 <th>{LANG_ACTIONS}</th>
             </tr>
@@ -26,9 +25,6 @@
             <td>
                 {PAGES_TITLE}<br>
                 <a href="/admin/pages/{PAGES_PID}">{PAGES_URL}</a>
-            </td>
-            <td>
-                {PAGES_TAGS}
             </td>
             <td><em class="ago">({PAGES_CREATED})</em> <br>por <a href="/admin/users/{PAGES_CREATOR_ID}">{PAGES_CREATOR_NAME}</a></td>
             <td class="actions"><a href="/admin/pages/{PAGES_PID}/settings">{LANG_SETTINGS}</a><a href="/admin/pages/{PAGES_PID}/edit">{LANG_EDIT}</a></td>

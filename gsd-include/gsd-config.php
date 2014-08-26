@@ -6,6 +6,10 @@ include_once(INCLUDEPATH . 'gsd-lang' . PHPEXT);
 include_once(INCLUDEPATH . 'gsd-functions' . PHPEXT);
 include_once(INCLUDEPATH . 'gsd-paginator' . PHPEXT);
 
+if (is_file (CLIENTINCLUDEPATH . 'lang' . PHPEXT)) {
+    include_once(CLIENTINCLUDEPATH . 'lang' . PHPEXT);
+}
+
 date_default_timezone_set('Europe/Lisbon');
  
 // Next, register it with PHP.
