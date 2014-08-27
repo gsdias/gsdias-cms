@@ -107,7 +107,7 @@ class pages extends section implements isection {
             FROM pagemodules AS pm
 LEFT JOIN layoutsections as ls on ls.lsid = pm.lsid
 LEFT JOIN moduletypes as mt on mt.mtid = pm.mtid
-WHERE pid = ?', array($this->item['pid']));
+WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item['pid']));
             foreach ($mysql->result() as $item) {
                 $partial = new tpl();
                 $partial->setvars(array(

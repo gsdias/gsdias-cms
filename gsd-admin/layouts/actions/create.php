@@ -7,7 +7,7 @@ if (!IS_ADMIN) {
 
 if (@$_REQUEST['save']) {
     
-    $content = file_get_contents(sprintf(CLIENTPATH . 'tpl/_layouts/%s', $_FILES['layout']["name"]));
+    $content = file_get_contents(sprintf(CLIENTTPLPATH . '_layouts/%s', $_FILES['layout']["name"]));
 
     $fields = array(
         $_REQUEST['name'],

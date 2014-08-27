@@ -56,7 +56,7 @@ abstract class section implements isection {
                     $field = new select(array(
                         'id' => $extrafield,
                         'name' => $extrafield,
-                        'list' => $sectionextrafields['values'],
+                        'list' => $sectionextrafields['values'][$key],
                         'label' => $sectionextrafields['labels'][$key],
                         'selected' => @$item[$extrafield]
                     ));

@@ -1,4 +1,5 @@
 <?php
+
 $lang['pt'] = array(
     "LANG_REMOVE" => "Remover",
     "LANG_ADD" => "Adicionar",
