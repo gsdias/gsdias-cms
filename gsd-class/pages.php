@@ -103,10 +103,12 @@ class pages extends section implements isection {
         $extrafields = array();
 
         if (!empty($this->item)) {
-            $mysql->statement('SELECT *, ls.name AS lsname
+            $mysql->statement('SELECT *, mt.file, ls.name AS lsname, smt.file AS sfile
             FROM pagemodules AS pm
-LEFT JOIN layoutsections as ls on ls.lsid = pm.lsid
-LEFT JOIN moduletypes as mt on mt.mtid = pm.mtid
+LEFT JOIN layoutsections AS ls ON ls.lsid = pm.lsid
+LEFT JOIN layoutsectionmoduletypes AS lsmt ON ls.lsid = lsmt.lsid
+LEFT JOIN moduletypes AS mt ON mt.mtid = lsmt.mtid
+LEFT JOIN moduletypes AS smt ON smt.mtid = lsmt.smtid
 WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item['pid']));
             foreach ($mysql->result() as $item) {
                 $partial = new tpl();
@@ -115,6 +117,23 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item['pid']));
                     'NAME' => $item['pmid'],
                     'VALUE' => $item['data']
                 ));
+
+                if ($item['sfile']) {
+
+                    $spartial = new tpl();
+
+                    $spartial->setvars(array(
+                        'NAME' => 's' . $item['pmid'],
+                        'VALUE' => ''
+                    ));
+                    $spartial->setfile($item['sfile']);
+
+                    $list = array();
+                    $list[] = array('ITEM' => (string)$spartial);
+
+                    $partial->setarray('LIST', $list);
+                }
+
                 $partial->setfile($item['file']);
 
                 $extrafields[] = array(

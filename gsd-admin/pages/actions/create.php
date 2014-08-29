@@ -7,14 +7,14 @@ if (!IS_ADMIN) {
 
 if (@$_REQUEST['save']) {
     
-    $defaultfields = array('title', 'url', 'lid', 'description', 'keywords', 'tags', 'og_title', 'og_image', 'og_description');
+    $defaultfields = array('title', 'url', 'lid', 'description', 'keywords', 'tags', 'og_title', 'og_image', 'og_description', 'show_menu', 'require_auth');
     
     $fields = array('creator');
     
     $values = array($user->id);        
     
-    $_REQUEST['auth'] = @$_REQUEST['auth'] ? @$_REQUEST['auth'] : null;
-    $_REQUEST['menu'] = @$_REQUEST['menu'] ? @$_REQUEST['menu'] : null;
+    $_REQUEST['require_auth'] = @$_REQUEST['auth'] ? @$_REQUEST['auth'] : null;
+    $_REQUEST['show_menu'] = @$_REQUEST['menu'] ? @$_REQUEST['menu'] : null;
     
     $result = $csection->add($defaultfields, $fields, $values);
 

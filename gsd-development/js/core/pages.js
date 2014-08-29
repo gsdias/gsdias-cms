@@ -21,8 +21,25 @@
         }
     };
 
+    var newsubmodule = function () {
+        var id = this.name.replace('pm_s', ''),
+            elm = $(this),
+            newelm = elm.clone();
+
+        if (!elm.next().length) {
+            elm.after(newelm.val(''));
+        }
+    };
+
+    var savesubmodule = function () {
+        var id = this.name.replace('pm_s', '');
+
+    };
+
     $(document).bind(GSD.globalevents.init, function () {
         $('[name="title"]').on('blur', generateurl);
+        $('body').on('focus', "input[name^='pm_s']", newsubmodule);
+        $('body').on('change', "input[name^='pm_s']", savesubmodule);
     });
 
 }(GSD.Pages = GSD.Pages || {}, GSD.App, jQuery, _, Backbone));

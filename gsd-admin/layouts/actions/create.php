@@ -39,18 +39,15 @@ if (@$_REQUEST['save']) {
                 $mtid
             ));
         }
+        header("Location: /admin/layouts", true, 302);
+        exit;
     } else {
 
             $tpl->setvar('ERRORS', '{LANG_LAYOUT_ALREADY_EXISTS}');
             $tpl->setcondition('ERRORS');
 
     }
-//
-//    if ($mysql->total) {
-//        
-//        header("Location: /admin/images", true, 302);
-//        exit;
-//    }
+
 }
 
 $mysql->statement('SELECT * FROM layouttypes');
