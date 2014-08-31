@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS `layoutsectionmoduletypes` (
   `lsid` int(11) NOT NULL,
   `mtid` int(11) NOT NULL,
   `smtid` int(11) DEFAULT NULL,
+  `total` int(11) DEFAULT 1,
   FOREIGN KEY (lsid)
     REFERENCES layoutsections(lsid)
     ON UPDATE CASCADE ON DELETE CASCADE,

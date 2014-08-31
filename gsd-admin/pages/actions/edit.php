@@ -29,6 +29,7 @@ if (@$_REQUEST['save']) {
                         'style' => @$_REQUEST['style_' . $module][$i]
                     );
                 }
+                print_r($value);
                 $mysql->statement('UPDATE pagemodules SET data = ? WHERE pmid = ?;', array(serialize($value), substr($module, 4)));
             } else if (strpos($module, 'pm_') !== false) {
                 $value = array(

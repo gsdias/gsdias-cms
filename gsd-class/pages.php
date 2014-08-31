@@ -142,42 +142,43 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item['pid']));
 
                 if ($item['sfile']) {
                     $list = array();
-                    foreach ($item['data'] as $data) {
+
+                    foreach ($item['data'] as $data1) {
 
                         $extra = array();
-                        $data = gettype($data) == 'array' ? $data : array();
-                        while (sizeof($data)) {
-                            $sitem = array_shift($data);
-                            if (!$sitem) {
+                        $data = gettype($data1) == 'array' ? $data1 : array();
+
+
+                            if (!$data['value']) {
                                 continue;
                             }
                             if ($item['sfile'] == '_image') {
-                                $mysql->statement('SELECT * FROM images WHERE iid = ?;', array($sitem));
+                                $mysql->statement('SELECT * FROM images WHERE iid = ?;', array($data['value']));
                                 $image = $mysql->singleline();
 
                                 $image = new image(array(
                                     'src' => sprintf('/gsd-assets/images/%s.%s', @$image['iid'], @$image['extension']),
                                     'height' => '100',
                                     'width' => 'auto',
-                                    'class' => sprintf('preview %s', $sitem ? '' : 'is-hidden')
+                                    'class' => sprintf('preview %s', $data['value'] ? '' : 'is-hidden')
                                 ));
 
                                 $extra = array(
                                     'IMAGE' => $image,
-                                    'VALUE' => $sitem ? $sitem : 0,
-                                    'EMPTY' => $sitem ? 'is-hidden' : ''
+                                    'VALUE' => $data['value'] ? $data['value'] : 0,
+                                    'EMPTY' => $data['value'] ? 'is-hidden' : ''
                                 );
                             }
                             $spartial = new tpl();
 
                             $spartial->setvars(array_merge(array(
                                 'NAME' => 'pm_s' . $item['pmid'] . '[]',
-                                'VALUE' => $sitem
+                                'VALUE' => $data['value']
                             ), $extra));
                             $spartial->setfile($item['sfile']);
 
                             $list[] = array('ITEM' => (string)$spartial);
-                        }
+
 
                         $spartial = new tpl();
 
