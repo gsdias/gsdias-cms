@@ -34,9 +34,14 @@ if (@$_REQUEST['save']) {
             $lsid = $mysql->lastinserted();
             $mysql->statement('SELECT mtid FROM moduletypes WHERE name = ?', array( strtolower( $sectionname[1] ) ));
             $mtid = $mysql->singleresult();
-            $mysql->statement('INSERT INTO layoutsectionmoduletypes (lsid, mtid) values(?, ?);', array(
+
+            $mysql->statement('SELECT mtid FROM moduletypes WHERE name = ?', array( strtolower( @$sectionname[2] ) ));
+            $smtid = $mysql->singleresult() ? $mysql->singleresult() : null;
+
+            $mysql->statement('INSERT INTO layoutsectionmoduletypes (lsid, mtid, smtid) values(?, ?, ?);', array(
                 $lsid,
-                $mtid
+                $mtid,
+                $smtid
             ));
         }
         header("Location: /admin/layouts", true, 302);

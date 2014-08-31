@@ -23,23 +23,18 @@
 
     var newsubmodule = function () {
         var id = this.name.replace('pm_s', ''),
-            elm = $(this),
+            elm = $(this).closest('.submodule'),
             newelm = elm.clone();
 
         if (!elm.next().length) {
-            elm.after(newelm.val(''));
+            newelm.find('input').val('');
+            elm.after(newelm);
         }
-    };
-
-    var savesubmodule = function () {
-        var id = this.name.replace('pm_s', '');
-
     };
 
     $(document).bind(GSD.globalevents.init, function () {
         $('[name="title"]').on('blur', generateurl);
         $('body').on('focus', "input[name^='pm_s']", newsubmodule);
-        $('body').on('change', "input[name^='pm_s']", savesubmodule);
     });
 
 }(GSD.Pages = GSD.Pages || {}, GSD.App, jQuery, _, Backbone));

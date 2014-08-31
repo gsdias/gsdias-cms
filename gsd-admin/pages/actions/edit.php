@@ -18,14 +18,32 @@ if (@$_REQUEST['save']) {
     } else {
 
         foreach ($_REQUEST as $module => $value) {
-            if (strpos($module, 'pm_') !== false) {
-                $mysql->statement('UPDATE pagemodules SET data = ? WHERE pmid = ?;', array($value, substr($module, 3)));
+
+            if (strpos($module, 'pm_s') !== false) {
+                $vals = $value;
+                $value = array();
+                foreach ($vals as $i => $val) {
+                    $value[] = array(
+                        'value' => @$_REQUEST[$module][$i],
+                        'class' => @$_REQUEST['class_' . $module][$i],
+                        'style' => @$_REQUEST['style_' . $module][$i]
+                    );
+                }
+                $mysql->statement('UPDATE pagemodules SET data = ? WHERE pmid = ?;', array(serialize($value), substr($module, 4)));
+            } else if (strpos($module, 'pm_') !== false) {
+                $value = array(
+                    'value' => $value,
+                    'class' => @$_REQUEST['class_' . $module],
+                    'style' => @$_REQUEST['style_' . $module]
+                );
+                $mysql->statement('UPDATE pagemodules SET data = ? WHERE pmid = ?;', array(serialize($value), substr($module, 3)));
+
             }
         }
 
         $_SESSION['message'] = '{LANG_PAGE_SAVED}';
 
-        header("Location: /admin/pages", true, 302);
-        exit;
+        //header("Location: /admin/pages", true, 302);
+        //exit;
     }
 }

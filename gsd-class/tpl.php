@@ -102,7 +102,44 @@ class tpl {
         while ($key = array_pop($list)) {
             if ($type == 'PLACEHOLDER') {
                 $placeholder = explode(' ', $key);
-                $this->config['file'] = preg_replace(sprintf('#<!-- %s %s -->#s', $type, $key), $site->pagemodules[$placeholder[0]], $this->config['file'], 1);
+                if ($placeholder[1] == 'LIST') {
+                    $data = unserialize($site->pagemodules[$placeholder[0]]);
+                    $ul = '';
+                    if (gettype($data) == 'array' && sizeof($data)) {
+                        $ul .= '<ul>';
+                        foreach ($data as $item) {
+                            if ($placeholder[2] == 'IMAGE') {
+                                $mysql->statement('SELECT * FROM images WHERE iid = ?;', array($item));
+                                $image = $mysql->singleline();
+
+                                $item = new image(array(
+                                    'src' => sprintf('/gsd-assets/images/%s.%s', @$image['iid'], @$image['extension']),
+                                    'width' => 'auto'
+                                ));
+                            }
+                            $ul .= sprintf('<li>%s</li>', $item);
+                        }
+                        $ul .= '</ul>';
+                    }
+                    $this->config['file'] = preg_replace(sprintf('#<!-- %s %s -->#s', $type, $key), $ul, $this->config['file'], 1);
+                } elseif ($placeholder[1] == 'IMAGE') {
+                    $item = $site->pagemodules[$placeholder[0]];
+                    $item = unserialize($item);
+                    $mysql->statement('SELECT * FROM images WHERE iid = ?;', array(@$item['value']));
+                    $image = $mysql->singleline();
+
+                    $item = new image(array(
+                        'src' => sprintf('/gsd-assets/images/%s.%s', @$image['iid'], @$image['extension']),
+                        'width' => 'auto',
+                        'class' => @$item['class'],
+                        'style' => @$item['style']
+                    ));
+                    $this->config['file'] = preg_replace(sprintf('#<!-- %s %s -->#s', $type, $key), $item, $this->config['file'], 1);
+                } else {
+                    $item = $site->pagemodules[$placeholder[0]];
+                    $item = unserialize($item);
+                    $this->config['file'] = preg_replace(sprintf('#<!-- %s %s -->#s', $type, $key), $item['value'], $this->config['file'], 1);
+                }
             } else {
                 preg_match_all(sprintf('#<!-- %s %s -->(.*?)<!-- END%s %s -->#s', $type, $key, $type, $key), $this->config['file'], $matches, PREG_SET_ORDER);
                 for ($i = 0; $i < count($matches); $i++) {

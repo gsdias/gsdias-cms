@@ -12,6 +12,7 @@ $lang['pt'] = array(
     "LANG_ALL_LAYOUTS" => "Listar layouts",
     "LANG_NO_LAYOUTS" => "Não existem layouts",
     "LANG_LAYOUT_ALREADY_EXISTS" => "Já existe um layout associado a esse ficheiro",
+    "LANG_LAYOUT_REMOVED" => "Layout apagado",
     "LANG_LAYOUT_CREATED" => "Layout %s criado",
     "LANG_LAYOUT_NOPERMISSION" => "Não tem permissão para apagar layouts",
     "LANG_LAYOUT_RELATED" => "Existem páginas a usar este layout. Tem de apagar primeiro as páginas",

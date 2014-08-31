@@ -26,10 +26,13 @@ if (@$_REQUEST['save']) {
         WHERE lid = ?;', array(@$_REQUEST['lid']));
 
         foreach ($mysql->result() as $section) {
-            $mysql->statement('INSERT INTO pagemodules (lsid, mtid, pid, creator) values(?, ?, ?, ?);', array(
+            $defaultdata = array('class' => '', 'style' => '', 'value' => '');
+            $data = array_fill(0, $section['total'], $defaultdata);
+            $mysql->statement('INSERT INTO pagemodules (lsid, mtid, pid, data, creator) values(?, ?, ?, ?, ?);', array(
                 $section['lsid'],
                 $section['mtid'],
                 $pid,
+                serialize($data),
                 $user->id
             ));
         }

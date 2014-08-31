@@ -21,11 +21,7 @@ if ($action) {
         }
 
         $csection = new $classsection ();
-        
-        $csection->getcurrent($id);
-        
-        $csection->generatefields($section);
-        
+
         $site->main = sprintf('%s/%s', $section, $action);
         
         $file = sprintf('gsd-admin/%s/actions/%s%s', $section, $action, PHPEXT);
@@ -38,6 +34,10 @@ if ($action) {
         if (is_file($file)) {
             include_once($file);
         }
+
+        $csection->getcurrent($id);
+
+        $csection->generatefields($section);
     }
 
 } else {

@@ -39,7 +39,7 @@ class pages extends section implements isection {
             
             $tpl->setcondition('PAGINATOR', $pages['TOTAL'] > 1);
             
-            $this->generatepaginator($pages);
+            parent::generatepaginator($pages);
         }
     }
     
@@ -111,33 +111,101 @@ LEFT JOIN moduletypes AS mt ON mt.mtid = lsmt.mtid
 LEFT JOIN moduletypes AS smt ON smt.mtid = lsmt.smtid
 WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item['pid']));
             foreach ($mysql->result() as $item) {
+
+                $item['data'] = unserialize($item['data']);
+                $extra = array();
+                if ($item['file'] == '_image') {
+                    $mysql->statement('SELECT * FROM images WHERE iid = ?;', array(@$item['data']['value']));
+                    $image = $mysql->singleline();
+
+                    $image = new image(array(
+                        'src' => sprintf('/gsd-assets/images/%s.%s', @$image['iid'], @$image['extension']),
+                        'height' => '100',
+                        'width' => 'auto',
+                        'class' => sprintf('preview %s', @$item['data']['value'] ? '' : 'is-hidden')
+                    ));
+
+                    $extra = array(
+                        'IMAGE' => $image,
+                        'EMPTY' => @$item['data']['value'] ? 'is-hidden' : ''
+                    );
+                }
+
                 $partial = new tpl();
-                $partial->setvars(array(
+                $partial->setvars(array_merge(array(
                     'LABEL' => ucwords(strtolower($item['lsname'])),
-                    'NAME' => $item['pmid'],
-                    'VALUE' => $item['data']
-                ));
+                    'NAME' => 'pm_' . $item['pmid'],
+                    'VALUE' => @$item['data']['value'],
+                    'CLASS' => @$item['data']['class'],
+                    'STYLE' => @$item['data']['style']
+                ), $extra));
 
                 if ($item['sfile']) {
-
-                    $spartial = new tpl();
-
-                    $spartial->setvars(array(
-                        'NAME' => 's' . $item['pmid'],
-                        'VALUE' => ''
-                    ));
-                    $spartial->setfile($item['sfile']);
-
                     $list = array();
-                    $list[] = array('ITEM' => (string)$spartial);
+                    foreach ($item['data'] as $data) {
 
+                        $extra = array();
+                        $data = gettype($data) == 'array' ? $data : array();
+                        while (sizeof($data)) {
+                            $sitem = array_shift($data);
+                            if (!$sitem) {
+                                continue;
+                            }
+                            if ($item['sfile'] == '_image') {
+                                $mysql->statement('SELECT * FROM images WHERE iid = ?;', array($sitem));
+                                $image = $mysql->singleline();
+
+                                $image = new image(array(
+                                    'src' => sprintf('/gsd-assets/images/%s.%s', @$image['iid'], @$image['extension']),
+                                    'height' => '100',
+                                    'width' => 'auto',
+                                    'class' => sprintf('preview %s', $sitem ? '' : 'is-hidden')
+                                ));
+
+                                $extra = array(
+                                    'IMAGE' => $image,
+                                    'VALUE' => $sitem ? $sitem : 0,
+                                    'EMPTY' => $sitem ? 'is-hidden' : ''
+                                );
+                            }
+                            $spartial = new tpl();
+
+                            $spartial->setvars(array_merge(array(
+                                'NAME' => 'pm_s' . $item['pmid'] . '[]',
+                                'VALUE' => $sitem
+                            ), $extra));
+                            $spartial->setfile($item['sfile']);
+
+                            $list[] = array('ITEM' => (string)$spartial);
+                        }
+
+                        $spartial = new tpl();
+
+                        $spartial->setvars(array(
+                            'NAME' => 'pm_s' . $item['pmid'] . '[]',
+                            'EMPTY' => '',
+                            'IMAGE' => new image(array (
+                                'height' => '100',
+                                'width' => '100',
+                                'class' => sprintf('preview %s', @$item[$extrafield] ? '' : 'is-hidden')
+                            ))
+                        ));
+                        $spartial->setfile($item['sfile']);
+
+                        $list[] = array(
+                            'ITEM' => (string)$spartial,
+                            'EXTRACLASS' => 'image'
+                        );
+
+                    }
                     $partial->setarray('LIST', $list);
                 }
 
                 $partial->setfile($item['file']);
 
                 $extrafields[] = array(
-                    'FIELD' => $partial
+                    'FIELD' => $partial,
+                    'EXTRACLASS' => 'image'
                 );
             }
             $tpl->setarray('FIELD', $extrafields, true);

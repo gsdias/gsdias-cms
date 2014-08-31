@@ -2,6 +2,7 @@
 
 if (@$_REQUEST['save']) {
     $site->main = 'STEP2';
+    $site->startpoint = 'index';
     
     $mysql->statement("INSERT INTO users (level, email, password, name, creator) VALUES ('admin', :email, md5(:password), :name, 0);", array(':email' => $_REQUEST['email'], ':password' => $_REQUEST['password'], ':name' => $_REQUEST['name']));
     
@@ -11,6 +12,7 @@ if (@$_REQUEST['save']) {
 
 } else {
     $site->main = 'STEP1';
+    $site->startpoint = 'index';
     
     $mysql->statement("SHOW DATABASES;");
 
@@ -44,9 +46,9 @@ if (@$_REQUEST['save']) {
                     $status = '<span style="color: green;">Exists</span><br>';
                     $tables[$table] = 0;
                 } else {
-                    $status = '<span style="color: red;">Dont\' exist</span><br>';
+                    $status = '<span style="color: red;">Don\'t exist</span><br>';
                 }
-                
+                echo $table . ' ' . $status . '<br>';
                 $table_exists[] = array(
                     'NAME' => $table,
                     'STATUS' => $status
@@ -72,6 +74,8 @@ if (@$_REQUEST['save']) {
         }
     } else {
         $site->main = 'STEP2';
+        $site->startpoint = 'index';
+
         $mysql->statement("SELECT count(*) FROM users;");
         if ($mysql->singleresult()) {
             $tpl->setvar('STEP2_MESSAGES', "There is already an user on the database.");
@@ -98,10 +102,10 @@ function createtable ($table) {
     $sentence = file_get_contents(sprintf('gsd-sql/table_%s.sql', $table));
     $mysql->statement('SET foreign_key_checks = 0;' . $sentence . 'SET foreign_key_checks = 1;');
     
-    printf('<pre>%s%s</pre><br>', $sentence, $mysql->errmsg);
-    if ($mysql->executed) {
-        return sprintf('<span style="color: green;">Created</span><pre>%s</pre><br>', $mysql->errmsg);
+    //printf('<pre>%s%s</pre><br>', $sentence, $mysql->errmsg);
+    if (!$mysql->errnum) {
+        return sprintf('<span style="color: green;">Created</span><br>', $mysql->errmsg);
     } else {
-        return sprintf('<span style="color: red;">Something got wrong</span><pre>%s</pre><br>', $mysql->errmsg);
+        return sprintf('<span style="color: red;">Something got wrong</span><br>', $mysql->errmsg);
     }
 }
