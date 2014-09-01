@@ -42,10 +42,11 @@ if (@$_REQUEST['save']) {
                 $lsid,
                 $mtid,
                 $smtid,
-                @$sectionname[2] ? $sectionname[2] : 1
+                @$sectionname[3] ? $sectionname[3] : 1
             ));
+            echo $mysql->errmsg;
         }
-        header("Location: /admin/layouts", true, 302);
+        //header("Location: /admin/layouts", true, 302);
         exit;
     } else {
 
