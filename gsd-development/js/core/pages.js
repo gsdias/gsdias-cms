@@ -27,14 +27,15 @@
             newelm = elm.clone();
 
         if (!elm.next().length) {
-            newelm.find('input').val('');
+            newelm.find('.item_value').val('');
             elm.after(newelm);
+            newelm.find('.clearimage').trigger('click');
         }
     };
 
     $(document).bind(GSD.globalevents.init, function () {
         $('[name="title"]').on('blur', generateurl);
-        $('body').on('focus', "input[name^='pm_s']", newsubmodule);
+        $('body').on('change', ".item_value", newsubmodule);
     });
 
 }(GSD.Pages = GSD.Pages || {}, GSD.App, jQuery, _, Backbone));

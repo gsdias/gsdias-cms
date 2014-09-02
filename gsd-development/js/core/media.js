@@ -24,6 +24,7 @@
             $(overlay.$el.data('preview')).attr('src', use.data('image'));
             $(overlay.$el.data('preview')).removeClass('is-hidden');
             this.closeoverlay();
+            $(overlay.$el.data('elm')).trigger('change');
         },
         
         closeoverlay: function () {
@@ -38,11 +39,11 @@
 
     $(document).bind(GSD.globalevents.init, function () {
         overlay = new MediaView();
-        $('.findimage').on('click', function (e) {
+        $('body').on('click', '.findimage', function (e) {
             e.preventDefault();
 
-            overlay.$el.data('elm', $(this).closest('.colA').find('input[type="hidden"]'));
-            overlay.$el.data('preview', $(this).closest('.colA').find('img'));
+            overlay.$el.data('elm', $(this).closest('.image_block').find('input[type="hidden"]'));
+            overlay.$el.data('preview', $(this).closest('.image_block').find('img'));
             
             api.call($(this), 'GET', 'images', {}, function (data) {
                 var datacontent = $('#overlay div');
@@ -58,12 +59,12 @@
                 overlay.render();
             });
         });
-        $('.clearimage').on('click', function (e) {
+        $('body').on('click', '.clearimage', function (e) {
             e.preventDefault();
-            $(this).closest('.colA').find('input[type="hidden"]').val('0');
-            $(this).closest('.colA').find('input[type="text"]').removeClass('is-hidden');
-            $(this).closest('.colA').find('img').attr('src', '/gsd-image.php?width=auto&&height=100');
-            $(this).closest('.colA').find('img').addClass('is-hidden');
+            $(this).closest('.image_block').find('input[type="hidden"]').val('0');
+            $(this).closest('.image_block').find('input[type="text"]').removeClass('is-hidden');
+            $(this).closest('.image_block').find('img').attr('src', '/gsd-image.php?width=auto&&height=100');
+            $(this).closest('.image_block').find('img').addClass('is-hidden');
         });
     });
 

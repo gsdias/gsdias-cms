@@ -144,7 +144,7 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item['pid']));
                     $list = array();
 
                     foreach ($item['data'] as $index => $data1) {
-
+                        $spartials = '';
                         foreach ($data1 as $data2) {
                             $extra = array();
                             $data = $data2;
@@ -170,34 +170,36 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item['pid']));
 
                             $spartial->setvars(array_merge(array(
                                 'NAME' => 'pm_' . $index . '_s' . $item['pmid'] . '[]',
-                                'VALUE' => $data['value']
+                                'VALUE' => $data['value'],
+                                'LABEL' => 'Value'
                             ), $extra));
                             $spartial->setfile($item['sfile']);
 
-                            $list[] = array('ITEM' => (string)$spartial);
+                            $spartials .= $spartial;
+                            
 
                         }
-                        $spartial = new tpl();
-
-                        $spartial->setvars(array(
-                            'NAME' => 'pm_' . ($index + 1) . '_s' . $item['pmid'] . '[]',
-                            'EMPTY' => '',
-                            'IMAGE' => new image(array (
-                                'height' => '100',
-                                'width' => '100',
-                                'class' => 'preview is-hidden'
-                            ))
-                        ));
-                        $spartial->setfile($item['sfile']);
-
-                        for ($i = 0; $i < sizeof($data1); $i++) {
-                            $list[] = array(
-                                'ITEM' => (string)$spartial,
-                                'EXTRACLASS' => ''
-                            );
-                        }
+                        
 
                     }
+                    $list[] = array(
+                        'ITEM' => $spartials,
+                        'EXTRACLASS' => $item['sfile'] == '_image' ? 'image' : ''
+                    );
+                        
+                    $spartial = new tpl();
+
+                    $spartial->setvars(array(
+                        'NAME' => 'pm_' . ($index + 1) . '_s' . $item['pmid'] . '[]',
+                        'EMPTY' => '',
+                        'IMAGE' => new image(array (
+                            'height' => '100',
+                            'width' => '100',
+                            'class' => 'preview is-hidden'
+                        ))
+                    ));
+                    $spartial->setfile($item['sfile']);
+
                     $partial->setarray('LIST', $list);
                 }
 
