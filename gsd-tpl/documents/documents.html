@@ -2,6 +2,12 @@
     <h1>Documentos
         <a href="/admin/documents/upload" class="btn">Carregar documento</a>
     </h1>
+    <!-- IF ERRORS -->
+    <div class="errors">{ERRORS}</div>
+    <!-- ENDIF ERRORS -->
+    <!-- IF MESSAGES -->
+    <div class="errors messages">{MESSAGES}</div>
+    <!-- ENDIF MESSAGES -->
     <!-- IF DOCUMENTS_EXIST -->
     [_PAGINATOR]
     <table class="table">

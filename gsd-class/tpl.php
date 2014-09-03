@@ -107,17 +107,24 @@ class tpl {
                     $ul = '';
                     if (gettype($data) == 'array' && sizeof($data)) {
                         $ul .= '<ul>';
-                        foreach ($data as $item) {
-                            if ($placeholder[2] == 'IMAGE') {
-                                $mysql->statement('SELECT * FROM images WHERE iid = ?;', array($item));
-                                $image = $mysql->singleline();
+                        foreach ($data as $items) {
+                            $li = '';
+                            foreach ($items as $item) {
+                                if ($placeholder[2] == 'IMAGE' && $item['value']) {
+                                    $mysql->statement('SELECT * FROM images WHERE iid = ?;', array($item['value']));
+                                    $image = $mysql->singleline();
 
-                                $item = new image(array(
-                                    'src' => sprintf('/gsd-assets/images/%s.%s', @$image['iid'], @$image['extension']),
-                                    'width' => 'auto'
-                                ));
+                                    $li .= new image(array(
+                                        'src' => sprintf('/gsd-assets/images/%s.%s', @$image['iid'], @$image['extension']),
+                                        'width' => 'auto',
+                                        'class' => $item['class'],
+                                        'style' => $item['style']
+                                    ));
+                                } else if ($item['value'])  {
+                                    $li = $item['value'];
+                                }
                             }
-                            $ul .= sprintf('<li>%s</li>', $item);
+                            $ul .= sprintf('<li>%s</li>', $li);
                         }
                         $ul .= '</ul>';
                     }
@@ -125,20 +132,20 @@ class tpl {
                 } elseif ($placeholder[1] == 'IMAGE') {
                     $item = $site->pagemodules[$placeholder[0]];
                     $item = unserialize($item);
-                    $mysql->statement('SELECT * FROM images WHERE iid = ?;', array(@$item['value']));
+                    $mysql->statement('SELECT * FROM images WHERE iid = ?;', array(@$item[0][0]['value']));
                     $image = $mysql->singleline();
 
                     $item = new image(array(
                         'src' => sprintf('/gsd-assets/images/%s.%s', @$image['iid'], @$image['extension']),
                         'width' => 'auto',
-                        'class' => @$item['class'],
-                        'style' => @$item['style']
+                        'class' => @$item[0][0]['class'],
+                        'style' => @$item[0][0]['style']
                     ));
                     $this->config['file'] = preg_replace(sprintf('#<!-- %s %s -->#s', $type, $key), $item, $this->config['file'], 1);
                 } else {
                     $item = $site->pagemodules[$placeholder[0]];
                     $item = unserialize($item);
-                    $this->config['file'] = preg_replace(sprintf('#<!-- %s %s -->#s', $type, $key), $item['value'], $this->config['file'], 1);
+                    $this->config['file'] = preg_replace(sprintf('#<!-- %s %s -->#s', $type, $key), $item[0][0]['value'], $this->config['file'], 1);
                 }
             } else {
                 preg_match_all(sprintf('#<!-- %s %s -->(.*?)<!-- END%s %s -->#s', $type, $key, $type, $key), $this->config['file'], $matches, PREG_SET_ORDER);

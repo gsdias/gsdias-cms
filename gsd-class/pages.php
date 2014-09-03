@@ -115,35 +115,35 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item['pid']));
                 $item['data'] = unserialize($item['data']);
                 $extra = array();
                 if ($item['file'] == '_image') {
-                    $mysql->statement('SELECT * FROM images WHERE iid = ?;', array(@$item['data'][0]['value']));
+                    $mysql->statement('SELECT * FROM images WHERE iid = ?;', array(@$item['data'][0][0]['value']));
                     $image = $mysql->singleline();
 
                     $image = new image(array(
                         'src' => sprintf('/gsd-assets/images/%s.%s', @$image['iid'], @$image['extension']),
                         'height' => '100',
                         'width' => 'auto',
-                        'class' => sprintf('preview %s', @$item['data'][0]['value'] ? '' : 'is-hidden')
+                        'class' => sprintf('preview %s', @$item['data'][0][0]['value'] ? '' : 'is-hidden')
                     ));
 
                     $extra = array(
                         'IMAGE' => $image,
-                        'EMPTY' => @$item['data'][0]['value'] ? 'is-hidden' : ''
+                        'EMPTY' => @$item['data'][0][0]['value'] ? 'is-hidden' : ''
                     );
                 }
 
                 $partial = new tpl();
                 $partial->setvars(array_merge(array(
                     'LABEL' => ucwords(strtolower($item['lsname'])),
-                    'NAME' => 'pm_' . $item['pmid'],
-                    'VALUE' => @$item['data'][0]['value'],
-                    'CLASS' => @$item['data'][0]['class'],
-                    'STYLE' => @$item['data'][0]['style']
+                    'NAME' => 'value_pm_' . $item['pmid'],
+                    'VALUE' => @$item['data'][0][0]['value'],
+                    'CLASS' => @$item['data'][0][0]['class'],
+                    'STYLE' => @$item['data'][0][0]['style']
                 ), $extra));
 
                 if ($item['sfile']) {
                     $list = array();
-
                     foreach ($item['data'] as $index => $data1) {
+
                         $spartials = '';
                         foreach ($data1 as $data2) {
                             $extra = array();
@@ -169,28 +169,27 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item['pid']));
                             $spartial = new tpl();
 
                             $spartial->setvars(array_merge(array(
-                                'NAME' => 'pm_' . $index . '_s' . $item['pmid'] . '[]',
+                                'NAME' => 'value_pm_s_' . $index . '_' . $item['pmid'] . '[]',
                                 'VALUE' => $data['value'],
+                                'CLASS' => $data['class'],
+                                'STYLE' => $data['style'],
                                 'LABEL' => 'Value'
                             ), $extra));
                             $spartial->setfile($item['sfile']);
 
                             $spartials .= $spartial;
-                            
 
                         }
-                        
-
+                        $list[] = array(
+                            'ITEM' => $spartials,
+                            'EXTRACLASS' => $item['sfile'] == '_image' ? 'image' : ''
+                        );
                     }
-                    $list[] = array(
-                        'ITEM' => $spartials,
-                        'EXTRACLASS' => $item['sfile'] == '_image' ? 'image' : ''
-                    );
                         
                     $spartial = new tpl();
 
                     $spartial->setvars(array(
-                        'NAME' => 'pm_' . ($index + 1) . '_s' . $item['pmid'] . '[]',
+                        'NAME' => 'value_pm_' . ($index + 1) . '_s' . $item['pmid'] . '[]',
                         'EMPTY' => '',
                         'IMAGE' => new image(array (
                             'height' => '100',

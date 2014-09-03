@@ -35,13 +35,10 @@ if (@$_REQUEST['save']) {
                 serialize($data),
                 $user->id
             ));
-            echo $section['name'].'<pre>';
-            print_r($data);
-            echo '</pre>';
         }
 
         $_SESSION['message'] = sprintf($lang[$config['lang']]['LANG_PAGE_CREATED'], $_REQUEST['title']);
-        //header("Location: /admin/pages", true, 302);
+        header("Location: /admin/pages", true, 302);
         exit;
     } else {
         $tpl->setvar('ERRORS', '{LANG_PAGE_ALREADY_EXISTS}');

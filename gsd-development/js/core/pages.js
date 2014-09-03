@@ -22,12 +22,16 @@
     };
 
     var newsubmodule = function () {
-        var id = this.name.replace('pm_s', ''),
+        var id = this.name.replace('pm_s_', '').split('_'),
             elm = $(this).closest('.submodule'),
             newelm = elm.clone();
 
         if (!elm.next().length) {
+            var name = id[2].split('[');
             newelm.find('.item_value').val('');
+            newelm.find('.item_value').attr('name', 'value_pm_s_' + (parseInt(id[1], 10) + 1) + '_' + name[0] + '[]');
+            newelm.find('.item_class').attr('name', 'class_pm_s_' + (parseInt(id[1], 10) + 1) + '_' + name[0] + '[]');
+            newelm.find('.item_style').attr('name', 'style_pm_s_' + (parseInt(id[1], 10) + 1) + '_' + name[0] + '[]');
             elm.after(newelm);
             newelm.find('.clearimage').trigger('click');
         }

@@ -17,34 +17,51 @@ if (@$_REQUEST['save']) {
         $tpl->setcondition('ERRORS');
     } else {
 
+        $modules = array();
+
         foreach ($_REQUEST as $module => $value) {
 
-            if (strpos($module, 'pm_s') !== false) {
+            if (substr($module, 0, 10) == 'value_pm_s') {
                 $vals = $value;
                 $value = array();
+                $moduleid = explode('_', $module);
                 foreach ($vals as $i => $val) {
-                    $value[] = array(
-                        'value' => @$_REQUEST[$module][$i],
-                        'class' => @$_REQUEST['class_' . $module][$i],
-                        'style' => @$_REQUEST['style_' . $module][$i]
+                    $value[] = array (
+                            'value' => @$_REQUEST[$module][$i],
+                            'class' => @$_REQUEST['class_' . $module][$i],
+                            'style' => @$_REQUEST['style_' . $module][$i]
                     );
                 }
-                print_r($value);
-                $mysql->statement('UPDATE pagemodules SET data = ? WHERE pmid = ?;', array(serialize($value), substr($module, 4)));
-            } else if (strpos($module, 'pm_') !== false) {
-                $value = array(
-                    'value' => $value,
-                    'class' => @$_REQUEST['class_' . $module],
-                    'style' => @$_REQUEST['style_' . $module]
-                );
-                $mysql->statement('UPDATE pagemodules SET data = ? WHERE pmid = ?;', array(serialize($value), substr($module, 3)));
+                if (!sizeof(@$modules[$moduleid[4]])) {
+                    $modules[$moduleid[4]] = array();
+                }
+                $modules[$moduleid[4]][] = $value;
 
+            } else if (substr($module, 0, 9) == 'value_pm_') {
+                $value = array(
+                            array(
+                                array(
+                                    'value' => $value,
+                                    'class' => @$_REQUEST['class_' . $module],
+                                    'style' => @$_REQUEST['style_' . $module]
+                                )
+                            )
+                );
+
+                $mysql->statement('UPDATE pagemodules SET data = ? WHERE pmid = ?;', array(serialize($value), substr($module, 9)));
+
+            }
+        }
+
+        if (sizeof($modules)) {
+            foreach ($modules as $id => $value) {
+                $mysql->statement('UPDATE pagemodules SET data = ? WHERE pmid = ?;', array(serialize($value), $id));
             }
         }
 
         $_SESSION['message'] = '{LANG_PAGE_SAVED}';
 
-        //header("Location: /admin/pages", true, 302);
-        //exit;
+        header("Location: /admin/pages", true, 302);
+        exit;
     }
 }
