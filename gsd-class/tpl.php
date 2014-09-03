@@ -296,8 +296,10 @@ class tpl {
         if ($file) {
             if ($filefound = $this->findFile($idFile, 1)) {
                 $this->config['files'][$id] = $filefound;
+                $this->addError('TPL: ' . $filefound);
             } else if (is_file($file)) {
                 $this->config['files'][$id] = $file;
+                $this->addError('TPL: ' . $file);
             }
         } else {
             unset($this->config['files'][$id]);
