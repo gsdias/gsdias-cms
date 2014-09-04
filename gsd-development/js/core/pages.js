@@ -38,8 +38,14 @@
     };
 
     var togglesettings = function () {
-        var parent = $(this).closest('div'),
+        var icon = $(this),
+            parent = icon.closest('div'),
             settings = parent.find('.settings');
+
+        settings.css({
+            left: icon.position().left + 20,
+            top: 0
+        });
 
         settings.toggle();
     };
