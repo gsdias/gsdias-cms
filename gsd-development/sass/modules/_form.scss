@@ -1,7 +1,5 @@
 label {
-    width: 95%;
     display: block;
-    margin: auto;
     &.error {
         color: red;
         width: auto;
@@ -12,7 +10,6 @@ label {
 input {
     width: 91%;
     display: block;
-    margin: auto;
     border: solid 1px $border-color;
     height: 30px;
     border-radius: 3px;
@@ -82,13 +79,9 @@ input {
 
 @include respond-min($tablet-port) {
     label {
-        display: inline-block;
-        width: 150px;
-        text-align: right;
-        margin-right: 20px;
+        margin-bottom: 10px;
     }
     input {
-        display: inline-block;
         width: 200px;
         padding: 0 20px;
     }
