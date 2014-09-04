@@ -37,9 +37,17 @@
         }
     };
 
+    var togglesettings = function () {
+        var parent = $(this).closest('div'),
+            settings = parent.find('.settings');
+
+        settings.toggle();
+    };
+
     $(document).bind(GSD.globalevents.init, function () {
         $('[name="title"]').on('blur', generateurl);
         $('body').on('change', ".item_value", newsubmodule);
+        $('body').on('click', ".icon-gear", togglesettings);
     });
 
 }(GSD.Pages = GSD.Pages || {}, GSD.App, jQuery, _, Backbone));
