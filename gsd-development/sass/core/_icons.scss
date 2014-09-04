@@ -44,9 +44,9 @@
 .icon-gear {
     @extend .icon;
     @include retina-sprite(Gear);
-    position: relative;
-    top: -22px;
-    left: 394px;
+    position: absolute;
+    top: 12px;
+    left: 175px;
 }
 
 .icon-users {

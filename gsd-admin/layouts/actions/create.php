@@ -46,7 +46,7 @@ if (@$_REQUEST['save']) {
             ));
             echo $mysql->errmsg;
         }
-        //header("Location: /admin/layouts", true, 302);
+        header("Location: /admin/layouts", true, 302);
         exit;
     } else {
 

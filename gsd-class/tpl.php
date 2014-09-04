@@ -144,14 +144,14 @@ class tpl {
                     if (defined('DEBUG') && DEBUG) {
                         $extra = sprintf('<!-- DEBUG %s %s -->', $type, $key);
                     }
-                    $this->config['file'] = preg_replace(sprintf('#<!-- %s %s -->#s', $type, $key), $extra . $item, $this->config['file'], 1);
+                    $this->config['file'] = preg_replace(sprintf('#<!-- %s %s -->#s', $type, $key), @$extra . $item, $this->config['file'], 1);
                 } else {
                     $item = $site->pagemodules[$placeholder[0]];
                     $item = unserialize($item);
                     if (defined('DEBUG') && DEBUG) {
                         $extra = sprintf('<!-- DEBUG %s %s -->', $type, $key);
                     }
-                    $this->config['file'] = preg_replace(sprintf('#<!-- %s %s -->#s', $type, $key), $extra . $item[0][0]['value'], $this->config['file'], 1);
+                    $this->config['file'] = preg_replace(sprintf('#<!-- %s %s -->#s', $type, $key), @$extra . $item[0][0]['value'], $this->config['file'], 1);
                 }
             } else {
                 preg_match_all(sprintf('#<!-- %s %s -->(.*?)<!-- END%s %s -->#s', $type, $key, $type, $key), $this->config['file'], $matches, PREG_SET_ORDER);
@@ -160,9 +160,9 @@ class tpl {
                         $extra = sprintf('<!-- DEBUG %s %s -->', $type, $key);
                     }
                     if ($type === 'LOOP') {
-                        $this->config['file'] = preg_replace(sprintf('#<!-- %s %s -->.*?<!-- END%s %s -->#s', $type, $key, $type, $key), $extra . $this->loopBlock($key, $matches[$i][1]), $this->config['file'], 1);
+                        $this->config['file'] = preg_replace(sprintf('#<!-- %s %s -->.*?<!-- END%s %s -->#s', $type, $key, $type, $key), @$extra . $this->loopBlock($key, $matches[$i][1]), $this->config['file'], 1);
                     } else {
-                        $this->config['file'] = preg_replace(sprintf('#<!-- %s %s -->.*?<!-- END%s %s -->#s', $type, $key, $type, $key), $extra . $this->ifBlock($key, $matches[$i][1]), $this->config['file'], 1);
+                        $this->config['file'] = preg_replace(sprintf('#<!-- %s %s -->.*?<!-- END%s %s -->#s', $type, $key, $type, $key), @$extra . $this->ifBlock($key, $matches[$i][1]), $this->config['file'], 1);
                     }
                 }
             }

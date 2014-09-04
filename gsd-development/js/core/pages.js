@@ -43,7 +43,7 @@
             settings = parent.find('.settings');
 
         settings.css({
-            left: icon.position().left + 20,
+            left: icon.position().left + 150,
             top: 0
         });
 
