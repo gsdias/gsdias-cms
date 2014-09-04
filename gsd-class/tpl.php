@@ -13,7 +13,7 @@ class tpl {
     );
     
     public function __construct () {
-        $this->config['paths'] = array(ROOTPATH . 'gsd-tpl/_shared/%s' . TPLEXT);
+        $this->config['paths'] = array(ROOTPATH . 'gsd-tpl/_shares/%s' . TPLEXT, ROOTPATH . 'gsd-tpl/_modules/%s' . TPLEXT);
     }
     
     /** 
@@ -141,19 +141,28 @@ class tpl {
                         'class' => @$item[0][0]['class'],
                         'style' => @$item[0][0]['style']
                     ));
-                    $this->config['file'] = preg_replace(sprintf('#<!-- %s %s -->#s', $type, $key), $item, $this->config['file'], 1);
+                    if (defined('DEBUG') && DEBUG) {
+                        $extra = sprintf('<!-- DEBUG %s %s -->', $type, $key);
+                    }
+                    $this->config['file'] = preg_replace(sprintf('#<!-- %s %s -->#s', $type, $key), $extra . $item, $this->config['file'], 1);
                 } else {
                     $item = $site->pagemodules[$placeholder[0]];
                     $item = unserialize($item);
-                    $this->config['file'] = preg_replace(sprintf('#<!-- %s %s -->#s', $type, $key), $item[0][0]['value'], $this->config['file'], 1);
+                    if (defined('DEBUG') && DEBUG) {
+                        $extra = sprintf('<!-- DEBUG %s %s -->', $type, $key);
+                    }
+                    $this->config['file'] = preg_replace(sprintf('#<!-- %s %s -->#s', $type, $key), $extra . $item[0][0]['value'], $this->config['file'], 1);
                 }
             } else {
                 preg_match_all(sprintf('#<!-- %s %s -->(.*?)<!-- END%s %s -->#s', $type, $key, $type, $key), $this->config['file'], $matches, PREG_SET_ORDER);
                 for ($i = 0; $i < count($matches); $i++) {
+                    if (defined('DEBUG') && DEBUG) {
+                        $extra = sprintf('<!-- DEBUG %s %s -->', $type, $key);
+                    }
                     if ($type === 'LOOP') {
-                        $this->config['file'] = preg_replace(sprintf('#<!-- %s %s -->.*?<!-- END%s %s -->#s', $type, $key, $type, $key), $this->loopBlock($key, $matches[$i][1]), $this->config['file'], 1);
+                        $this->config['file'] = preg_replace(sprintf('#<!-- %s %s -->.*?<!-- END%s %s -->#s', $type, $key, $type, $key), $extra . $this->loopBlock($key, $matches[$i][1]), $this->config['file'], 1);
                     } else {
-                        $this->config['file'] = preg_replace(sprintf('#<!-- %s %s -->.*?<!-- END%s %s -->#s', $type, $key, $type, $key), $this->ifBlock($key, $matches[$i][1]), $this->config['file'], 1);
+                        $this->config['file'] = preg_replace(sprintf('#<!-- %s %s -->.*?<!-- END%s %s -->#s', $type, $key, $type, $key), $extra . $this->ifBlock($key, $matches[$i][1]), $this->config['file'], 1);
                     }
                 }
             }
@@ -247,12 +256,14 @@ class tpl {
             $cpath = sprintf($_path, $file, $file);
             
             if (is_file($cpath)) {
+                $this->addError('TPL: ' . $cpath);
                 return $pathname ? $cpath : file_get_contents($cpath);
             }
             
             $cpath = sprintf($_path, $site->arg(0), $file);
             
             if (is_file($cpath)) {
+                $this->addError('TPL: ' . $cpath);
                 return $pathname ? $cpath : file_get_contents($cpath);
             }
         }
@@ -296,10 +307,8 @@ class tpl {
         if ($file) {
             if ($filefound = $this->findFile($idFile, 1)) {
                 $this->config['files'][$id] = $filefound;
-                $this->addError('TPL: ' . $filefound);
             } else if (is_file($file)) {
                 $this->config['files'][$id] = $file;
-                $this->addError('TPL: ' . $file);
             }
         } else {
             unset($this->config['files'][$id]);
@@ -314,7 +323,7 @@ class tpl {
         global $mysql;
         
         if (!defined('DEBUG') || !DEBUG) {
-            //$this->config['file'] = str_replace(array("\r\n", "\r", "\n"), array('', '', ''), $this->config['file']);
+            $this->config['file'] = str_replace(array("\r\n", "\r", "\n"), array('', '', ''), $this->config['file']);
         }
         
         ob_start();
