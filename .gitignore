@@ -1,12 +1,10 @@
-gsd-development/node_modules
-gsd-development/.tmp
-gsd-development/.sass-cache
+node_modules/
+.tmp/
+.sass-cache/
 gsd-resources/js/*
 gsd-resources/css/*.css
 error_log
-gsd-client
+gsd-client/
 gsd-tpl/_shared/_scripts.html
-gsd-assets/images/*
-gsd-assets/documents/*
+gsd-assets/
 gsd-settings.php
-/gsd-settings.php
