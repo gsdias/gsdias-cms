@@ -1,5 +1,5 @@
 /*jslint nomen: true, debug: true, evil: false, vars: true, browser: true, devel: true */
-/*global require: false, define: false, $: false, _: false, Backbone: false, server: false */
+/*global GSD: false, define: false, $: false, jQuery: false, _: false, Backbone: false, server: false */
 
 (function (media, app, api, $, _, Backbone, undefined) {
 

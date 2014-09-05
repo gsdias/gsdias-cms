@@ -1,5 +1,5 @@
 /*jslint nomen: true, debug: true, evil: false, vars: true, browser: true, devel: true */
-/*global require: false, define: false, $: false, _: false, Backbone: false, server: false */
+/*global GSD: false, define: false, $: false, jQuery: false, _: false, Backbone: false, server: false */
 
 (function (pages, app, $, _, Backbone, undefined) {
 
@@ -7,9 +7,9 @@
 
     var generateurl = function () {
         var value = this.value.toLowerCase(),
-            url = $('[name="url"]');
+            url = $('[name="url"]').get(0);
 
-        if (url.length && !url.val().length && value.length) {
+        if (!url && value.length) {
             value = value.replace(new RegExp(" ", "gm"), "-")
                     .replace(/ç/g, "c")
                     .replace(/á/g, "a").replace(/à/g, "a").replace(/ã/g, "a").replace(/â/g, "a")
@@ -17,7 +17,7 @@
                     .replace(/í/g, "i").replace(/ì/g, "i").replace(/î/g, "i")
                     .replace(/ó/g, "o").replace(/ò/g, "o").replace(/õ/g, "o").replace(/ô/g, "o")
                     .replace(/ú/g, "u").replace(/ù/g, "u").replace(/û/g, "u");
-            url.val('/' + value.trim());
+            url.value = '/' + value.trim();
         }
     };
 
