@@ -10,7 +10,7 @@
             url = $('[name="url"]');
 
         if (url.length && !url.val().length && value.length) {
-            value = value.replace( new RegExp(" ", "gm"),"-")
+            value = value.replace(new RegExp(" ", "gm"), "-")
                     .replace(/ç/g, "c")
                     .replace(/á/g, "a").replace(/à/g, "a").replace(/ã/g, "a").replace(/â/g, "a")
                     .replace(/é/g, "e").replace(/è/g, "e").replace(/ê/g, "ê")
@@ -43,7 +43,7 @@
             settings = parent.find('.settings');
 
         settings.css({
-            left: icon.position().left + 150,
+            left: icon.position().left + 20,
             top: 0
         });
 

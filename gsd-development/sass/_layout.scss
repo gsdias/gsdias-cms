@@ -1,3 +1,11 @@
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
 .container {
     width: 94%;
     max-width: 1260px;
@@ -26,13 +34,10 @@
     }
 }
 
-.colA, .submodule {
+.colA {
     width: 100%;
     margin-bottom: 30px;
     clear: both;
-    position: relative;
-}
-.image_block {
     position: relative;
 }
 

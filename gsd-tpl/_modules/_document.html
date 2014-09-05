@@ -1,15 +1,18 @@
-<label>{LABEL}</label>
-<input type="hidden" name="{NAME}"value="{VALUE}">
-{IMAGE}
-<i class="icon-gear"></i>
-<div class="settings">
-<label>Class</label>
-<input class="item_class" type="text" name="class_{NAME}" value="{CLASS}">
-<br>
-<label>Style</label>
-<input class="item_style" type="text" name="style_{NAME}" value="{STYLE}">
-</div>
-<div class="btns">
-    <a href="#" class="btn findimage">Escolher documento</a>
-    <a href="#" class="btn red clearimage">Limpar documento</a>
+<div class="image_block image">
+    <label>{LABEL}</label>
+    <input class="item_value" type="hidden" name="{NAME}" value="{VALUE}">
+    <input type="text" readonly="readonly" value="Sem documento" class="{EMPTY} box">
+    {IMAGE}
+    <i class="icon-gear"></i>
+    <div class="settings">
+        <label>Class</label>
+        <input class="item_class" type="text" name="class_{NAME}" value="{CLASS}">
+        <br>
+        <label>Style</label>
+        <input class="item_style" type="text" name="style_{NAME}" value="{STYLE}">
+    </div>
+    <div class="btns">
+        <a href="#" class="btn finddocument">Escolher documento</a>
+        <a href="#" class="btn red cleardocument">Limpar documento</a>
+    </div>
 </div>
