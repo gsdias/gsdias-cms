@@ -9,6 +9,7 @@ if (@$_REQUEST['save']) {
     $fields = array(
         $_REQUEST['name'],
         $_REQUEST['description'],
+        $_REQUEST['tags'],
         $extension,
         $size[0],
         $size[1],
@@ -16,7 +17,7 @@ if (@$_REQUEST['save']) {
         $user->id
     );
     
-    $mysql->statement('INSERT INTO images (name, description, extension, width, height, size, creator) values(?, ?, ?, ?, ?, ?, ?);', $fields);
+    $mysql->statement('INSERT INTO images (name, description, tags, extension, width, height, size, creator) values(?, ?, ?, ?, ?, ?, ?, ?);', $fields);
 
     if ($mysql->total) {
         

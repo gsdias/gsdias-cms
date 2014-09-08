@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS `images` (
   `iid` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `name` varchar(100) NOT NULL,
   `description` varchar(100) DEFAULT NULL,
+  `tags` varchar(100) DEFAULT NULL,
   `extension` varchar(5) NOT NULL,
   `width` int(11) NOT NULL,
   `height` int(11) NOT NULL,

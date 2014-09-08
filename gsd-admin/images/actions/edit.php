@@ -5,10 +5,11 @@ if (@$_REQUEST['save']) {
     $defaultfields = array(
         $_REQUEST['name'],
         $_REQUEST['description'],
+        $_REQUEST['tags'],
         $site->arg(2)
     );
 
-    $mysql->statement('UPDATE images SET name = ?, description = ? WHERE iid = ?;', $defaultfields);
+    $mysql->statement('UPDATE images SET name = ?, description = ?, tags = ? WHERE iid = ?;', $defaultfields);
 
     if ($_FILES['asset']['error'] == 0) {
 
