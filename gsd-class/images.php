@@ -10,10 +10,15 @@ class images extends section implements isection {
     public function getlist ($numberPerPage = 10) {
         global $mysql, $tpl;
         
+        $tags = @$_REQUEST['search'] ? sprintf('WHERE tags = "%%%s%%"', $_REQUEST['search']) : '';
+
+        $tpl->setvar('SEARCH_VALUE', @$_REQUEST['search']);
+
         $mysql->statement('SELECT images.*, images.creator AS creator_id, u.name AS creator_name 
         FROM images 
-        LEFT JOIN users AS u ON images.creator = u.uid 
-        ORDER BY images.iid ' . pageLimit(pageNumber(), $numberPerPage));
+        LEFT JOIN users AS u ON images.creator = u.uid '
+        . $tags .
+        'ORDER BY images.iid ' . pageLimit(pageNumber(), $numberPerPage));
 
         $list = array();
 

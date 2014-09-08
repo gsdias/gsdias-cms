@@ -37,7 +37,13 @@
         <div id="overlay">
             <section>
                 <header><i class="close"></i></header>
-                <div></div>
+                <div class="search">
+                    <form method="post">
+                        <input type="text" value="{SEARCH_VALUE}" name="search">
+                        <input type="submit" value="Procurar" name="search_submit">
+                    </form>
+                </div>
+                <div class="content"></div>
             </section>
         </div>
         [_SCRIPTS]

@@ -1,0 +1,14 @@
+.search {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    input {
+        display: inline-block;
+    }
+    [type="submit"] {
+        background: #276876;
+        color: #fff;
+        padding: 5px;
+        width: 80px;
+    }
+}

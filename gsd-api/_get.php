@@ -15,7 +15,12 @@ $GETimages = function ($fields, $extra, $doc = false) {
     if (!$api->requiredFields($fields, $requiredFields)) {
         return array('error' => -3, 'message' => 'Missing required fields' );
     }
-    $mysql->statement('SELECT * from images;');
+
+    $tags = @$fields['search'] ? sprintf('WHERE tags like "%%%s%%"', $fields['search']) : '';
+
+    $mysql->statement('SELECT * FROM images '
+        . $tags .
+        ';');
 
     if ($mysql->total) {
         $output['message'] = '';

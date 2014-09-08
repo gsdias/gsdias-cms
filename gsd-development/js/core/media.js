@@ -13,7 +13,8 @@
         el: '#overlay',
         events: {
             'click .close': 'closeoverlay',
-            'click .use': 'useasset'
+            'click .use': 'useasset',
+            'submit .search': 'filter'
         },
         
         useasset: function (e) {
@@ -27,6 +28,25 @@
             $(overlay.$el.data('elm')).trigger('change');
         },
         
+        filter: function (e) {
+            e.preventDefault();
+            this.$el.data('elm', $(this).closest('.image_block').find('input[type="hidden"]'));
+            this.$el.data('preview', $(this).closest('.image_block').find('img'));
+
+            api.call(this.$el, 'GET', 'images', { search: this.$('[name="search"]').val() }, function (data) {
+                var datacontent = $('#overlay .content');
+
+                datacontent.find('*').remove();
+
+                datacontent.append('<table><thead><tr><th>Imagem</th><th>Nome</th><th>Accao</th></tr></thead><tbody></tbody></table>');
+
+                _.each(data, function (item) {
+                    datacontent.find('tbody').append('<tr><td><image src="/gsd-assets/images/' + item.iid + '.' + item.extension + '" height="100"></td><td>' + item.name + '</td><td><a href="#' + item.iid + '" data-image="/gsd-assets/images/' + item.iid + '.' + item.extension + '" class="use">Usar</a></td></tr>');
+                });
+
+            });
+        },
+
         closeoverlay: function () {
             this.$el.removeClass('is-visible');
         },
@@ -46,7 +66,7 @@
             overlay.$el.data('preview', $(this).closest('.image_block').find('img'));
             
             api.call($(this), 'GET', 'images', {}, function (data) {
-                var datacontent = $('#overlay div');
+                var datacontent = $('#overlay .content');
                 
                 datacontent.find('*').remove();
                 
