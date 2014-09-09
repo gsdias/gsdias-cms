@@ -9,7 +9,7 @@
         var value = this.value.toLowerCase(),
             url = $('[name="url"]').get(0);
 
-        if (!url && value.length) {
+        if ($(url).length && value.length) {
             value = value.replace(new RegExp(" ", "gm"), "-")
                     .replace(/ç/g, "c")
                     .replace(/á/g, "a").replace(/à/g, "a").replace(/ã/g, "a").replace(/â/g, "a")
