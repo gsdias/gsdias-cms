@@ -20,18 +20,16 @@
         useasset: function (e) {
             e.preventDefault();
             var use = $(e.currentTarget);
-            $(overlay.$el.data('elm')).val(use.attr('href').substr(1));
-            $(overlay.$el.data('elm')).next().addClass('is-hidden');
-            $(overlay.$el.data('preview')).attr('src', use.data('image'));
-            $(overlay.$el.data('preview')).removeClass('is-hidden');
+            $(this.$el.data('elm')).val(use.attr('href').substr(1));
+            $(this.$el.data('elm')).next().addClass('is-hidden');
+            $(this.$el.data('preview')).attr('src', use.data('image'));
+            $(this.$el.data('preview')).removeClass('is-hidden');
             this.closeoverlay();
-            $(overlay.$el.data('elm')).trigger('change');
+            $(this.$el.data('elm')).trigger('change');
         },
         
         filter: function (e) {
             e.preventDefault();
-            this.$el.data('elm', $(this).closest('.image_block').find('input[type="hidden"]'));
-            this.$el.data('preview', $(this).closest('.image_block').find('img'));
 
             api.call(this.$el, 'GET', 'images', { search: this.$('[name="search"]').val() }, function (data) {
                 var datacontent = $('#overlay .content');
