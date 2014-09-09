@@ -10,7 +10,7 @@ class images extends section implements isection {
     public function getlist ($numberPerPage = 10) {
         global $mysql, $tpl;
         
-        $tags = @$_REQUEST['search'] ? sprintf('WHERE tags = "%%%s%%"', $_REQUEST['search']) : '';
+        $tags = @$_REQUEST['search'] ? sprintf(' WHERE tags like "%%%s%%" ', $_REQUEST['search']) : '';
 
         $tpl->setvar('SEARCH_VALUE', @$_REQUEST['search']);
 
@@ -42,7 +42,7 @@ class images extends section implements isection {
                 $list[] = $fields;
             }
             $tpl->setarray('IMAGES', $list);
-            $pages = pageGenerator('FROM images LEFT JOIN users AS u ON images.creator = u.uid ORDER BY images.iid;');
+            $pages = pageGenerator('FROM images LEFT JOIN users AS u ON images.creator = u.uid ' . $tags . 'ORDER BY images.iid;');
             
             $tpl->setcondition('PAGINATOR', $pages['TOTAL'] > 1);
             
