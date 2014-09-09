@@ -44,7 +44,6 @@ if (@$_REQUEST['save']) {
                 $smtid,
                 @$sectionname[3] ? $sectionname[3] : 1
             ));
-            echo $mysql->errmsg;
         }
         header("Location: /admin/layouts", true, 302);
         exit;

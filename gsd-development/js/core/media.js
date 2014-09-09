@@ -9,25 +9,57 @@
 
     var MediaCollection = Backbone.Collection.extend('');
 
+    var MediaModel = Backbone.Model.extend({
+        urlRoot: '/api/image',
+        idAttribute: 'iid',
+
+        initialize: function () {
+            this.on("invalid", function (model, error) {
+                alert(error);
+            });
+        },
+
+        validate: function (attrs, options) {
+            if (isNaN(attrs.vid) || isNaN(attrs.uid) || !attrs.vid.length || !attrs.uid.length) {
+                return "Falta inserir dados obrigatorios ou inseriu valores errados";
+            }
+        }
+
+    });
+
     var MediaView = Backbone.View.extend({
-        el: '#overlay',
+        template: _.template('<td><image src="/gsd-assets/images/((iid)).((extension))" height="100"></td><td>((name))</td><td><a href="#((iid))" data-image="/gsd-assets/images/((iid)).((extension))" class="use">Usar</a></td>'),
+        tagName: 'tr',
         events: {
             'click .close': 'closeoverlay',
             'click .use': 'useasset',
             'submit .search': 'filter'
         },
-        
         useasset: function (e) {
             e.preventDefault();
             var use = $(e.currentTarget);
-            $(this.$el.data('elm')).val(use.attr('href').substr(1));
-            $(this.$el.data('elm')).next().addClass('is-hidden');
-            $(this.$el.data('preview')).attr('src', use.data('image'));
-            $(this.$el.data('preview')).removeClass('is-hidden');
-            this.closeoverlay();
-            $(this.$el.data('elm')).trigger('change');
+            $(overlay.$el.data('elm')).val(use.attr('href').substr(1));
+            $(overlay.$el.data('elm')).next().addClass('is-hidden');
+            $(overlay.$el.data('preview')).attr('src', use.data('image'));
+            $(overlay.$el.data('preview')).removeClass('is-hidden');
+            overlay.closeoverlay();
+            $(overlay.$el.data('elm')).trigger('change');
         },
         
+        render: function () {
+            this.$el.html(this.template(this.model.attributes));
+            return this;
+        }
+
+    });
+
+    var MediasView = Backbone.View.extend({
+        el: '#overlay',
+        events: {
+            'click .close': 'closeoverlay',
+            'submit .search': 'filter'
+        },
+
         filter: function (e) {
             e.preventDefault();
 
@@ -39,7 +71,14 @@
                 datacontent.append('<table><thead><tr><th>Imagem</th><th>Nome</th><th>Accao</th></tr></thead><tbody></tbody></table>');
 
                 _.each(data, function (item) {
-                    datacontent.find('tbody').append('<tr><td><image src="/gsd-assets/images/' + item.iid + '.' + item.extension + '" height="100"></td><td>' + item.name + '</td><td><a href="#' + item.iid + '" data-image="/gsd-assets/images/' + item.iid + '.' + item.extension + '" class="use">Usar</a></td></tr>');
+                    var media = new MediaView({
+                        model: new MediaModel({
+                            iid: item.iid, name: item.name, extension: item.extension
+                        })
+                    });
+
+                    media.render();
+                    datacontent.find('tbody').append(media.$el);
                 });
 
             });
@@ -56,7 +95,7 @@
     });
 
     $(document).bind(GSD.globalevents.init, function () {
-        overlay = new MediaView();
+        overlay = new MediasView();
         $('body').on('click', '.findimage', function (e) {
             e.preventDefault();
 
@@ -71,7 +110,15 @@
                 datacontent.append('<table><thead><tr><th>Imagem</th><th>Nome</th><th>Accao</th></tr></thead><tbody></tbody></table>');
                 
                 _.each(data, function (item) {
-                    datacontent.find('tbody').append('<tr><td><image src="/gsd-assets/images/' + item.iid + '.' + item.extension + '" height="100"></td><td>' + item.name + '</td><td><a href="#' + item.iid + '" data-image="/gsd-assets/images/' + item.iid + '.' + item.extension + '" class="use">Usar</a></td></tr>');
+                    var media = new MediaView({
+                        model: new MediaModel({
+                            iid: item.iid, name: item.name, extension: item.extension
+                        })
+                    });
+
+                    media.render();
+                    console.log(media.el)
+                    datacontent.find('tbody').append(media.el);
                 });
                 
                 overlay.render();
