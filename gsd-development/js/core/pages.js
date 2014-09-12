@@ -42,7 +42,7 @@
     var togglesettings = function () {
         var icon = $(this),
             parent = icon.closest('div'),
-            settings = parent.find('.settings');
+            settings = parent.find('.settings:first');
 
         settings.css({
             left: icon.position().left + 20,
