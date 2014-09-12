@@ -9,14 +9,16 @@
         var value = this.value.toLowerCase(),
             url = $('[name="url"]').get(0);
 
-        if (url.value.length && value.length) {
-            value = value.replace(new RegExp(" ", "gm"), "-")
+        if ($(url).length && !url.value.length && value.length) {
+            value = value.replace(/\b\w{1,2}\b/g, "").replace(/\b\  \b/g, " ")
+                    .replace(/ç/g, "c")
                     .replace(/ç/g, "c")
                     .replace(/á/g, "a").replace(/à/g, "a").replace(/ã/g, "a").replace(/â/g, "a")
                     .replace(/é/g, "e").replace(/è/g, "e").replace(/ê/g, "ê")
                     .replace(/í/g, "i").replace(/ì/g, "i").replace(/î/g, "i")
                     .replace(/ó/g, "o").replace(/ò/g, "o").replace(/õ/g, "o").replace(/ô/g, "o")
-                    .replace(/ú/g, "u").replace(/ù/g, "u").replace(/û/g, "u");
+                    .replace(/ú/g, "u").replace(/ù/g, "u").replace(/û/g, "u")
+                    .replace(/\b\ \b/g, "-");
             url.value = '/' + value.trim();
         }
     };
