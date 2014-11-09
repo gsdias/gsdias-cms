@@ -109,22 +109,24 @@ class tpl {
                         $ul .= '<ul>';
                         foreach ($data as $items) {
                             $li = '';
-                            foreach ($items as $item) {
-                                if ($placeholder[2] == 'IMAGE' && $item['value']) {
-                                    $mysql->statement('SELECT * FROM images WHERE iid = ?;', array($item['value']));
-                                    $image = $mysql->singleline();
+                            if (gettype($items) == 'array' && sizeof($items)) {
+                                foreach ($items as $item) {
+                                    if ($placeholder[2] == 'IMAGE' && $item['value']) {
+                                        $mysql->statement('SELECT * FROM images WHERE iid = ?;', array($item['value']));
+                                        $image = $mysql->singleline();
 
-                                    $li .= new image(array(
-                                        'src' => sprintf('/gsd-assets/images/%s.%s', @$image['iid'], @$image['extension']),
-                                        'width' => 'auto',
-                                        'class' => $item['class'],
-                                        'style' => $item['style']
-                                    ));
-                                } else if ($item['value'])  {
-                                    $li = $item['value'];
+                                        $li .= new image(array(
+                                            'src' => sprintf('/gsd-assets/images/%s.%s', @$image['iid'], @$image['extension']),
+                                            'width' => 'auto',
+                                            'class' => $item['class'],
+                                            'style' => $item['style']
+                                        ));
+                                    } else if ($item['value'])  {
+                                        $li = $item['value'];
+                                    }
                                 }
+                                $ul .= sprintf('<li>%s</li>', $li);
                             }
-                            $ul .= sprintf('<li>%s</li>', $li);
                         }
                         $ul .= '</ul>';
                     }

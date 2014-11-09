@@ -1,5 +1,23 @@
 <?php
 
+// Set language to German
+putenv('LC_ALL=pt_PT');
+setlocale(LC_ALL, 'pt_PT');
+
+// Specify location of translation tables
+bindtextdomain("myPHPApp", "./locale");
+
+// Choose domain
+textdomain("myPHPApp");
+
+// Translation is looking for in ./locale/de_DE/LC_MESSAGES/myPHPApp.mo now
+
+// Or use the alias _() for gettext()
+echo _("My name is %s.\n");
+
+
+
+
 define('ROOTPATH', dirname(__FILE__) . '/');
 
 if (is_file('gsd-install.php')) {
