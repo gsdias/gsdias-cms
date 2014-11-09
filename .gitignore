@@ -1,6 +1,7 @@
 node_modules/
 .tmp/
 .sass-cache/
+.brackets.json
 gsd-resources/js/*
 gsd-resources/css/*.css
 error_log
