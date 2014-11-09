@@ -36,6 +36,7 @@ if (@$_REQUEST['save']) {
                     $modules[$moduleid[4]] = array();
                 }
                 $modules[$moduleid[4]][] = $value;
+                $modules[$moduleid[4]]['order'] = 1;
 
             } else if (substr($module, 0, 9) == 'value_pm_') {
                 $value = array(
