@@ -1,8 +1,10 @@
 <?php
 
-// Set language to German
-putenv('LC_ALL=pt_PT');
-setlocale(LC_ALL, 'pt_PT');
+// Set language to Portuguese
+putenv('LC_ALL=de_DE');
+setlocale(LC_ALL, "");
+setlocale(LC_ALL, 'de_DE');
+echo strftime("%A %e %B %Y", mktime(0, 0, 0, 12, 22, 1978));
 
 // Specify location of translation tables
 bindtextdomain("gsdias", "./locale");
