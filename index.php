@@ -5,12 +5,12 @@ putenv('LC_ALL=pt_PT');
 setlocale(LC_ALL, 'pt_PT');
 
 // Specify location of translation tables
-bindtextdomain("myPHPApp", "./locale");
+bindtextdomain("gsdias", "./locale");
 
 // Choose domain
-textdomain("myPHPApp");
+textdomain("gsdias");
 
-// Translation is looking for in ./locale/de_DE/LC_MESSAGES/myPHPApp.mo now
+// Translation is looking for in ./locale/pt_PT/LC_MESSAGES/gsdias.po now
 
 // Or use the alias _() for gettext()
 echo _("My name is %s.\n");
