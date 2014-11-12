@@ -1,24 +1,24 @@
 <?php
 
-// Set language to Portuguese
-putenv('LC_ALL=de_DE');
-setlocale(LC_ALL, "");
-setlocale(LC_ALL, 'de_DE');
-echo strftime("%A %e %B %Y", mktime(0, 0, 0, 12, 22, 1978));
+$language = 'pt_PT';
 
-// Specify location of translation tables
-bindtextdomain("gsdias", "./locale");
+$folder = "Locale";
+$domain = "messages";
+$encoding = "UTF-8";
 
-// Choose domain
-textdomain("gsdias");
+putenv("LANG=" . $language);
+setlocale(LC_ALL, $language);
 
-// Translation is looking for in ./locale/pt_PT/LC_MESSAGES/gsdias.po now
+bindtextdomain($domain, $folder);
+bind_textdomain_codeset($domain, $encoding);
+
+textdomain($domain);
 
 // Or use the alias _() for gettext()
-echo _("My name is %s.\n");
+echo _("Hello World!");
 
 
-
+phpinfo();
 
 define('ROOTPATH', dirname(__FILE__) . '/');
 
