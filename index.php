@@ -17,16 +17,9 @@ textdomain($domain);
 // Or use the alias _() for gettext()
 echo _("Hello World!");
 
-
-phpinfo();
-
 define('ROOTPATH', dirname(__FILE__) . '/');
 
-if (is_file('gsd-install.php')) {
-    define('IS_INSTALLED', 0);
-} else {
-    define('IS_INSTALLED', 1);
-}
+define('IS_INSTALLED', is_file('gsd-install.php'));
 
 include_once('gsd-include/gsd-config.php');
 
