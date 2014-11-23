@@ -83,6 +83,66 @@ class tpl {
         $this->config['paths'] = $path;
     }
     
+    function createImage ($placeholder) {
+        global $site, $mysql;
+        
+        $item = $site->pagemodules[$placeholder[0]];
+        $item = unserialize($item);
+        $mysql->statement('SELECT * FROM images WHERE iid = ?;', array(@$item[0][0]['value']));
+        $image = $mysql->singleline();
+
+        $item = new image(array(
+            'src' => sprintf('/gsd-assets/images/%s.%s', @$image['iid'], @$image['extension']),
+            'width' => 'auto',
+            'class' => @$item[0][0]['class'],
+            'style' => @$item[0][0]['style']
+        ));
+        if (defined('DEBUG') && DEBUG) {
+            $extra = sprintf('<!-- DEBUG %s %s -->', $type, $key);
+        }
+        
+        return @$extra . $item;
+    }
+    
+    function createLists ($placeholder) {
+        global $site;
+        
+        $data = unserialize($site->pagemodules[$placeholder[0]]);
+        $ul = '';
+        if (gettype($data) == 'array' && sizeof($data)) {
+            $ul .= '<ul>';
+            foreach ($data as $items) {
+                $li = '';
+                if (gettype($items) == 'array' && sizeof($items)) {
+                    $ul .= sprintf('<li>%s</li>', $this->populateLists ($placeholder, $items));
+                }
+            }
+            $ul .= '</ul>';
+        }
+        return $ul;
+    }
+    
+    function populateLists ($placeholder, $items) {
+        $li = '';
+        foreach ($items as $item) {
+            if ($placeholder[2] == 'IMAGE' && $item['value']) {
+                $mysql->statement('SELECT * FROM images WHERE iid = ?;', array($item['value']));
+                $image = $mysql->singleline();
+
+                $li .= new image(array(
+                    'src' => sprintf('/gsd-assets/images/%s.%s', @$image['iid'], @$image['extension']),
+                    'width' => 'auto',
+                    'class' => $item['class'],
+                    'style' => $item['style']
+                ));
+            } else if ($item['value'])  {
+                $li = $item['value'];
+            }
+        }
+
+        return $li;
+    }
+    
     private
     /** 
       * @desc 
@@ -103,50 +163,10 @@ class tpl {
             if ($type == 'PLACEHOLDER') {
                 $placeholder = explode(' ', $key);
                 if ($placeholder[1] == 'LIST') {
-                    $data = unserialize($site->pagemodules[$placeholder[0]]);
-                    $ul = '';
-                    if (gettype($data) == 'array' && sizeof($data)) {
-                        $ul .= '<ul>';
-                        foreach ($data as $items) {
-                            $li = '';
-                            if (gettype($items) == 'array' && sizeof($items)) {
-                                foreach ($items as $item) {
-                                    if ($placeholder[2] == 'IMAGE' && $item['value']) {
-                                        $mysql->statement('SELECT * FROM images WHERE iid = ?;', array($item['value']));
-                                        $image = $mysql->singleline();
-
-                                        $li .= new image(array(
-                                            'src' => sprintf('/gsd-assets/images/%s.%s', @$image['iid'], @$image['extension']),
-                                            'width' => 'auto',
-                                            'class' => $item['class'],
-                                            'style' => $item['style']
-                                        ));
-                                    } else if ($item['value'])  {
-                                        $li = $item['value'];
-                                    }
-                                }
-                                $ul .= sprintf('<li>%s</li>', $li);
-                            }
-                        }
-                        $ul .= '</ul>';
-                    }
-                    $this->config['file'] = preg_replace(sprintf('#<!-- %s %s -->#s', $type, $key), $ul, $this->config['file'], 1);
+                    $this->config['file'] = preg_replace(sprintf('#<!-- %s %s -->#s', $type, $key), $this->createLists($placeholder), $this->config['file'], 1);
                 } elseif ($placeholder[1] == 'IMAGE') {
-                    $item = $site->pagemodules[$placeholder[0]];
-                    $item = unserialize($item);
-                    $mysql->statement('SELECT * FROM images WHERE iid = ?;', array(@$item[0][0]['value']));
-                    $image = $mysql->singleline();
-
-                    $item = new image(array(
-                        'src' => sprintf('/gsd-assets/images/%s.%s', @$image['iid'], @$image['extension']),
-                        'width' => 'auto',
-                        'class' => @$item[0][0]['class'],
-                        'style' => @$item[0][0]['style']
-                    ));
-                    if (defined('DEBUG') && DEBUG) {
-                        $extra = sprintf('<!-- DEBUG %s %s -->', $type, $key);
-                    }
-                    $this->config['file'] = preg_replace(sprintf('#<!-- %s %s -->#s', $type, $key), @$extra . $item, $this->config['file'], 1);
+                    
+                    $this->config['file'] = preg_replace(sprintf('#<!-- %s %s -->#s', $type, $key), $this->createImage($placeholder), $this->config['file'], 1);
                 } else {
                     $item = $site->pagemodules[$placeholder[0]];
                     $item = unserialize($item);
