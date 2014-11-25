@@ -1,5 +1,5 @@
 /*jslint nomen: true, debug: true, evil: false, vars: true, browser: true, devel: true */
-/*global require: false, define: false, $: false, _: false, Backbone: false, module: false */
+/*global module: false */
 
 module.exports = function (grunt) {
 
