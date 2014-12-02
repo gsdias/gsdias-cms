@@ -70,7 +70,7 @@ class tpl {
       * @param array $value - given list
       * @return nothing
     */  
-    function setcondition ($id, $value = true) {
+    function setcondition ($id, $value = 1) {
         $this->config['conditions'][$id] = $value;
     }
     
@@ -239,29 +239,29 @@ class tpl {
             $detected = 0;
             foreach ($list as $blk) {
                 if (substr($blk, 0, 1) == "!")  {
-                    $detected = $this->config['conditions'][substr($blk, 1)] === false || $detected ? 1 : 0;
+                    $detected = $this->config['conditions'][substr($blk, 1)] == 0 || $detected ? 1 : 0;
                 } else {
-                    $detected = $this->config['conditions'][$blk] === true || $detected ? 1 : 0;
+                    $detected = $this->config['conditions'][$blk] == 1 || $detected ? 1 : 0;
                 }
             }  
             return $detected ? $block : '';
         }
-        if (strpos($blockid," AND ")) {
+        if (strpos($blockid, " AND ")) {
             $list = explode(" ", $blockid);
             $detected = 1;
             foreach ($list as $blk) {
                 if ($blk == "AND")
                     continue;
-                if (substr($blk, 0, 1) == "!") $detected = $this->config['conditions'][substr($blk, 1)] === false && $detected ? 1 : 0;
-                else $detected = $this->config['conditions'][$blk] === true && $detected ? 1 : 0;
+                if (substr($blk, 0, 1) == "!") $detected = $this->config['conditions'][substr($blk, 1)] == 0 && $detected ? 1 : 0;
+                else $detected = $this->config['conditions'][$blk] == 1 && $detected ? 1 : 0;
             }  
             return $detected ? $block : '';
         }
         
         if (substr($blockid,0,1) == "!") {
-            return !@$this->config['conditions'][substr($blockid,1)] || @$this->config['conditions'][substr($blockid,1)] === false ? $block : '';
+            return !@$this->config['conditions'][substr($blockid,1)] || @$this->config['conditions'][substr($blockid,1)] == 0 ? $block : '';
         } else {
-            return @$this->config['conditions'][$blockid] === true ? $block : '';
+            return @$this->config['conditions'][$blockid] == 1 ? $block : '';
         }
     }
 

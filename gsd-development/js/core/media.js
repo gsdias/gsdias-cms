@@ -117,7 +117,6 @@
                     });
 
                     media.render();
-                    console.log(media.el)
                     datacontent.find('tbody').append(media.el);
                 });
                 

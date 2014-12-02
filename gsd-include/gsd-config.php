@@ -29,7 +29,7 @@ $tpl->setpaths($config['tplpath']);
 
 $resources = $config['resources'];
 
-//$tpl->setvars($lang[$config['lang']]);
+$tpl->setvars($lang[$config['lang']]);
 
 $tpl->setVar('SCRIPT', sprintf('server = "undefined" === typeof server ? { } : server;server.lang = "%s";server.ga = "%s";server.fb = "%s";', $config['lang'], $site->ga, $site->fb));
 $tpl->setVar('CDN', $resources);
