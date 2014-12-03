@@ -1,9 +1,6 @@
-/*jslint nomen: true, debug: true, evil: false, vars: true, browser: true, devel: true */
-/*global GSD: false, define: false, $: false, jQuery: false, _: false, Backbone: false, server: false */
-
 (function (api, app, $, _, Backbone, undefined) {
 
-    "use strict";
+    'use strict';
 
     var url = '/gsd-api/',
         messageBlock = $('.favicons');
@@ -12,7 +9,7 @@
 
         api.loading();
 
-        alert("Não foi possível comunicar com o servidor. Tente mais tarde");
+        alert('Não foi possível comunicar com o servidor. Tente mais tarde');
 
     };
 
@@ -101,7 +98,7 @@
         if ('undefined' !== typeof elem && null !== elem) {
             api.loading(elem);
         }
-        if (typeof file !== 'undefined') {
+        if ('undefined' !== typeof file) {
             $.ajax({
                 url: url + service,
                 type: method,

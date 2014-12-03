@@ -1,6 +1,3 @@
-/*jslint nomen: true, debug: true, evil: false, vars: true, browser: true, devel: true */
-/*global GSD: false, define: false, $: false, jQuery: false, _: false, Backbone: false, server: false */
-
 window.GSD = window.GSD || {};
 
 // Global event dispatcher - see http://www.michikono.com/2012/01/11/adding-a-centralized-event-dispatcher-on-backbone-js/ for discussion
@@ -8,9 +5,9 @@ GSD.globalEvents = _.extend({}, Backbone.Events);
 
 // Global events
 GSD.globalevents = {
-    init: "pageinit.gsd",
-    resize: "pageresize.gsd",
-    scroll: "pagescroll.gsd"
+    init: 'pageinit.gsd',
+    resize: 'pageresize.gsd',
+    scroll: 'pagescroll.gsd'
 };
 
 // App settings
@@ -21,7 +18,7 @@ GSD.settings = {
 
 (function (app, $, _, Backbone, undefined) {
 
-    "use strict";
+    'use strict';
 
     _.templateSettings = {
         evaluate: /\<\%([\s\S]+?)\%\>/g,
@@ -55,19 +52,19 @@ GSD.settings = {
             scroll: 0
         },
         body: {
-            el: $("body")
+            el: $('body')
         },
         html: {
-            el: $("html")
+            el: $('html')
         },
         header: {
-            el: $(".header")
+            el: $('.header')
         },
         content: {
-            el: $(".main")
+            el: $('.main')
         },
         footer: {
-            el: $(".footer")
+            el: $('.footer')
         }
     };
 
@@ -90,14 +87,14 @@ GSD.settings = {
 
         $(document).bind(GSD.globalevents.init, function () {
             // Add validation to any new forms that have been included
-            $("form").removeData("validator");
-            $("form").removeData("unobtrusiveValidation");
-            $("form").validate({
+            $('form').removeData('validator');
+            $('form').removeData('unobtrusiveValidation');
+            $('form').validate({
                 onkeyup: false
             });
             $.validator.messages.required = 'Campo de preenchimento obrigatório';
             $.validator.messages.email = 'Formato de email inválido';
-            //$.validator.unobtrusive.parse("form");
+            //$.validator.unobtrusive.parse('form');
         });
 
         // GO!

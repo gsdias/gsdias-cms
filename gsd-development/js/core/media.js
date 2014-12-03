@@ -1,27 +1,22 @@
-/*jslint nomen: true, debug: true, evil: false, vars: true, browser: true, devel: true */
-/*global GSD: false, define: false, $: false, jQuery: false, _: false, Backbone: false, server: false */
-
 (function (media, app, api, $, _, Backbone, undefined) {
 
-    "use strict";
+    'use strict';
 
     var overlay;
-
-    var MediaCollection = Backbone.Collection.extend('');
 
     var MediaModel = Backbone.Model.extend({
         urlRoot: '/api/image',
         idAttribute: 'iid',
 
         initialize: function () {
-            this.on("invalid", function (model, error) {
+            this.on('invalid', function (model, error) {
                 alert(error);
             });
         },
 
-        validate: function (attrs, options) {
+        validate: function (attrs) {
             if (isNaN(attrs.vid) || isNaN(attrs.uid) || !attrs.vid.length || !attrs.uid.length) {
-                return "Falta inserir dados obrigatorios ou inseriu valores errados";
+                return 'Falta inserir dados obrigatorios ou inseriu valores errados';
             }
         }
 
