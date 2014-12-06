@@ -8,9 +8,6 @@
  * classie.toggle( elem, 'my-class' )
  */
 
-/*jshint browser: true, strict: true, undef: true */
-/*global define: false */
-
 ( function( window ) {
 
     'use strict';
@@ -90,7 +87,7 @@
  */
 (function() {
 
-    "use strict";
+    'use strict';
     
     function scrollY() {
         return window.pageYOffset || docElem.scrollTop;
