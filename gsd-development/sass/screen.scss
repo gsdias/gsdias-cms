@@ -21,15 +21,15 @@ $sprites2x: sprite-map("icons/retina/*.png");
 /*===============================
         Core includes
 =================================*/
-
 @import "core/settings";
 @import "core/retina-sprites";
 @import "core/icons";
 @import "core/header";
 @import "core/footer";
 
-
-
+/*===============================
+        Base and Layout
+=================================*/
 @import "_base.scss";
 @import "_layout.scss";
 
@@ -38,6 +38,8 @@ $sprites2x: sprite-map("icons/retina/*.png");
 =================================*/
 @import "modules/**";
 
-
+/*===============================
+        State and Theme
+=================================*/
 @import "_state.scss";
 @import "_theme.scss";

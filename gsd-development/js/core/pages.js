@@ -1,24 +1,21 @@
-/*jslint nomen: true, debug: true, evil: false, vars: true, browser: true, devel: true */
-/*global GSD: false, define: false, $: false, jQuery: false, _: false, Backbone: false, server: false */
-
 (function (pages, app, $, _, Backbone, undefined) {
 
-    "use strict";
+    'use strict';
 
     var generateurl = function () {
         var value = this.value.toLowerCase(),
             url = $('[name="url"]').get(0);
 
         if ($(url).length && !url.value.length && value.length) {
-            value = value.replace(/\b\w{1,2}\b/g, "").replace(/\b\  \b/g, " ")
-                    .replace(/ç/g, "c")
-                    .replace(/ç/g, "c")
-                    .replace(/á/g, "a").replace(/à/g, "a").replace(/ã/g, "a").replace(/â/g, "a")
-                    .replace(/é/g, "e").replace(/è/g, "e").replace(/ê/g, "ê")
-                    .replace(/í/g, "i").replace(/ì/g, "i").replace(/î/g, "i")
-                    .replace(/ó/g, "o").replace(/ò/g, "o").replace(/õ/g, "o").replace(/ô/g, "o")
-                    .replace(/ú/g, "u").replace(/ù/g, "u").replace(/û/g, "u")
-                    .replace(/\b\ \b/g, "-");
+            value = value.replace(/\b\w{1,2}\b/g, '').replace(/\b\  \b/g, ' ')
+                    .replace(/ç/g, 'c')
+                    .replace(/ç/g, 'c')
+                    .replace(/á/g, 'a').replace(/à/g, 'a').replace(/ã/g, 'a').replace(/â/g, 'a')
+                    .replace(/é/g, 'e').replace(/è/g, 'e').replace(/ê/g, 'ê')
+                    .replace(/í/g, 'i').replace(/ì/g, 'i').replace(/î/g, 'i')
+                    .replace(/ó/g, 'o').replace(/ò/g, 'o').replace(/õ/g, 'o').replace(/ô/g, 'o')
+                    .replace(/ú/g, 'u').replace(/ù/g, 'u').replace(/û/g, 'u')
+                    .replace(/\b\ \b/g, '-');
             url.value = '/' + value.trim();
         }
     };
@@ -54,8 +51,8 @@
 
     $(document).bind(GSD.globalevents.init, function () {
         $('[name="title"]').on('blur', generateurl);
-        $('body').on('change', ".item_value", newsubmodule);
-        $('body').on('click', ".icon-gear", togglesettings);
+        $('body').on('change', '.item_value', newsubmodule);
+        $('body').on('click', '.icon-gear', togglesettings);
     });
 
 }(GSD.Pages = GSD.Pages || {}, GSD.App, jQuery, _, Backbone));

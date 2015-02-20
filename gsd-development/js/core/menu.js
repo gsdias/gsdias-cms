@@ -1,6 +1,3 @@
-/*jslint nomen: true, debug: true, evil: false, vars: true, browser: true, devel: true */
-/*global GSD: false, define: false, $: false, jQuery: false, _: false, Backbone: false, server: false, Modernizr: false, classie: false */
-
 /*!
  * classie - class helper functions
  * from bonzo https://github.com/ded/bonzo
@@ -10,9 +7,6 @@
  * classie.remove( elem, 'my-unwanted-class' )
  * classie.toggle( elem, 'my-class' )
  */
-
-/*jshint browser: true, strict: true, undef: true */
-/*global define: false */
 
 ( function( window ) {
 
@@ -93,7 +87,7 @@
  */
 (function() {
 
-    "use strict";
+    'use strict';
     
     function scrollY() {
         return window.pageYOffset || docElem.scrollTop;

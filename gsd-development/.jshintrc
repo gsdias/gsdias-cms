@@ -1,0 +1,23 @@
+{
+    "bitwise": false,
+    "browser": true,
+    "camelcase": true,
+    "curly": true,
+    "eqeqeq": true,
+    "es3": true,
+    "esnext": true,
+    "expr": true,
+    "forin": true,
+    "immed": true,
+    "indent": 4,
+    "latedef": true,
+    "newcap": true,
+    "noarg": true,
+    "node": true,
+    "nonew": true,
+    "predef": [ "GSD", "areas", "jQuery", "Backbone", "_", "Modernizr", "classie" ],
+    "quotmark": "single",
+    "strict": true,
+    "undef": true,
+    "unused": true
+}

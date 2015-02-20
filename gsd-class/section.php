@@ -130,7 +130,7 @@ abstract class section implements isection {
 
         $mysql->statement(sprintf('INSERT INTO %s (%s) values (%s);', $section, implode(', ', $fields), substr($questions, 2)), $values);
         
-        return array('total' => $mysql->total, 'errnum' => $mysql->errnum, 'id' => $mysql->lastinserted());
+        return array('total' => $mysql->total, 'errnum' => $mysql->errnum, 'errmsg' => $mysql->errmsg, 'id' => $mysql->lastinserted());
     }
     
     public function edit ($defaultfields) {

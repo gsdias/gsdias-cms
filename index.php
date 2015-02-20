@@ -2,7 +2,7 @@
 
 $language = 'pt_PT';
 
-$folder = "Locale";
+$folder = "locale";
 $domain = "messages";
 $encoding = "UTF-8";
 
@@ -14,12 +14,9 @@ bind_textdomain_codeset($domain, $encoding);
 
 textdomain($domain);
 
-// Or use the alias _() for gettext()
-echo _("Hello World!");
-
 define('ROOTPATH', dirname(__FILE__) . '/');
 
-define('IS_INSTALLED', is_file('gsd-install.php'));
+define('IS_INSTALLED', !is_file('gsd-install.php'));
 
 include_once('gsd-include/gsd-config.php');
 
