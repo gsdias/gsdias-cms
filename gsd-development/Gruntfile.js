@@ -9,7 +9,7 @@ module.exports = function (grunt) {
         pkg: grunt.file.readJSON('package.json'),
         filerev: {
             compile: {
-                src: ['../gsd-resources/js/built.js', '../gsd-resources/css/screen.css']
+                src: ['../<%= pkg.prefix %>resources/js/built.js', '../<%= pkg.prefix %>resources/css/screen.css']
             },
             options: {
                 algorithm: 'md5',
@@ -18,8 +18,8 @@ module.exports = function (grunt) {
         },
         clean: {
             options: { force: true },
-            js: ['../gsd-resources/js/*.js', '../gsd-resources/js/*.map'],
-            css: ['../gsd-resources/css/*.css', '../gsd-resources/css/*.map']
+            js: ['../<%= pkg.prefix %>resources/js/*.js', '../<%= pkg.prefix %>resources/js/*.map'],
+            css: ['../<%= pkg.prefix %>resources/css/*.css', '../<%= pkg.prefix %>resources/css/*.map']
         },
         jshint: {
             files: [
@@ -41,16 +41,16 @@ module.exports = function (grunt) {
         copy: {
             main: {
                 src: './tpl/_scripts.html',
-                dest: '../gsd-tpl/_shared/_scripts.html'
+                dest: '../<%= pkg.prefix %>tpl/_shared/_scripts.html'
             }
         },
         usemin: {
-            html: '../gsd-tpl/_shared/_scripts.html'
+            html: '../<%= pkg.prefix %>tpl/_shared/_scripts.html'
         },
         'string-replace': {
             'js-source-map-fix': {
                 files: {
-                    '../gsd-resources/js/': '../gsd-resources/js/*'
+                    '../<%= pkg.prefix %>resources/js/': '../<%= pkg.prefix %>resources/js/*'
                 },
                 options: {
                     replacements: [
@@ -89,9 +89,9 @@ module.exports = function (grunt) {
                                         'drop_console': true
                                     },
                                     sourceMap: true,
-                                    sourceMapIn: '.tmp/concat/resources/js/built.js.map',
+                                    sourceMapIn: '.tmp/concat/<%= pkg.prefix %>resources/js/built.js.map',
                                     files: {
-                                        '../gsd-resources/js/*': '.tmp/concat/gsd-resources/js/*'
+                                        '../<%= pkg.prefix %>resources/js/*': '.tmp/concat/<%= pkg.prefix %>resources/js/*'
                                     }
                                 };
                             }
@@ -141,7 +141,7 @@ module.exports = function (grunt) {
                 devFile: './js/libs/modernizr.js',
 
                 // [REQUIRED] Path to save out the built file.
-                outputFile: '../gsd-resources/js/libs/modernizr.min.js',
+                outputFile: '../<%= pkg.prefix %>resources/js/libs/modernizr.min.js',
 
                 // Based on default settings on http://modernizr.com/download/
                 extra: {

@@ -41,7 +41,7 @@
 			}
 
 			catch (\PDOException $error) {
-                //echo $error->getMessage();
+                echo $error->getMessage();
                 echo $error->getCode();
                 switch ($error->getCode()) {
                     case '2002':

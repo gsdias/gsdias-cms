@@ -17,6 +17,8 @@ sprite_load_path = "../gsd-resources/css/img"
 
 output_style = :expanded
 
+sourcemap = true
+
 # To enable relative paths to assets via compass helper functions. Uncomment:
 # relative_assets = true
 
