@@ -13,7 +13,7 @@ class tpl {
     );
     
     public function __construct () {
-        $this->config['paths'] = array(ROOTPATH . 'gsd-tpl/_shares/%s' . TPLEXT, ROOTPATH . 'gsd-tpl/_modules/%s' . TPLEXT);
+        $this->config['paths'] = array(ROOTPATH . 'gsd-tpl/_shared/%s' . TPLEXT, ROOTPATH . 'gsd-tpl/_modules/%s' . TPLEXT);
     }
     
     /** 
@@ -80,7 +80,7 @@ class tpl {
       * @return nothing
     */  
     function setpaths ($path = array()) {
-        $this->config['paths'] = $path;
+        $this->config['paths'] = array_merge($path, $this->config['paths']);
     }
     
     function createImage ($placeholder) {
@@ -258,7 +258,7 @@ class tpl {
             return $detected ? $block : '';
         }
         
-        if (substr($blockid,0,1) == "!") {
+        if (substr($blockid, 0, 1) == "!") {
             return !@$this->config['conditions'][substr($blockid,1)] || @$this->config['conditions'][substr($blockid,1)] == 0 ? $block : '';
         } else {
             return @$this->config['conditions'][$blockid] == 1 ? $block : '';
@@ -281,7 +281,9 @@ class tpl {
                 $this->addError('TPL: ' . $cpath);
                 return $pathname ? $cpath : file_get_contents($cpath);
             }
-            
+        }
+
+        foreach($this->config['paths'] as $_path) {
             $cpath = sprintf($_path, $site->arg(0), $file);
             
             if (is_file($cpath)) {

@@ -4,6 +4,7 @@ node_modules/
 .brackets.json
 gsd-resources/js/*
 gsd-resources/css/*.css
+gsd-resources/css/*.map
 error_log
 gsd-client/
 gsd-tpl/_shared/_scripts.html

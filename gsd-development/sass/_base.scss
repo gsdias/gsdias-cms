@@ -1,4 +1,4 @@
-body {
+& {
     font: 400 14px $font-arial;
     color: $text-color;
 }
@@ -47,13 +47,13 @@ a {
 }
 
 @media (max-width: 900px) {
-    body {
+    & {
         font-size: 90%;
     }
 }
 
 @media (max-width: 800px) {
-    body {
+    & {
         font-size: 80%;
     }
 }

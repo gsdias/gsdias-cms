@@ -49,10 +49,11 @@ if ($user->isLogged()) {
         $tpl->setvar('USER_ID', $user->id);
 
     }
-    $tpl->setVar('SCRIPT', sprintf('server.userId = "%s";', $user->id));
+    $tpl->setVar('SCRIPT', sprintf('server.userId = "%s";var user = { uid: %s };', $user->id, $user->id));
     
 } else {
     define('IS_LOGGED', 0);
+    $tpl->setVar('SCRIPT', 'var user = {{}};');
 }
 
 if ($uri == '/admin/auth' || $uri == '/admin/auth/') {

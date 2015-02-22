@@ -17,29 +17,34 @@
 $sprites: sprite-map("icons/normal/*.png");
 $sprites2x: sprite-map("icons/retina/*.png");
 
+.gsd {
+    /*===============================
+            Core includes
+    =================================*/
+    @import "core/settings";
+    @import "core/retina-sprites";
+    @import "core/icons";
+    @import "core/header";
+    @import "core/footer";
 
-/*===============================
-        Core includes
-=================================*/
-@import "core/settings";
-@import "core/retina-sprites";
-@import "core/icons";
-@import "core/header";
-@import "core/footer";
+    /*===============================
+            Base and Layout
+    =================================*/
+    @import "_base.scss";
+    @import "_layout.scss";
 
-/*===============================
-        Base and Layout
-=================================*/
-@import "_base.scss";
-@import "_layout.scss";
+    /*===============================
+            Reusable, page-independant modules
+    =================================*/
+    @import "modules/**";
 
-/*===============================
-        Reusable, page-independant modules
-=================================*/
-@import "modules/**";
+    /*===============================
+            State and Theme
+    =================================*/
+    @import "_state.scss";
+    @import "_theme.scss";
+}
 
-/*===============================
-        State and Theme
-=================================*/
-@import "_state.scss";
-@import "_theme.scss";
+.frontend {
+    @import "../../gsd-client/development/sass/_client.scss";
+}

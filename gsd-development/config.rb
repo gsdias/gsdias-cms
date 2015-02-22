@@ -11,6 +11,7 @@ images_dir = "../gsd-resources/css/img"
 generated_images_dir = "../gsd-resources/css/img"
 images_dir_source = "../gsd-resources/css/img"
 sprite_load_path = "../gsd-resources/css/img"
+additional_import_paths  = ["../gsd-client/development/sass"]
 
 # You can select your preferred output style here (can be overridden via the command line):
 # output_style = :expanded or :nested or :compact or :compressed

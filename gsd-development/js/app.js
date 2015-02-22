@@ -6,6 +6,7 @@ GSD.globalEvents = _.extend({}, Backbone.Events);
 // Global events
 GSD.globalevents = {
     init: 'pageinit.gsd',
+    frontend: 'pagefrontend.gsd',
     resize: 'pageresize.gsd',
     scroll: 'pagescroll.gsd'
 };

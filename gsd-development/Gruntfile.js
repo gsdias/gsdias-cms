@@ -9,7 +9,7 @@ module.exports = function (grunt) {
         pkg: grunt.file.readJSON('package.json'),
         filerev: {
             compile: {
-                src: ['../<%= pkg.prefix %>resources/js/built.js', '../<%= pkg.prefix %>resources/css/screen.css']
+                src: ['../gsd-resources/js/built.js', '../gsd-resources/css/screen.css']
             },
             options: {
                 algorithm: 'md5',
@@ -18,14 +18,14 @@ module.exports = function (grunt) {
         },
         clean: {
             options: { force: true },
-            js: ['../<%= pkg.prefix %>resources/js/*.js', '../<%= pkg.prefix %>resources/js/*.map'],
-            css: ['../<%= pkg.prefix %>resources/css/*.css', '../<%= pkg.prefix %>resources/css/*.map']
+            js: ['../gsd-resources/js/*.js', '../gsd-resources/js/*.map'],
+            css: ['../gsd-resources/css/*.css', '../gsd-resources/css/*.map']
         },
         jshint: {
             files: [
                 './js/core/*.js',
                 './js/core/generic/*.js',
-                '!./js/App.js',
+                '!./js/app.js',
                 '!./js/libs/*.js'
             ],
             options: {
@@ -41,22 +41,26 @@ module.exports = function (grunt) {
         copy: {
             main: {
                 src: './tpl/_scripts.html',
-                dest: '../<%= pkg.prefix %>tpl/_shared/_scripts.html'
+                dest: '../gsd-tpl/_shared/_scripts.html'
             }
         },
         usemin: {
-            html: '../<%= pkg.prefix %>tpl/_shared/_scripts.html'
+            html: '../gsd-tpl/_shared/_scripts.html'
         },
         'string-replace': {
             'js-source-map-fix': {
                 files: {
-                    '../<%= pkg.prefix %>resources/js/': '../<%= pkg.prefix %>resources/js/*'
+                    '../gsd-resources/js/': '../gsd-resources/js/*'
                 },
                 options: {
                     replacements: [
                         {
-                            pattern: /"..\/..\/..\/..\//gi,
-                            replacement: '"..\/..\/development\/'
+                            pattern: /"..\/..\/..\/..\/js/gi,
+                            replacement: '"..\/..\/gsd-development\/js'
+                        },
+                        {
+                            pattern: /"..\/..\/..\/..\/..\/gsd-client/gi,
+                            replacement: '"..\/..\/gsd-client'
                         }
                     ]
                 }
@@ -89,9 +93,9 @@ module.exports = function (grunt) {
                                         'drop_console': true
                                     },
                                     sourceMap: true,
-                                    sourceMapIn: '.tmp/concat/<%= pkg.prefix %>resources/js/built.js.map',
+                                    sourceMapIn: '.tmp/concat/gsd-resources/js/built.js.map',
                                     files: {
-                                        '../<%= pkg.prefix %>resources/js/*': '.tmp/concat/<%= pkg.prefix %>resources/js/*'
+                                        '../gsd-resources/js/*': '.tmp/concat/gsd-resources/js/*'
                                     }
                                 };
                             }
@@ -122,11 +126,11 @@ module.exports = function (grunt) {
         },
         watch: {
             js: {
-                files: ['./js/*.js', './js/*/*.js'],
+                files: ['./js/*.js', './js/*/*.js', '../gsd-client/development/js/*.js', '../gsd-client/development/js/*/*.js'],
                 tasks: ['jshint', 'useminPrepare', 'concat', 'uglify', 'usemin']
             },
             css: {
-                files: ['./sass/*.scss', './sass/*/*.scss'],
+                files: ['./sass/*.scss', './sass/*/*.scss', '../gsd-client/development/sass/*.scss', '../gsd-client/development/sass/*/*.scss'],
                 tasks: ['compass']
             }
         },
@@ -141,7 +145,7 @@ module.exports = function (grunt) {
                 devFile: './js/libs/modernizr.js',
 
                 // [REQUIRED] Path to save out the built file.
-                outputFile: '../<%= pkg.prefix %>resources/js/libs/modernizr.min.js',
+                outputFile: '../gsd-resources/js/libs/modernizr.min.js',
 
                 // Based on default settings on http://modernizr.com/download/
                 extra: {
