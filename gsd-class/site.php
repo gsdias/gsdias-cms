@@ -21,12 +21,10 @@ class site {
         foreach ($mysql->result() as $option) {
             $name = str_replace('gsd-', '', $option['name']);
             $this->{$name} = $option['value'];
-            if (strpos($name, '_image') !== false) {
-                if ($option['value']) {
-                    $image = new image(array('iid' => $option['value'], 'width' => @$image['width'], 'height' => @$image['height']));
 
-                    $tpl->setvar('SITE_' . strtoupper($name), $image);
-                }
+            if (strpos($name, '_image') !== false) {
+                $image = new image(array('iid' => $option['value']));
+                $tpl->setvar('SITE_' . strtoupper($name), $image);
             } else {
                 $tpl->setvar('SITE_' . strtoupper($name), $option['value']);
             }

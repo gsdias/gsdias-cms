@@ -29,14 +29,12 @@ foreach ($mysql->result() as $item) {
     if (strpos($item['name'], '_image') === false) {
         $field = (string)new input(array('name' => $item['name'], 'value' => @$item['value'], 'label' => $item['label']));
     } else {
-        if ($item['value']) {
-            $image = new image(array(
-                'iid' => $item['value'],
-                'height' => '100',
-                'width' => 'auto',
-                'class' => sprintf('preview %s', $item['value'] ? '' : 'is-hidden')
-            ));
-        }
+        $image = new image(array(
+            'iid' => $item['value'],
+            'height' => '100',
+            'width' => 'auto',
+            'class' => sprintf('preview %s', $item['value'] ? '' : 'is-hidden')
+        ));
 
         $partial = new tpl();
         $partial->setvars(array(

@@ -14,7 +14,6 @@ class image {
         );
         
         $this->args = array_merge($defaults, $args);
-        
         if ($this->args['src'] && !is_file(ROOTPATH . $this->args['src'])) {
             $width = is_numeric($this->args['width']) || $this->args['width'] == 'auto' ? $this->args['width'] : $this->width;
             $height = is_numeric($this->args['height']) || $this->args['height'] == 'auto' ? $this->args['height'] : $this->height;
@@ -22,10 +21,10 @@ class image {
         } else {
             $this->args['src'] = sprintf("/gsd-assets/images/%s", $this->args['iid']);
         }
-        
         $this->args['width'] = $this->args['width'] ? sprintf(' width="%s"', $this->args['width']) : '';
         $this->args['height'] = $this->args['height'] ? sprintf(' height="%s"', $this->args['height']) : '';
     }
+
     public function __toString () {
         $class = $this->args['class'] ? sprintf(' class="%s"', $this->args['class']) : '';
         $extra = @$this->args['max-height'] ? sprintf(' style="max-height: %spx;%s"', $this->args['max-height'], @$this->args['style']) : sprintf(' style="%s"', @$this->args['style']);
