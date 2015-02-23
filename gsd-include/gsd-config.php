@@ -19,7 +19,7 @@ spl_autoload_register('GSDClassLoading');
 
 $mysql = new mysql($_mysql['db'], $_mysql['host'], $_mysql['user'], $_mysql['pass']);
 
-$tpl = new tpl();
+$tpl = new tpl(DEBUG);
 
 $site = new site();
 

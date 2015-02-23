@@ -5,12 +5,14 @@
 
 class site {
 
-    public $name, $email, $ga, $fb, $uri, $page, $main, $startpoint, $pagemodules, $layout;
+    public $name, $email, $ga, $fb, $uri, $page, $main, $startpoint, $pagemodules, $layout, $protocol;
     protected $path;
 
     public function __construct () {
         global $mysql, $tpl;
         
+        $this->protocol = (stripos($_SERVER['SERVER_PROTOCOL'], 'https') === true ? 'https://' : 'http://');
+
         $this->startpoint = 'index';
         $this->main = '';
 
@@ -20,11 +22,13 @@ class site {
             $name = str_replace('gsd-', '', $option['name']);
             $this->{$name} = $option['value'];
             if (strpos($name, '_image') !== false) {
-                $mysql->statement('SELECT * FROM images WHERE iid = ?;', array($option['value']));
-                $image = $mysql->singleline();
-                $image = new image(array('src' => sprintf('/gsd-assets/images/%s.%s', @$image['iid'], @$image['extension']), 'width' => @$image['width'], 'height' => @$image['height']));
+                if ($option['value']) {
+                    $mysql->statement('SELECT * FROM images WHERE iid = ?;', array($option['value']));
+                    $image = $mysql->singleline();
+                    $image = new image(array('iid' => $image['iid'], 'width' => @$image['width'], 'height' => @$image['height']));
 
-                $tpl->setvar('SITE_' . strtoupper($name), $image);
+                    $tpl->setvar('SITE_' . strtoupper($name), $image);
+                }
             } else {
                 $tpl->setvar('SITE_' . strtoupper($name), $option['value']);
             }
@@ -46,7 +50,7 @@ class site {
     }
 
     public function page () {
-        global $tpl, $mysql;
+        global $tpl, $mysql, $config;
 
         $mysql->statement('SELECT destination FROM redirect WHERE `from` = :uri', array(':uri' => $this->uri));
         if ($mysql->total) {
@@ -86,10 +90,10 @@ class site {
                 'PAGE_TITLE' => $page['title'],
                 'PAGE_DESCRIPTION' => $page['description'],
                 'PAGE_KEYWORDS' => $page['keywords'],
-                'PAGE_OG_TITLE' => $page['og_title'],
+                'PAGE_OG_TITLE' => $page['og_title'] ? $page['og_title'] : $page['title'],
                 'PAGE_OG_DESCRIPTION' => $page['og_description'],
-                'PAGE_OG_IMAGE' => $page['og_image'],
-                'PAGE_CANONICAL' => $_SERVER['HTTP_HOST'] . '/' . $this->uri
+                'PAGE_OG_IMAGE' => $this->protocol . $_SERVER['HTTP_HOST'] . '/gsd-assets/images/' . $page['og_image'],
+                'PAGE_CANONICAL' => $this->protocol . $_SERVER['HTTP_HOST'] . '/' . $this->uri
             ));
             $this->main = trim(str_replace('.html', '', $page['file']));
 
@@ -110,7 +114,7 @@ class site {
             $this->startpoint = '404';
             $tpl->setvar('PAGE_TITLE', $this->name);
         }
-        $tpl->setvar('PAGE_CANONICAL', (stripos($_SERVER['SERVER_PROTOCOL'],'https') === true ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . $this->uri
+        $tpl->setvar('PAGE_CANONICAL', $this->protocol . $_SERVER['HTTP_HOST'] . $this->uri
         );
     }
 

@@ -1,13 +1,17 @@
 .search {
     position: absolute;
-    top: 20px;
     right: 20px;
+    top: 20px;
+
     input {
         display: inline-block;
+        width: 200px;
     }
+
     [type="submit"] {
         background: #276876;
         color: #fff;
+        min-width: inherit;
         padding: 5px;
         width: 80px;
     }

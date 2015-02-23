@@ -37,7 +37,7 @@ class images extends section implements isection {
                 $created = explode(' ', $item['created']);
                 $fields['CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())));
                 
-                $fields['ASSET'] = @$item['width'] ? new image(array('src' => sprintf('/gsd-assets/images/%s.%s', $item['iid'], $item['extension']), 'max-height' => '100', 'height' => 'auto', 'width' => 'auto')) : '';
+                $fields['ASSET'] = @$item['width'] ? new image(array('iid' => $item['iid'], 'max-height' => '100', 'height' => 'auto', 'width' => 'auto')) : '';
                 $fields['SIZE'] = sprintf('<strong>%s x %s</strong><br>%s', $item['width'], $item['height'], $item['size']);
                 $list[] = $fields;
             }

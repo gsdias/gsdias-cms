@@ -212,11 +212,6 @@ module.exports = function (grunt) {
         'copy',
         'jshint',
         'compass',
-        'useminPrepare',
-        'concat:generated',
-        'uglify:generated',
-        'usemin',
-        'string-replace',
         'watch'
     ]);
     grunt.registerTask('build', [

@@ -29,15 +29,17 @@ abstract class section implements isection {
 
                 switch ($sectionextrafields['types'][$key]) {
                     case 'image':
-                    $mysql->statement('SELECT * FROM images WHERE iid = ?;', array(@$item[$extrafield]));
-                    $image = $mysql->singleline();
+                    if (@$item[$extrafield]) {
+                        $mysql->statement('SELECT * FROM images WHERE iid = ?;', array(@$item[$extrafield]));
+                        $image = $mysql->singleline();
 
-                    $image = new image(array(
-                        'src' => sprintf('/gsd-assets/images/%s.%s', @$image['iid'], @$image['extension']),
-                        'height' => '100',
-                        'width' => 'auto',
-                        'class' => sprintf('preview %s', @$item[$extrafield] ? '' : 'is-hidden')
-                    ));
+                        $image = new image(array(
+                            'iid' => $image['iid'],
+                            'height' => '100',
+                            'width' => 'auto',
+                            'class' => sprintf('preview %s', @$item[$extrafield] ? '' : 'is-hidden')
+                        ));
+                    }
 
                     $partial = new tpl();
                     $partial->setvars(array(

@@ -7,7 +7,11 @@
             url = $('[name="url"]').get(0);
 
         if ($(url).length && !url.value.length && value.length) {
-            value = value.replace(/\b\w{1,2}\b/g, '').replace(/\b\  \b/g, ' ')
+            value = value
+                    .replace(/!/g, '').replace(/@/g, '').replace(/£/g, '').replace(/\$/g, '').replace(/%/g, '')
+                    .replace(/\^/g, '').replace(/&/g, '').replace(/\*/g, '').replace(/\(/g, '').replace(/\)/g, '')
+                    .replace(/\=/g, '').replace(/\?/g, '').replace(/\€/g, '').replace(/\#/g, '').replace(/\~/g, '')
+                    .replace(/\//g, '').replace(/\./g, '').replace(/\,/g, '').replace(/\\/g, '')
                     .replace(/ç/g, 'c')
                     .replace(/ç/g, 'c')
                     .replace(/á/g, 'a').replace(/à/g, 'a').replace(/ã/g, 'a').replace(/â/g, 'a')

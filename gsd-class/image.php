@@ -5,6 +5,7 @@ class image {
 
     public function __construct ($args = array()) {
         $defaults = array(
+            'iid' => 0,
             'src' => null,
             'alt' => '',
             'class' => '',
@@ -14,10 +15,12 @@ class image {
         
         $this->args = array_merge($defaults, $args);
         
-        if (!is_file(ROOTPATH . $this->args['src'])) {
+        if ($this->args['src'] && !is_file(ROOTPATH . $this->args['src'])) {
             $width = is_numeric($this->args['width']) || $this->args['width'] == 'auto' ? $this->args['width'] : $this->width;
             $height = is_numeric($this->args['height']) || $this->args['height'] == 'auto' ? $this->args['height'] : $this->height;
-            $this->args['src'] = sprintf("/gsd-image.php?width=%s&&height=%s", $width, $height);
+            $this->args['src'] = sprintf("/gsd-image.php?width=%s&height=%s", $width, $height);
+        } else {
+            $this->args['src'] = sprintf("/gsd-assets/images/%s", $this->args['iid']);
         }
         
         $this->args['width'] = $this->args['width'] ? sprintf(' width="%s"', $this->args['width']) : '';

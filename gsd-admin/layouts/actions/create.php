@@ -7,11 +7,11 @@ if (!IS_ADMIN) {
 
 if (@$_REQUEST['save']) {
     
-    $content = file_get_contents(sprintf(CLIENTTPLPATH . '_layouts/%s', $_FILES['layout']["name"]));
+    $content = file_get_contents(sprintf(CLIENTTPLPATH . '_layouts/%s', $_REQUEST['layout']));
 
     $fields = array(
         $_REQUEST['name'],
-        str_replace('.html', '', $_FILES['layout']["name"]),
+        str_replace('.html', '', $_REQUEST['layout']),
         $_REQUEST['ltid'],
         $user->id
     );
@@ -65,3 +65,16 @@ foreach ($mysql->result() as $item) {
 
 $types = new select( array ( 'list' => $types, 'id' => 'LAYOUTTYPE' ) );
 $types->object();
+
+$templatefiles = scandir(CLIENTTPLPATH . '_layouts');
+
+$templates = array();
+
+foreach ($templatefiles as $file) {
+    if ($file != '.' && $file != '..') {
+        $templates[$file] = $file;
+    }
+}
+
+$templates = new select( array ( 'list' => $templates, 'id' => 'LAYOUT' ) );
+$templates->object();

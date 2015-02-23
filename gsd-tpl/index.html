@@ -17,23 +17,19 @@
         <script src="/gsd-resources/js/libs/modernizr.min.js"></script>
     </head>
     <body class="gsd {EXTRACLASS}">
-        <div id="perspective" class="perspective effect-rotateleft">
-            <div class="navcontainer">
-                <div class="wrapper">
-                    [_HEADER]
-                    <!-- IF IS_LOGGED -->
-                    <!--nav class="menu outer-nav right vertical"-->
-                    <nav class="nav">
-                    [_ASIDE]
-                    </nav>
-                    <!-- ENDIF IS_LOGGED -->
-                    <div class="main">
-                        [MAIN]
-                    </div>
-                    [_FOOTER]
-                </div>
-            </div>
+        [_HEADER]
+        <!-- IF IS_LOGGED -->
+        <nav class="nav">
+        [_ASIDE]
+        </nav>
+        <!-- ENDIF IS_LOGGED -->
+        <div class="main">
+            [MAIN]
+            <!-- IF DEBUG -->
+            [_DEBUG]
+            <!-- ENDIF DEBUG -->
         </div>
+        [_FOOTER]
         <div id="overlay">
             <section>
                 <header><i class="close"></i></header>
@@ -48,7 +44,5 @@
         </div>
         [_SCRIPTS]
         {CLIENT_SCRIPT}
-
-        [_DEBUG]
     </body>
 </html>

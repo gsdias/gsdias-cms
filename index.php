@@ -9,10 +9,12 @@ $encoding = "UTF-8";
 putenv("LANG=" . $language);
 setlocale(LC_ALL, $language);
 
-bindtextdomain($domain, $folder);
-bind_textdomain_codeset($domain, $encoding);
+if (function_exists('bindtextdomain')) {
+    bindtextdomain($domain, $folder);
+    bind_textdomain_codeset($domain, $encoding);
 
-textdomain($domain);
+    textdomain($domain);
+}
 
 define('ROOTPATH', dirname(__FILE__) . '/');
 

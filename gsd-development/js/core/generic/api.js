@@ -26,7 +26,7 @@
         }
         var size = [elem.innerWidth(), elem.innerHeight()];
         if (!$('.loadingimg').length) {
-            $('body').append('<img src="/resources/images/ajax-loader.gif" class="loadingimg"/>');
+            $('body').append('<img src="/gsd-resources/images/ajax-loader.gif" class="loadingimg"/>');
         }
 
         $('.loadingimg').css({

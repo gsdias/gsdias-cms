@@ -29,15 +29,17 @@ foreach ($mysql->result() as $item) {
     if (strpos($item['name'], '_image') === false) {
         $field = (string)new input(array('name' => $item['name'], 'value' => @$item['value'], 'label' => $item['label']));
     } else {
-        $mysql->statement('SELECT * FROM images WHERE iid = ?;', array($item['value']));
-        $image = $mysql->singleline();
+        if ($item['value']) {
+            $mysql->statement('SELECT * FROM images WHERE iid = ?;', array($item['value']));
+            $image = $mysql->singleline();
 
-        $image = new image(array(
-            'src' => sprintf('/gsd-assets/images/%s.%s', @$image['iid'], @$image['extension']),
-            'height' => '100',
-            'width' => 'auto',
-            'class' => sprintf('preview %s', $item['value'] ? '' : 'is-hidden')
-        ));
+            $image = new image(array(
+                'iid' => $image['iid'],
+                'height' => '100',
+                'width' => 'auto',
+                'class' => sprintf('preview %s', $item['value'] ? '' : 'is-hidden')
+            ));
+        }
 
         $partial = new tpl();
         $partial->setvars(array(

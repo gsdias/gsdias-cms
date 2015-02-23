@@ -73,7 +73,7 @@ class pages extends section implements isection {
             $image = $mysql->singleline();
 
             $image = new image(array(
-                'src' => sprintf('/gsd-assets/images/%s.%s', @$image['iid'], @$image['extension']),
+                'iid' => @$image['iid'],
                 'height' => '100',
                 'width' => 'auto',
                 'class' => sprintf('preview %s', $item['og_image'] ? '' : 'is-hidden')
@@ -119,7 +119,7 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item['pid']));
                     $image = $mysql->singleline();
 
                     $image = new image(array(
-                        'src' => sprintf('/gsd-assets/images/%s.%s', @$image['iid'], @$image['extension']),
+                        'iid' => $image['iid'],
                         'height' => '100',
                         'width' => 'auto',
                         'class' => sprintf('preview %s', @$item['data'][0][0]['value'] ? '' : 'is-hidden')
@@ -155,7 +155,7 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item['pid']));
                                     $image = $mysql->singleline();
 
                                     $image = new image(array(
-                                        'src' => sprintf('/gsd-assets/images/%s.%s', @$image['iid'], @$image['extension']),
+                                        'iid' => $image['iid'],
                                         'height' => '100',
                                         'width' => 'auto',
                                         'class' => sprintf('preview %s', $data['value'] ? '' : 'is-hidden')

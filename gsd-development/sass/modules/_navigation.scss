@@ -1,16 +1,15 @@
 .nav {
-    position: fixed;
+    position: absolute;
     left: 0;
     top: 54px;
     z-index: 5;
     background: #efefef;
-    height: 100%;
     > ul {
         box-shadow: inset -5px 0px 10px -5px rgba(0, 0, 0, 0.5);
     }
     .icon {
         -webkit-backface-visibility: hidden;
-        @include prefixs('transform', 'scale(.7) translatez(0)');
+        @include prefixs('transform', 'scale3d(0.7, 0.7, 1) translatez(0)');
         @include prefixs('transition', 'all .3s ease');
         @include prefixs('image-rendering', 'crisp-edges');
     }

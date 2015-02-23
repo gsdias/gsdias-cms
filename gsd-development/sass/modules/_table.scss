@@ -1,28 +1,35 @@
 .table {
     width: 100%;
     margin-top: 30px;
+
     th {
         font-weight: 700;
     }
+
     td, th {
         padding: 10px;
     }
+
     tbody {
         tr:nth-child(odd) {
             background: #ededed;
         }
+
         tr:nth-child(even) {
             background: #d7d7d7;
         }
     }
+
     .actions {
         a {
             display: block;
         }
     }
+
     a {
         color: #276876;
     }
+
     img {
         padding: 3px;
         background: #fff;

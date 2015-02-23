@@ -2,6 +2,7 @@
     text-align: center;
     width: 100%;
     margin-top: 20px;
+
     &:after {
         content: '';
         display: block;
@@ -27,6 +28,8 @@
         border: solid 1px #979797;
         box-shadow: inset 0 1px 1px -1px #fff;
         text-shadow: 0 1px 0 #787878;
+        min-width: inherit;
+
         &:hover {
             @include gradient(#adadad, #c7c7c7);
             text-decoration: none;

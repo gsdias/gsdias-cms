@@ -12,8 +12,9 @@ class tpl {
         'path' => ''
     );
     
-    public function __construct () {
+    public function __construct ($debug = 0) {
         $this->config['paths'] = array(ROOTPATH . 'gsd-tpl/_shared/%s' . TPLEXT, ROOTPATH . 'gsd-tpl/_modules/%s' . TPLEXT);
+        $this->setcondition('DEBUG', $debug);
     }
     
     /** 
@@ -92,7 +93,7 @@ class tpl {
         $image = $mysql->singleline();
 
         $item = new image(array(
-            'src' => sprintf('/gsd-assets/images/%s.%s', @$image['iid'], @$image['extension']),
+            'iid' => $image['iid'],
             'width' => 'auto',
             'class' => @$item[0][0]['class'],
             'style' => @$item[0][0]['style']
@@ -130,7 +131,7 @@ class tpl {
                 $image = $mysql->singleline();
 
                 $li .= new image(array(
-                    'src' => sprintf('/gsd-assets/images/%s.%s', @$image['iid'], @$image['extension']),
+                    'iid' => $image['iid'],
                     'width' => 'auto',
                     'class' => $item['class'],
                     'style' => $item['style']
@@ -370,7 +371,7 @@ class tpl {
     }
     
     function sendError () {
-        $this->config['error'] = array_reverse($this->config['error']);
+        $this->config['error'] = $this->config['error'];
         if (constant('DEBUG') == '1')
             $this->setarray('DEBUGLIST', $this->config['error']);
     }

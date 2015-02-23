@@ -11,9 +11,13 @@ if (@$_REQUEST['save']) {
 
     $mysql->statement('UPDATE images SET name = ?, description = ?, tags = ? WHERE iid = ?;', $defaultfields);
 
+    $mysql->statement('SELECT * FROM images WHERE iid = ?;', $site->arg(2));
+
+    $image = $mysql->singleline();
+
     if ($_FILES['asset']['error'] == 0) {
 
-        removefile(ASSETPATH . 'images/' . $site->arg(2));
+        removefile(ASSETPATH . 'images/' . $site->arg(2) . '.' . $image['extension']);
 
         $name = explode('.', $_FILES['asset']['name']);
         $extension = end($name);
@@ -28,7 +32,7 @@ if (@$_REQUEST['save']) {
             $site->arg(2)
         );
 
-        $file = savefile ($_FILES['asset'], ASSETPATH . 'images/' . $site->arg(2) . '/', null, null, $site->arg(2));
+        $file = savefile ($_FILES['asset'], sprintf('%simages/', ASSETPATH), null, null, $site->arg(2));
 
         $mysql->statement('UPDATE images SET extension = ?, width = ?, height = ?, size = ? WHERE iid = ?;', $fields);
     }
