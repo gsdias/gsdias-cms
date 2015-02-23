@@ -69,11 +69,8 @@ class pages extends section implements isection {
             $fields['AUTH_CHECKED'] = @$item['require_auth'] ? 'checked="checked"' : '';
             $fields['PUBLISHED_CHECKED'] = @$item['published'] ? 'checked="checked"' : '';
 
-            $mysql->statement('SELECT * FROM images WHERE iid = ?;', array($item['og_image']));
-            $image = $mysql->singleline();
-
             $image = new image(array(
-                'iid' => @$image['iid'],
+                'iid' => @$item['og_image'],
                 'height' => '100',
                 'width' => 'auto',
                 'class' => sprintf('preview %s', $item['og_image'] ? '' : 'is-hidden')
@@ -115,11 +112,8 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item['pid']));
                 $item['data'] = unserialize($item['data']);
                 $extra = array();
                 if ($item['file'] == '_image') {
-                    $mysql->statement('SELECT * FROM images WHERE iid = ?;', array(@$item['data'][0][0]['value']));
-                    $image = $mysql->singleline();
-
                     $image = new image(array(
-                        'iid' => $image['iid'],
+                        'iid' => @$item['data'][0][0]['value'],
                         'height' => '100',
                         'width' => 'auto',
                         'class' => sprintf('preview %s', @$item['data'][0][0]['value'] ? '' : 'is-hidden')
@@ -151,11 +145,8 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item['pid']));
                                 $data = $data2;
 
                                 if ($item['sfile'] == '_image') {
-                                    $mysql->statement('SELECT * FROM images WHERE iid = ?;', array($data['value']));
-                                    $image = $mysql->singleline();
-
                                     $image = new image(array(
-                                        'iid' => $image['iid'],
+                                        'iid' => @$data['value'],
                                         'height' => '100',
                                         'width' => 'auto',
                                         'class' => sprintf('preview %s', $data['value'] ? '' : 'is-hidden')

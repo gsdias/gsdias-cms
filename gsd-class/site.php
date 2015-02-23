@@ -23,9 +23,7 @@ class site {
             $this->{$name} = $option['value'];
             if (strpos($name, '_image') !== false) {
                 if ($option['value']) {
-                    $mysql->statement('SELECT * FROM images WHERE iid = ?;', array($option['value']));
-                    $image = $mysql->singleline();
-                    $image = new image(array('iid' => $image['iid'], 'width' => @$image['width'], 'height' => @$image['height']));
+                    $image = new image(array('iid' => $option['value'], 'width' => @$image['width'], 'height' => @$image['height']));
 
                     $tpl->setvar('SITE_' . strtoupper($name), $image);
                 }

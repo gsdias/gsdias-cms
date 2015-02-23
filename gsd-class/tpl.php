@@ -89,11 +89,9 @@ class tpl {
         
         $item = $site->pagemodules[$placeholder[0]];
         $item = unserialize($item);
-        $mysql->statement('SELECT * FROM images WHERE iid = ?;', array(@$item[0][0]['value']));
-        $image = $mysql->singleline();
 
         $item = new image(array(
-            'iid' => $image['iid'],
+            'iid' => @$item[0][0]['value'],
             'width' => 'auto',
             'class' => @$item[0][0]['class'],
             'style' => @$item[0][0]['style']
@@ -127,11 +125,8 @@ class tpl {
         $li = '';
         foreach ($items as $item) {
             if ($placeholder[2] == 'IMAGE' && $item['value']) {
-                $mysql->statement('SELECT * FROM images WHERE iid = ?;', array($item['value']));
-                $image = $mysql->singleline();
-
                 $li .= new image(array(
-                    'iid' => $image['iid'],
+                    'iid' => $item['value'],
                     'width' => 'auto',
                     'class' => $item['class'],
                     'style' => $item['style']

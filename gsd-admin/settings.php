@@ -30,11 +30,8 @@ foreach ($mysql->result() as $item) {
         $field = (string)new input(array('name' => $item['name'], 'value' => @$item['value'], 'label' => $item['label']));
     } else {
         if ($item['value']) {
-            $mysql->statement('SELECT * FROM images WHERE iid = ?;', array($item['value']));
-            $image = $mysql->singleline();
-
             $image = new image(array(
-                'iid' => $image['iid'],
+                'iid' => $item['value'],
                 'height' => '100',
                 'width' => 'auto',
                 'class' => sprintf('preview %s', $item['value'] ? '' : 'is-hidden')
