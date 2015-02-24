@@ -1,6 +1,6 @@
 <main>
-    <h1>Documentos
-        <a href="/admin/documents/upload" class="btn">Carregar documento</a>
+    <h1>{LANG_DOCUMENTS}
+        <a href="/admin/documents/upload" class="btn">{LANG_UPLOAD_DOCUMENT}</a>
     </h1>
     <!-- IF ERRORS -->
     <div class="errors">{ERRORS}</div>
@@ -29,8 +29,8 @@
             <td>{DOCUMENTS_DESCRIPTION}</td>
             <td>{DOCUMENTS_CREATED} <br>por <a href="/admin/users/{DOCUMENTS_CREATOR_ID}">{DOCUMENTS_CREATOR_NAME}</a></td>
             <td class="actions">
-                <a href="/admin/documents/{DOCUMENTS_DID}/edit">Editar</a>
-                <a href="/admin/documents/{DOCUMENTS_DID}/remove">Remover</a>
+                <a href="/admin/documents/{DOCUMENTS_DID}/edit">{LANG_EDIT}</a>
+                <a href="/admin/documents/{DOCUMENTS_DID}/remove">{LANG_REMOVE}</a>
             </td>
         </tr>
         <!-- ENDLOOP DOCUMENTS -->
@@ -39,6 +39,6 @@
     <!-- ENDIF DOCUMENTS_EXIST -->
     
     <!-- IF !DOCUMENTS_EXIST -->
-    <span class="warning">Não existem documentos</span>
+    <span class="warning">{LANG_NO_DOCUMENTS}</span>
     <!-- ENDIF !DOCUMENTS_EXIST -->
 </main>

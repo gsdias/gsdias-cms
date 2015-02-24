@@ -16,5 +16,7 @@ if (@$site->arg(1) == 'images') {
             fpassthru($fp);
             exit;
         }
+    } else {
+        header("Location: /gsd-image.php", true, 302);
     }
 }

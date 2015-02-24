@@ -29,14 +29,12 @@ abstract class section implements isection {
 
                 switch ($sectionextrafields['types'][$key]) {
                     case 'image':
-                    if (@$item[$extrafield]) {
-                        $image = new image(array(
-                            'iid' => @$item[$extrafield],
-                            'height' => '100',
-                            'width' => 'auto',
-                            'class' => sprintf('preview %s', @$item[$extrafield] ? '' : 'is-hidden')
-                        ));
-                    }
+                    $image = new image(array(
+                        'iid' => @$item[$extrafield],
+                        'height' => '100',
+                        'width' => 'auto',
+                        'class' => sprintf('preview %s', @$item[$extrafield] ? '' : 'is-hidden')
+                    ));
 
                     $partial = new tpl();
                     $partial->setvars(array(

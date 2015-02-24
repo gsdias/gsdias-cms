@@ -1,5 +1,5 @@
 <main>
-    <h1>Imagens
+    <h1>{LANG_IMAGES}
         <a href="/admin/images/upload" class="btn">{LANG_UPLOAD_IMAGE}</a>
     </h1>
     <div class="search">
@@ -26,8 +26,7 @@
                 <th>{LANG_ACTIONS}</th>
             </tr>
         </thead>
-        <!-- LOOP IMAGES -->
-        <tr>
+        <!-- LOOP IMAGES --><tr>
             <td>
                 <a href="/admin/images/{IMAGES_IID}">{IMAGES_ASSET}</a>
             </td>
@@ -35,16 +34,12 @@
             <td>{IMAGES_DESCRIPTION}</td>
             <td>{IMAGES_CREATED} <br>por <a href="/admin/users/{IMAGES_CREATOR_ID}">{IMAGES_CREATOR_NAME}</a></td>
             <td class="actions">
-                <a href="/admin/images/{IMAGES_IID}/edit">Editar</a>
-                <a href="/admin/images/{IMAGES_IID}/remove">Remover</a>
+                <a href="/admin/images/{IMAGES_IID}/edit">{LANG_EDIT}</a>
+                <a href="/admin/images/{IMAGES_IID}/remove">{LANG_REMOVE}</a>
             </td>
-        </tr>
-        <!-- ENDLOOP IMAGES -->
+        </tr><!-- ENDLOOP IMAGES -->
     </table>
     [_PAGINATOR]
     <!-- ENDIF IMAGES_EXIST -->
-    
-    <!-- IF !IMAGES_EXIST -->
-    <span class="warning">Não existem imagens</span>
-    <!-- ENDIF !IMAGES_EXIST -->
+    <!-- IF !IMAGES_EXIST --><span class="warning">{LANG_NO_IMAGES}</span><!-- ENDIF !IMAGES_EXIST -->
 </main>

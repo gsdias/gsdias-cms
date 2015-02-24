@@ -19,6 +19,7 @@ class image {
             $height = is_numeric($this->args['height']) || $this->args['height'] == 'auto' ? $this->args['height'] : $this->height;
             $this->args['src'] = sprintf("/gsd-image.php?width=%s&height=%s", $width, $height);
         } else {
+            //echo $this->args['iid'] . ' ';
             $this->args['src'] = sprintf("/gsd-assets/images/%s", $this->args['iid']);
         }
         $this->args['width'] = $this->args['width'] ? sprintf(' width="%s"', $this->args['width']) : '';

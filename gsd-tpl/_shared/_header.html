@@ -1,11 +1,10 @@
 <header class="header">
     <a href="http://www.gsdias.pt" class="logo" target="_blank"><i class="icon icon-cms-logo"></i></a>
     <!-- IF IS_LOGGED -->
-    <!--button id="showMenu">Show Menu</button-->
-    <a href="/logout" class="logout"><i class="icon icon-power"></i>Sair</a>
+    <a href="/logout" class="logout"><i class="icon icon-power"></i>{LANG_LOGOUT}</a>
     <div class="bar">
         <div class="right">
-            <a href="/" target="_blank">{PAGE_TITLE}</a> | <a href="/admin/users/{USER_ID}">{USER_NAME}</a> (<a href="/logout">Sair</a>)
+            <a href="/" target="_blank">{PAGE_TITLE}</a> | <a href="/admin/users/{USER_ID}">{USER_NAME}</a> (<a href="/logout">{LANG_LOGOUT}</a>)
         </div>
     </div>
     <!-- ENDIF IS_LOGGED -->
