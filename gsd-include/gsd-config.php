@@ -2,7 +2,9 @@
 
 include_once(ROOTPATH . 'gsd-settings.php');
 include_once(ROOTPATH . 'gsd-class/interfaces' . PHPEXT);
-include_once(INCLUDEPATH . 'gsd-lang' . PHPEXT);
+if (is_file(INCLUDEPATH . 'gsd-lang' . PHPEXT)) {
+    include_once(INCLUDEPATH . 'gsd-lang' . PHPEXT);
+}
 include_once(INCLUDEPATH . 'gsd-functions' . PHPEXT);
 include_once(INCLUDEPATH . 'gsd-paginator' . PHPEXT);
 

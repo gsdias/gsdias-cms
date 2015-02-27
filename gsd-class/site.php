@@ -23,7 +23,7 @@ class site {
             $this->{$name} = $option['value'];
 
             if (strpos($name, '_image') !== false) {
-                $image = new image(array('iid' => $option['value']));
+                $image = new image(array('iid' => $option['value'], 'width' => 'auto', 'height' => 'auto'));
                 $tpl->setvar('SITE_' . strtoupper($name), $image);
             } else {
                 $tpl->setvar('SITE_' . strtoupper($name), $option['value']);

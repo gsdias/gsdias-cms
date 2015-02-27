@@ -121,6 +121,15 @@ class tpl {
         return $ul;
     }
     
+    function languagereplace() {
+        $list = array();
+        preg_match_all('#{LANG_(.*?)}#s', $this->config['file'], $matches, PREG_SET_ORDER);
+
+        foreach ($matches as $match) {
+            $this->config['file'] = preg_replace(sprintf('#{LANG_%s}#s', $match[1]), _('LANG_' . $match[1]), $this->config['file'], 1);
+        }
+    }
+
     function populateLists ($placeholder, $items) {
         $li = '';
         foreach ($items as $item) {
@@ -154,7 +163,7 @@ class tpl {
         preg_match_all(sprintf('#<!-- %s (.*?) -->#s', $type), $this->config['file'], $matches, PREG_SET_ORDER);
         
         foreach ($matches as $match) array_push($list, $match[1]);
-        
+        $this->languagereplace();
         while ($key = array_pop($list)) {
             if ($type == 'PLACEHOLDER') {
                 $placeholder = explode(' ', $key);

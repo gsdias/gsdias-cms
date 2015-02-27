@@ -1,7 +1,7 @@
 <main>
     <h1>{LANG_LAYOUTS}
         <!-- IF IS_ADMIN -->
-        <a href="/admin/layouts/create">Novo layout</a>
+        <a href="/admin/layouts/create">{LANG_NEW_LAYOUT}</a>
         <!-- ENDIF IS_ADMIN -->
     </h1>
     <!-- IF ERRORS -->
@@ -15,7 +15,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Nome</th>
+                <th>{LANG_NAME}</th>
                 <th>{LANG_CREATED}</th>
                 <th>{LANG_ACTIONS}</th>
             </tr>
@@ -26,7 +26,7 @@
                 {LAYOUTS_NAME}<br>
                 <a href="/admin/layouts/{LAYOUTS_LID}">{LAYOUTS_URL}</a>
             </td>
-            <td><em class="ago">({LAYOUTS_CREATED})</em> <br>por <a href="/admin/users/{LAYOUTS_CREATOR_ID}">{LAYOUTS_CREATOR_NAME}</a></td>
+            <td><em class="ago">({LAYOUTS_CREATED})</em> <br>{LANG_BY} <a href="/admin/users/{LAYOUTS_CREATOR_ID}">{LAYOUTS_CREATOR_NAME}</a></td>
             <td class="actions">
                 <a href="/admin/layouts/{LAYOUTS_LID}/remove">{LANG_REMOVE}</a>
             </td>

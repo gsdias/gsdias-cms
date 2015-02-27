@@ -6,10 +6,12 @@ $folder = "locale";
 $domain = "messages";
 $encoding = "UTF-8";
 
+clearstatcache();
 putenv("LANG=" . $language);
 setlocale(LC_ALL, $language);
 
 if (function_exists('bindtextdomain')) {
+    bindtextdomain($domain, './locale/nocache');
     bindtextdomain($domain, $folder);
     bind_textdomain_codeset($domain, $encoding);
 

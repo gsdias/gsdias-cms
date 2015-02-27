@@ -1,5 +1,5 @@
 <main>
-    <h1>Editar página</h1>
+    <h1>{LANG_PAGE_EDIT}</h1>
     <!-- IF ERRORS -->
     <div class="errors">{ERRORS}</div>
     <!-- ENDIF ERRORS -->
@@ -7,29 +7,29 @@
     <div class="errors messages">{MESSAGES}</div>
     <!-- ENDIF MESSAGES -->
     <form method="post" enctype="multipart/form-data">
-        <div class="colA"><label>Título</label> <input name="title" value="{CURRENT_PAGE_TITLE}" required></div>
-        <div class="colA"><label>Descrição</label> <input name="description" value="{CURRENT_PAGE_DESCRIPTION}"></div>
+        <div class="colA"><label>{LANG_TITLE}</label> <input name="title" value="{CURRENT_PAGE_TITLE}" required></div>
+        <div class="colA"><label>{LANG_DESCRIPTION}</label> <input name="description" value="{CURRENT_PAGE_DESCRIPTION}"></div>
         <div class="colA"><label>Keywords</label> <input name="keywords" value="{CURRENT_PAGE_KEYWORDS}"></div>
         <div class="colA"><label>Tags</label> <input name="tags" value="{CURRENT_PAGE_TAGS}"></div>
         <h2>Open graph</h2>
-        <div class="colA"><label>Título</label> <input name="og_title" value="{CURRENT_PAGE_OG_TITLE}"></div>
-        <div class="colA"><label>Descrição</label> <input name="og_description" value="{CURRENT_PAGE_OG_DESCRIPTION}"></div>
+        <div class="colA"><label>{LANG_TITLE}</label> <input name="og_title" value="{CURRENT_PAGE_OG_TITLE}"></div>
+        <div class="colA"><label>{LANG_DESCRIPTION}</label> <input name="og_description" value="{CURRENT_PAGE_OG_DESCRIPTION}"></div>
         <div class="colA image">
             {CURRENT_PAGE_OG_IMAGE}
         </div>
         
-        <h2>Avançadas</h2>
-        <div class="colA"><label>Publicada</label><input type="checkbox" {PUBLISHED_CHECKED} value="1" name="published"></div>
-        <div class="colA"><label>Mostrar no menu</label><input type="checkbox" {MENU_CHECKED} value="1" name="menu"></div>
-        <div class="colA"><label>Requer autenticação</label><input type="checkbox" {AUTH_CHECKED} value="1" name="auth"></div>
+        <h2>{LANG_ADVANCED}</h2>
+        <div class="colA"><label>{LANG_PUBLISHED}</label><input type="checkbox" {PUBLISHED_CHECKED} value="1" name="published"></div>
+        <div class="colA"><label>{LANG_SHOW_MENU}</label><input type="checkbox" {MENU_CHECKED} value="1" name="menu"></div>
+        <div class="colA"><label>{LANG_REQUIRE_AUTH}</label><input type="checkbox" {AUTH_CHECKED} value="1" name="auth"></div>
         <!-- IF EXTRAFIELDS -->
-        <h2>Informação adicional</h2>
+        <h2>{LANG_ADITIONAL_INFORMATION}</h2>
         <!-- LOOP FIELD -->
         <div class="colA">{FIELD_FIELD}</div>
         <!-- ENDLOOP FIELD -->
         <!-- ENDIF EXTRAFIELDS -->
         <div class="btns">
-            <input type="submit" class="btn blue" value="Salvar" name="save">
+            <input type="submit" class="btn blue" value="{LANG_SAVE}" name="save">
         </div>
     </form>
 </main>

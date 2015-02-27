@@ -8,39 +8,37 @@
         <div class="colA"><label>Url</label> <input name="url" required></div>
         <div class="colA"><label>Layout</label>
             <select name="lid" required>
-                <option value="0" disabled="disabled">Escolha</option>
-                <!-- LOOP LAYOUT -->
-                <option value="{LAYOUT_KEY}">{LAYOUT_VALUE}</option>
-                <!-- ENDLOOP LAYOUT -->
+                <option value="0" disabled="disabled">{LANG_CHOOSE}</option>
+                <!-- LOOP LAYOUT --><option value="{LAYOUT_KEY}">{LAYOUT_VALUE}</option><!-- ENDLOOP LAYOUT -->
             </select>
         </div>
-        <div class="colA"><label>Descrição</label> <input name="description"></div>
+        <div class="colA"><label>{LANG_DESCRIPTION}</label> <input name="description"></div>
         <div class="colA"><label>keywords</label> <input name="keywords"></div>
         <div class="colA"><label>Tags</label> <input name="tags"></div>
         <h2>Open graph</h2>
-        <div class="colA"><label>Título</label> <input name="og_title"></div>
-        <div class="colA"><label>Descrição</label> <input name="og_description"></div>
+        <div class="colA"><label>{LANG_TITLE}</label> <input name="og_title"></div>
+        <div class="colA"><label>{LANG_DESCRIPTION}</label> <input name="og_description"></div>
         <div class="colA image">
-            <label>Imagem</label>
+            <label>{LANG_IMAGE}</label>
             <input type="hidden" name="og_image" value="0">
             <input type="text" readonly="readonly" value="Sem imagem" class="box valid" aria-invalid="false">
             <img src="/gsd-image.php?width=auto&amp;&amp;height=100" width="auto" height="100" alt="" class="preview is-hidden">
             <div class="btns">
-                <a href="#" class="btn findimage">Escolher imagem</a>
-                <a href="#" class="btn red clearimage">Limpar imagem</a>
+                <a href="#" class="btn findimage">{LANG_IMAGE_CHOOSE}</a>
+                <a href="#" class="btn red clearimage">{LANG_IMAGE_CLEAN}</a>
             </div>
         </div>
-        <h2>Avançadas</h2>
-        <div class="colA"><label>Mostrar no menu</label><input name="menu" value="1" type="checkbox"></div>
-        <div class="colA"><label>Requer autenticação</label><input name="auth" value="1" type="checkbox"></div>
+        <h2>{LANG_ADVANCED}</h2>
+        <div class="colA"><label>{LANG_SHOW_MENU}</label><input name="menu" value="1" type="checkbox"></div>
+        <div class="colA"><label>{LANG_REQUIRE_AUTH}</label><input name="auth" value="1" type="checkbox"></div>
         <!-- IF EXTRAFIELDS -->
-        <h2>Informação adicional</h2>
+        <h2>{LANG_ADITIONAL_INFORMATION}</h2>
         <!-- LOOP FIELD -->
         <div class="colA {FIELD_EXTRACLASS}">{FIELD_FIELD}</div>
         <!-- ENDLOOP FIELD -->
         <!-- ENDIF EXTRAFIELDS -->
         <div class="btns">
-            <input type="submit" class="btn blue" value="Salvar" name="save">
+            <input type="submit" class="btn blue" value="{LANG_SAVE}" name="save">
         </div>
     </form>
 </main>
