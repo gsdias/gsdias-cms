@@ -122,12 +122,16 @@ class tpl {
     }
     
     function languagereplace() {
+        $content = $this->config['file'];
         $list = array();
-        preg_match_all('#{LANG_(.*?)}#s', $this->config['file'], $matches, PREG_SET_ORDER);
+        preg_match_all('#{LANG_(.*?)}#s', $content, $matches, PREG_SET_ORDER);
 
         foreach ($matches as $match) {
-            $this->config['file'] = preg_replace(sprintf('#{LANG_%s}#s', $match[1]), _('LANG_' . $match[1]), $this->config['file'], 1);
+            $replace = _('LANG_' . $match[1]) != 'LANG_' . $match[1] ? _('LANG_' . $match[1]) : dcgettext('client', 'LANG_' . $match[1], LC_MESSAGES);
+            $content = preg_replace(sprintf('#%s#s', $match[0]), $replace, $content, 1);
         }
+
+        $this->config['file'] = $content;
     }
 
     function populateLists ($placeholder, $items) {

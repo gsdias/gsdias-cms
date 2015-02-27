@@ -16,6 +16,11 @@ if (function_exists('bindtextdomain')) {
     bind_textdomain_codeset($domain, $encoding);
 
     textdomain($domain);
+
+    if (is_dir('gsd-client/locale')) {
+        bindtextdomain('client', 'gsd-client/' . $folder);
+        bind_textdomain_codeset('client', $encoding);
+    }
 }
 
 define('ROOTPATH', dirname(__FILE__) . '/');

@@ -10,3 +10,4 @@ gsd-client/
 gsd-tpl/_shared/_scripts.html
 gsd-assets/
 gsd-settings.php
+*.mo
