@@ -25,8 +25,8 @@ module.exports = function (grunt) {
             files: [
                 './js/core/*.js',
                 './js/core/generic/*.js',
-                '!./js/app.js',
-                '!./js/libs/*.js'
+                '../gsd-client/development/js/core/*.js',
+                '../gsd-client/development/js/core/generic/*.js'
             ],
             options: {
                 // options here to override JSHint defaults
@@ -79,10 +79,13 @@ module.exports = function (grunt) {
                         js: [{
                             name: 'concat',
                             createConfig: function (context) {
-                                var generated = context.options.generated;
+                                var generated = context.options.generated,
+                                    clientfiles = grunt.file.readJSON('../gsd-client/development/jsclient.json');
                                 generated.options = {
                                     sourceMap: true
                                 };
+                                generated.files[0].src = generated.files[0].src.concat(clientfiles.files);
+                                context.inFiles = context.inFiles.concat(clientfiles.files);
                             }
                         }, {
                             name: 'uglify',
@@ -113,21 +116,21 @@ module.exports = function (grunt) {
                     expand: true,
                     dot: false,
                     cwd: './',
-                    dest: 'dist',
-                    src: '../core/js/*.html'
+                    dest: '../gsd-tpl/shared',
+                    src: './tpl/_scripts.html'
                 }, {
                     expand: true,
                     dot: false,
                     cwd: './',
-                    dest: 'dist',
-                    src: '../core/tpl/*.html'
+                    dest: '../gsd-tpl/shared',
+                    src: '../gsd-tpl/shared/_scripts.html'
                 }]
             }
         },
         watch: {
             js: {
                 files: ['./js/*.js', './js/*/*.js', '../gsd-client/development/js/*.js', '../gsd-client/development/js/*/*.js'],
-                tasks: ['jshint', 'useminPrepare', 'concat', 'uglify', 'usemin']
+                tasks: ['jshint', 'useminPrepare', 'concat:generated', 'uglify:generated', 'usemin', 'string-replace']
             },
             css: {
                 files: ['./sass/*.scss', './sass/*/*.scss', '../gsd-client/development/sass/*.scss', '../gsd-client/development/sass/*/*.scss'],
@@ -209,10 +212,20 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-file-blocks');
 
     grunt.registerTask('default', [
+        /*'clean',
+        'copy',
+        'jshint',
+        'compass',*/
         'clean',
         'copy',
         'jshint',
         'compass',
+        'useminPrepare',
+        'concat:generated',
+        'uglify:generated',
+        'usemin',
+        'string-replace',
+        'modernizr',
         'watch'
     ]);
     grunt.registerTask('build', [

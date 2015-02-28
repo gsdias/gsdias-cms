@@ -16,4 +16,4 @@
         global.resizemain();
     });
 
-}(GSD.Global = GSD.Global || {}, GSD.App, jQuery, _, Backbone));
+}(GSD.Global = GSD.Global || {}, GSD.App, GSD.$, _, Backbone));

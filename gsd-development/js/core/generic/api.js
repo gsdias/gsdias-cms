@@ -32,8 +32,11 @@
         $('.loadingimg').css({
             position: 'absolute',
             display: 'block',
+            width: 'auto',
+            height: '50',
             left: parseInt((elem.offset() || {}).left + (size[0] / 2) - 62, 10),
-            top: parseInt((elem.offset() || {}).top + (size[1] / 2) - 62, 10)
+            top: parseInt((elem.offset() || {}).top + (size[1] / 2) - 62, 10),
+            zIndex: 10
         });
     };
 
@@ -131,4 +134,4 @@
         displayMessage(messageBlock.html());
     }
 
-}(GSD.Api = GSD.Api || {}, GSD.App, jQuery, _, Backbone));
+}(GSD.Api = GSD.Api || {}, GSD.App, GSD.$, _, Backbone));

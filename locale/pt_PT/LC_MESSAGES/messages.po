@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2014-11-12 17:19-0000\n"
-"PO-Revision-Date: 2015-02-27 14:09-0000\n"
+"PO-Revision-Date: 2015-02-27 22:15-0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -60,6 +60,9 @@ msgstr "Páginas"
 
 msgid "LANG_PAGE"
 msgstr "Página"
+
+msgid "LANG_PAGE_REMOVE"
+msgstr "Remover página"
 
 msgid "LANG_FROM"
 msgstr "de"
@@ -229,6 +232,9 @@ msgstr "por"
 msgid "LANG_DELETE_LAYOUT"
 msgstr "Pretende apagar o layout"
 
+msgid "LANG_DELETE_PAGE"
+msgstr "Pretende apagar a pagina"
+
 msgid "LANG_DESCRIPTION"
 msgstr "Descrição"
 
@@ -267,3 +273,15 @@ msgstr "Modificado"
 
 msgid "LANG_FILENAME"
 msgstr "Nome do ficheiro"
+
+msgid "LANG_PAGE_BASIC_INFO"
+msgstr "Informação básica da página"
+
+msgid "LANG_NO"
+msgstr "Nao"
+
+msgid "LANG_YES"
+msgstr "Sim"
+
+msgid "LANG_PATH"
+msgstr "Caminho"

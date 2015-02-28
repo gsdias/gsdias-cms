@@ -13,7 +13,9 @@ if (@$_REQUEST['save']) {
 
     $values = array($user->id);
     
-    $_REQUEST['password'] = substr(str_shuffle(sha1(rand() . time() . "gsdias-cms")), 2, 10);
+    $password = substr(str_shuffle(sha1(rand() . time() . "gsdias-cms")), 2, 10);
+
+    $_REQUEST['password'] = md5($password);
         
     $result = $csection->add($defaultfields, $fields, $values);
     
@@ -28,9 +30,9 @@ if (@$_REQUEST['save']) {
         $email->setfrom($site->email);
         $email->setreplyto($site->email);
         $email->setsubject('Registo no site');
-        $email->setbody(sprintf('Foi criado um registo com este email. Para poder aceder use o seu email e a password: ', $password));
+        $email->setbody(sprintf('Foi criado um registo com este email. Para poder aceder use o seu email e a password: %s', $password));
         
-        #$email->sendmail();        
+        $email->sendmail();
 
         $_SESSION['message'] = sprintf($lang[$config['lang']]['LANG_USER_CREATED'], $_REQUEST['name']);
 

@@ -1,15 +1,15 @@
 <main>
-    <h1>Página: {CURRENT_PAGE_TITLE}</h1>
+    <h1>{LANG_PAGE}: {CURRENT_PAGE_TITLE}</h1>
     Status: {CURRENT_PAGE_STATUS}<br>
-    Título: {CURRENT_PAGE_TITLE}<br>
+    {LANG_TITLE}: {CURRENT_PAGE_TITLE}<br>
     Url: {CURRENT_PAGE_URL}<br>
-    Descrição: {CURRENT_PAGE_DESCRIPTION}<br>
+    {LANG_DESCRIPTION}: {CURRENT_PAGE_DESCRIPTION}<br>
     Keywords: {CURRENT_PAGE_KEYWORDS}<br>
     Tags: {CURRENT_PAGE_TAGS}<br>
-    Criado: {CURRENT_PAGE_CREATED} {LANG_BY} {CURRENT_PAGE_AUTHOR}<br>
+    Criado: {CURRENT_PAGE_CREATED} {LANG_BY} {CURRENT_PAGE_CREATOR}<br>
     <div class="btns">
         <!-- IF IS_ADMIN -->
-        <a href="/admin/pages/{CURRENT_PAGE_PID}/remove" class="btn red">Remover página</a>
+        <a href="/admin/pages/{CURRENT_PAGE_PID}/remove" class="btn red">{LANG_PAGE_REMOVE}</a>
         <!-- ENDIF IS_ADMIN -->
         <!--<a href="#" class="btn">Discard draft</a>-->
     </div>

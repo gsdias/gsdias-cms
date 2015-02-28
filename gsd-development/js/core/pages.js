@@ -59,4 +59,4 @@
         $('body').on('click', '.icon-gear', togglesettings);
     });
 
-}(GSD.Pages = GSD.Pages || {}, GSD.App, jQuery, _, Backbone));
+}(GSD.Pages = GSD.Pages || {}, GSD.App, GSD.$, _, Backbone));

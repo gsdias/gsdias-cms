@@ -17,6 +17,10 @@ GSD.settings = {
     tabletLand: 1024
 };
 
+GSD.$ = jQuery.noConflict(true);
+
+window.jQuery = window.$ = {};
+
 (function (app, $, _, Backbone, undefined) {
 
     'use strict';
@@ -102,4 +106,4 @@ GSD.settings = {
         $(document).trigger(GSD.globalevents.init);
     });
 
-}(GSD.App = GSD.App || {}, jQuery, _, Backbone));
+}(GSD.App = GSD.App || {}, GSD.$, _, Backbone));

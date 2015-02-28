@@ -46,7 +46,7 @@ class pages extends section implements isection {
     public function getcurrent ($id = 0) {
         global $mysql, $tpl;
 
-        $mysql->statement('SELECT pages.*, pages.created FROM pages LEFT JOIN users AS u ON pages.creator = u.uid WHERE pages.pid = ?;', array($id));
+        $mysql->statement('SELECT pages.*, pages.created, u.name AS creator FROM pages LEFT JOIN users AS u ON pages.creator = u.uid WHERE pages.pid = ?;', array($id));
 
         if ($mysql->total) {
 

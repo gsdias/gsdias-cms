@@ -127,4 +127,4 @@
         });
     });
 
-}(GSD.Media = GSD.Media || {}, GSD.App, GSD.Api, jQuery, _, Backbone));
+}(GSD.Media = GSD.Media || {}, GSD.App, GSD.Api, GSD.$, _, Backbone));

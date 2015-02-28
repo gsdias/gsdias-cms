@@ -43,17 +43,13 @@ if ($user->isLogged()) {
             $user->logout();
         }
     } else {
-    
         $tpl->setcondition('IS_LOGGED');
         define('IS_LOGGED', 1);
         $tpl->setvar('USER_ID', $user->id);
-
     }
-    $tpl->setVar('SCRIPT', sprintf('server.userId = "%s";var user = { uid: %s };', $user->id, $user->id));
     
 } else {
     define('IS_LOGGED', 0);
-    $tpl->setVar('SCRIPT', 'var user = {{}};');
 }
 
 if ($uri == '/admin/auth' || $uri == '/admin/auth/') {
