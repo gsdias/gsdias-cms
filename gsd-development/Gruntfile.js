@@ -93,7 +93,7 @@ module.exports = function (grunt) {
                                 var generated = context.options.generated;
                                 generated.options = {
                                     compress: {
-                                        'drop_console': true
+                                        //'drop_console': true
                                     },
                                     sourceMap: true,
                                     sourceMapIn: '.tmp/concat/gsd-resources/js/built.js.map',
