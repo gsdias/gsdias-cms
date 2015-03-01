@@ -2,7 +2,11 @@
 
 if (@$_REQUEST['save']) {
 
-    $defaultfields = array('email', 'level', 'name', 'disabled');
+    $defaultfields = array('email', 'level', 'name', 'disabled', 'password');
+
+    if (!@$_REQUEST['password']) {
+        $defaultfields = array_shift($defaultfields);
+    }
     
     $_REQUEST['disabled'] = @$_REQUEST['disabled'] ? @$_REQUEST['disabled'] : null;
     

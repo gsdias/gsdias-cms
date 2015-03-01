@@ -6,6 +6,8 @@
     <form method="post">
         <div class="colA"><label>Nome</label> <input name="name" value="{CURRENT_USER_NAME}" required></div>
         <div class="colA"><label>Email</label> <input name="email" value="{CURRENT_USER_EMAIL}" data-rule-email="true" required></div>
+        <div class="colA"><label>Password</label> <input name="password" id="password" type="password" value="" data-rule-minlength="6"></div>
+        <div class="colA"><label>Confirmar password</label> <input name="confpassword" type="password" value="" data-rule-equalto="#password"></div>
         <div class="colA">
             {PERMISSION}
         </div>

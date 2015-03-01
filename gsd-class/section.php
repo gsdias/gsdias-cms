@@ -145,7 +145,7 @@ abstract class section implements isection {
 
         foreach ($allfields as $field) {
             $fields .= sprintf(", `%s` = ?", $field);
-            $values[] = @$_REQUEST[$field];
+            $values[] = $field == 'password' ? md5(@$_REQUEST[$field]) : @$_REQUEST[$field];
         }
 
         $values[] = $site->arg(2);
