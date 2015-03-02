@@ -16,7 +16,11 @@
         }
 
         tr:nth-child(even) {
-            background: #d7d7d7;
+            background: #dddddd;
+        }
+
+        tr:hover {
+            background: #bbbbbb;
         }
     }
 

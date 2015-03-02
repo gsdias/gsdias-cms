@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2014-11-12 17:19-0000\n"
-"PO-Revision-Date: 2015-02-27 22:15-0000\n"
+"PO-Revision-Date: 2015-03-02 11:56-0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -26,7 +26,7 @@ msgid "LANG_SETTINGS"
 msgstr "Definições"
 
 msgid "LANG_DASHBOARD"
-msgstr "Painel"
+msgstr "Páinel"
 
 msgid "LANG_LAYOUTS"
 msgstr "Layouts"
@@ -92,7 +92,7 @@ msgid "LANG_PAGE_ERROR"
 msgstr "Houve um problema. Verifique os dados e tente novamente"
 
 msgid "LANG_PAGE_NOPERMISSION"
-msgstr "Nao tem permissao para apagar paginas"
+msgstr "Não tem permissão para apagar páginas"
 
 msgid "LANG_USERS"
 msgstr "Utilizadores"
@@ -116,7 +116,7 @@ msgid "LANG_USER_REMOVED"
 msgstr "Utilizador apagado"
 
 msgid "LANG_USER_NOPERMISSION"
-msgstr "Nao tem permissao para apagar utilizadores"
+msgstr "Não tem permissão para apagar utilizadores"
 
 msgid "LANG_USER_DEFAULT"
 msgstr "Não pode remover o utilizador padrão"
@@ -233,7 +233,7 @@ msgid "LANG_DELETE_LAYOUT"
 msgstr "Pretende apagar o layout"
 
 msgid "LANG_DELETE_PAGE"
-msgstr "Pretende apagar a pagina"
+msgstr "Pretende apagar a página"
 
 msgid "LANG_DESCRIPTION"
 msgstr "Descrição"
@@ -278,10 +278,22 @@ msgid "LANG_PAGE_BASIC_INFO"
 msgstr "Informação básica da página"
 
 msgid "LANG_NO"
-msgstr "Nao"
+msgstr "Não"
 
 msgid "LANG_YES"
 msgstr "Sim"
 
 msgid "LANG_PATH"
 msgstr "Caminho"
+
+msgid "LANG_FIRST"
+msgstr "Primeira"
+
+msgid "LANG_PREVIOUS"
+msgstr "Anterior"
+
+msgid "LANG_NEXT"
+msgstr "Seguinte"
+
+msgid "LANG_LAST"
+msgstr "Última"
