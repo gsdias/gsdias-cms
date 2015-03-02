@@ -40,8 +40,12 @@ module.exports = function (grunt) {
         },
         copy: {
             main: {
-                src: './tpl/_scripts.html',
-                dest: '../gsd-tpl/_shared/_scripts.html'
+                expand: true,
+                cwd: './tpl/',
+                src: '**',
+                dest: '../gsd-tpl/_shared/',
+                flatten: true,
+                filter: 'isFile'
             }
         },
         usemin: {
