@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * @author     Goncalo Silva Dias <mail@gsdias.pt>
+ * @copyright  2014-2015 GSDias
+ * @version    1.0
+ * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
+ * @since      File available since Release 1.0
+ */
+
 $mysql->statement('SELECT * FROM users WHERE disabled IS NULL LIMIT 0, 5');
 
 $users = array();

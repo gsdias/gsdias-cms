@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * @author     Goncalo Silva Dias <mail@gsdias.pt>
+ * @copyright  2014-2015 GSDias
+ * @version    1.0
+ * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
+ * @since      File available since Release 1.0
+ */
+
 include_once(ROOTPATH . 'gsd-settings.php');
 include_once(ROOTPATH . 'gsd-class/interfaces' . PHPEXT);
 if (is_file(INCLUDEPATH . 'gsd-lang' . PHPEXT)) {

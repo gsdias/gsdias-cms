@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * @author     Goncalo Silva Dias <mail@gsdias.pt>
+ * @copyright  2014-2015 GSDias
+ * @version    1.0
+ * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
+ * @since      File available since Release 1.0
+ */
+
 class tpl {
     var $config = array(
         'vars' => array(), 
@@ -13,8 +21,8 @@ class tpl {
     );
     
     public function __construct ($debug = 0) {
-        $this->config['paths'] = array(ROOTPATH . 'gsd-tpl/_shared/%s' . TPLEXT, ROOTPATH . 'gsd-tpl/_modules/%s' . TPLEXT);
         $this->setcondition('DEBUG', $debug);
+        $this->config['paths'] = array(ROOTPATH . 'gsd-tpl/_shared/%s' . TPLEXT, ROOTPATH . 'gsd-tpl/_modules/%s' . TPLEXT);
     }
     
     /** 
