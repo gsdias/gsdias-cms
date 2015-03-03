@@ -93,9 +93,15 @@ abstract class section implements isection {
         ));
     }
     
+    private function tablename () {
+        $class = get_class($this);
+
+        return substr($class, 0, 6) === 'client' ? substr($class, 6) : $class;
+    }
+
     protected function extrafields () {
         
-        $section = str_replace('client', '', get_class($this));
+        $section = $this->tablename();
         
         $_fields = $section . 'fields';
         
@@ -107,7 +113,7 @@ abstract class section implements isection {
     public function add ($defaultfields, $defaultsafter = array(), $defaultvalues = array()) {
         global $mysql;
         
-        $section = str_replace('client', '', get_class($this));
+        $section = $this->tablename();
 
         $extrafields = $this->extrafields ();
 
@@ -133,7 +139,7 @@ abstract class section implements isection {
     public function edit ($defaultfields) {
         global $mysql, $site;
         
-        $section = str_replace('client', '', get_class($this));
+        $section = $this->tablename();
         
         $extrafields = $this->extrafields ();
 
@@ -158,7 +164,7 @@ abstract class section implements isection {
     public function remove () {
         global $mysql, $site;
         
-        $section = str_replace('client', '', get_class($this));
+        $section = $this->tablename();
         
         $mysql->statement(sprintf('DELETE FROM %s WHERE %sid = ?;', $section, substr($section, 0, 1)), array($site->arg(2)));
         
