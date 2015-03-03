@@ -19,7 +19,7 @@ class users extends section implements isection {
         global $mysql, $tpl;
 
         $result = false;
-        $fields = 'users.uid, users.name, users.last_login, users.created, users.creator AS creator_id, u.name AS creator_name';
+        $fields = 'users.uid, users.name, users.last_login, users.created, users.disabled, users.creator AS creator_id, u.name AS creator_name';
 
         if (!empty($extrafields)) {
             foreach ($extrafields as $field) {
