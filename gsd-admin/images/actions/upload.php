@@ -9,25 +9,30 @@
  */
 
 if (@$_REQUEST['save']) {
+
+    $defaultfields = array('name', 'description', 'tags', 'extension', 'width', 'height', 'size');
+
+    $fields = array('creator');
+
+    $values = array($user->id);
+
     $name = explode('.', $_FILES['asset']['name']);
     $extension = end($name);
         
     $size = getimagesize($_FILES['asset']["tmp_name"]);
     
-    $fields = array(
-        $_REQUEST['name'],
-        $_REQUEST['description'],
-        $_REQUEST['tags'],
-        $extension,
-        $size[0],
-        $size[1],
-        round(filesize($_FILES['asset']["tmp_name"]) / 1000, 0) . 'KB',
-        $user->id
-    );
+    $_REQUEST['extension'] = $extension;
+    $_REQUEST['width'] = $size[0];
+    $_REQUEST['height'] = $size[1];
+    $_REQUEST['size'] = round(filesize($_FILES['asset']["tmp_name"]) / 1000, 0) . 'KB';
     
-    $mysql->statement('INSERT INTO images (name, description, tags, extension, width, height, size, creator) values(?, ?, ?, ?, ?, ?, ?, ?);', $fields);
+    $result = $csection->add($defaultfields, $fields, $values);
 
-    if ($mysql->total) {
+    if ($result['errnum']) {
+        $tpl->setvar('ERRORS', '{LANG_IMAGE_ERROR}');
+        $tpl->setcondition('ERRORS');
+
+    } else {
         
         $id = $mysql->lastInserted();
         

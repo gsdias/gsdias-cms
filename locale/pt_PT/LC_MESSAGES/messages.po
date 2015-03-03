@@ -142,6 +142,12 @@ msgstr "Não existem images"
 msgid "LANG_IMAGE_UPLOADED"
 msgstr "Imagem %s carregada"
 
+msgid "LANG_IMAGE_ERROR"
+msgstr "Houve um erro. Tente mais tarde"
+
+msgid "LANG_IMAGE_SAVED"
+msgstr "Imagem salva"
+
 msgid "LANG_DOCUMENTS"
 msgstr "Documentos"
 
