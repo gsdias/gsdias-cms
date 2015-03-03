@@ -1,15 +1,24 @@
-/*jslint nomen: true, debug: true, evil: false, vars: true, browser: true, devel: true */
-/*global require: false, define: false, $: false, _: false, Backbone: false, server: false */
+/**
+ * @author     Goncalo Silva Dias <mail@gsdias.pt>
+ * @copyright  2014-2015 GSDias
+ * @version    1.0
+ * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
+ * @since      File available since Release 1.0
+ */
 
 (function (unique, $, undefined) {
 
-    "use strict";
+    'use strict';
 
     Array.prototype.unique = function () {
         var a = [];
         var l = this.length;
         for (var i = 0; i < l; i++) {
-            for (var j = i + 1; j < l; j++) if (this[i] === this[j]) j = ++i;
+            for (var j = i + 1; j < l; j++) {
+                if (this[i] === this[j]) {
+                    j = ++i;
+                }
+            }
             a.push(this[i]);
         }
         return a;
@@ -32,4 +41,4 @@
         }
     });
     return this;
-}(PRO.Unique = PRO.Unique || {}, jQuery));
+}(GSD.Unique = GSD.Unique || {}, jQuery));
