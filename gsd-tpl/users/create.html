@@ -14,6 +14,12 @@
                 <option value="user">Utilizador</option>
             </select>
         </div>
+        <div class="colA"><label>Lingua</label>
+            <select name="locale" required>
+                <option value="" disabled="disabled">{LANG_CHOOSE}</option>
+                <!-- LOOP LANGUAGE --><option value="{LANGUAGE_KEY}">{LANGUAGE_VALUE}</option><!-- ENDLOOP LANGUAGE -->
+            </select>
+        </div>
         <!-- IF EXTRAFIELDS -->
         <h2>Informação adicional</h2>
         <!-- LOOP FIELD -->

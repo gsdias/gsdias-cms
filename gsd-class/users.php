@@ -15,8 +15,11 @@ class users extends section implements isection {
         return 0; 
     }
 
-    public function add ($defaultfields, $defaultsafter = array(), $defaultvalues = array()) {
+    public function add ($defaultfields, $defaultsafter = array(), $defaultvalues = array(), $emailparams = array()) {
+        global $site;
 
+        $password = $_REQUEST['password'];
+        $_REQUEST['password'] = md5($_REQUEST['password']);
         $result = parent::add($defaultfields, $defaultsafter, $defaultvalues);
 
         $email = new email();
@@ -24,14 +27,20 @@ class users extends section implements isection {
         $email->setto($_REQUEST['email']);
         $email->setfrom($site->email);
         $email->setreplyto($site->email);
-        $email->setsubject('Registo no site');
-        $email->setbody(sprintf('Foi criado um registo com este email. Para poder aceder use o seu email e a password: %s', $password));
+        $email->setsubject(dcgettext('client', 'LANG_REGISTER_SUBJECT', LC_MESSAGES) != 'LANG_REGISTER_SUBJECT' ? dcgettext('client', 'LANG_REGISTER_SUBJECT', LC_MESSAGES) : _('LANG_REGISTER_SUBJECT'));
+        $email->setvar('password', $password);
+        if (sizeof($emailparams)) {
+            foreach ($emailparams as $key => $value) {
+                $email->setvar(strtolower($key), $value);
+            }
+        }
 
-        $email->setvar('PASSWORD', $password);
-        $email->setvar('SUBDOMAIN', $password);
+        $template = is_file(CLIENTTPLPATH . '_emails/register' . TPLEXT) ? CLIENTTPLPATH . '_emails/register' . TPLEXT : TPLPATH . '_emails/register' . TPLEXT;
 
+        $email->settemplate($template);
         $email->sendmail();
 
+        return $result;
     }
 
     public function getlist ($numberPerPage = 10, $extrafields = array()) {
@@ -118,6 +127,9 @@ class users extends section implements isection {
                 'selected' => $item['level'],
                 'name' => 'level'
             ));
+
+            $types = new select( array ( 'list' => array('pt_PT' => 'Portugues', 'en_GB' => 'Ingles'), 'id' => 'LANGUAGE', 'selected' => $item['locale'] ) );
+            $types->object();
 
             $tpl->setvars($fields);
 

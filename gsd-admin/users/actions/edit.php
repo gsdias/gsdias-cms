@@ -10,7 +10,7 @@
 
 if (@$_REQUEST['save']) {
 
-    $defaultfields = array('email', 'level', 'name', 'disabled', 'password');
+    $defaultfields = array('email', 'level', 'name', 'locale', 'disabled', 'password');
 
     if (!@$_REQUEST['password']) {
         array_pop($defaultfields);

@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `email` varchar(255) NOT NULL,
   `password` varchar(32) DEFAULT NULL,
   `name` varchar(120) NOT NULL,
+  `locale` varchar(10) DEFAULT 'en_GB',
   `level` varchar(10) DEFAULT 'user',
   `notifications` int(1) DEFAULT NULL,
   `sync` int(1) DEFAULT NULL,

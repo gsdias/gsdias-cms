@@ -15,7 +15,7 @@ if (!IS_ADMIN) {
 
 if (@$_REQUEST['save']) {
     
-    $defaultfields = array('email', 'password', 'level', 'name');
+    $defaultfields = array('email', 'password', 'level', 'name', 'locale');
 
     $fields = array('creator');
 
@@ -38,3 +38,6 @@ if (@$_REQUEST['save']) {
         exit;
     }
 }
+
+$types = new select( array ( 'list' => array('pt_PT' => 'Portugues', 'en_GB' => 'Ingles'), 'id' => 'LANGUAGE' ) );
+$types->object();
