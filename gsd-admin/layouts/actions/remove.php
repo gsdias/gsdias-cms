@@ -16,7 +16,7 @@ if (!IS_ADMIN) {
     exit;
 }
 
-if (@$_REQUEST['confirm'] == 'Sim') {
+if (@$_REQUEST['confirm'] == $affirmative) {
     $mysql->statement('DELETE FROM layouts WHERE lid = ?;', array($site->arg(2)));
 
     if ($mysql->errnum) {
@@ -34,7 +34,7 @@ if (@$_REQUEST['confirm'] == 'Sim') {
     }
 }
 
-if (@$_REQUEST['confirm'] == 'Nao') {
+if (@$_REQUEST['confirm'] == $negative) {
     header("Location: /admin/layouts", true, 302);
     exit;
 }

@@ -8,7 +8,7 @@
  * @since      File available since Release 1.0
  */
 
-if (@$_REQUEST['confirm'] == 'Sim') {
+if (@$_REQUEST['confirm'] == $affirmative) {
     $mysql->statement('SELECT extension FROM images WHERE iid = ?;', array($site->arg(2)));
     $image = $mysql->singleline();
 
@@ -22,7 +22,7 @@ if (@$_REQUEST['confirm'] == 'Sim') {
     }
 }
 
-if (@$_REQUEST['confirm'] == 'Nao') {
+if (@$_REQUEST['confirm'] == $negative) {
     header("Location: /admin/images", true, 302);
     exit;
 }

@@ -34,9 +34,7 @@ $mysql->statement('SELECT * FROM options ORDER BY `index`;');
 $options = array();
 foreach ($mysql->result() as $item) {
     $extraclass = '';
-    if (strpos($item['name'], '_image') === false) {
-        $field = (string)new input(array('name' => $item['name'], 'value' => @$item['value'], 'label' => $item['label']));
-    } else {
+    if (strpos($item['name'], '_image') !== false) {
         $image = new image(array(
             'iid' => $item['value'],
             'height' => '100',
@@ -56,6 +54,16 @@ foreach ($mysql->result() as $item) {
 
         $field = $partial;
         $extraclass = 'image';
+    } else if (strpos($item['name'], '_select') !== false) {
+        $field = new select(array(
+            'id' => $item['name'],
+            'name' => $item['name'],
+            'list' => array('pt_PT' => 'Portugues', 'en_GB' => 'Ingles'),
+            'label' => $item['label'],
+            'selected' => @$item['value']
+        ));
+    } else {
+        $field = (string)new input(array('name' => $item['name'], 'value' => @$item['value'], 'label' => $item['label']));
     }
 
     $options[] = array(

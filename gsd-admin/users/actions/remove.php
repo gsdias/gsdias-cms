@@ -20,7 +20,7 @@ if ($site->arg(2) == 1) {
     exit;
 }
 
-if (@$_REQUEST['confirm'] == 'Sim') {
+if (@$_REQUEST['confirm'] == $affirmative) {
     $mysql->statement('DELETE FROM users WHERE uid = ?;', array($site->arg(2)));
     if ($mysql->errnum) {
 
@@ -36,7 +36,7 @@ if (@$_REQUEST['confirm'] == 'Sim') {
 
 }
 
-if (@$_REQUEST['confirm'] == 'Nao') {
+if (@$_REQUEST['confirm'] == $negative) {
     header("Location: /admin/users", true, 302);
     exit;
 }

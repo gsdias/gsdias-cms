@@ -8,29 +8,6 @@
  * @since      File available since Release 1.0
  */
 
-$language = 'pt_PT';
-
-$folder = "locale";
-$domain = "messages";
-$encoding = "UTF-8";
-
-clearstatcache();
-putenv("LANG=" . $language);
-setlocale(LC_ALL, $language);
-
-if (function_exists('bindtextdomain')) {
-    bindtextdomain($domain, './locale/nocache');
-    bindtextdomain($domain, $folder);
-    bind_textdomain_codeset($domain, $encoding);
-
-    textdomain($domain);
-
-    if (is_dir('gsd-client/locale')) {
-        bindtextdomain('client', 'gsd-client/' . $folder);
-        bind_textdomain_codeset('client', $encoding);
-    }
-}
-
 define('ROOTPATH', dirname(__FILE__) . '/');
 
 define('IS_INSTALLED', !is_file('gsd-install.php'));

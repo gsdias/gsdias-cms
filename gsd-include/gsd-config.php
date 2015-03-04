@@ -35,6 +35,29 @@ $site = new site();
 
 $user = @$_SESSION['user'] ? $_SESSION['user'] : (class_exists('clientuser') ? new clientuser() : new user());
 
+$language = $user->locale ? $user->locale : $site->locale_select;
+
+$folder = "locale";
+$domain = "messages";
+$encoding = "UTF-8";
+
+clearstatcache();
+putenv("LANG=" . $language);
+setlocale(LC_ALL, $language);
+
+if (function_exists('bindtextdomain')) {
+    bindtextdomain($domain, './locale/nocache');
+    bindtextdomain($domain, $folder);
+    bind_textdomain_codeset($domain, $encoding);
+
+    textdomain($domain);
+
+    if (is_dir('gsd-client/locale')) {
+        bindtextdomain('client', 'gsd-client/' . $folder);
+        bind_textdomain_codeset('client', $encoding);
+    }
+}
+
 $tpl->setpaths($config['tplpath']);
 
 $resources = $config['resources'];

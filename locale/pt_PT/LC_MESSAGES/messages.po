@@ -137,7 +137,7 @@ msgid "LANG_UPLOAD_IMAGE"
 msgstr "Carregar imagem"
 
 msgid "LANG_NO_IMAGES"
-msgstr "Não existem images"
+msgstr "Não existem imagens"
 
 msgid "LANG_IMAGE_UPLOADED"
 msgstr "Imagem %s carregada"

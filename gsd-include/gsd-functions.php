@@ -63,90 +63,7 @@ function filerename ($old, $new) {
     return $new . '.' . strtolower($old[sizeof($old) - 1]);
 }
 
-/** 
-  * @desc creates a string with html to handle files
-  * @param string $path - public path of the file on the server
-  * @param string $file - public name of file
-  * @param string $id - id of the file
-  * @param string $name - internal name type of file
-  * @param string $desc - small description about the file
-  * @return string - html code ready to output
-*/  
-function getSend ($path, $file, $id, $name, $desc, $type = '') {
-
-    $result = $file ? sprintf('<a href="%s%s" target="_blank" class="download-link">
-    <img src="/resources/images/link.png" /></a>
-    <input type="submit" data-name="%s" data-path="%s" data-value="%s" data-type="%s" name="delete" class="delete icon-cross-black">', $path, $file, $name, $path, $file, $type) : '';
-    $result = sprintf('<form method="post" enctype="multipart/form-data" class="envio">
-    <div id="progress">
-        <div class="bar" style="width: 0%%;"></div>
-    </div>
-    <input name="id" type="hidden" value="%s"/>
-    <input name="name" type="hidden" value="%s"/>
-    <div class="input file colA">
-        <button class="icon-upload"></button>
-        <input class="input" data-name="%s" data-value="%s" name="%s" data-path="%s" type="file" />
-        ' . $result . '
-    </div>
-      </form>
-    ', $id, $name, $name, $file, $name, $path, $desc);
-    return $result;
-}
-
-/** 
-  * @desc trims given text with given length
-  * @param string $text - text to be treated
-  * @param int $length - number characters before trims the text
-  * @return string - trimmed text with ellipsis if needed
-*/  
-function fileparam ($name) {
-    global $files_tracking;
-
-    $params = @$files_tracking[$name];
-
-    return is_array($params) ? $params : array('table' => '', 'field' => '', 'fieldid' => '', 'path' => '');
-}
-/** 
-  * @desc searches for a given country name
-  * @param string $search - partial name of country
-  * @return int - id of the first country found
-*/  
-function getCountryValue ($search) {
-    global $paises;
-
-    foreach ($paises as $id => $values) {
-
-        if (-1 < stripos($values, $search)) {
-            return $id;
-        } 
-
-    }
-    return;
-}
-
-/** 
-  * @desc searches for a given county name
-  * @param string $search - partial name of county
-  * @return int - id of the first county found
-*/  
-function getCountyValue ($search) {
-    global $concelhos;
-
-    foreach ($concelhos as $districtid => $district) {
-
-        foreach ($district as $countyid => $countyname) {        
-
-            if (-1 < stripos($countyname, $search)) {
-                return substr("0" . $districtid, -2) . substr("0" . $countyid, -2);
-            } 
-
-        } 
-
-    }
-    return;
-}
-
-/** 
+/**
   * @desc presents the date with the right format (DD/MM/YYYY)
   * @param string $date - date
   * @return string $date - formated date
@@ -256,17 +173,6 @@ function smallData ($data) {
     $data = str_replace(array("/", "."), array("-", "-"), $data);
     $data = explode('-', $data);
     return substr($data[0], 2, 2) . '-' . $data[1] . '-' . $data[2];
-}
-
-function sendMailRecover ($to, $link) {
-    global $pathsite, $_title;
-    $email = new email();
-    $email->setTo($to);
-    $email->setVar('link', $link);
-    $email->setVar('site', $_title);
-    $email->setFrom(sprintf("webmaster@sve.proatlantico.com", $pathsite));
-    $email->setTemplate(TPLPATH . 'emails/recuperar_pass.html');
-    return $email->sendMail();
 }
 
 /** 

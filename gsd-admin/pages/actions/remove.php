@@ -16,7 +16,7 @@ if (!IS_ADMIN) {
     exit;
 }
 
-if (@$_REQUEST['confirm'] == 'Sim') {
+if (@$_REQUEST['confirm'] == $affirmative) {
     $mysql->statement('SELECT url FROM pages WHERE pid = ?;', array($site->arg(2)));
 
     $currenturl = $mysql->singleresult();
@@ -40,7 +40,7 @@ if (@$_REQUEST['confirm'] == 'Sim') {
     }
 }
 
-if (@$_REQUEST['confirm'] == 'Nao') {
+if (@$_REQUEST['confirm'] == $negative) {
     header("Location: /admin/pages", true, 302);
     exit;
 }
