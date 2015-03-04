@@ -15,6 +15,25 @@ class users extends section implements isection {
         return 0; 
     }
 
+    public function add ($defaultfields, $defaultsafter = array(), $defaultvalues = array()) {
+
+        $result = parent::add($defaultfields, $defaultsafter, $defaultvalues);
+
+        $email = new email();
+
+        $email->setto($_REQUEST['email']);
+        $email->setfrom($site->email);
+        $email->setreplyto($site->email);
+        $email->setsubject('Registo no site');
+        $email->setbody(sprintf('Foi criado um registo com este email. Para poder aceder use o seu email e a password: %s', $password));
+
+        $email->setvar('PASSWORD', $password);
+        $email->setvar('SUBDOMAIN', $password);
+
+        $email->sendmail();
+
+    }
+
     public function getlist ($numberPerPage = 10, $extrafields = array()) {
         global $mysql, $tpl;
 

@@ -23,7 +23,7 @@ if (@$_REQUEST['save']) {
     
     $password = substr(str_shuffle(sha1(rand() . time() . "gsdias-cms")), 2, 10);
 
-    $_REQUEST['password'] = md5($password);
+    $_REQUEST['password'] = $password;
         
     $result = $csection->add($defaultfields, $fields, $values);
     
@@ -32,19 +32,6 @@ if (@$_REQUEST['save']) {
         $tpl->setcondition('ERRORS');
 
     } else {
-        $email = new email();
-        
-        $email->setto($_REQUEST['email']);
-        $email->setfrom($site->email);
-        $email->setreplyto($site->email);
-        $email->setsubject('Registo no site');
-        $email->setbody(sprintf('Foi criado um registo com este email. Para poder aceder use o seu email e a password: %s', $password));
-        
-        $email->setvar('PASSWORD', $password);
-        $email->setvar('SUBDOMAIN', $password);
-
-        $email->sendmail();
-
         $_SESSION['message'] = sprintf($lang[$config['lang']]['LANG_USER_CREATED'], $_REQUEST['name']);
 
         header("Location: /admin/users", true, 302);
