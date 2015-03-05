@@ -99,7 +99,7 @@ function timeago ($seconds = 0, $hour = 0) {
     $months = round($months, 0);
     
     if ($months > 0) {
-        $label = sprintf('%d %s %s', $months, $months > 1 ? ' meses': 'mês', _('LANG_AGO'));
+        $label = sprintf('%d %s %s', $months, $months > 1 ? ' meses' : 'mês', _('LANG_AGO'));
     } else {
         $label = $days > 0 ? $days . ( $days == 1 ? ' dia ' : ' dias ') . _('LANG_AGO') : 'às ' . date('H:i', strtotime($hour));
     }

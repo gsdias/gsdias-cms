@@ -24,13 +24,13 @@ class users extends section implements isection {
 
         $email = new email();
 
-        $email->setto($_REQUEST['email']);
+        $email->setto(@$emailparams['to'] ? $emailparams['to'] : $_REQUEST['email']);
         $email->setfrom($site->email);
         $email->setreplyto($site->email);
         $email->setsubject(dcgettext('client', 'LANG_REGISTER_SUBJECT', LC_MESSAGES) != 'LANG_REGISTER_SUBJECT' ? dcgettext('client', 'LANG_REGISTER_SUBJECT', LC_MESSAGES) : _('LANG_REGISTER_SUBJECT'));
         $email->setvar('password', $password);
-        if (sizeof($emailparams)) {
-            foreach ($emailparams as $key => $value) {
+        if (sizeof(@$emailparams['fields'])) {
+            foreach ($emailparams['fields'] as $key => $value) {
                 $email->setvar(strtolower($key), $value);
             }
         }
@@ -128,7 +128,7 @@ class users extends section implements isection {
                 'name' => 'level'
             ));
 
-            $types = new select( array ( 'list' => array('pt_PT' => 'Portugues', 'en_GB' => 'Ingles'), 'id' => 'LANGUAGE', 'selected' => $item['locale'] ) );
+            $types = new select( array ( 'list' => array('pt_PT' => 'Português', 'en_GB' => 'Inglês'), 'id' => 'LANGUAGE', 'selected' => $item['locale'] ) );
             $types->object();
 
             $tpl->setvars($fields);

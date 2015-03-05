@@ -58,7 +58,7 @@ foreach ($mysql->result() as $item) {
         $field = new select(array(
             'id' => $item['name'],
             'name' => $item['name'],
-            'list' => array('pt_PT' => 'Portugues', 'en_GB' => 'Ingles'),
+            'list' => array('pt_PT' => 'Português', 'en_GB' => 'Inglês'),
             'label' => $item['label'],
             'selected' => @$item['value']
         ));
