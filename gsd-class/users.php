@@ -76,8 +76,8 @@ class users extends section implements isection {
                 }
                 $created = explode(' ', $item['created']);
                 $last_login = explode(' ', @$item['last_login']);
-                $fields['CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())));
-                $fields['LAST_LOGIN'] = sizeof($last_login) ? ($last_login[0] ? timeago(dateDif($last_login[0], date('Y-m-d',time()))) : '{LANG_NEVER}') : '';
+                $fields['CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())), $created[1]);
+                $fields['LAST_LOGIN'] = sizeof($last_login) ? ($last_login[0] ? timeago(dateDif($last_login[0], date('Y-m-d',time())), $created[1]) : '{LANG_NEVER}') : '';
                 $fields['DISABLED'] = $item['disabled'] ? '<br>({LANG_DISABLED})' : '';
                 $list[] = $fields;
             }

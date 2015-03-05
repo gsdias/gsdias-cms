@@ -38,7 +38,7 @@ class documents extends section implements isection {
                     $fields[strtoupper($field)] = $value;
                 }
                 $created = explode(' ', $item['created']);
-                $fields['CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())));
+                $fields['CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())), $created[1]);
 
                 $fields['ASSET'] = $item['name'];
                 $fields['SIZE'] = sprintf('%s', $item['size']);
@@ -70,8 +70,6 @@ class documents extends section implements isection {
                 }
                 $fields['CURRENT_DOCUMENT_'. strtoupper($field)] = $value;
             }
-
-            $fields['CURRENT_DOCUMENT_CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())));
 
             $tpl->setvars($fields);
 

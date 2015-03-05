@@ -24,6 +24,8 @@ if (@$_REQUEST['save']) {
     $_REQUEST['require_auth'] = @$_REQUEST['auth'] ? @$_REQUEST['auth'] : null;
     $_REQUEST['show_menu'] = @$_REQUEST['menu'] ? @$_REQUEST['menu'] : null;
     
+    $mysql->statement('DELETE FROM redirect WHERE `from` = ?;', array($_REQUEST['url']));
+
     $result = $csection->add($defaultfields, $fields, $values);
 
     if ($result['total']) {
@@ -45,7 +47,7 @@ if (@$_REQUEST['save']) {
             ));
         }
 
-        $_SESSION['message'] = sprintf($lang[$config['lang']]['LANG_PAGE_CREATED'], $_REQUEST['title']);
+        $_SESSION['message'] = sprintf(_('LANG_PAGE_CREATED'), $_REQUEST['title']);
         header("Location: /admin/pages/$pid/edit", true, 302);
         exit;
     } else {

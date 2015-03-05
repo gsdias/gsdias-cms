@@ -38,7 +38,7 @@ class pages extends section implements isection {
                     $fields[strtoupper($field)] = $value;
                 }
                 $created = explode(' ', $item['created']);
-                $fields['CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())));
+                $fields['CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())), $created[1]);
 
                 $list[] = $fields;
             }
@@ -71,7 +71,7 @@ class pages extends section implements isection {
                 $fields['CURRENT_PAGE_'. strtoupper($field)] = $value;
             }
 
-            $fields['CURRENT_PAGE_CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())));
+            $fields['CURRENT_PAGE_CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())), $created[1]);
 
             $fields['MENU_CHECKED'] = @$item['show_menu'] ? 'checked="checked"' : '';
             $fields['AUTH_CHECKED'] = @$item['require_auth'] ? 'checked="checked"' : '';

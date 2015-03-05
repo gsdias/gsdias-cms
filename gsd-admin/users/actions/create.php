@@ -32,7 +32,7 @@ if (@$_REQUEST['save']) {
         $tpl->setcondition('ERRORS');
 
     } else {
-        $_SESSION['message'] = sprintf($lang[$config['lang']]['LANG_USER_CREATED'], $_REQUEST['name']);
+        $_SESSION['message'] = sprintf(_('LANG_USER_CREATED'), $_REQUEST['name']);
 
         header("Location: /admin/users", true, 302);
         exit;

@@ -38,7 +38,7 @@ class layouts extends section implements isection {
                     $fields[strtoupper($field)] = $value;
                 }
                 $created = explode(' ', $item['created']);
-                $fields['CREATED'] = timeago(dateDif($created[0], date('Y-m-d', time())));
+                $fields['CREATED'] = timeago(dateDif($created[0], date('Y-m-d', time())), $created[1]);
 
                 $list[] = $fields;
             }
@@ -70,8 +70,6 @@ class layouts extends section implements isection {
                 }
                 $fields['CURRENT_LAYOUT_'. strtoupper($field)] = $value;
             }
-
-            $fields['CURRENT_LAYOUT_CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())));
 
             $tpl->setvars($fields);
 

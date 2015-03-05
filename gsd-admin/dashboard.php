@@ -17,7 +17,7 @@ foreach ($mysql->result() as $userlist) {
     $users[] = array(
         'ID' => $userlist['uid'],
         'NAME' => $userlist['name'],
-        'CREATED' => timeago(dateDif($created[0], date('Y-m-d',time())))
+        'CREATED' => timeago(dateDif($created[0], date('Y-m-d',time())), $created[1])
     );
 }
 $tpl->setarray('USERS', $users);
@@ -33,7 +33,7 @@ if ($mysql->total) {
         $pages[] = array(
             'ID' => $pagelist['pid'],
             'NAME' => $pagelist['url'],
-            'CREATED' => timeago(dateDif($created[0], date('Y-m-d',time())))
+            'CREATED' => timeago(dateDif($created[0], date('Y-m-d',time())), $created[1])
         );
     }
     $tpl->setarray('PAGES', $pages);
@@ -50,7 +50,7 @@ if ($mysql->total) {
         $images[] = array(
             'ID' => $imagelist['iid'],
             'NAME' => $imagelist['name'],
-            'CREATED' => timeago(dateDif($created[0], date('Y-m-d',time())))
+            'CREATED' => timeago(dateDif($created[0], date('Y-m-d',time())), $created[1])
         );
     }
     $tpl->setarray('IMAGES', $images);
@@ -67,7 +67,7 @@ if ($mysql->total) {
         $documents[] = array(
             'ID' => $documentlist['did'],
             'NAME' => $documentlist['name'],
-            'CREATED' => timeago(dateDif($created[0], date('Y-m-d',time())))
+            'CREATED' => timeago(dateDif($created[0], date('Y-m-d',time())), $created[1])
         );
     }
     $tpl->setarray('DOCUMENTS', $documents);

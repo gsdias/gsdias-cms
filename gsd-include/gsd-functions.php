@@ -91,7 +91,7 @@ function dateDif ($first = null, $second = null) {
     return mktime('0', '0', '0', $second[1], $second[2], $second[0]) - mktime('0', '0', '0', $first[1], $first[2], $first[0]);
 }
 
-function timeago ($seconds = 0) {
+function timeago ($seconds = 0, $hour = 0) {
     global $lang, $config;
     
     $days = $seconds / 3600 / 24;
@@ -99,9 +99,9 @@ function timeago ($seconds = 0) {
     $months = round($months, 0);
     
     if ($months > 0) {
-        $label = sprintf('%d %s %s', $months, $months > 1 ? ' meses': 'mês', $lang[$config['lang']]['LANG_AGO']);
+        $label = sprintf('%d %s %s', $months, $months > 1 ? ' meses': 'mês', _('LANG_AGO'));
     } else {
-        $label = $days > 0 ? $days . ( $days == 1 ? ' dia ' : ' dias ') . $lang[$config['lang']]['LANG_AGO'] : 'hoje';
+        $label = $days > 0 ? $days . ( $days == 1 ? ' dia ' : ' dias ') . _('LANG_AGO') : 'às ' . date('H:i', strtotime($hour));
     }
     
     return $label;
@@ -229,6 +229,12 @@ function removefile ($path) {
     return false;
 }
 
-if ($path[0] != 'admin' && is_file (CLIENTPATH . 'functions' . PHPEXT) && IS_INSTALLED) {
-    include_once(CLIENTPATH . 'functions' . PHPEXT);
+function toAscii($str) {
+    setlocale(LC_ALL, 'en_US.UTF8');
+	$clean = iconv('UTF-8', 'ASCII//TRANSLIT', $str);
+	$clean = preg_replace("/[^a-zA-Z0-9\/_| -]/", '', $clean);
+	$clean = strtolower(trim($clean, '-'));
+	$clean = preg_replace("/[\/_| -]+/", '-', $clean);
+
+	return $clean;
 }

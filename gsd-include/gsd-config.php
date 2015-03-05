@@ -10,15 +10,8 @@
 
 include_once(ROOTPATH . 'gsd-settings.php');
 include_once(ROOTPATH . 'gsd-class/interfaces' . PHPEXT);
-if (is_file(INCLUDEPATH . 'gsd-lang' . PHPEXT)) {
-    include_once(INCLUDEPATH . 'gsd-lang' . PHPEXT);
-}
 include_once(INCLUDEPATH . 'gsd-functions' . PHPEXT);
 include_once(INCLUDEPATH . 'gsd-paginator' . PHPEXT);
-
-if (is_file (CLIENTINCLUDEPATH . 'lang' . PHPEXT)) {
-    include_once(CLIENTINCLUDEPATH . 'lang' . PHPEXT);
-}
 
 date_default_timezone_set('Europe/Lisbon');
  
@@ -62,11 +55,10 @@ $tpl->setpaths($config['tplpath']);
 
 $resources = $config['resources'];
 
-$tpl->setvars($lang[$config['lang']]);
-
-$tpl->setVar('SCRIPT', sprintf('server = "undefined" === typeof server ? { } : server;server.lang = "%s";server.ga = "%s";server.fb = "%s";', $config['lang'], $site->ga, $site->fb));
+$tpl->setVar('SCRIPT', sprintf('GSD.ga = "%s";GSD.fb = "%s";', $site->ga, $site->fb));
 $tpl->setVar('CDN', $resources);
 $tpl->setVar('CLIENT_RESOURCES', @$config['client_resources']);
+$tpl->setVar('CLIENT_PATH', @$config['client_path']);
 $tpl->setVar('REDIRECT', @$_REQUEST['redirect'] ? sprintf("?redirect=%s", $_REQUEST['redirect']) : '');
 
 
