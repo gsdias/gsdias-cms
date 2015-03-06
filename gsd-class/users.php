@@ -24,7 +24,7 @@ class users extends section implements isection {
 
         $email = new email();
 
-        $email->setto(@$emailparams['to'] ? $emailparams['to'] : $_REQUEST['email']);
+        $email->setto($_REQUEST['email']);
         $email->setfrom($site->email);
         $email->setreplyto($site->email);
         $email->setsubject(dcgettext('client', 'LANG_REGISTER_SUBJECT', LC_MESSAGES) != 'LANG_REGISTER_SUBJECT' ? dcgettext('client', 'LANG_REGISTER_SUBJECT', LC_MESSAGES) : _('LANG_REGISTER_SUBJECT'));
