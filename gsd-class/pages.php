@@ -11,7 +11,6 @@
 class pages extends section implements isection {
 
     public function __construct ($id = null) {
-
         return 0; 
     }
 
@@ -212,5 +211,35 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item['pid']));
             }
             $tpl->setarray('FIELD', $extrafields, true);
         }
+    }
+
+    public function edit ($defaultfields) {
+        global $mysql, $site;
+
+        $mysql->statement('SELECT * FROM pages WHERE pid = ?;', array($site->arg(2)));
+        $currentpage = $mysql->singleline();
+        $hasChanged = 0;
+        $fields = array();
+
+        foreach ($defaultfields as $field) {
+            if ($currentpage[$field] != $_REQUEST[$field]) {
+                $hasChanged = 1;
+            }
+            array_push($fields, $currentpage[$field]);
+        }
+
+        parent::edit($defaultfields);
+
+        if ($hasChanged) {
+            $this->page_review($defaultfields, $fields);
+        }
+    }
+
+    private function page_review ($defaultfields = array(), $fields = array()) {
+        global $mysql, $user;
+
+        array_push($fields, $user->id);
+        $questions = str_repeat(", ? ", sizeof($fields));
+        $mysql->statement(sprintf('INSERT INTO pages_review (%s, creator, created) values (%s, CURRENT_TIMESTAMP());', implode(',', $defaultfields), substr($questions, 2)), $fields);
     }
 }

@@ -47,7 +47,7 @@ if (@$_REQUEST['save']) {
             ));
         }
 
-        $_SESSION['message'] = sprintf(_('LANG_PAGE_CREATED'), $_REQUEST['title']);
+        $_SESSION['message'] = sprintf(lang('LANG_PAGE_CREATED'), $_REQUEST['title']);
         header("Location: /admin/pages/$pid/edit", true, 302);
         exit;
     } else {

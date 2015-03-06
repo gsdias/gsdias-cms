@@ -135,7 +135,7 @@ class tpl {
         preg_match_all('#{LANG_(.*?)}#s', $content, $matches, PREG_SET_ORDER);
 
         foreach ($matches as $match) {
-            $replace = _('LANG_' . $match[1]) != 'LANG_' . $match[1] ? _('LANG_' . $match[1]) : dcgettext('client', 'LANG_' . $match[1], LC_MESSAGES);
+            $replace = lang('LANG_' . $match[1]);
             $content = preg_replace(sprintf('#%s#s', $match[0]), $replace, $content, 1);
         }
 

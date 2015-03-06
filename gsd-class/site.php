@@ -32,8 +32,10 @@ class site {
 
             if (strpos($name, '_image') !== false) {
                 $image = new image(array('iid' => $option['value'], 'width' => 'auto', 'height' => 'auto'));
+                $name = str_replace(array('_image', '_select'), '', $name);
                 $tpl->setvar('SITE_' . strtoupper($name), $image);
             } else {
+                $name = str_replace(array('_image', '_select'), '', $name);
                 $tpl->setvar('SITE_' . strtoupper($name), $option['value']);
             }
         }

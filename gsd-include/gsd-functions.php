@@ -16,6 +16,10 @@ function GSDClassLoading($className) {
     }
 }
 
+function lang ($text) {
+    return _($text) != $text ? _($text) : dcgettext('client', $text, LC_MESSAGES);
+}
+
 function isuploaded ($folder, $filename) {
     $found = '';
     if ($handle = opendir($folder)) {

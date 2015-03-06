@@ -16,7 +16,6 @@ if (@$_REQUEST['save']) {
     $_REQUEST['require_auth'] = @$_REQUEST['auth'] ? @$_REQUEST['auth'] : null;
     $_REQUEST['published'] = @$_REQUEST['published'] ? @$_REQUEST['published'] : null;
 
-    
     $result = $csection->edit($defaultfields);
 
     if ($result['errnum']) {

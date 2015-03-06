@@ -27,7 +27,7 @@ class users extends section implements isection {
         $email->setto($_REQUEST['email']);
         $email->setfrom($site->email);
         $email->setreplyto($site->email);
-        $email->setsubject(dcgettext('client', 'LANG_REGISTER_SUBJECT', LC_MESSAGES) != 'LANG_REGISTER_SUBJECT' ? dcgettext('client', 'LANG_REGISTER_SUBJECT', LC_MESSAGES) : _('LANG_REGISTER_SUBJECT'));
+        $email->setsubject(lang('LANG_REGISTER_SUBJECT'));
         $email->setvar('password', $password);
         if (sizeof(@$emailparams['fields'])) {
             foreach ($emailparams['fields'] as $key => $value) {
