@@ -16,8 +16,5 @@ CREATE TABLE IF NOT EXISTS `pages_review` (
   `require_auth` tinyint(1) DEFAULT NULL,
   `creator` int(11) NOT NULL,
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `published` tinyint(1) DEFAULT NULL,
-  FOREIGN KEY (creator)
-    REFERENCES users(uid)
-    ON UPDATE CASCADE ON DELETE CASCADE
+  `published` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;

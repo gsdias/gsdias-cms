@@ -44,7 +44,9 @@ class site {
         $this->uri = preg_replace($pattern, '', $_SERVER['REQUEST_URI']);
 
         $this->path();
-        $this->page();
+        if ($this->path[0] !== 'admin') {
+            $this->page();
+        }
     }
 
     public function path () {
