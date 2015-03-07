@@ -75,6 +75,7 @@ class pages extends section implements isection {
             $fields['MENU_CHECKED'] = @$item['show_menu'] ? 'checked="checked"' : '';
             $fields['AUTH_CHECKED'] = @$item['require_auth'] ? 'checked="checked"' : '';
             $fields['PUBLISHED_CHECKED'] = @$item['published'] ? 'checked="checked"' : '';
+            $fields['CURRENT_PAGE_STATUS'] = @$item['published'] ? 'Publicada' : 'Por publicar';
 
             $image = new image(array(
                 'iid' => @$item['og_image'],
@@ -97,6 +98,18 @@ class pages extends section implements isection {
 
             $tpl->setvars($fields);
 
+            $mysql->statement('SELECT * FROM pages_review WHERE pid = ?;', array($id));
+
+            if ($mysql->total) {
+                $review = array();
+                foreach ($mysql->result() as $field) {
+                    $review[] = array(
+                        'KEY' => $field['prid'],
+                        'VALUE' => $field['modified']
+                    );
+                }
+                $tpl->setarray('VERSION', $review);
+            }
         }
     }
     public function generatefields ($section) {
@@ -213,7 +226,7 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item['pid']));
         }
     }
 
-    public function edit ($defaultfields) {
+    public function edit ($defaultfields = array()) {
         global $mysql, $site;
 
         $mysql->statement('SELECT * FROM pages WHERE pid = ?;', array($site->arg(2)));
@@ -231,15 +244,18 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item['pid']));
         parent::edit($defaultfields);
 
         if ($hasChanged) {
+            array_push($fields, $currentpage['modified']);
+            array_push($defaultfields, 'modified');
             $this->page_review($defaultfields, $fields);
         }
     }
 
     private function page_review ($defaultfields = array(), $fields = array()) {
-        global $mysql, $user;
+        global $mysql, $user, $site;
 
         array_push($fields, $user->id);
+        array_push($fields, $site->arg(2));
         $questions = str_repeat(", ? ", sizeof($fields));
-        $mysql->statement(sprintf('INSERT INTO pages_review (%s, creator, created) values (%s, CURRENT_TIMESTAMP());', implode(',', $defaultfields), substr($questions, 2)), $fields);
+        $mysql->statement(sprintf('INSERT INTO pages_review (%s, creator, pid) values (%s);', implode(',', $defaultfields), substr($questions, 2)), $fields);
     }
 }

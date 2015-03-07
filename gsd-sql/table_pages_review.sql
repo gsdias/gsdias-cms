@@ -3,7 +3,8 @@
 --
 
 CREATE TABLE IF NOT EXISTS `pages_review` (
-  `pid` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `prid` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `pid` int(11) NOT NULL,
   `title` varchar(120) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
   `keywords` varchar(255) DEFAULT NULL,
@@ -14,7 +15,7 @@ CREATE TABLE IF NOT EXISTS `pages_review` (
   `show_menu` tinyint(1) DEFAULT 1,
   `require_auth` tinyint(1) DEFAULT NULL,
   `creator` int(11) NOT NULL,
-  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `published` tinyint(1) DEFAULT NULL,
   FOREIGN KEY (creator)
     REFERENCES users(uid)

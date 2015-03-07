@@ -38,11 +38,13 @@ if (is_file('gsd-install' . PHPEXT)) {
         }
         require_once(ROOTPATH . 'gsd-client/index.php');
     }
+
     if (@$_SESSION['error']) {
         $tpl->setvar('ERRORS', $_SESSION['error']);
         $tpl->setcondition('ERRORS');
         unset($_SESSION['error']);
     }
+
     if (@$_SESSION['message']) {
         $tpl->setvar('MESSAGES', $_SESSION['message']);
         $tpl->setcondition('MESSAGES');

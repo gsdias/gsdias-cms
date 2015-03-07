@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS `pages` (
   `require_auth` tinyint(1) DEFAULT NULL,
   `creator` int(11) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `published` tinyint(1) DEFAULT NULL,
   FOREIGN KEY (creator)
     REFERENCES users(uid)
