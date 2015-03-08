@@ -45,7 +45,6 @@ if (@$_REQUEST['save']) {
     $mysql->statement('SHOW TABLES;');
     
     if ($mysql->total) {
-        
         $found = serialize($mysql->result());
         $table_exists = array();
         foreach($tables as $table => $value) {
@@ -56,7 +55,7 @@ if (@$_REQUEST['save']) {
                 } else {
                     $status = '<span style="color: red;">Don\'t exist</span><br>';
                 }
-                echo $table . ' ' . $status . '<br>';
+
                 $table_exists[] = array(
                     'NAME' => $table,
                     'STATUS' => $status
@@ -101,16 +100,11 @@ if (@$_REQUEST['save']) {
     }
 }
 
-if (!DEBUG) {
-    $tpl->includeFiles('_DEBUG');
-}
-
 function createtable ($table) {
     global $mysql;
     $sentence = file_get_contents(sprintf('gsd-sql/table_%s.sql', $table));
     $mysql->statement('SET foreign_key_checks = 0;' . $sentence . 'SET foreign_key_checks = 1;');
-    
-    //printf('<pre>%s%s</pre><br>', $sentence, $mysql->errmsg);
+
     if (!$mysql->errnum) {
         return sprintf('<span style="color: green;">Created</span><br>', $mysql->errmsg);
     } else {

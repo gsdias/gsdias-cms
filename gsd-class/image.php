@@ -19,8 +19,8 @@ class image {
             'src' => null,
             'alt' => '',
             'class' => '',
-            'width' => $this->width,
-            'height' => $this->height
+            'width' => '',
+            'height' => ''
         );
         
         $this->args = array_merge($defaults, $args);

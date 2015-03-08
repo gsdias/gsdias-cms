@@ -10,5 +10,8 @@ CREATE TABLE IF NOT EXISTS `emails` (
     `to` VARCHAR(100) DEFAULT NULL,
     `cc` VARCHAR(100) DEFAULT NULL,
     `bcc` VARCHAR(100) DEFAULT NULL,
-    `attachment` TEXT DEFAULT '[]'
-) ENGINE = InnoDB;
+    `attachment` TEXT DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+INSERT INTO `emails` (`eid`, `template`, `subject`, `from`, `to`, `cc`, `bcc`, `attachment`) VALUES
+(1, 'register', NULL, NULL, NULL, NULL, NULL, '[]');

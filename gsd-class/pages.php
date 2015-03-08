@@ -120,6 +120,7 @@ class pages extends section implements isection {
         $extrafields = array();
 
         if (!empty($this->item)) {
+
             $mysql->statement('SELECT *, mt.file, ls.name AS lsname, smt.file AS sfile
             FROM pagemodules AS pm
 LEFT JOIN layoutsections AS ls ON ls.lsid = pm.lsid
@@ -127,6 +128,7 @@ LEFT JOIN layoutsectionmoduletypes AS lsmt ON ls.lsid = lsmt.lsid
 LEFT JOIN moduletypes AS mt ON mt.mtid = lsmt.mtid
 LEFT JOIN moduletypes AS smt ON smt.mtid = lsmt.smtid
 WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item['pid']));
+
             foreach ($mysql->result() as $item) {
 
                 $item['data'] = unserialize($item['data']);
@@ -224,6 +226,7 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item['pid']));
             }
             $tpl->setarray('FIELD', $extrafields, true);
         }
+        $tpl->setcondition('EXTRAFIELDS', !empty($extrafields));
     }
 
     public function edit ($defaultfields = array()) {

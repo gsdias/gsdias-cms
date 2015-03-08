@@ -22,24 +22,6 @@
     background: #fff;
 }
 
-.msgError {
-    border: solid 1px $bg-color;
-    margin: 20px;
-    padding: 0 10px;
-    table {
-        border: none;
-        tr {
-            margin: 10px 0;
-            display: block;
-            td {
-                border: none;
-                text-align: left;
-                font-size: 12px;
-            }
-        }
-    }
-}
-
 .colA {
     width: 100%;
     margin-bottom: 30px;

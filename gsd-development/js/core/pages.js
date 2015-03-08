@@ -23,7 +23,7 @@
                     .replace(/ç/g, 'c')
                     .replace(/ç/g, 'c')
                     .replace(/á/g, 'a').replace(/à/g, 'a').replace(/ã/g, 'a').replace(/â/g, 'a')
-                    .replace(/é/g, 'e').replace(/è/g, 'e').replace(/ê/g, 'ê')
+                    .replace(/é/g, 'e').replace(/è/g, 'e').replace(/ê/g, 'e')
                     .replace(/í/g, 'i').replace(/ì/g, 'i').replace(/î/g, 'i')
                     .replace(/ó/g, 'o').replace(/ò/g, 'o').replace(/õ/g, 'o').replace(/ô/g, 'o')
                     .replace(/ú/g, 'u').replace(/ù/g, 'u').replace(/û/g, 'u')

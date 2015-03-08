@@ -50,7 +50,7 @@ class site {
     }
 
     public function path () {
-        $path = explode("/", $this->uri);
+        $path = explode('/', $this->uri);
 
         array_shift($path);
 
@@ -62,7 +62,7 @@ class site {
 
         $mysql->statement('SELECT destination FROM redirect WHERE `from` = :uri', array(':uri' => $this->uri));
         if ($mysql->total) {
-            header("Location: " . $mysql->singleresult(), true, 301);
+            header('Location: ' . $mysql->singleresult(), true, 301);
             exit;
         }
 

@@ -8,11 +8,11 @@ CREATE TABLE IF NOT EXISTS `pagemodules` (
   `lsid` int(11) NOT NULL,
   `mtid` int(11) NOT NULL,
   `data` text DEFAULT NULL,
-  `creator` int(11) NOT NULL,
+  `creator` int(11) DEFAULT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (creator)
     REFERENCES users(uid)
-    ON UPDATE CASCADE ON DELETE CASCADE,
+    ON UPDATE CASCADE ON DELETE SET NULL,
   FOREIGN KEY (pid)
     REFERENCES pages(pid)
     ON UPDATE CASCADE ON DELETE CASCADE,

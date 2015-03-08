@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `level` varchar(10) DEFAULT 'user',
   `notifications` int(1) DEFAULT NULL,
   `sync` int(1) DEFAULT NULL,
-  `creator` int(11) NOT NULL,
+  `creator` int(11) DEFAULT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `disabled` int(1) DEFAULT NULL,
   `last_login` timestamp NULL DEFAULT NULL,
