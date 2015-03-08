@@ -37,6 +37,8 @@ if (is_file('gsd-install' . PHPEXT)) {
     require_once('gsd-assets' . PHPEXT);
 } else {
     
+    $tpl->setvar('HTML_CLASS', 'gsd');
+
     require_once(INCLUDEPATH . 'gsd-credentials' . PHPEXT);
 
     if ($site->arg(0) == 'admin') {
