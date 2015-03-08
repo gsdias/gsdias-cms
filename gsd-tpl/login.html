@@ -1,8 +1,8 @@
 [_TOP]
-    <body class="gsd {EXTRACLASS}">
+    <body class="{EXTRACLASS}">
         <section>
             <header>
-                <i class="icon icon-cms-logo"></i><span>{PAGE_TITLE}</span>
+                <i class="icon icon-cms-logo"></i><span>{SITE_NAME}</span>
             </header>
             <form method="POST" action="/admin/auth{REDIRECT}">
                 <div class="colA">
@@ -15,10 +15,13 @@
                 </div>
                 <div class="form-messages">{FORM_MESSAGES}</div>
                 <input type="submit" class="btn-submit" name="login" value="Login">
-                <a href="/">&lt; {LANG_BACK_TO} {PAGE_TITLE}</a>
+                <a href="/">&lt; {LANG_BACK_TO} {SITE_NAME}</a>
                 <a href="#" class="right">{LANG_RECOVER_PASSWORD}</a>
             </form>
         </section>
+        <!-- IF DEBUG -->
+        [_DEBUG]
+        <!-- ENDIF DEBUG -->
         [_SCRIPTS]
     </body>
 </html>
