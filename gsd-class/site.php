@@ -28,7 +28,7 @@ class site {
 
         foreach ($mysql->result() as $option) {
             $name = str_replace('gsd-', '', $option['name']);
-            $this->{$name} = $option['value'];
+            $this->{str_replace(array('_image', '_select'), '', $name)} = $option['value'];
 
             if (strpos($name, '_image') !== false) {
                 $image = new image(array('iid' => $option['value'], 'width' => 'auto', 'height' => 'auto'));
