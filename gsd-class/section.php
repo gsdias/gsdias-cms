@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * @author     Goncalo Silva Dias <mail@gsdias.pt>
+ * @copyright  2014-2015 GSDias
+ * @version    1.0
+ * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
+ * @since      File available since Release 1.0
+ */
+
 abstract class section implements isection {
 
     public $item = array();
@@ -79,10 +87,10 @@ abstract class section implements isection {
     public function generatepaginator ($pages) {
         global $tpl;
 
-        $first_page = new anchor(array('text' => '&lt; Primeira', 'href' => '?page=1'));
-        $prev_page = new anchor(array('text' => 'Anterior', 'href' => '?page=' . $pages['PREV']));
-        $next_page = new anchor(array('text' => 'Seguinte', 'href' => '?page=' . $pages['NEXT']));
-        $last_page = new anchor(array('text' => 'Ultima &gt;', 'href' => '?page=' . $pages['LAST']));
+        $first_page = new anchor(array('text' => '&lt; {LANG_FIRST}', 'href' => '?'));
+        $prev_page = new anchor(array('text' => '{LANG_PREVIOUS}', 'href' => '?page=' . $pages['PREV']));
+        $next_page = new anchor(array('text' => '{LANG_NEXT}', 'href' => '?page=' . $pages['NEXT']));
+        $last_page = new anchor(array('text' => '{LANG_LAST} &gt;', 'href' => '?page=' . $pages['LAST']));
         $tpl->setvars(array(
             'FIRST_PAGE' => $first_page,
             'PREV_PAGE' => $prev_page,
@@ -93,9 +101,15 @@ abstract class section implements isection {
         ));
     }
     
+    private function tablename () {
+        $class = get_class($this);
+
+        return substr($class, 0, 6) === 'client' ? substr($class, 6) : $class;
+    }
+
     protected function extrafields () {
         
-        $section = str_replace('client', '', get_class($this));
+        $section = $this->tablename();
         
         $_fields = $section . 'fields';
         
@@ -107,7 +121,7 @@ abstract class section implements isection {
     public function add ($defaultfields, $defaultsafter = array(), $defaultvalues = array()) {
         global $mysql;
         
-        $section = str_replace('client', '', get_class($this));
+        $section = $this->tablename();
 
         $extrafields = $this->extrafields ();
 
@@ -133,7 +147,7 @@ abstract class section implements isection {
     public function edit ($defaultfields) {
         global $mysql, $site;
         
-        $section = str_replace('client', '', get_class($this));
+        $section = $this->tablename();
         
         $extrafields = $this->extrafields ();
 
@@ -158,7 +172,7 @@ abstract class section implements isection {
     public function remove () {
         global $mysql, $site;
         
-        $section = str_replace('client', '', get_class($this));
+        $section = $this->tablename();
         
         $mysql->statement(sprintf('DELETE FROM %s WHERE %sid = ?;', $section, substr($section, 0, 1)), array($site->arg(2)));
         

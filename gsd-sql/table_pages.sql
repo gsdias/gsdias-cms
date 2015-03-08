@@ -15,12 +15,13 @@ CREATE TABLE IF NOT EXISTS `pages` (
   `og_image` varchar(100) DEFAULT NULL,
   `show_menu` tinyint(1) DEFAULT 1,
   `require_auth` tinyint(1) DEFAULT NULL,
-  `creator` int(11) NOT NULL,
+  `creator` int(11) DEFAULT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `published` tinyint(1) DEFAULT NULL,
   FOREIGN KEY (creator)
     REFERENCES users(uid)
-    ON UPDATE CASCADE ON DELETE CASCADE,
+    ON UPDATE CASCADE ON DELETE SET NULL,
   FOREIGN KEY (lid)
     REFERENCES layouts(lid)
     ON UPDATE CASCADE ON DELETE CASCADE,

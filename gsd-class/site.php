@@ -1,4 +1,12 @@
 <?php
+
+/**
+ * @author     Goncalo Silva Dias <mail@gsdias.pt>
+ * @copyright  2014-2015 GSDias
+ * @version    1.0
+ * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
+ * @since      File available since Release 1.0
+ */
 /*************************************
 * File with user class information  *
 *************************************/
@@ -20,12 +28,14 @@ class site {
 
         foreach ($mysql->result() as $option) {
             $name = str_replace('gsd-', '', $option['name']);
-            $this->{$name} = $option['value'];
+            $this->{str_replace(array('_image', '_select'), '', $name)} = $option['value'];
 
             if (strpos($name, '_image') !== false) {
                 $image = new image(array('iid' => $option['value'], 'width' => 'auto', 'height' => 'auto'));
+                $name = str_replace(array('_image', '_select'), '', $name);
                 $tpl->setvar('SITE_' . strtoupper($name), $image);
             } else {
+                $name = str_replace(array('_image', '_select'), '', $name);
                 $tpl->setvar('SITE_' . strtoupper($name), $option['value']);
             }
         }
@@ -34,11 +44,13 @@ class site {
         $this->uri = preg_replace($pattern, '', $_SERVER['REQUEST_URI']);
 
         $this->path();
-        $this->page();
+        if ($this->path[0] !== 'admin') {
+            $this->page();
+        }
     }
 
     public function path () {
-        $path = explode("/", $this->uri);
+        $path = explode('/', $this->uri);
 
         array_shift($path);
 
@@ -50,7 +62,7 @@ class site {
 
         $mysql->statement('SELECT destination FROM redirect WHERE `from` = :uri', array(':uri' => $this->uri));
         if ($mysql->total) {
-            header("Location: " . $mysql->singleresult(), true, 301);
+            header('Location: ' . $mysql->singleresult(), true, 301);
             exit;
         }
 

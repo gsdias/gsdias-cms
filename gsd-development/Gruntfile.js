@@ -1,5 +1,10 @@
-/*jslint nomen: true, debug: true, evil: false, vars: true, browser: true, devel: true */
-/*global module: false */
+/**
+ * @author     Goncalo Silva Dias <mail@gsdias.pt>
+ * @copyright  2014-2015 GSDias
+ * @version    1.0
+ * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
+ * @since      File available since Release 1.0
+ */
 
 module.exports = function (grunt) {
 
@@ -40,8 +45,12 @@ module.exports = function (grunt) {
         },
         copy: {
             main: {
-                src: './tpl/_scripts.html',
-                dest: '../gsd-tpl/_shared/_scripts.html'
+                expand: true,
+                cwd: './tpl/',
+                src: '**',
+                dest: '../gsd-tpl/_shared/',
+                flatten: true,
+                filter: 'isFile'
             }
         },
         usemin: {
@@ -211,20 +220,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-clean');
 
     grunt.registerTask('default', [
-        /*'clean',
-        'copy',
-        'jshint',
-        'compass',*/
-        'clean',
-        'copy',
-        'jshint',
-        'compass',
-        'useminPrepare',
-        'concat:generated',
-        'uglify:generated',
-        'usemin',
-        'string-replace',
-        'modernizr',
+        'build',
         'watch'
     ]);
     grunt.registerTask('build', [
@@ -235,7 +231,7 @@ module.exports = function (grunt) {
         'useminPrepare',
         'concat:generated',
         'uglify:generated',
-        'filerev',
+        //'filerev',
         'usemin',
         'string-replace',
         'modernizr'

@@ -1,3 +1,11 @@
+/**
+ * @author     Goncalo Silva Dias <mail@gsdias.pt>
+ * @copyright  2014-2015 GSDias
+ * @version    1.0
+ * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
+ * @since      File available since Release 1.0
+ */
+
 .clearfix:after {
     content: ".";
     display: block;
@@ -12,24 +20,6 @@
     margin: 0 auto;
     padding: 0 3%;
     background: #fff;
-}
-
-.msgError {
-    border: solid 1px $bg-color;
-    margin: 20px;
-    padding: 0 10px;
-    table {
-        border: none;
-        tr {
-            margin: 10px 0;
-            display: block;
-            td {
-                border: none;
-                text-align: left;
-                font-size: 12px;
-            }
-        }
-    }
 }
 
 .colA {

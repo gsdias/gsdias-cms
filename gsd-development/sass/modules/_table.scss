@@ -1,3 +1,11 @@
+/**
+ * @author     Goncalo Silva Dias <mail@gsdias.pt>
+ * @copyright  2014-2015 GSDias
+ * @version    1.0
+ * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
+ * @since      File available since Release 1.0
+ */
+
 .table {
     width: 100%;
     margin-top: 30px;
@@ -16,7 +24,11 @@
         }
 
         tr:nth-child(even) {
-            background: #d7d7d7;
+            background: #dddddd;
+        }
+
+        tr:hover {
+            background: #bbbbbb;
         }
     }
 

@@ -1,3 +1,11 @@
+/**
+ * @author     Goncalo Silva Dias <mail@gsdias.pt>
+ * @copyright  2014-2015 GSDias
+ * @version    1.0
+ * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
+ * @since      File available since Release 1.0
+ */
+
 /* Welcome to Compass.
  * In this file you should write your main styles. (or centralize your imports)
  * Import this file using the following HTML or equivalent:
@@ -47,4 +55,28 @@ $sprites2x: sprite-map("icons/retina/*.png");
 
 .frontend {
     @import "../../gsd-client/development/sass/_client.scss";
+}
+
+
+
+.msgError {
+    background: #fff;
+    border: solid 1px #000;
+    margin: 20px;
+    padding: 0 10px;
+
+    table {
+        border: none;
+
+        tr {
+            margin: 10px 0;
+            display: block;
+
+            td {
+                border: none;
+                text-align: left;
+                font-size: 12px;
+            }
+        }
+    }
 }

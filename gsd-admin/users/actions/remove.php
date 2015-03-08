@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * @author     Goncalo Silva Dias <mail@gsdias.pt>
+ * @copyright  2014-2015 GSDias
+ * @version    1.0
+ * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
+ * @since      File available since Release 1.0
+ */
+
 if (!IS_ADMIN) {
     $_SESSION['error'] = '{LANG_USER_NOPERMISSION}';
     header("Location: /admin/users", true, 302);
@@ -12,7 +20,7 @@ if ($site->arg(2) == 1) {
     exit;
 }
 
-if (@$_REQUEST['confirm'] == 'Sim') {
+if (@$_REQUEST['confirm'] == $affirmative) {
     $mysql->statement('DELETE FROM users WHERE uid = ?;', array($site->arg(2)));
     if ($mysql->errnum) {
 
@@ -28,7 +36,7 @@ if (@$_REQUEST['confirm'] == 'Sim') {
 
 }
 
-if (@$_REQUEST['confirm'] == 'Nao') {
+if (@$_REQUEST['confirm'] == $negative) {
     header("Location: /admin/users", true, 302);
     exit;
 }

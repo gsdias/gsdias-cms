@@ -11,6 +11,12 @@
         <div class="colA">
             {PERMISSION}
         </div>
+        <div class="colA"><label>Lingua</label>
+            <select name="locale">
+                <option value="" disabled="disabled">{LANG_CHOOSE}</option>
+                <!-- LOOP LANGUAGE --><option {LANGUAGE_SELECTED} value="{LANGUAGE_KEY}">{LANGUAGE_VALUE}</option><!-- ENDLOOP LANGUAGE -->
+            </select>
+        </div>
         <div class="colA"><label>Desativo</label> <input type="checkbox" name="disabled" value="1" {CURRENT_USER_DISABLED}></div>
         <!-- IF EXTRAFIELDS -->
         <h2>Informação adicional</h2>

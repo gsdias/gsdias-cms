@@ -1,11 +1,23 @@
 <?php
 
+/**
+ * @author     Goncalo Silva Dias <mail@gsdias.pt>
+ * @copyright  2014-2015 GSDias
+ * @version    1.0
+ * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
+ * @since      File available since Release 1.0
+ */
+
 function GSDClassLoading($className) {
     if (is_file(CLIENTCLASSPATH . $className . PHPEXT)) {
         include_once(CLIENTCLASSPATH . $className . PHPEXT);
     } elseif (is_file(CLASSPATH . $className . PHPEXT)) {
         include_once(CLASSPATH . $className . PHPEXT);
     }
+}
+
+function lang ($text) {
+    return _($text) != $text ? _($text) : dcgettext('client', $text, LC_MESSAGES);
 }
 
 function isuploaded ($folder, $filename) {
@@ -55,90 +67,7 @@ function filerename ($old, $new) {
     return $new . '.' . strtolower($old[sizeof($old) - 1]);
 }
 
-/** 
-  * @desc creates a string with html to handle files
-  * @param string $path - public path of the file on the server
-  * @param string $file - public name of file
-  * @param string $id - id of the file
-  * @param string $name - internal name type of file
-  * @param string $desc - small description about the file
-  * @return string - html code ready to output
-*/  
-function getSend ($path, $file, $id, $name, $desc, $type = '') {
-
-    $result = $file ? sprintf('<a href="%s%s" target="_blank" class="download-link">
-    <img src="/resources/images/link.png" /></a>
-    <input type="submit" data-name="%s" data-path="%s" data-value="%s" data-type="%s" name="delete" class="delete icon-cross-black">', $path, $file, $name, $path, $file, $type) : '';
-    $result = sprintf('<form method="post" enctype="multipart/form-data" class="envio">
-    <div id="progress">
-        <div class="bar" style="width: 0%%;"></div>
-    </div>
-    <input name="id" type="hidden" value="%s"/>
-    <input name="name" type="hidden" value="%s"/>
-    <div class="input file colA">
-        <button class="icon-upload"></button>
-        <input class="input" data-name="%s" data-value="%s" name="%s" data-path="%s" type="file" />
-        ' . $result . '
-    </div>
-      </form>
-    ', $id, $name, $name, $file, $name, $path, $desc);
-    return $result;
-}
-
-/** 
-  * @desc trims given text with given length
-  * @param string $text - text to be treated
-  * @param int $length - number characters before trims the text
-  * @return string - trimmed text with ellipsis if needed
-*/  
-function fileparam ($name) {
-    global $files_tracking;
-
-    $params = @$files_tracking[$name];
-
-    return is_array($params) ? $params : array('table' => '', 'field' => '', 'fieldid' => '', 'path' => '');
-}
-/** 
-  * @desc searches for a given country name
-  * @param string $search - partial name of country
-  * @return int - id of the first country found
-*/  
-function getCountryValue ($search) {
-    global $paises;
-
-    foreach ($paises as $id => $values) {
-
-        if (-1 < stripos($values, $search)) {
-            return $id;
-        } 
-
-    }
-    return;
-}
-
-/** 
-  * @desc searches for a given county name
-  * @param string $search - partial name of county
-  * @return int - id of the first county found
-*/  
-function getCountyValue ($search) {
-    global $concelhos;
-
-    foreach ($concelhos as $districtid => $district) {
-
-        foreach ($district as $countyid => $countyname) {        
-
-            if (-1 < stripos($countyname, $search)) {
-                return substr("0" . $districtid, -2) . substr("0" . $countyid, -2);
-            } 
-
-        } 
-
-    }
-    return;
-}
-
-/** 
+/**
   * @desc presents the date with the right format (DD/MM/YYYY)
   * @param string $date - date
   * @return string $date - formated date
@@ -166,7 +95,7 @@ function dateDif ($first = null, $second = null) {
     return mktime('0', '0', '0', $second[1], $second[2], $second[0]) - mktime('0', '0', '0', $first[1], $first[2], $first[0]);
 }
 
-function timeago ($seconds = 0) {
+function timeago ($seconds = 0, $hour = 0) {
     global $lang, $config;
     
     $days = $seconds / 3600 / 24;
@@ -174,9 +103,9 @@ function timeago ($seconds = 0) {
     $months = round($months, 0);
     
     if ($months > 0) {
-        $label = sprintf('%d %s %s', $months, $months > 1 ? ' meses': 'mês', $lang[$config['lang']]['LANG_AGO']);
+        $label = sprintf('%d %s %s', $months, $months > 1 ? ' {LANG_MONTHS}' : '{LANG_MONTH}', '{LANG_AGO}');
     } else {
-        $label = $days > 0 ? $days . ( $days == 1 ? ' dia ' : ' dias ') . $lang[$config['lang']]['LANG_AGO'] : 'hoje';
+        $label = $days > 0 ? $days . ( $days == 1 ? ' {LANG_DAY} ' : ' {LANG_DAYS} ') . '{LANG_AGO}' : '{LANG_AT} ' . date('H:i', strtotime($hour));
     }
     
     return $label;
@@ -250,17 +179,6 @@ function smallData ($data) {
     return substr($data[0], 2, 2) . '-' . $data[1] . '-' . $data[2];
 }
 
-function sendMailRecover ($to, $link) {
-    global $pathsite, $_title;
-    $email = new email();
-    $email->setTo($to);
-    $email->setVar('link', $link);
-    $email->setVar('site', $_title);
-    $email->setFrom(sprintf("webmaster@sve.proatlantico.com", $pathsite));
-    $email->setTemplate(TPLPATH . 'emails/recuperar_pass.html');
-    return $email->sendMail();
-}
-
 /** 
   * @desc save file to disk
   * @param string $file - name of file
@@ -315,6 +233,12 @@ function removefile ($path) {
     return false;
 }
 
-if ($path[0] != 'admin' && is_file (CLIENTPATH . 'functions' . PHPEXT) && IS_INSTALLED) {
-    include_once(CLIENTPATH . 'functions' . PHPEXT);
+function toAscii($str) {
+    setlocale(LC_ALL, 'en_US.UTF8');
+	$clean = iconv('UTF-8', 'ASCII//TRANSLIT', $str);
+	$clean = preg_replace("/[^a-zA-Z0-9\/_| -]/", '', $clean);
+	$clean = strtolower(trim($clean, '-'));
+	$clean = preg_replace("/[\/_| -]+/", '-', $clean);
+
+	return $clean;
 }

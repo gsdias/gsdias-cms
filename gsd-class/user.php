@@ -1,11 +1,19 @@
 <?php
+
+/**
+ * @author     Goncalo Silva Dias <mail@gsdias.pt>
+ * @copyright  2014-2015 GSDias
+ * @version    1.0
+ * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
+ * @since      File available since Release 1.0
+ */
 /*************************************
 * File with user class information  *
 *************************************/
 
 class user implements iuser {
     
-    public $level, $email, $name, $firstName, $lastName, $id, $notifications, $code;
+    public $level, $email, $name, $firstName, $lastName, $id, $notifications, $code, $locale;
     
     public function __construct ($id = 0) {
         
@@ -31,13 +39,13 @@ class user implements iuser {
 
         $isLogged = $this->id != null;
 
-        if ($isLogged) {
-            $mysql->statement('SELECT sync FROM users WHERE uid = :uid', array(':uid' => $this->id));
-
-            if ($mysql->singleresult()) {
-                $mysql->statement('UPDATE users SET sync = 0 WHERE uid = :uid', array(':uid' => $this->id));
-            }
-        }
+//        if ($isLogged) {
+//            $mysql->statement('SELECT sync FROM users WHERE uid = :uid', array(':uid' => $this->id));
+//
+//            if ($mysql->singleresult()) {
+//                $mysql->statement('UPDATE users SET sync = 0 WHERE uid = :uid', array(':uid' => $this->id));
+//            }
+//        }
 
         return $isLogged; 
     }
@@ -46,7 +54,7 @@ class user implements iuser {
         global $mysql, $site;
 
         $result = false;
-        $fields = 'code, level, name, uid, email';
+        $fields = 'code, level, name, uid, email, locale';
         $user = array();
         
         if (!empty($extrafields)) {
@@ -73,6 +81,7 @@ class user implements iuser {
             $names = explode(' ', $user['name']);
             $this->id = $user['uid'];
             $this->level = $user['level'];
+            $this->locale = $user['locale'];
             $this->name = $user['name'];
             $this->firstName = array_shift($names);
             $this->lastName = array_pop($names);

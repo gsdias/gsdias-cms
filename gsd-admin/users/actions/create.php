@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * @author     Goncalo Silva Dias <mail@gsdias.pt>
+ * @copyright  2014-2015 GSDias
+ * @version    1.0
+ * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
+ * @since      File available since Release 1.0
+ */
+
 if (!IS_ADMIN) {
     header("Location: /admin/users", true, 302);
     exit;
@@ -7,7 +15,7 @@ if (!IS_ADMIN) {
 
 if (@$_REQUEST['save']) {
     
-    $defaultfields = array('email', 'password', 'level', 'name');
+    $defaultfields = array('email', 'password', 'level', 'name', 'locale');
 
     $fields = array('creator');
 
@@ -15,7 +23,7 @@ if (@$_REQUEST['save']) {
     
     $password = substr(str_shuffle(sha1(rand() . time() . "gsdias-cms")), 2, 10);
 
-    $_REQUEST['password'] = md5($password);
+    $_REQUEST['password'] = $password;
         
     $result = $csection->add($defaultfields, $fields, $values);
     
@@ -24,19 +32,12 @@ if (@$_REQUEST['save']) {
         $tpl->setcondition('ERRORS');
 
     } else {
-        $email = new email();
-        
-        $email->setto($_REQUEST['email']);
-        $email->setfrom($site->email);
-        $email->setreplyto($site->email);
-        $email->setsubject('Registo no site');
-        $email->setbody(sprintf('Foi criado um registo com este email. Para poder aceder use o seu email e a password: %s', $password));
-        
-        $email->sendmail();
-
-        $_SESSION['message'] = sprintf($lang[$config['lang']]['LANG_USER_CREATED'], $_REQUEST['name']);
+        $_SESSION['message'] = sprintf(lang('LANG_USER_CREATED'), $_REQUEST['name']);
 
         header("Location: /admin/users", true, 302);
         exit;
     }
 }
+
+$types = new select( array ( 'list' => array('pt_PT' => 'Português', 'en_GB' => 'Inglês'), 'id' => 'LANGUAGE' ) );
+$types->object();

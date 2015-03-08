@@ -1,27 +1,12 @@
 <?php
 
-$language = 'pt_PT';
-
-$folder = "locale";
-$domain = "messages";
-$encoding = "UTF-8";
-
-clearstatcache();
-putenv("LANG=" . $language);
-setlocale(LC_ALL, $language);
-
-if (function_exists('bindtextdomain')) {
-    bindtextdomain($domain, './locale/nocache');
-    bindtextdomain($domain, $folder);
-    bind_textdomain_codeset($domain, $encoding);
-
-    textdomain($domain);
-
-    if (is_dir('gsd-client/locale')) {
-        bindtextdomain('client', 'gsd-client/' . $folder);
-        bind_textdomain_codeset('client', $encoding);
-    }
-}
+/**
+ * @author     Goncalo Silva Dias <mail@gsdias.pt>
+ * @copyright  2014-2015 GSDias
+ * @version    1.0
+ * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
+ * @since      File available since Release 1.0
+ */
 
 define('ROOTPATH', dirname(__FILE__) . '/');
 
@@ -55,11 +40,13 @@ if (is_file('gsd-install' . PHPEXT)) {
         }
         require_once(ROOTPATH . 'gsd-client/index.php');
     }
+
     if (@$_SESSION['error']) {
         $tpl->setvar('ERRORS', $_SESSION['error']);
         $tpl->setcondition('ERRORS');
         unset($_SESSION['error']);
     }
+
     if (@$_SESSION['message']) {
         $tpl->setvar('MESSAGES', $_SESSION['message']);
         $tpl->setcondition('MESSAGES');

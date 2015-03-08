@@ -9,6 +9,7 @@ gsd-resources/css/*.map
 error_log
 gsd-client/
 gsd-tpl/_shared/_scripts.html
+gsd-tpl/_shared/_top.html
 gsd-assets/
 gsd-settings.php
 *.mo

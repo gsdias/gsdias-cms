@@ -1,6 +1,14 @@
 <?php
 
-if (@$_REQUEST['confirm'] == 'Sim') {
+/**
+ * @author     Goncalo Silva Dias <mail@gsdias.pt>
+ * @copyright  2014-2015 GSDias
+ * @version    1.0
+ * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
+ * @since      File available since Release 1.0
+ */
+
+if (@$_REQUEST['confirm'] == $affirmative) {
     $mysql->statement('SELECT extension FROM images WHERE iid = ?;', array($site->arg(2)));
     $image = $mysql->singleline();
 
@@ -14,7 +22,7 @@ if (@$_REQUEST['confirm'] == 'Sim') {
     }
 }
 
-if (@$_REQUEST['confirm'] == 'Nao') {
+if (@$_REQUEST['confirm'] == $negative) {
     header("Location: /admin/images", true, 302);
     exit;
 }

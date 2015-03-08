@@ -1,9 +1,16 @@
 <?php
 
+/**
+ * @author     Goncalo Silva Dias <mail@gsdias.pt>
+ * @copyright  2014-2015 GSDias
+ * @version    1.0
+ * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
+ * @since      File available since Release 1.0
+ */
+
 class pages extends section implements isection {
 
     public function __construct ($id = null) {
-
         return 0; 
     }
 
@@ -30,7 +37,7 @@ class pages extends section implements isection {
                     $fields[strtoupper($field)] = $value;
                 }
                 $created = explode(' ', $item['created']);
-                $fields['CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())));
+                $fields['CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())), $created[1]);
 
                 $list[] = $fields;
             }
@@ -63,11 +70,12 @@ class pages extends section implements isection {
                 $fields['CURRENT_PAGE_'. strtoupper($field)] = $value;
             }
 
-            $fields['CURRENT_PAGE_CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())));
+            $fields['CURRENT_PAGE_CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())), $created[1]);
 
             $fields['MENU_CHECKED'] = @$item['show_menu'] ? 'checked="checked"' : '';
             $fields['AUTH_CHECKED'] = @$item['require_auth'] ? 'checked="checked"' : '';
             $fields['PUBLISHED_CHECKED'] = @$item['published'] ? 'checked="checked"' : '';
+            $fields['CURRENT_PAGE_STATUS'] = @$item['published'] ? 'Publicada' : 'Por publicar';
 
             $image = new image(array(
                 'iid' => @$item['og_image'],
@@ -90,6 +98,18 @@ class pages extends section implements isection {
 
             $tpl->setvars($fields);
 
+            $mysql->statement('SELECT * FROM pages_review WHERE pid = ?;', array($id));
+
+            if ($mysql->total) {
+                $review = array();
+                foreach ($mysql->result() as $field) {
+                    $review[] = array(
+                        'KEY' => $field['prid'],
+                        'VALUE' => $field['modified']
+                    );
+                }
+                $tpl->setarray('VERSION', $review);
+            }
         }
     }
     public function generatefields ($section) {
@@ -100,6 +120,7 @@ class pages extends section implements isection {
         $extrafields = array();
 
         if (!empty($this->item)) {
+
             $mysql->statement('SELECT *, mt.file, ls.name AS lsname, smt.file AS sfile
             FROM pagemodules AS pm
 LEFT JOIN layoutsections AS ls ON ls.lsid = pm.lsid
@@ -107,6 +128,7 @@ LEFT JOIN layoutsectionmoduletypes AS lsmt ON ls.lsid = lsmt.lsid
 LEFT JOIN moduletypes AS mt ON mt.mtid = lsmt.mtid
 LEFT JOIN moduletypes AS smt ON smt.mtid = lsmt.smtid
 WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item['pid']));
+
             foreach ($mysql->result() as $item) {
 
                 $item['data'] = unserialize($item['data']);
@@ -204,5 +226,39 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item['pid']));
             }
             $tpl->setarray('FIELD', $extrafields, true);
         }
+        $tpl->setcondition('EXTRAFIELDS', !empty($extrafields));
+    }
+
+    public function edit ($defaultfields = array()) {
+        global $mysql, $site;
+
+        $mysql->statement('SELECT * FROM pages WHERE pid = ?;', array($site->arg(2)));
+        $currentpage = $mysql->singleline();
+        $hasChanged = 0;
+        $fields = array();
+
+        foreach ($defaultfields as $field) {
+            if ($currentpage[$field] != $_REQUEST[$field]) {
+                $hasChanged = 1;
+            }
+            array_push($fields, $currentpage[$field]);
+        }
+
+        parent::edit($defaultfields);
+
+        if ($hasChanged) {
+            array_push($fields, $currentpage['modified']);
+            array_push($defaultfields, 'modified');
+            $this->page_review($defaultfields, $fields);
+        }
+    }
+
+    private function page_review ($defaultfields = array(), $fields = array()) {
+        global $mysql, $user, $site;
+
+        array_push($fields, $user->id);
+        array_push($fields, $site->arg(2));
+        $questions = str_repeat(", ? ", sizeof($fields));
+        $mysql->statement(sprintf('INSERT INTO pages_review (%s, creator, pid) values (%s);', implode(',', $defaultfields), substr($questions, 2)), $fields);
     }
 }

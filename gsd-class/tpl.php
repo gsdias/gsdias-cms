@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * @author     Goncalo Silva Dias <mail@gsdias.pt>
+ * @copyright  2014-2015 GSDias
+ * @version    1.0
+ * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
+ * @since      File available since Release 1.0
+ */
+
 class tpl {
     var $config = array(
         'vars' => array(), 
@@ -13,8 +21,8 @@ class tpl {
     );
     
     public function __construct ($debug = 0) {
-        $this->config['paths'] = array(ROOTPATH . 'gsd-tpl/_shared/%s' . TPLEXT, ROOTPATH . 'gsd-tpl/_modules/%s' . TPLEXT);
         $this->setcondition('DEBUG', $debug);
+        $this->config['paths'] = array(ROOTPATH . 'gsd-tpl/_shared/%s' . TPLEXT, ROOTPATH . 'gsd-tpl/_modules/%s' . TPLEXT);
     }
     
     /** 
@@ -127,7 +135,7 @@ class tpl {
         preg_match_all('#{LANG_(.*?)}#s', $content, $matches, PREG_SET_ORDER);
 
         foreach ($matches as $match) {
-            $replace = _('LANG_' . $match[1]) != 'LANG_' . $match[1] ? _('LANG_' . $match[1]) : dcgettext('client', 'LANG_' . $match[1], LC_MESSAGES);
+            $replace = lang('LANG_' . $match[1]);
             $content = preg_replace(sprintf('#%s#s', $match[0]), $replace, $content, 1);
         }
 

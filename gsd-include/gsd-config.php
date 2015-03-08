@@ -1,16 +1,17 @@
 <?php
 
+/**
+ * @author     Goncalo Silva Dias <mail@gsdias.pt>
+ * @copyright  2014-2015 GSDias
+ * @version    1.0
+ * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
+ * @since      File available since Release 1.0
+ */
+
 include_once(ROOTPATH . 'gsd-settings.php');
 include_once(ROOTPATH . 'gsd-class/interfaces' . PHPEXT);
-if (is_file(INCLUDEPATH . 'gsd-lang' . PHPEXT)) {
-    include_once(INCLUDEPATH . 'gsd-lang' . PHPEXT);
-}
 include_once(INCLUDEPATH . 'gsd-functions' . PHPEXT);
 include_once(INCLUDEPATH . 'gsd-paginator' . PHPEXT);
-
-if (is_file (CLIENTINCLUDEPATH . 'lang' . PHPEXT)) {
-    include_once(CLIENTINCLUDEPATH . 'lang' . PHPEXT);
-}
 
 date_default_timezone_set('Europe/Lisbon');
  
@@ -27,15 +28,36 @@ $site = new site();
 
 $user = @$_SESSION['user'] ? $_SESSION['user'] : (class_exists('clientuser') ? new clientuser() : new user());
 
+$language = $user->locale ? $user->locale : $site->locale;
+
+$folder = "locale";
+$domain = "messages";
+$encoding = "UTF-8";
+
+clearstatcache();
+putenv("LANG=" . $language);
+setlocale(LC_ALL, $language);
+
+clearstatcache ();
+if (function_exists('bindtextdomain')) {
+    bindtextdomain($domain, ROOTPATH . $folder);
+    bind_textdomain_codeset($domain, $encoding);
+
+    textdomain($domain);
+    if (is_dir(CLIENTPATH . 'locale')) {
+        bindtextdomain('client', CLIENTPATH . $folder);
+        bind_textdomain_codeset('client', $encoding);
+    }
+}
+
 $tpl->setpaths($config['tplpath']);
 
 $resources = $config['resources'];
 
-$tpl->setvars($lang[$config['lang']]);
-
-$tpl->setVar('SCRIPT', sprintf('server = "undefined" === typeof server ? { } : server;server.lang = "%s";server.ga = "%s";server.fb = "%s";', $config['lang'], $site->ga, $site->fb));
+$tpl->setVar('SCRIPT', sprintf('GSD.ga = "%s";GSD.fb = "%s";', $site->ga, $site->fb));
 $tpl->setVar('CDN', $resources);
 $tpl->setVar('CLIENT_RESOURCES', @$config['client_resources']);
+$tpl->setVar('CLIENT_PATH', @$config['client_path']);
 $tpl->setVar('REDIRECT', @$_REQUEST['redirect'] ? sprintf("?redirect=%s", $_REQUEST['redirect']) : '');
 
 

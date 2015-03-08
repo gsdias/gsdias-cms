@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * @author     Goncalo Silva Dias <mail@gsdias.pt>
+ * @copyright  2014-2015 GSDias
+ * @version    1.0
+ * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
+ * @since      File available since Release 1.0
+ */
+
 $mysql->statement('SELECT * FROM users WHERE disabled IS NULL LIMIT 0, 5');
 
 $users = array();
@@ -9,7 +17,7 @@ foreach ($mysql->result() as $userlist) {
     $users[] = array(
         'ID' => $userlist['uid'],
         'NAME' => $userlist['name'],
-        'CREATED' => timeago(dateDif($created[0], date('Y-m-d',time())))
+        'CREATED' => timeago(dateDif($created[0], date('Y-m-d',time())), $created[1])
     );
 }
 $tpl->setarray('USERS', $users);
@@ -25,7 +33,7 @@ if ($mysql->total) {
         $pages[] = array(
             'ID' => $pagelist['pid'],
             'NAME' => $pagelist['url'],
-            'CREATED' => timeago(dateDif($created[0], date('Y-m-d',time())))
+            'CREATED' => timeago(dateDif($created[0], date('Y-m-d',time())), $created[1])
         );
     }
     $tpl->setarray('PAGES', $pages);
@@ -42,7 +50,7 @@ if ($mysql->total) {
         $images[] = array(
             'ID' => $imagelist['iid'],
             'NAME' => $imagelist['name'],
-            'CREATED' => timeago(dateDif($created[0], date('Y-m-d',time())))
+            'CREATED' => timeago(dateDif($created[0], date('Y-m-d',time())), $created[1])
         );
     }
     $tpl->setarray('IMAGES', $images);
@@ -59,7 +67,7 @@ if ($mysql->total) {
         $documents[] = array(
             'ID' => $documentlist['did'],
             'NAME' => $documentlist['name'],
-            'CREATED' => timeago(dateDif($created[0], date('Y-m-d',time())))
+            'CREATED' => timeago(dateDif($created[0], date('Y-m-d',time())), $created[1])
         );
     }
     $tpl->setarray('DOCUMENTS', $documents);

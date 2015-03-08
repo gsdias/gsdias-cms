@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * @author     Goncalo Silva Dias <mail@gsdias.pt>
+ * @copyright  2014-2015 GSDias
+ * @version    1.0
+ * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
+ * @since      File available since Release 1.0
+ */
+
 if (@$_REQUEST['save']) {
     
     $fields = 0;
@@ -26,9 +34,7 @@ $mysql->statement('SELECT * FROM options ORDER BY `index`;');
 $options = array();
 foreach ($mysql->result() as $item) {
     $extraclass = '';
-    if (strpos($item['name'], '_image') === false) {
-        $field = (string)new input(array('name' => $item['name'], 'value' => @$item['value'], 'label' => $item['label']));
-    } else {
+    if (strpos($item['name'], '_image') !== false) {
         $image = new image(array(
             'iid' => $item['value'],
             'height' => '100',
@@ -48,6 +54,16 @@ foreach ($mysql->result() as $item) {
 
         $field = $partial;
         $extraclass = 'image';
+    } else if (strpos($item['name'], '_select') !== false) {
+        $field = new select(array(
+            'id' => $item['name'],
+            'name' => $item['name'],
+            'list' => array('pt_PT' => 'Português', 'en_GB' => 'Inglês'),
+            'label' => $item['label'],
+            'selected' => @$item['value']
+        ));
+    } else {
+        $field = (string)new input(array('name' => $item['name'], 'value' => @$item['value'], 'label' => $item['label']));
     }
 
     $options[] = array(

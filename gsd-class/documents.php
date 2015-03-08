@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * @author     Goncalo Silva Dias <mail@gsdias.pt>
+ * @copyright  2014-2015 GSDias
+ * @version    1.0
+ * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
+ * @since      File available since Release 1.0
+ */
+
 class documents extends section implements isection {
     
     public function __construct ($id = null) {
@@ -30,7 +38,7 @@ class documents extends section implements isection {
                     $fields[strtoupper($field)] = $value;
                 }
                 $created = explode(' ', $item['created']);
-                $fields['CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())));
+                $fields['CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())), $created[1]);
 
                 $fields['ASSET'] = $item['name'];
                 $fields['SIZE'] = sprintf('%s', $item['size']);
@@ -62,8 +70,6 @@ class documents extends section implements isection {
                 }
                 $fields['CURRENT_DOCUMENT_'. strtoupper($field)] = $value;
             }
-
-            $fields['CURRENT_DOCUMENT_CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())));
 
             $tpl->setvars($fields);
 

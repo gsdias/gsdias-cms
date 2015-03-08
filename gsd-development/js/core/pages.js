@@ -1,3 +1,11 @@
+/**
+ * @author     Goncalo Silva Dias <mail@gsdias.pt>
+ * @copyright  2014-2015 GSDias
+ * @version    1.0
+ * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
+ * @since      File available since Release 1.0
+ */
+
 (function (pages, app, $, _, Backbone, undefined) {
 
     'use strict';
@@ -15,7 +23,7 @@
                     .replace(/ç/g, 'c')
                     .replace(/ç/g, 'c')
                     .replace(/á/g, 'a').replace(/à/g, 'a').replace(/ã/g, 'a').replace(/â/g, 'a')
-                    .replace(/é/g, 'e').replace(/è/g, 'e').replace(/ê/g, 'ê')
+                    .replace(/é/g, 'e').replace(/è/g, 'e').replace(/ê/g, 'e')
                     .replace(/í/g, 'i').replace(/ì/g, 'i').replace(/î/g, 'i')
                     .replace(/ó/g, 'o').replace(/ò/g, 'o').replace(/õ/g, 'o').replace(/ô/g, 'o')
                     .replace(/ú/g, 'u').replace(/ù/g, 'u').replace(/û/g, 'u')

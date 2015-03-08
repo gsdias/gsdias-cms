@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * @author     Goncalo Silva Dias <mail@gsdias.pt>
+ * @copyright  2014-2015 GSDias
+ * @version    1.0
+ * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
+ * @since      File available since Release 1.0
+ */
+
 if (@$_REQUEST['save']) {
 
     $defaultfields = array('title', 'description', 'tags', 'keywords', 'og_title', 'og_description', 'og_image', 'show_menu', 'require_auth', 'published');
@@ -8,7 +16,6 @@ if (@$_REQUEST['save']) {
     $_REQUEST['require_auth'] = @$_REQUEST['auth'] ? @$_REQUEST['auth'] : null;
     $_REQUEST['published'] = @$_REQUEST['published'] ? @$_REQUEST['published'] : null;
 
-    
     $result = $csection->edit($defaultfields);
 
     if ($result['errnum']) {

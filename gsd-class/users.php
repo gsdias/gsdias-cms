@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * @author     Goncalo Silva Dias <mail@gsdias.pt>
+ * @copyright  2014-2015 GSDias
+ * @version    1.0
+ * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
+ * @since      File available since Release 1.0
+ */
+
 class users extends section implements isection {
 
     public function __construct ($id = null) {
@@ -7,10 +15,47 @@ class users extends section implements isection {
         return 0; 
     }
 
-    public function getlist ($numberPerPage = 10) {
+    public function add ($defaultfields, $defaultsafter = array(), $defaultvalues = array(), $emailparams = array()) {
+        global $site;
+
+        $password = $_REQUEST['password'];
+        $_REQUEST['password'] = md5($_REQUEST['password']);
+        $result = parent::add($defaultfields, $defaultsafter, $defaultvalues);
+
+        $email = new email();
+
+        $email->setto($_REQUEST['email']);
+        $email->setfrom($site->email);
+        $email->setreplyto($site->email);
+        $email->setsubject(lang('LANG_REGISTER_SUBJECT'));
+        $email->setvar('password', $password);
+        if (sizeof(@$emailparams['fields'])) {
+            foreach ($emailparams['fields'] as $key => $value) {
+                $email->setvar(strtolower($key), $value);
+            }
+        }
+
+        $template = is_file(CLIENTTPLPATH . '_emails/register' . TPLEXT) ? CLIENTTPLPATH . '_emails/register' . TPLEXT : TPLPATH . '_emails/register' . TPLEXT;
+
+        $email->settemplate($template);
+        $email->sendmail();
+
+        return $result;
+    }
+
+    public function getlist ($numberPerPage = 10, $extrafields = array()) {
         global $mysql, $tpl;
 
-        $mysql->statement('SELECT users.*, users.creator AS creator_id, u.name AS creator_name 
+        $result = false;
+        $fields = 'users.uid, users.name, users.last_login, users.created, users.disabled, users.creator AS creator_id, u.name AS creator_name';
+
+        if (!empty($extrafields)) {
+            foreach ($extrafields as $field) {
+                $fields .= sprintf(", %s", $field);
+            }
+        }
+
+        $mysql->statement('SELECT ' . $fields . '
         FROM users 
         LEFT JOIN users AS u ON users.creator = u.uid 
         ORDER BY users.uid ' . pageLimit(pageNumber(), $numberPerPage));
@@ -31,18 +76,22 @@ class users extends section implements isection {
                 }
                 $created = explode(' ', $item['created']);
                 $last_login = explode(' ', @$item['last_login']);
-                $fields['CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())));
-                $fields['LAST_LOGIN'] = sizeof($last_login) ? ($last_login[0] ? timeago(dateDif($last_login[0], date('Y-m-d',time()))) : 'Nunca') : '';
-                $fields['DISABLED'] = $item['disabled'] ? '<br>(Desativo)' : '';
+                $fields['CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())), $created[1]);
+                $fields['LAST_LOGIN'] = sizeof($last_login) ? ($last_login[0] ? timeago(dateDif($last_login[0], date('Y-m-d',time())), $last_login[1]) : '{LANG_NEVER}') : '';
+                $fields['DISABLED'] = $item['disabled'] ? '<br>({LANG_DISABLED})' : '';
                 $list[] = $fields;
             }
-            $tpl->setarray('USERS', $list);
+            if (!sizeof($extrafields)) {
+                $tpl->setarray('USERS', $list);
+            }
             $pages = pageGenerator('FROM users LEFT JOIN users AS u ON users.creator = u.uid ORDER BY users.uid;');
 
             $tpl->setcondition('PAGINATOR', $pages['TOTAL'] > 1);
 
             $this->generatepaginator($pages);
         }
+
+        return $list;
     }
 
     public function getcurrent ($id = 0) {
@@ -66,7 +115,7 @@ class users extends section implements isection {
             }
 
             $fields['CURRENT_USER_DISABLED'] = $item['disabled'] ? 'checked="checked"': '';
-            $fields['CURRENT_USER_STATUS'] = !$item['disabled'] ? 'Ativo': 'Desativo';
+            $fields['CURRENT_USER_STATUS'] = !$item['disabled'] ? '{LANG_ENABLED}': '{LANG_DISABLED}';
 
             $fields['PERMISSION'] = new select(array(
                 'list' => array(
@@ -74,10 +123,13 @@ class users extends section implements isection {
                     'editor' => 'editor',
                     'user' => 'user'
                 ),
-                'label' => 'Permissão',
+                'label' => '{LANG_PERMISSION}',
                 'selected' => $item['level'],
                 'name' => 'level'
             ));
+
+            $types = new select( array ( 'list' => array('pt_PT' => 'Português', 'en_GB' => 'Inglês'), 'id' => 'LANGUAGE', 'selected' => $item['locale'] ) );
+            $types->object();
 
             $tpl->setvars($fields);
 
