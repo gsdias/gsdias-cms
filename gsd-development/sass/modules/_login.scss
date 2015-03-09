@@ -16,6 +16,7 @@
     header {
         position: relative;
         padding-bottom: 10px;
+
         span {
             position: absolute;
             display: block;
@@ -23,6 +24,7 @@
             top: 20px;
         }
     }
+
     form {
         padding: 20px 0;
         margin: auto;
@@ -30,14 +32,17 @@
         overflow: hidden;
         text-align: center;
     }
+
     i {
         margin-left: 4%;
     }
+
     hr {
         border: none;
         border-top: solid 1px #ccc;
         margin-bottom: 20px;
     }
+
     .btn-submit {
         float: none;
         margin: 0 auto 20px;
@@ -46,6 +51,7 @@
         padding: 0 2%;
         border: none;
     }
+
     a {
         float: left;
         margin-left: 5%;
@@ -56,6 +62,7 @@
             margin-right: 5%;
         }
     }
+
     label {
         position: absolute;
         left: 6%;
@@ -63,9 +70,16 @@
         font-size: 0;
         width: auto;
         margin: 0;
+
+        &.error {
+            margin: 10px auto 0;
+            width: 91%;
+        }
+
         .icon {
             margin-left: 0;
         }
+
         &.error {
             position: relative;
             top: auto;

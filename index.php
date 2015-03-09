@@ -14,6 +14,8 @@ define('IS_INSTALLED', !is_file('gsd-install.php'));
 
 include_once('gsd-include/gsd-config.php');
 
+$tpl->setvar('HTML_CLASS', 'gsd');
+
 if (is_file('gsd-install' . PHPEXT)) {
     $site->main = 'STEP1';
     require_once('gsd-install' . PHPEXT);
@@ -21,8 +23,6 @@ if (is_file('gsd-install' . PHPEXT)) {
 } elseif ($site->arg(0) == 'gsd-assets') {
     require_once('gsd-assets' . PHPEXT);
 } else {
-    
-    $tpl->setvar('HTML_CLASS', 'gsd');
 
     require_once(INCLUDEPATH . 'gsd-credentials' . PHPEXT);
 
