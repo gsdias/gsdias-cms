@@ -69,7 +69,7 @@ class site {
         $mysql->statement('SELECT *
         FROM pages
         LEFT JOIN layouts ON layouts.lid = pages.lid
-        WHERE published IS NOT NULL AND url = ? LIMIT 0, 1;', array($this->uri));
+        WHERE published IS NOT NULL AND beautify = ? LIMIT 0, 1;', array($this->uri));
 
         if ($mysql->total) {
 
@@ -106,8 +106,7 @@ class site {
             $this->startpoint = '404';
             $tpl->setvar('PAGE_TITLE', $this->name);
         }
-        $tpl->setvar('PAGE_CANONICAL', $this->protocol . $_SERVER['HTTP_HOST'] . $this->uri
-        );
+        $tpl->setvar('PAGE_CANONICAL', $this->protocol . $_SERVER['HTTP_HOST'] . $this->uri);
     }
 
     public function arg ($pos) {

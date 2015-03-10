@@ -260,6 +260,16 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item['pid']));
             array_push($fields, $currentpage[$field]);
         }
 
+        $_REQUEST['beautify'] = '';
+        array_push($defaultfields, 'beautify');
+
+        if ($_REQUEST['parent']) {
+            $mysql->statement('SELECT beautify FROM pages WHERE pid = ?;', array($_REQUEST['parent']));
+            $_REQUEST['beautify'] = $mysql->singleresult();
+        }
+
+        $_REQUEST['beautify'] .= $currentpage['url'];
+
         $result = parent::edit($defaultfields);
 
         if ($hasChanged) {
