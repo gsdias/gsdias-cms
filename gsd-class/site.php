@@ -66,26 +66,10 @@ class site {
             exit;
         }
 
-        $levels = explode('/', $this->uri);
-        $urls = array($this->uri);
-
-        if (sizeof($levels) > 2) {
-            while(sizeof($levels)) {
-                array_pop($levels);
-                $url = implode('/', $levels);
-                if ($url) {
-                    $urls[] = $url;
-                }
-            }
-        }
-
-        $questions = str_repeat('url = ? OR ', sizeof($urls) - 1);
-        $questions .= 'url = ?';
-
-        $mysql->statement(sprintf('SELECT *
+        $mysql->statement('SELECT *
         FROM pages
         LEFT JOIN layouts ON layouts.lid = pages.lid
-        WHERE published IS NOT NULL AND (%s) LIMIT 0, 1;', $questions), $urls);
+        WHERE published IS NOT NULL AND url = ? LIMIT 0, 1;', array($this->uri));
 
         if ($mysql->total) {
 

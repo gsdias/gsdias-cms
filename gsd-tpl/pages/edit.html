@@ -19,6 +19,12 @@
         </div>
         
         <h2>{LANG_ADVANCED}</h2>
+        <div class="colA"><label>Pagina ascendente</label>
+            <select name="parent">
+                <option value="0">{LANG_CHOOSE}</option>
+                <!-- LOOP PARENT --><option value="{PARENT_KEY}" {PARENT_SELECTED}>{PARENT_VALUE}</option><!-- ENDLOOP PARENT -->
+            </select>
+        </div>
         <div class="colA"><label>{LANG_PUBLISHED}</label><input type="checkbox" {PUBLISHED_CHECKED} value="1" name="published"></div>
         <div class="colA"><label>{LANG_SHOW_MENU}</label><input type="checkbox" {MENU_CHECKED} value="1" name="menu"></div>
         <div class="colA"><label>{LANG_REQUIRE_AUTH}</label><input type="checkbox" {AUTH_CHECKED} value="1" name="auth"></div>

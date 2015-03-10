@@ -15,7 +15,7 @@ if (!IS_ADMIN) {
 
 if (@$_REQUEST['save']) {
     
-    $defaultfields = array('title', 'url', 'lid', 'description', 'keywords', 'tags', 'og_title', 'og_image', 'og_description', 'show_menu', 'require_auth');
+    $defaultfields = array('title', 'url', 'lid', 'description', 'keywords', 'tags', 'og_title', 'og_image', 'og_description', 'parent', 'show_menu', 'require_auth');
     
     $fields = array('creator');
     
@@ -64,4 +64,14 @@ foreach ($mysql->result() as $item) {
 }
 
 $types = new select( array ( 'list' => $types, 'id' => 'LAYOUT' ) );
+$types->object();
+
+$mysql->statement('SELECT pid, title FROM pages');
+
+$types = array();
+foreach ($mysql->result() as $item) {
+    $types[$item['pid']] = $item['title'];
+}
+
+$types = new select( array ( 'list' => $types, 'id' => 'PARENT' ) );
 $types->object();

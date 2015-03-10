@@ -17,10 +17,11 @@ class pages extends section implements isection {
     public function getlist ($numberPerPage = 10) {
         global $mysql, $tpl;
 
-        $mysql->statement('SELECT pages.*, pages.creator AS creator_id, u.name AS creator_name 
-        FROM pages 
-        LEFT JOIN users AS u ON pages.creator = u.uid 
-        ORDER BY pages.pid ' . pageLimit(pageNumber(), $numberPerPage));
+        $mysql->statement('SELECT p.*, concat(if(pp.url = "/" OR pp.url IS NULL, "", pp.url), p.url) AS url, p.creator AS creator_id, u.name AS creator_name
+        FROM pages AS p
+        LEFT JOIN users AS u ON p.creator = u.uid
+        LEFT JOIN pages AS pp ON p.parent = pp.pid
+        ORDER BY p.pid ' . pageLimit(pageNumber(), $numberPerPage));
 
         $list = array();
 
@@ -110,6 +111,21 @@ class pages extends section implements isection {
                 }
                 $tpl->setarray('VERSION', $review);
             }
+
+            $mysql->statement('SELECT p.pid, p.title
+                FROM pages AS p
+                WHERE pid <> ?;', array($this->item['pid']));
+
+            $parent = array();
+            foreach ($mysql->result() as $field) {
+
+                $parent[] = array(
+                    'KEY' => $field['pid'],
+                    'VALUE' => $field['title'],
+                    'SELECTED' => $field['pid'] == $this->item['parent'] ? 'selected="selected"' : ''
+                );
+            }
+            $tpl->setarray('PARENT', $parent);
         }
     }
     public function generatefields ($section) {
@@ -244,13 +260,41 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item['pid']));
             array_push($fields, $currentpage[$field]);
         }
 
-        parent::edit($defaultfields);
+        $result = parent::edit($defaultfields);
 
         if ($hasChanged) {
             array_push($fields, $currentpage['modified']);
             array_push($defaultfields, 'modified');
             $this->page_review($defaultfields, $fields);
         }
+
+        return $result;
+    }
+
+    public function add ($defaultfields, $defaultsafter = array(), $defaultvalues = array()) {
+        global $mysql, $site;
+
+        $_REQUEST['beautify'] = '';
+        array_push($defaultfields, 'beautify');
+
+        if ($_REQUEST['parent']) {
+
+            $parent = $_REQUEST['parent'];
+
+            while ($parent != 0 && $parent != '') {
+                $mysql->statement('SELECT parent, url FROM pages WHERE pid = ?;', array($_REQUEST['parent']));
+
+                $parentline = $mysql->singleline();
+
+                $_REQUEST['beautify'] .= $parentline['url'];
+
+                $parent = $parentline['parent'];
+            }
+        }
+
+        $_REQUEST['beautify'] .= $_REQUEST['url'];
+
+        return parent::add($defaultfields, $defaultsafter, $defaultvalues);
     }
 
     private function page_review ($defaultfields = array(), $fields = array()) {
