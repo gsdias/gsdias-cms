@@ -5,7 +5,7 @@
 CREATE TABLE IF NOT EXISTS `layoutsections` (
   `lsid` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `lid` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL,
+  `label` varchar(120) NOT NULL,
   `creator` int(11) DEFAULT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (creator)

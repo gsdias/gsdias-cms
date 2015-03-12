@@ -5,7 +5,7 @@
 CREATE TABLE IF NOT EXISTS `pages` (
   `pid` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `url` varchar(60) NOT NULL,
-  `beautify` varchar(120) NOT NULL,
+  `beautify` varchar(120) DEFAULT NULL,
   `lid` int DEFAULT NULL,
   `parent` int(11) DEFAULT NULL,
   `title` varchar(120) NOT NULL,

@@ -46,6 +46,11 @@ class site {
         $this->path();
         if ($this->path[0] !== 'admin') {
             $this->page();
+        } else {
+            $tpl->setvars(array(
+                'PAGE_TITLE' => sprintf('%s - %s', $this->name, ucwords($this->path[1])),
+                'PAGE_CANONICAL' => $this->protocol . $_SERVER['HTTP_HOST'] . '/' . $this->uri
+            ));
         }
     }
 
@@ -87,6 +92,7 @@ class site {
                 'PAGE_OG_IMAGE' => $this->protocol . $_SERVER['HTTP_HOST'] . '/gsd-assets/images/' . $page['og_image'],
                 'PAGE_CANONICAL' => $this->protocol . $_SERVER['HTTP_HOST'] . '/' . $this->uri
             ));
+
             $this->main = trim(str_replace('.html', '', $page['file']));
 
             $mysql->statement('SELECT *
@@ -97,7 +103,7 @@ class site {
             if ($mysql->total) {
                 $pagemodules = array();
                 foreach ($mysql->result() as $module) {
-                    $pagemodules[$module['name']] = $module['data'];
+                    $pagemodules[$module['label']] = $module['data'];
                 }
                 $this->pagemodules = $pagemodules;
             }

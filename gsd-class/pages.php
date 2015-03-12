@@ -32,9 +32,6 @@ class pages extends section implements isection {
             foreach ($mysql->result() as $item) {
                 $fields = array();
                 foreach ($item as $field => $value) {
-                    if (is_numeric($field)) {
-                        continue;
-                    }
                     $fields[strtoupper($field)] = $value;
                 }
                 $created = explode(' ', $item['created']);
@@ -137,7 +134,7 @@ class pages extends section implements isection {
 
         if (!empty($this->item)) {
 
-            $mysql->statement('SELECT *, mt.file, ls.name AS lsname, smt.file AS sfile
+            $mysql->statement('SELECT *, mt.file, ls.label AS lsname, smt.file AS sfile
             FROM pagemodules AS pm
 LEFT JOIN layoutsections AS ls ON ls.lsid = pm.lsid
 LEFT JOIN layoutsectionmoduletypes AS lsmt ON ls.lsid = lsmt.lsid
@@ -148,6 +145,7 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item['pid']));
             foreach ($mysql->result() as $item) {
 
                 $item['data'] = unserialize($item['data']);
+
                 $extra = array();
                 if ($item['file'] == '_image') {
                     $image = new image(array(
@@ -163,18 +161,15 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item['pid']));
                     );
                 }
 
-                $partial = new tpl();
-                $partial->setvars(array_merge(array(
-                    'LABEL' => ucwords(strtolower($item['lsname'])),
-                    'NAME' => 'value_pm_' . $item['pmid'],
-                    'VALUE' => @$item['data'][0][0]['value'],
-                    'CLASS' => @$item['data'][0][0]['class'],
-                    'STYLE' => @$item['data'][0][0]['style']
-                ), $extra));
+                if ($item['sfile']) {
+                    $partial = $this->partialtpl($item['data'], $item['lsname'], $item['pmid'], $extra);
+                } else {
+                    $partial = $this->partialtpl($item['data']['list'][0][0], $item['lsname'], $item['pmid'], $extra);
+                }
 
                 if ($item['sfile']) {
                     $list = array();
-                    foreach ($item['data'] as $index => $data1) {
+                    foreach ($item['data']['list'] as $index => $data1) {
 
                         $spartials = '';
                         if (gettype($data1) === 'array') {
@@ -260,17 +255,9 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item['pid']));
             array_push($fields, $currentpage[$field]);
         }
 
-        $_REQUEST['beautify'] = '';
-        array_push($defaultfields, 'beautify');
-
-        if ($_REQUEST['parent']) {
-            $mysql->statement('SELECT beautify FROM pages WHERE pid = ?;', array($_REQUEST['parent']));
-            $_REQUEST['beautify'] = $mysql->singleresult();
-        }
-
-        $_REQUEST['beautify'] .= $currentpage['url'];
-
         $result = parent::edit($defaultfields);
+
+        $this->update_beautify($site->arg(2));
 
         if ($hasChanged) {
             array_push($fields, $currentpage['modified']);
@@ -284,27 +271,19 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item['pid']));
     public function add ($defaultfields, $defaultsafter = array(), $defaultvalues = array()) {
         global $mysql, $site;
 
-        $_REQUEST['beautify'] = '';
-        array_push($defaultfields, 'beautify');
+        $result = parent::add($defaultfields, $defaultsafter, $defaultvalues);
 
-        if ($_REQUEST['parent']) {
+        $this->update_beautify($result['id']);
 
-            $parent = $_REQUEST['parent'];
+        return $result;
+    }
 
-            while ($parent != 0 && $parent != '') {
-                $mysql->statement('SELECT parent, url FROM pages WHERE pid = ?;', array($_REQUEST['parent']));
+    private function update_beautify ($pid) {
+        global $mysql;
 
-                $parentline = $mysql->singleline();
-
-                $_REQUEST['beautify'] .= $parentline['url'];
-
-                $parent = $parentline['parent'];
-            }
-        }
-
-        $_REQUEST['beautify'] .= $_REQUEST['url'];
-
-        return parent::add($defaultfields, $defaultsafter, $defaultvalues);
+        $mysql->statement('SELECT pp.beautify, p.url FROM pages AS p LEFT JOIN pages AS pp ON p.parent = pp.pid WHERE p.pid = ?;', array($pid));
+        $result = $mysql->singleline();
+        $mysql->statement('UPDATE pages SET beautify = ? WHERE pid = ?;', array(vsprintf('%s%s', $result), $pid));
     }
 
     private function page_review ($defaultfields = array(), $fields = array()) {
@@ -314,5 +293,18 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item['pid']));
         array_push($fields, $site->arg(2));
         $questions = str_repeat(", ? ", sizeof($fields));
         $mysql->statement(sprintf('INSERT INTO pages_review (%s, creator, pid) values (%s);', implode(',', $defaultfields), substr($questions, 2)), $fields);
+    }
+
+    private function partialtpl ($item, $lsname, $pmid, $extra) {
+        $partial = new tpl();
+        $partial->setvars(array_merge(array(
+            'LABEL' => lang(sprintf('LANG_%s', $lsname)),
+            'NAME' => 'value_pm_' . $pmid,
+            'VALUE' => @$item['value'],
+            'CLASS' => @$item['class'],
+            'STYLE' => @$item['style']
+        ), $extra));
+
+        return $partial;
     }
 }

@@ -37,7 +37,7 @@ if (@$_REQUEST['save']) {
 
         foreach ($mysql->result() as $section) {
             $defaultdata = array('class' => '', 'style' => '', 'value' => '');
-            $data = array(array_fill(0, $section['total'], $defaultdata));
+            $data = array('list' => array(array_fill(0, $section['total'], $defaultdata)), 'class' => '', 'style' => '');
             $mysql->statement('INSERT INTO pagemodules (lsid, mtid, pid, data, creator) values(?, ?, ?, ?, ?);', array(
                 $section['lsid'],
                 $section['mtid'],

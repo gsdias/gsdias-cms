@@ -33,7 +33,7 @@ if (!IS_LOGGED) {
         include_once('gsd-admin/dashboard' . PHPEXT);
         $tpl->setvar('DASHBOARD_ACTIVE', 'active');
     } else {
-        $affirmative = lang('LANG_YES');
+        $afirmative = lang('LANG_YES');
         $negative = lang('LANG_NO');
         $file = '';
         $tpl->setvar(strtoupper($site->arg(1)) . '_ACTIVE', 'active');

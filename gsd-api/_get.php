@@ -37,7 +37,7 @@ $GETimages = function ($fields, $extra, $doc = false) {
             $array = array();
             foreach ($row as $visible => $value) {
 
-                if (!is_numeric($visible) && in_array($visible, $returnFields)) {
+                if (in_array($visible, $returnFields)) {
 
                     $array[$visible] = $value;
 

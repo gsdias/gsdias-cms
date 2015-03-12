@@ -34,16 +34,16 @@ if (@$_REQUEST['save']) {
 
         while ($key = array_pop($list)) {
             $sectionname = explode(' ', $key);
-            $mysql->statement('INSERT INTO layoutsections (lid, name, creator) values(?, ?, ?);', array(
+            $mysql->statement('INSERT INTO layoutsections (lid, label, creator) values(?, ?, ?);', array(
                 $lid,
                 $sectionname[0],
                 $user->id
             ));
             $lsid = $mysql->lastinserted();
-            $mysql->statement('SELECT mtid FROM moduletypes WHERE name = ?', array( strtolower( $sectionname[1] ) ));
+            $mysql->statement('SELECT mtid FROM moduletypes WHERE name like ?', array( strtolower( $sectionname[1] ) ));
             $mtid = $mysql->singleresult();
 
-            $mysql->statement('SELECT mtid FROM moduletypes WHERE name = ?', array( strtolower( @$sectionname[2] ) ));
+            $mysql->statement('SELECT mtid FROM moduletypes WHERE name like ?', array( strtolower( @$sectionname[2] ) ));
             $smtid = $mysql->singleresult() ? $mysql->singleresult() : null;
 
             $mysql->statement('INSERT INTO layoutsectionmoduletypes (lsid, mtid, smtid, total) values(?, ?, ?, ?);', array(
@@ -56,12 +56,9 @@ if (@$_REQUEST['save']) {
         header("Location: /admin/layouts", true, 302);
         exit;
     } else {
-
-            $tpl->setvar('ERRORS', '{LANG_LAYOUT_ALREADY_EXISTS}');
-            $tpl->setcondition('ERRORS');
-
+        $tpl->setvar('ERRORS', '{LANG_LAYOUT_ALREADY_EXISTS}');
+        $tpl->setcondition('ERRORS');
     }
-
 }
 
 $mysql->statement('SELECT * FROM layouttypes');

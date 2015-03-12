@@ -32,9 +32,6 @@ class documents extends section implements isection {
             foreach ($mysql->result() as $item) {
                 $fields = array();
                 foreach ($item as $field => $value) {
-                    if (is_numeric($field)) {
-                        continue;
-                    }
                     $fields[strtoupper($field)] = $value;
                 }
                 $created = explode(' ', $item['created']);

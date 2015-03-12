@@ -8,7 +8,7 @@
  * @since      File available since Release 1.0
  */
 
-if (@$_REQUEST['confirm'] == $affirmative) {
+if (@$_REQUEST['confirm'] == $afirmative) {
     $mysql->statement('SELECT extension FROM images WHERE iid = ?;', array($site->arg(2)));
     $image = $mysql->singleline();
 

@@ -45,7 +45,9 @@ if ($action) {
 
         $csection->getcurrent($id);
 
-        $csection->generatefields($section);
+        if ($action === 'edit') {
+            $csection->generatefields($section);
+        }
     }
 
 } else {

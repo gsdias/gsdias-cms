@@ -20,7 +20,7 @@ if ($site->arg(2) == 1) {
     exit;
 }
 
-if (@$_REQUEST['confirm'] == $affirmative) {
+if (@$_REQUEST['confirm'] == $afirmative) {
     $mysql->statement('DELETE FROM users WHERE uid = ?;', array($site->arg(2)));
     if ($mysql->errnum) {
 
@@ -29,14 +29,9 @@ if (@$_REQUEST['confirm'] == $affirmative) {
     } else {
 
         $_SESSION['message'] = '{LANG_USER_REMOVED}';
-
-        header("Location: /admin/users", true, 302);
-        exit;
     }
 
 }
 
-if (@$_REQUEST['confirm'] == $negative) {
-    header("Location: /admin/users", true, 302);
-    exit;
-}
+header("Location: /admin/users", true, 302);
+exit;

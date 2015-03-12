@@ -60,6 +60,7 @@ if (@$_REQUEST['save']) {
 
         if ($mysql->total) {
             foreach($mysql->result() as $url) {
+                //REFACTOR: THIS PART IS OUTDATED
                 $mysql->statement('INSERT INTO redirect (`pid`, `from`, `destination`, `creator`) VALUES (?, ?, ?, ?);', array($site->arg(2), $url[1], $_REQUEST['url'], $user->id));
             }
         } else {

@@ -117,7 +117,7 @@ class tpl {
         $data = unserialize($site->pagemodules[$placeholder[0]]);
         $ul = '';
         if (gettype($data) == 'array' && sizeof($data)) {
-            $ul .= '<ul>';
+            $ul .= sprintf('<ul class="%s">', $data['class']);
             foreach ($data as $items) {
                 $li = '';
                 if (gettype($items) == 'array' && sizeof($items)) {
