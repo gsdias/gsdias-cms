@@ -95,6 +95,8 @@ module.exports = function (grunt) {
                                 };
                                 generated.files[0].src = generated.files[0].src.concat(clientfiles.files);
                                 context.inFiles = context.inFiles.concat(clientfiles.files);
+
+                                console.log(generated.files[0].src);
                             }
                         }, {
                             name: 'uglify',

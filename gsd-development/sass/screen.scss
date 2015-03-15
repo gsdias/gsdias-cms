@@ -19,6 +19,7 @@
 @import "compass/css3/border-radius";
 @import "compass/css3/box-shadow";
 @import "compass/css3/box-sizing";
+@import "compass/css3/font-face";
 @import "compass/reset";
 
 // Internal Imports
@@ -53,6 +54,7 @@ $sprites2x: sprite-map("icons/retina/*.png");
     @import "_theme.scss";
 }
 
+@import "../../gsd-client/development/sass/_core/_fonts";
 .frontend {
     @import "../../gsd-client/development/sass/_client.scss";
 }

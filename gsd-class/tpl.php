@@ -118,7 +118,7 @@ class tpl {
         $ul = '';
         if (gettype($data) == 'array' && sizeof($data)) {
             $ul .= sprintf('<ul class="%s">', $data['class']);
-            foreach ($data as $items) {
+            foreach ($data['list'] as $items) {
                 $li = '';
                 if (gettype($items) == 'array' && sizeof($items)) {
                     $ul .= sprintf('<li>%s</li>', $this->populateLists ($placeholder, $items));
@@ -190,7 +190,7 @@ class tpl {
                     if (defined('DEBUG') && DEBUG) {
                         $extra = sprintf('<!-- DEBUG %s %s -->', $type, $key);
                     }
-                    $this->config['file'] = preg_replace(sprintf('#<!-- %s %s -->#s', $type, $key), @$extra . $item[0][0]['value'], $this->config['file'], 1);
+                    $this->config['file'] = preg_replace(sprintf('#<!-- %s %s -->#s', $type, $key), @$extra . $item['list'][0][0]['value'], $this->config['file'], 1);
                 }
             } else {
                 preg_match_all(sprintf('#<!-- %s %s -->(.*?)<!-- END%s %s -->#s', $type, $key, $type, $key), $this->config['file'], $matches, PREG_SET_ORDER);

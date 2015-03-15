@@ -33,6 +33,9 @@ if (@$_REQUEST['save']) {
                 $value = array();
                 $moduleid = explode('_', $module);
                 foreach ($vals as $i => $val) {
+                    if (!@$_REQUEST[$module][$i]) {
+                        continue;
+                    }
                     $value[] = array (
                             'value' => @$_REQUEST[$module][$i],
                             'class' => @$_REQUEST['class_' . $module][$i],
