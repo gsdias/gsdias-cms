@@ -48,7 +48,7 @@ class site {
             $this->page();
         } else {
             $tpl->setvars(array(
-                'PAGE_TITLE' => sprintf('%s - %s', $this->name, ucwords($this->path[1])),
+                'PAGE_TITLE' => sprintf('%s - %s', $this->name, ucwords(@$this->path[1])),
                 'PAGE_CANONICAL' => $this->protocol . $_SERVER['HTTP_HOST'] . '/' . $this->uri
             ));
         }
@@ -103,7 +103,7 @@ class site {
             if ($mysql->total) {
                 $pagemodules = array();
                 foreach ($mysql->result() as $module) {
-                    $pagemodules[$module['label']] = $module['data'];
+                    $pagemodules[@$module['label']] = $module['data'];
                 }
                 $this->pagemodules = $pagemodules;
             }

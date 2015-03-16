@@ -188,7 +188,7 @@ class tpl {
                     
                     $this->config['file'] = preg_replace(sprintf('#<!-- %s %s -->#s', $type, $key), $this->createImage($placeholder), $this->config['file'], 1);
                 } else {
-                    $item = $site->pagemodules[$placeholder[0]];
+                    $item = @$site->pagemodules[@$placeholder[0]];
                     $item = unserialize($item);
                     if (defined('DEBUG') && DEBUG) {
                         $extra = sprintf('<!-- DEBUG %s %s -->', $type, $key);
