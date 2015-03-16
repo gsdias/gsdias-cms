@@ -10,7 +10,7 @@
 
 function pageTotal ($sql, $numberPerPage) {
     global $mysql;
-    $select = sprintf('SELECT floor(count(*) / %d) AS p, mod(count(*), %d) %s AS r', $numberPerPage, $numberPerPage, $sql);
+    $select = sprintf('SELECT floor(count(*) / %d) AS p, mod(count(*), %d) AS r %s', $numberPerPage, $numberPerPage, $sql);
     
     $mysql->statement($select);
     

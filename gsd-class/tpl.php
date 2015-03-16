@@ -121,7 +121,10 @@ class tpl {
             foreach ($data['list'] as $items) {
                 $li = '';
                 if (gettype($items) == 'array' && sizeof($items)) {
-                    $ul .= sprintf('<li>%s</li>', $this->populateLists ($placeholder, $items));
+                    $content = $this->populateLists ($placeholder, $items);
+                    if ($content) {
+                        $ul .= sprintf('<li>%s</li>', $content);
+                    }
                 }
             }
             $ul .= '</ul>';

@@ -67,7 +67,8 @@ if (@$_REQUEST['save']) {
             $mysql->statement('INSERT INTO redirect (`pid`, `from`, `destination`, `creator`) VALUES (?, ?, ?, ?);', array($site->arg(2), $currenturl, $_REQUEST['url'], $user->id));
         }
 
-        $mysql->statement('UPDATE pages SET url = ? WHERE pid = ?;', array(
+        $mysql->statement('UPDATE pages AS p JOIN pages AS pp ON pp.pid = p.parent SET p.url = ?, p.beautify = concat(pp.beautify, ?) WHERE p.pid = ?;', array(
+            $_REQUEST['url'],
             $_REQUEST['url'],
             $site->arg(2)
         ));
