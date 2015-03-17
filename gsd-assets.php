@@ -17,7 +17,7 @@ if (@$site->arg(1) == 'images') {
 
         $image = $mysql->singleline();
 
-        $asset = sprintf('gsd-assets/images/%d.%s', @$image['iid'], @$image['extension']);
+        $asset = sprintf(ASSETPATH . 'images/%d.%s', @$image['iid'], @$image['extension']);
 
         if ($mysql->total) {
             $size = getimagesize($asset);

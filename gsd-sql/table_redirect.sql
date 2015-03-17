@@ -1,5 +1,5 @@
 --
--- Table structure for table `pages`
+-- Table structure for table `redirect`
 --
 
 CREATE TABLE IF NOT EXISTS `redirect` (
