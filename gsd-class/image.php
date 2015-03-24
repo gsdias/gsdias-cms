@@ -31,7 +31,7 @@ class image {
         } else if ($this->args['iid']) {
             $mysql->statement('SELECT extension FROM images WHERE iid = ?;', array($this->args['iid']));
 
-            $this->args['src'] = sprintf("/gsd-assets/images/%s.%s", $this->args['iid'], $mysql->singleresult());
+            $this->args['src'] = sprintf(ASSETPATHURL . "images/%s.%s", $this->args['iid'], $mysql->singleresult());
         }
         $this->args['width'] = $this->args['width'] ? sprintf(' width="%s"', $this->args['width']) : '';
         $this->args['height'] = $this->args['height'] ? sprintf(' height="%s"', $this->args['height']) : '';

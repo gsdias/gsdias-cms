@@ -58,6 +58,7 @@ $tpl->setVar('SCRIPT', sprintf('GSD.ga = "%s";GSD.fb = "%s";', $site->ga, $site-
 $tpl->setVar('CDN', $resources);
 $tpl->setVar('CLIENT_RESOURCES', @$config['client_resources']);
 $tpl->setVar('CLIENT_PATH', @$config['client_path']);
+$tpl->setVar('ASSETPATH', ASSETPATHURL);
 $tpl->setVar('REDIRECT', @$_REQUEST['redirect'] ? sprintf("?redirect=%s", $_REQUEST['redirect']) : '');
 
 

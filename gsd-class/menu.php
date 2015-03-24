@@ -46,6 +46,7 @@ class menu {
     }
     
     public function removePages ($uri) {
+        //REFACTOR: THIS PART MIGHT BE IS OUTDATED
         foreach($uri as $key => $param) {
             if (is_numeric($param)) {
                 unset($uri[$key]);

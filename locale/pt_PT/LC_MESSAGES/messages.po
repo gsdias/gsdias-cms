@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2014-11-12 17:19-0000\n"
-"PO-Revision-Date: 2015-03-09 10:23-0000\n"
+"PO-Revision-Date: 2015-03-16 16:53-0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -59,10 +59,10 @@ msgid "LANG_LAYOUT_ALREADY_EXISTS"
 msgstr "Já existe um layout associado a esse ficheiro"
 
 msgid "LANG_LAYOUT_REMOVED"
-msgstr "Layout apagado"
+msgstr "Layout '%s' apagado"
 
 msgid "LANG_LAYOUT_CREATED"
-msgstr "Layout %s criado"
+msgstr "Layout '%s' criado"
 
 msgid "LANG_LAYOUT_NOPERMISSION"
 msgstr "Não tem permissão para apagar layouts"
@@ -92,16 +92,16 @@ msgid "LANG_NO_PAGES"
 msgstr "Não existem páginas"
 
 msgid "LANG_PAGE_CREATED"
-msgstr "Página %s criada"
+msgstr "Página '%s' criada"
 
 msgid "LANG_PAGE_SAVED"
-msgstr "Página salva"
+msgstr "Página '%s' salva"
 
 msgid "LANG_PAGE_ALREADY_EXISTS"
 msgstr "Já existe uma página com esse endereço"
 
 msgid "LANG_PAGE_REMOVED"
-msgstr "Página apagada"
+msgstr "Página '%s' apagada"
 
 msgid "LANG_PAGE_ERROR"
 msgstr "Houve um problema. Verifique os dados e tente novamente"
@@ -119,16 +119,16 @@ msgid "LANG_ALL_USERS"
 msgstr "Listar utilizadores"
 
 msgid "LANG_USER_CREATED"
-msgstr "Utilizador %s criado"
+msgstr "Utilizador '%s' criado"
 
 msgid "LANG_USER_SAVED"
-msgstr "Utilizador salvo"
+msgstr "Utilizador '%s' salvo"
 
 msgid "LANG_USER_ALREADY_EXISTS"
 msgstr "Já existe um utilizador com esse email"
 
 msgid "LANG_USER_REMOVED"
-msgstr "Utilizador apagado"
+msgstr "Utilizador '%s' apagado"
 
 msgid "LANG_USER_NOPERMISSION"
 msgstr "Não tem permissão para apagar utilizadores"
@@ -155,13 +155,13 @@ msgid "LANG_NO_IMAGES"
 msgstr "Não existem imagens"
 
 msgid "LANG_IMAGE_UPLOADED"
-msgstr "Imagem %s carregada"
+msgstr "Imagem '%s' carregada"
 
 msgid "LANG_IMAGE_ERROR"
 msgstr "Houve um erro. Tente mais tarde"
 
 msgid "LANG_IMAGE_SAVED"
-msgstr "Imagem salva"
+msgstr "Imagem '%s' salva"
 
 msgid "LANG_DOCUMENTS"
 msgstr "Documentos"
@@ -176,7 +176,7 @@ msgid "LANG_NO_DOCUMENTS"
 msgstr "Não existem documentos"
 
 msgid "LANG_DOCUMENT_UPLOADED"
-msgstr "Documento %s carregado"
+msgstr "Documento '%s' carregado"
 
 msgid "LANG_DOCUMENT_EMPTY"
 msgstr "Sem documento"

@@ -15,7 +15,7 @@ if (!IS_ADMIN) {
 
 if (@$_REQUEST['save']) {
     
-    $defaultfields = array('title', 'url', 'lid', 'description', 'keywords', 'tags', 'og_title', 'og_image', 'og_description', 'show_menu', 'require_auth');
+    $defaultfields = array('title', 'url', 'lid', 'description', 'keywords', 'tags', 'og_title', 'og_image', 'og_description', 'parent', 'show_menu', 'require_auth');
     
     $fields = array('creator');
     
@@ -37,7 +37,7 @@ if (@$_REQUEST['save']) {
 
         foreach ($mysql->result() as $section) {
             $defaultdata = array('class' => '', 'style' => '', 'value' => '');
-            $data = array(array_fill(0, $section['total'], $defaultdata));
+            $data = array('list' => array(array_fill(0, $section['total'], $defaultdata)), 'class' => '', 'style' => '');
             $mysql->statement('INSERT INTO pagemodules (lsid, mtid, pid, data, creator) values(?, ?, ?, ?, ?);', array(
                 $section['lsid'],
                 $section['mtid'],
@@ -64,4 +64,14 @@ foreach ($mysql->result() as $item) {
 }
 
 $types = new select( array ( 'list' => $types, 'id' => 'LAYOUT' ) );
+$types->object();
+
+$mysql->statement('SELECT pid, title FROM pages');
+
+$types = array();
+foreach ($mysql->result() as $item) {
+    $types[$item['pid']] = $item['title'];
+}
+
+$types = new select( array ( 'list' => $types, 'id' => 'PARENT' ) );
 $types->object();

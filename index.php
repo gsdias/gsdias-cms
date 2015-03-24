@@ -20,7 +20,7 @@ if (is_file('gsd-install' . PHPEXT)) {
     $site->main = 'STEP1';
     require_once('gsd-install' . PHPEXT);
     
-} elseif ($site->arg(0) == 'gsd-assets') {
+} elseif ($site->arg(1) == 'assets') {
     require_once('gsd-assets' . PHPEXT);
 } else {
 

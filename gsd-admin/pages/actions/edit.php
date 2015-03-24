@@ -10,7 +10,7 @@
 
 if (@$_REQUEST['save']) {
 
-    $defaultfields = array('title', 'description', 'tags', 'keywords', 'og_title', 'og_description', 'og_image', 'show_menu', 'require_auth', 'published');
+    $defaultfields = array('title', 'description', 'tags', 'keywords', 'og_title', 'og_description', 'og_image', 'parent', 'show_menu', 'require_auth', 'published');
 
     $_REQUEST['show_menu'] = @$_REQUEST['menu'] ? @$_REQUEST['menu'] : null;
     $_REQUEST['require_auth'] = @$_REQUEST['auth'] ? @$_REQUEST['auth'] : null;
@@ -40,20 +40,28 @@ if (@$_REQUEST['save']) {
                     );
                 }
                 if (!sizeof(@$modules[$moduleid[4]])) {
-                    $modules[$moduleid[4]] = array();
+                    $modules[$moduleid[4]] = array(
+                        'list' => array(),
+                        'style' => @$_REQUEST['style_value_pm_' . $moduleid[4]],
+                        'class' => @$_REQUEST['class_value_pm_' . $moduleid[4]]
+                    );
                 }
-                $modules[$moduleid[4]][] = $value;
-                $modules[$moduleid[4]]['order'] = 1;
+                $modules[$moduleid[4]]['list'][] = $value;
 
             } else if (substr($module, 0, 9) == 'value_pm_') {
                 $value = array(
+                    'list' =>
                             array(
                                 array(
-                                    'value' => $value,
-                                    'class' => @$_REQUEST['class_' . $module],
-                                    'style' => @$_REQUEST['style_' . $module]
+                                    array(
+                                        'value' => $value,
+                                        'class' => @$_REQUEST['class_' . $module],
+                                        'style' => @$_REQUEST['style_' . $module]
+                                    )
                                 )
-                            )
+                            ),
+                    'class' => '',
+                    'style' => ''
                 );
 
                 $mysql->statement('UPDATE pagemodules SET data = ? WHERE pmid = ?;', array(serialize($value), substr($module, 9)));
@@ -67,7 +75,7 @@ if (@$_REQUEST['save']) {
             }
         }
 
-        $_SESSION['message'] = '{LANG_PAGE_SAVED}';
+        $_SESSION['message'] =  sprintf(lang('LANG_PAGE_SAVED'), $_REQUEST['title']);
 
         header("Location: /admin/pages", true, 302);
         exit;

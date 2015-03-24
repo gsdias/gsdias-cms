@@ -19,7 +19,7 @@
                     .replace(/!/g, '').replace(/@/g, '').replace(/£/g, '').replace(/\$/g, '').replace(/%/g, '')
                     .replace(/\^/g, '').replace(/&/g, '').replace(/\*/g, '').replace(/\(/g, '').replace(/\)/g, '')
                     .replace(/\=/g, '').replace(/\?/g, '').replace(/\€/g, '').replace(/\#/g, '').replace(/\~/g, '')
-                    .replace(/\//g, '').replace(/\./g, '').replace(/\,/g, '').replace(/\\/g, '')
+                    .replace(/\//g, '').replace(/\,/g, '').replace(/\\/g, '')
                     .replace(/ç/g, 'c')
                     .replace(/ç/g, 'c')
                     .replace(/á/g, 'a').replace(/à/g, 'a').replace(/ã/g, 'a').replace(/â/g, 'a')

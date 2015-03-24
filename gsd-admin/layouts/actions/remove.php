@@ -16,7 +16,7 @@ if (!IS_ADMIN) {
     exit;
 }
 
-if (@$_REQUEST['confirm'] == $affirmative) {
+if (@$_REQUEST['confirm'] == $afirmative) {
     $mysql->statement('DELETE FROM layouts WHERE lid = ?;', array($site->arg(2)));
 
     if ($mysql->errnum) {

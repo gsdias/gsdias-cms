@@ -10,14 +10,14 @@
 
 function pageTotal ($sql, $numberPerPage) {
     global $mysql;
-    $select = sprintf('SELECT floor(count(*) / %d), mod(count(*), %d) %s', $numberPerPage, $numberPerPage, $sql);
+    $select = sprintf('SELECT floor(count(*) / %d) AS p, mod(count(*), %d) AS r %s', $numberPerPage, $numberPerPage, $sql);
     
     $mysql->statement($select);
     
     $result = $mysql->singleline();
 
-    $pages = $result[0];
-    $remain = $result[1];
+    $pages = @$result['p'] ? $result['p'] : 0;
+    $remain = @$result['r'] ? $result['r'] : 0;
 
     $pages = $remain > 0 ? ++$pages : $pages;
     return $pages;

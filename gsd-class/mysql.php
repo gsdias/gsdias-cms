@@ -132,17 +132,11 @@
 
             if (defined('DEBUG') && DEBUG) {
 
-                if (sizeof($values)) {
-                    foreach ($values as $key => $value) {
-                        $query = str_replace($key, sprintf('"%s"', $value), $query);
-                    }
-                }
-
-                $tpl->adderror($query);
+                $tpl->adderror(vsprintf(str_replace('?', '"%s"', $query), $values));
 
                 array_push($this->querylist, $query);
                 if ($this->errnum) {
-                    $tpl->adderror(sprintf("(<strong>%s</strong>) %s", $this->errnum, $this->errmsg));
+                    $tpl->adderror(sprintf("(<strong style='font-weight: 700'>%s</strong>) %s", $this->errnum, $this->errmsg));
                 }
             }
 
@@ -165,7 +159,7 @@
 			$this->total = $this->prepared->rowCount();
 			$erro = $this->prepared->errorInfo();
 
-			$this->result = $this->prepared->fetchAll();
+			$this->result = $this->prepared->fetchAll(PDO::FETCH_ASSOC);
 
 			$this->errnum = $erro[1];
 			$this->errmsg = $erro[2];
@@ -195,7 +189,7 @@
 		// -- Params :
 		// -- Purpose : returns database query single result
 		function singleresult() {
-			return sizeof($this->result) ? $this->result[0][0] : '';
+			return sizeof($this->result) ? array_values($this->result[0])[0] : '';
 		}
 
 		public

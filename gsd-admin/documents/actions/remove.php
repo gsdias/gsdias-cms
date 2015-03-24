@@ -8,7 +8,7 @@
  * @since      File available since Release 1.0
  */
 
-if (@$_REQUEST['confirm'] == $affirmative) {
+if (@$_REQUEST['confirm'] == $afirmative) {
     removefile(ASSETPATH . 'documents/' . $site->arg(2));
 
     $mysql->statement('DELETE FROM documents WHERE did = ?;', array($site->arg(2)));

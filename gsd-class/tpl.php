@@ -117,11 +117,14 @@ class tpl {
         $data = unserialize($site->pagemodules[$placeholder[0]]);
         $ul = '';
         if (gettype($data) == 'array' && sizeof($data)) {
-            $ul .= '<ul>';
-            foreach ($data as $items) {
+            $ul .= sprintf('<ul class="%s">', $data['class']);
+            foreach ($data['list'] as $items) {
                 $li = '';
                 if (gettype($items) == 'array' && sizeof($items)) {
-                    $ul .= sprintf('<li>%s</li>', $this->populateLists ($placeholder, $items));
+                    $content = $this->populateLists ($placeholder, $items);
+                    if ($content) {
+                        $ul .= sprintf('<li>%s</li>', $content);
+                    }
                 }
             }
             $ul .= '</ul>';
@@ -185,12 +188,12 @@ class tpl {
                     
                     $this->config['file'] = preg_replace(sprintf('#<!-- %s %s -->#s', $type, $key), $this->createImage($placeholder), $this->config['file'], 1);
                 } else {
-                    $item = $site->pagemodules[$placeholder[0]];
+                    $item = @$site->pagemodules[@$placeholder[0]];
                     $item = unserialize($item);
                     if (defined('DEBUG') && DEBUG) {
                         $extra = sprintf('<!-- DEBUG %s %s -->', $type, $key);
                     }
-                    $this->config['file'] = preg_replace(sprintf('#<!-- %s %s -->#s', $type, $key), @$extra . $item[0][0]['value'], $this->config['file'], 1);
+                    $this->config['file'] = preg_replace(sprintf('#<!-- %s %s -->#s', $type, $key), @$extra . $item['list'][0][0]['value'], $this->config['file'], 1);
                 }
             } else {
                 preg_match_all(sprintf('#<!-- %s %s -->(.*?)<!-- END%s %s -->#s', $type, $key, $type, $key), $this->config['file'], $matches, PREG_SET_ORDER);

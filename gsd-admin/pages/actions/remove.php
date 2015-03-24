@@ -16,10 +16,13 @@ if (!IS_ADMIN) {
     exit;
 }
 
-if (@$_REQUEST['confirm'] == $affirmative) {
-    $mysql->statement('SELECT url FROM pages WHERE pid = ?;', array($site->arg(2)));
+if (@$_REQUEST['confirm'] == $afirmative) {
+    $mysql->statement('SELECT url, title FROM pages WHERE pid = ?;', array($site->arg(2)));
 
-    $currenturl = $mysql->singleresult();
+    $result = $mysql->singleline();
+
+    $title = $result['title'];
+    $currenturl = $result['url'];
 
     $mysql->statement('DELETE FROM redirect WHERE `destination` = ?;', array($currenturl));
 
@@ -32,7 +35,7 @@ if (@$_REQUEST['confirm'] == $affirmative) {
 
     } else {
 
-        $_SESSION['message'] = '{LANG_PAGE_REMOVED}';
+        $_SESSION['message'] = sprintf(lang('LANG_PAGE_REMOVED'), $title);
 
         header("Location: /admin/pages", true, 302);
         exit;

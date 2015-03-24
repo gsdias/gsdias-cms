@@ -60,13 +60,15 @@ if (@$_REQUEST['save']) {
 
         if ($mysql->total) {
             foreach($mysql->result() as $url) {
+                //REFACTOR: THIS PART IS OUTDATED
                 $mysql->statement('INSERT INTO redirect (`pid`, `from`, `destination`, `creator`) VALUES (?, ?, ?, ?);', array($site->arg(2), $url[1], $_REQUEST['url'], $user->id));
             }
         } else {
             $mysql->statement('INSERT INTO redirect (`pid`, `from`, `destination`, `creator`) VALUES (?, ?, ?, ?);', array($site->arg(2), $currenturl, $_REQUEST['url'], $user->id));
         }
 
-        $mysql->statement('UPDATE pages SET url = ? WHERE pid = ?;', array(
+        $mysql->statement('UPDATE pages AS p JOIN pages AS pp ON pp.pid = p.parent SET p.url = ?, p.beautify = concat(pp.beautify, ?) WHERE p.pid = ?;', array(
+            $_REQUEST['url'],
             $_REQUEST['url'],
             $site->arg(2)
         ));

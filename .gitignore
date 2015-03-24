@@ -1,3 +1,4 @@
+vendor
 node_modules/
 .tmp/
 .sass-cache/
@@ -10,6 +11,5 @@ error_log
 gsd-client/
 gsd-tpl/_shared/_scripts.html
 gsd-tpl/_shared/_top.html
-gsd-assets/
 gsd-settings.php
 *.mo
