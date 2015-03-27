@@ -31,7 +31,7 @@
     });
 
     var MediaView = Backbone.View.extend({
-        template: _.template('<td><image src="/gsd-assets/images/((iid)).((extension))" height="100"></td><td>((name))</td><td><a href="#((iid))" data-image="/gsd-assets/images/((iid)).((extension))" class="use">Usar</a></td>'),
+        template: _.template('<td><image src="/gsd-client/assets/images/((iid)).((extension))" height="100"></td><td>((name))</td><td><a href="#((iid))" data-image="/gsd-client/assets/images/((iid)).((extension))" class="use">Usar</a></td>'),
         tagName: 'tr',
         events: {
             'click .close': 'closeoverlay',

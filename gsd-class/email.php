@@ -137,7 +137,11 @@ class email {
                 $this->reply_to = $from;
             }
             if ($to != '') {
-                $this->to = $to;
+                $this->to = array();
+                $tos = explode(',', str_replace(';', ',', $to));
+                foreach ($tos as $to) {
+                    $this->setto(trim($to));
+                }
             }
             if ($cc != '') {
                 $this->cc = array();

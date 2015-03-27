@@ -119,4 +119,17 @@ class site {
 
         return @$this->path[$pos];
     }
+
+    public function searchpage ($givenpath) {
+        $temp = $this->uri;
+        $this->startpoint = 'index';
+        $this->main = '';
+
+        $this->uri = $givenpath;
+        $this->path();
+        $this->page();
+
+        $this->uri = $temp;
+        $this->path();
+    }
 }

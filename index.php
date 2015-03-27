@@ -52,9 +52,9 @@ if (is_file('gsd-install' . PHPEXT)) {
         $tpl->setcondition('MESSAGES');
         unset($_SESSION['message']);
     }
-}
 
-$tpl->includeFiles('MAIN', $site->main);
-$tpl->setFile($site->startpoint);
+    $tpl->includeFiles('MAIN', $site->main);
+    $tpl->setFile($site->startpoint);
+}
 
 echo $tpl;

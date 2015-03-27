@@ -99,14 +99,11 @@ class tpl {
         $item = unserialize($item);
 
         $item = new image(array(
-            'iid' => @$item[0][0]['value'],
+            'iid' => @$item['list'][0][0]['value'],
             'width' => 'auto',
-            'class' => @$item[0][0]['class'],
-            'style' => @$item[0][0]['style']
+            'class' => @$item['list'][0][0]['class'],
+            'style' => @$item['list'][0][0]['style']
         ));
-        if (defined('DEBUG') && DEBUG) {
-            $extra = sprintf('<!-- DEBUG %s %s -->', $type, $key);
-        }
         
         return @$extra . $item;
     }
