@@ -29,9 +29,14 @@ if (@$_REQUEST['confirm'] == $afirmative) {
     } else {
 
         $_SESSION['message'] = '{LANG_USER_REMOVED}';
+
+        header("Location: /admin/users", true, 302);
+        exit;
     }
 
 }
 
-header("Location: /admin/users", true, 302);
-exit;
+if (@$_REQUEST['confirm'] == $negative) {
+    header("Location: /admin/users", true, 302);
+    exit;
+}

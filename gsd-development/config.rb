@@ -16,7 +16,7 @@ additional_import_paths  = ["../gsd-client/development/sass"]
 # You can select your preferred output style here (can be overridden via the command line):
 # output_style = :expanded or :nested or :compact or :compressed
 
-output_style = :expanded
+output_style = :compressed
 
 sourcemap = true
 

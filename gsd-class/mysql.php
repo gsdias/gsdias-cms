@@ -189,7 +189,8 @@
 		// -- Params :
 		// -- Purpose : returns database query single result
 		function singleresult() {
-			return sizeof($this->result) ? array_values($this->result[0])[0] : '';
+            $result = array_values($this->result[0]);
+			return sizeof($this->result) ? array_pop($result) : '';
 		}
 
 		public

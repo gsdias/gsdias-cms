@@ -24,11 +24,12 @@ class users extends section implements isection {
 
         $email = new email();
 
-        $email->setto($_REQUEST['email']);
+        $email->setto(@$emailparams['email'] ? $emailparams['email'] : $_REQUEST['email']);
         $email->setfrom($site->email);
         $email->setreplyto($site->email);
         $email->setsubject(lang('LANG_REGISTER_SUBJECT'));
         $email->setvar('password', $password);
+
         if (sizeof(@$emailparams['fields'])) {
             foreach ($emailparams['fields'] as $key => $value) {
                 $email->setvar(strtolower($key), $value);

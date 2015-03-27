@@ -9,9 +9,7 @@
  */
 
 if (!IS_ADMIN) {
-    
     $_SESSION['error'] = '{LANG_LAYOUT_NOPERMISSION}';
-    
     header("Location: /admin/layouts", true, 302);
     exit;
 }

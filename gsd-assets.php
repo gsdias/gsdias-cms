@@ -8,12 +8,16 @@
  * @since      File available since Release 1.0
  */
 
-if (@$site->arg(1) == 'images') {
-    $iid = explode('_', @$site->arg(2));
-    $name = explode('.', @$site->arg(2));
+if (@$site->arg(2) == 'images') {
+    $iid = is_numeric(@$site->arg(3)) ? $site->arg(3) : 0;
+    $name = explode('.', @$site->arg(3));
 
-    if (sizeof($name) === 2) {
-        $mysql->statement('SELECT iid, extension FROM images WHERE iid = ? OR (name = ? AND extension = ?);', array($iid[0], $name[0], @$name[1]));
+    if (sizeof($name) === 2 || $iid) {
+        if (sizeof($name) === 2) {
+            $mysql->statement('SELECT iid, extension FROM images WHERE name = ? AND extension = ?;', array($name[0], @$name[1]));
+        } else {
+            $mysql->statement('SELECT iid, extension FROM images WHERE iid = ?;', array($iid));
+        }
 
         $image = $mysql->singleline();
 

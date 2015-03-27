@@ -149,15 +149,15 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item['pid']));
                 $extra = array();
                 if ($item['file'] == '_image') {
                     $image = new image(array(
-                        'iid' => @$item['data'][0][0]['value'],
+                        'iid' => @$item['data']['list'][0][0]['value'],
                         'height' => '100',
                         'width' => 'auto',
-                        'class' => sprintf('preview %s', @$item['data'][0][0]['value'] ? '' : 'is-hidden')
+                        'class' => sprintf('preview %s', @$item['data']['list'][0][0]['value'] ? '' : 'is-hidden')
                     ));
 
                     $extra = array(
                         'IMAGE' => $image,
-                        'EMPTY' => @$item['data'][0][0]['value'] ? 'is-hidden' : ''
+                        'EMPTY' => @$item['data']['list'][0][0]['value'] ? 'is-hidden' : ''
                     );
                 }
 
