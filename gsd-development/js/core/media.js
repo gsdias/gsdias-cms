@@ -31,12 +31,14 @@
     });
 
     var MediaView = Backbone.View.extend({
-        template: _.template('<td><image src="/gsd-assets/images/((iid)).((extension))" height="100"></td><td>((name))</td><td><a href="#((iid))" data-image="/gsd-assets/images/((iid)).((extension))" class="use">Usar</a></td>'),
         tagName: 'tr',
         events: {
             'click .close': 'closeoverlay',
             'click .use': 'useasset',
             'submit .search': 'filter'
+        },
+        initialize: function () {
+            this.template = _.template($('#imageBlock').html());
         },
         useasset: function (e) {
             e.preventDefault();
@@ -71,7 +73,7 @@
 
                 datacontent.find('*').remove();
 
-                datacontent.append('<table><thead><tr><th>Imagem</th><th>Nome</th><th>Accao</th></tr></thead><tbody></tbody></table>');
+                datacontent.append('<table><thead><tr><th>Imagem</th><th>Nome</th><th>Acção</th></tr></thead><tbody></tbody></table>');
 
                 _.each(data, function (item) {
                     var media = new MediaView({
@@ -110,7 +112,7 @@
                 
                 datacontent.find('*').remove();
                 
-                datacontent.append('<table><thead><tr><th>Imagem</th><th>Nome</th><th>Accao</th></tr></thead><tbody></tbody></table>');
+                datacontent.append('<table><thead><tr><th>Imagem</th><th>Nome</th><th>Acção</th></tr></thead><tbody></tbody></table>');
                 
                 _.each(data, function (item) {
                     var media = new MediaView({
