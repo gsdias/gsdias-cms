@@ -98,7 +98,7 @@ function dateDif ($first = null, $second = null) {
 function timeago ($seconds = 0, $hour = 0) {
     global $lang, $config;
     
-    $days = $seconds / 3600 / 24;
+    $days = ceil($seconds / 3600 / 24);
     $months = $days > 30 ? $days / 30 : 0;
     $months = round($months, 0);
     

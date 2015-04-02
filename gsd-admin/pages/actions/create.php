@@ -15,7 +15,7 @@ if (!IS_ADMIN) {
 
 if (@$_REQUEST['save']) {
     
-    $defaultfields = array('title', 'url', 'lid', 'description', 'keywords', 'tags', 'og_title', 'og_image', 'og_description', 'parent', 'show_menu', 'require_auth');
+    $defaultfields = array('title', 'url', 'lid', 'description', 'keywords', 'tags', 'og_title', 'og_image', 'og_description', 'parent', 'show_menu', 'require_auth', 'created');
     
     $fields = array('creator');
     
@@ -23,6 +23,7 @@ if (@$_REQUEST['save']) {
     
     $_REQUEST['require_auth'] = @$_REQUEST['auth'] ? @$_REQUEST['auth'] : null;
     $_REQUEST['show_menu'] = @$_REQUEST['menu'] ? @$_REQUEST['menu'] : null;
+    $_REQUEST['created'] = date('Y-m-d H:i:s', time());
     
     $mysql->statement('DELETE FROM redirect WHERE `from` = ?;', array($_REQUEST['url']));
 

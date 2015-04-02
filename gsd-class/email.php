@@ -105,7 +105,7 @@ class email {
 
         $content = file_get_contents($file);
 
-        $this->parsehtml($text);
+        $this->parsehtml($content);
 
         $file = explode('/', $file);
         $file = explode('.', $file[sizeof($file) - 1]);
