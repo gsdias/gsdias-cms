@@ -10,10 +10,15 @@
     background: #efefef;
     float: left;
     position: relative;
+    text-align: center;
     z-index: 5;
 
     > ul {
         box-shadow: inset -5px 0px 10px -5px rgba(0, 0, 0, 0.5);
+
+        > li {
+            padding: 15px;
+        }
     }
 
     .icon {
@@ -24,38 +29,34 @@
     }
 
     a {
-        text-indent: -9999px;
+        color: #276876;
         overflow: hidden;
         text-decoration: none;
-        display: block;
-        font-size: 0;
-        text-align: start;
-        display: block;
         position: relative;
 
         &:hover {
             &:after {
-                right: 0;
+                right: -17px;
                 border: solid 8px transparent;
                 content: " ";
                 height: 0;
                 width: 0;
                 position: absolute;
                 border-right-color: #fff;
-                top: 28%;
+                top: -40%;
             }
         }
 
         &.active {
             &:after {
-                right: 0;
+                right: -11px;
                 border: solid 8px transparent;
                 content: " ";
                 height: 0;
                 width: 0;
                 position: absolute;
                 border-right-color: #fff;
-                top: 28%;
+                top: -40%;
             }
         }
     }
@@ -85,6 +86,7 @@
         padding: 10px;
         box-shadow: 2px 2px 3px 0px rgba(0, 0, 0, .3);
         border-radius: 0 5px 5px 0;
+        text-align: left;
 
         a {
             text-indent: 0;
@@ -113,69 +115,5 @@
             top: 18px;
             left: -16px;
         }
-    }
-}
-
-/* Media Queries */
-@media screen and (max-width: 77em) {
-
-    .outer-nav.top {
-        top: 15%;
-    }
-
-    .outer-nav.bottom {
-        bottom: 15%;
-    }
-}
-
-@media screen and (max-width: 36.625em), screen and (max-height: 41.75em) {
-
-    .outer-nav.top {
-        top: 5%;
-    }
-
-    .outer-nav.bottom {
-        bottom: 5%;
-    }
-
-    .outer-nav.horizontal {
-        font-size: 1.7em;
-        width: 6.2em;
-    }
-
-    .outer-nav.horizontal a {
-        display: block;
-        text-align: left;
-    }
-
-    /* Special Case */
-    .effect-rotatetop .outer-nav.horizontal {
-        width: 95%;
-        bottom: auto;
-        top: 50%;
-    }
-
-    .effect-rotatetop .outer-nav.horizontal a {
-        display: inline-block;
-    }
-
-}
-
-@media screen and (max-width: 31em), screen and (max-height: 36.2em) {
-    .outer-nav.horizontal,
-    .outer-nav.vertical {
-        font-size: 1.2em;
-        width: 6.8em;
-    }
-
-    .outer-nav.right {
-        right: auto;
-        left: 50%;
-    }
-}
-
-@media screen and (max-height: 31.6em) {
-    .outer-nav a {
-        margin-bottom: 20px;
     }
 }
