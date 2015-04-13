@@ -31,10 +31,19 @@
 
 .main {
     margin-left: 64px;
+
     &:after {
         content: '';
         display: block;
         clear: both;
+    }
+
+    .error404 {
+        text-align: center;
+
+        p {
+            margin: 50px 0;
+        }
     }
 }
 .ago {
