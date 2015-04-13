@@ -8,7 +8,7 @@ gsd-resources/js/libs/*
 gsd-resources/css/*.css
 gsd-resources/css/*.map
 error_log
-gsd-client/
+gsd-frontend/
 gsd-tpl/_shared/_scripts.html
 gsd-tpl/_shared/_top.html
 gsd-settings.php

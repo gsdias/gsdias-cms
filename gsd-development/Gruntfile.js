@@ -30,8 +30,8 @@ module.exports = function (grunt) {
             files: [
                 './js/core/*.js',
                 './js/core/generic/*.js',
-                '../gsd-client/development/js/core/*.js',
-                '../gsd-client/development/js/core/generic/*.js'
+                '../gsd-frontend/development/js/core/*.js',
+                '../gsd-frontend/development/js/core/generic/*.js'
             ],
             options: {
                 // options here to override JSHint defaults
@@ -68,8 +68,8 @@ module.exports = function (grunt) {
                             replacement: '"..\/..\/gsd-development\/js'
                         },
                         {
-                            pattern: /"..\/..\/..\/..\/..\/gsd-client/gi,
-                            replacement: '"..\/..\/gsd-client'
+                            pattern: /"..\/..\/..\/..\/..\/gsd-frontend/gi,
+                            replacement: '"..\/..\/gsd-frontend'
                         }
                     ]
                 }
@@ -89,7 +89,7 @@ module.exports = function (grunt) {
                             name: 'concat',
                             createConfig: function (context) {
                                 var generated = context.options.generated,
-                                    clientfiles = grunt.file.readJSON('../gsd-client/development/jsclient.json');
+                                    clientfiles = grunt.file.readJSON('../gsd-frontend/development/jsclient.json');
                                 generated.options = {
                                     sourceMap: true
                                 };
@@ -140,11 +140,11 @@ module.exports = function (grunt) {
         },
         watch: {
             js: {
-                files: ['./js/*.js', './js/*/*.js', '../gsd-client/development/js/*.js', '../gsd-client/development/js/*/*.js'],
+                files: ['./js/*.js', './js/*/*.js', '../gsd-frontend/development/js/*.js', '../gsd-frontend/development/js/*/*.js'],
                 tasks: ['jshint', 'useminPrepare', 'concat:generated', 'uglify:generated', 'usemin', 'string-replace']
             },
             css: {
-                files: ['./sass/*.scss', './sass/*/*.scss', '../gsd-client/development/sass/*.scss', '../gsd-client/development/sass/*/*.scss'],
+                files: ['./sass/*.scss', './sass/*/*.scss', '../gsd-frontend/development/sass/*.scss', '../gsd-frontend/development/sass/*/*.scss'],
                 tasks: ['compass']
             }
         },

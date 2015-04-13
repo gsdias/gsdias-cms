@@ -54,9 +54,9 @@ $sprites2x: sprite-map("icons/retina/*.png");
     @import "_theme.scss";
 }
 
-@import "../../gsd-client/development/sass/_core/_global";
+@import "../../gsd-frontend/development/sass/_core/_global";
 .frontend {
-    @import "../../gsd-client/development/sass/_client.scss";
+    @import "../../gsd-frontend/development/sass/_client.scss";
 }
 
 
