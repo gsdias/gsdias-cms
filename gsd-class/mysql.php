@@ -3,7 +3,7 @@
 /**
  * @author     Goncalo Silva Dias <mail@gsdias.pt>
  * @copyright  2014-2015 GSDias
- * @version    1.0
+ * @version    1.1
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
@@ -121,14 +121,7 @@
             if ($this->conn) {
                 $this->prepared = $this->conn->prepare($query);
                 $this->execute($values);
-            } else {
-                $file = fopen('error_log', 'a');
-                fwrite($file, 'no connection on: ' . $query . "\r\n");
-                fclose($file);
             }
-            /*if (defined('DEBUG') && DEBUG) {
-                echo $this->erromsg();
-            }*/
 
             if (defined('DEBUG') && DEBUG) {
 
