@@ -15,12 +15,14 @@
     left: 0;
     z-index: 10;
     display: none;
+
     header {
         width: 95%;
         max-width: 960px;
         margin: 50px auto 0;
         padding: 10px 0;
         overflow: hidden;
+
         .close {
             width: 30px;
             height: 30px;
@@ -30,10 +32,12 @@
             cursor: pointer;
         }
     }
+
     section {
         height: 100%;
         position: relative;
     }
+
     .content {
         background: #fff;
         width: 91%;
@@ -44,11 +48,14 @@
         overflow: auto;
         height: 70%;
     }
+
     table {
         width: 100%;
+
         thead {
             background: #ccc;
         }
+
         th, td {
             padding: 10px 0;
             text-align: center;
@@ -60,9 +67,11 @@
             box-shadow: 0 0 1px #ccc;
         }
     }
+
     a {
         color: #0076cf;
     }
+
     .search {
         position: relative;
         right: auto;

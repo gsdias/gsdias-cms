@@ -11,39 +11,49 @@
     margin: 0 1% 10px;
     width: 96%;
     max-width: none;
+
     h1 {
         font-size: 20px;
         font-weight: 700;
         margin-bottom: 10px;
         padding: 0 10px;
     }
+
     ul {
         border-radius: 10px 0 10px 0;
         overflow: hidden;
     }
+
     li {
         padding: 10px;
     }
+
     li:nth-child(odd) {
         background: #ededed;
     }
+
     li:nth-child(even) {
         background: #d7d7d7;
     }
+
     a {
         color: #276876;
     }
+
     @include respond-min($tablet-port) {
 		float: left;
         width: 45%;
 	}
+
     @include respond-min($tablet-land) {
         width: 29.1%;
 	}
+
     @include respond-min(1200px) {
         width: 23%;
 	}
 }
+
 .warning {
     background: #fcf8e3;
     border: solid 1px #f6dc00;

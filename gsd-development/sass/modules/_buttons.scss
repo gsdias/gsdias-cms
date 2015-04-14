@@ -16,6 +16,7 @@
         display: block;
         clear: both;
     }
+
     &.right {
         position: absolute;
         top: 20px;
@@ -23,6 +24,7 @@
         width: auto;
         margin-top: 0;
     }
+
     .btn {
         float: left;
         text-align: center;
@@ -42,45 +44,55 @@
             @include gradient(#adadad, #c7c7c7);
             text-decoration: none;
         }
+
         &[type="submit"] {
             border-radius: 0;
             width: auto;
             padding: 5px 15px;
         }
+
         &:active {
             background: #adadad;
         }
+
         &:first-child {
             border-top-left-radius: 5px;
             border-bottom-left-radius: 5px;
             margin-left: 0;
         }
+
         &:last-child {
             border-top-right-radius: 5px;
             border-bottom-right-radius: 5px;
         }
+
         &.red {
             color: #fff;
             @include gradient(#e23333, #bf2b2b);
             border: solid 1px #c75d5d;
             box-shadow: inset 0 1px 1px -1px #fff;
             text-shadow: 0 1px 0 #9e0000;
+
             &:hover {
                 @include gradient(#bf2b2b, #e23333);
             }
+
             &:active {
                 background: #bf2b2b;
             }
         }
+
         &.blue {
             color: #fff;
             @include gradient(#7faee9, #387ed3);
             border: solid 1px #567fb0;
             box-shadow: inset 0 1px 1px -1px #fff;
             text-shadow: 0 1px 0 #2d5ea8;
+
             &:hover {
                 @include gradient(#387ed3, #7faee9);
             }
+
             &:active {
                 background: #387ed3;
             }

@@ -12,6 +12,7 @@ header {
     position: relative;
     z-index: 10;
     //box-shadow: 0 0 10px 0px rgba(0, 0, 0, .5);
+
     .bar {
         background: #276876;
         color: #fff;
@@ -20,13 +21,16 @@ header {
         overflow: hidden;
         display: none;
     }
+
     i {
         margin-left: 10px;
     }
+
     .logo {
         display: inline-block;
         margin-bottom: 11px;
     }
+
     .logout {
         overflow: hidden;
         color: #276876;
@@ -36,6 +40,7 @@ header {
         float: right;
         margin-right: 11px;
     }
+
     #showMenu {
         background: grey;
         width: 40px;
@@ -45,20 +50,25 @@ header {
         right: 10px;
         text-indent: -9999px;
     }
+
     .right {
         float: right;
         margin-right: 10px;
     }
+
     nav {
         float: left;
+
         a {
             border-left: solid 1px #fff;
             padding-left: 4px;
+
             &:first-child {
                 border: none;
             }
         }
     }
+
     @include respond-max($tablet-port) {
         nav {
             display: none;
