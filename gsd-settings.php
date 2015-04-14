@@ -7,11 +7,11 @@ $path = explode("/", $uri);
 array_shift($path);
 
 $config['resources'] = '/gsd-resources';
-$config['url'] = 'stockiberico.localhost';
+$config['url'] = 'localhost';
 $_mysql['host'] = '127.0.0.1';
-$_mysql['user'] = 'corporat_iberica';
-$_mysql['pass'] = 'UTFFvV@%WaGG';
-$_mysql['db'] = 'corporat_iberica';
+$_mysql['user'] = '';
+$_mysql['pass'] = '';
+$_mysql['db'] = '';
 
 define('DEBUG', 0);
 define('TPLEXT', '.html');
