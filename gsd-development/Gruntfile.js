@@ -10,11 +10,12 @@ module.exports = function (grunt) {
 
     'use strict';
 
+    var pkg = require('./package.json');
+
     grunt.initConfig({
-        pkg: grunt.file.readJSON('package.json'),
         filerev: {
             compile: {
-                src: ['../gsd-resources/js/built.js', '../gsd-resources/css/screen.css']
+                src: [pkg.gsdresources + 'js/built.js', pkg.gsdresources + 'css/screen.css']
             },
             options: {
                 algorithm: 'md5',
@@ -23,15 +24,13 @@ module.exports = function (grunt) {
         },
         clean: {
             options: { force: true },
-            js: ['../gsd-resources/js/*.js', '../gsd-resources/js/*.map'],
-            css: ['../gsd-resources/css/*.css', '../gsd-resources/css/*.map']
+            js: [pkg.gsdresources + 'js/*.js', pkg.gsdresources + 'js/*.map'],
+            css: [pkg.gsdresources + 'css/*.css', pkg.gsdresources + 'css/*.map']
         },
         jshint: {
             files: [
-                './js/core/*.js',
-                './js/core/generic/*.js',
-                '../gsd-frontend/development/js/core/*.js',
-                '../gsd-frontend/development/js/core/generic/*.js'
+                './js/core/**/*.js',
+                pkg.gsdfrontend + 'development/js/core/**/*.js'
             ],
             options: {
                 // options here to override JSHint defaults
@@ -59,7 +58,7 @@ module.exports = function (grunt) {
         'string-replace': {
             'js-source-map-fix': {
                 files: {
-                    '../gsd-resources/js/': '../gsd-resources/js/*'
+                    '../gsd-resources/js/': pkg.gsdresources + 'js/*'
                 },
                 options: {
                     replacements: [
@@ -89,7 +88,7 @@ module.exports = function (grunt) {
                             name: 'concat',
                             createConfig: function (context) {
                                 var generated = context.options.generated,
-                                    clientfiles = grunt.file.readJSON('../gsd-frontend/development/jsclient.json');
+                                    clientfiles = grunt.file.readJSON(pkg.gsdfrontend + 'development/jsclient.json');
                                 generated.options = {
                                     sourceMap: true
                                 };
@@ -140,11 +139,11 @@ module.exports = function (grunt) {
         },
         watch: {
             js: {
-                files: ['./js/*.js', './js/*/*.js', '../gsd-frontend/development/js/*.js', '../gsd-frontend/development/js/*/*.js'],
+                files: ['./js/*.js', './js/*/*.js', pkg.gsdfrontend + 'development/js/*.js', pkg.gsdfrontend + 'development/js/*/*.js'],
                 tasks: ['jshint', 'useminPrepare', 'concat:generated', 'uglify:generated', 'usemin', 'string-replace']
             },
             css: {
-                files: ['./sass/*.scss', './sass/*/*.scss', '../gsd-frontend/development/sass/*.scss', '../gsd-frontend/development/sass/*/*.scss'],
+                files: ['./sass/*.scss', './sass/*/*.scss', pkg.gsdfrontend + 'development/sass/*.scss', pkg.gsdfrontend + 'development/sass/*/*.scss'],
                 tasks: ['compass']
             }
         },
@@ -159,7 +158,7 @@ module.exports = function (grunt) {
                 devFile: './js/libs/modernizr.js',
 
                 // [REQUIRED] Path to save out the built file.
-                outputFile: '../gsd-resources/js/libs/modernizr.min.js',
+                outputFile: pkg.gsdresources + 'js/libs/modernizr.min.js',
 
                 // Based on default settings on http://modernizr.com/download/
                 extra: {
@@ -208,9 +207,11 @@ module.exports = function (grunt) {
 
         },
         jscs: {
-            design: [
+            files: [
                 'js/**/*.js',
-                '!js/libs/*'
+                '!js/libs/*',
+                pkg.gsdfrontend + 'development/js/**/*.js',
+                '!' + pkg.gsdfrontend + 'development/js/libs/*'
             ],
             options: {
                 config: '.jscsrc'
@@ -228,6 +229,7 @@ module.exports = function (grunt) {
         'clean',
         'copy',
         'jshint',
+        'jscs',
         'compass',
         'useminPrepare',
         'concat:generated',

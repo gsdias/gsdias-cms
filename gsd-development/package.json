@@ -1,6 +1,6 @@
 {
-    "name": "happyfication-repo",
-    "version": "0.1.0",
+    "name": "gsd-cms",
+    "version": "1.1",
     "devDependencies": {
         "grunt-contrib-compass": "1.0.1",
         "grunt-contrib-uglify": "0.8.0",
@@ -17,12 +17,14 @@
         "grunt-jscs": "^1.5.0",
         "load-grunt-tasks": "^3.1.0"
     },
-    "description": "Happyfication",
+    "description": "GSD CMS",
     "main": "Gruntfile.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "prefix": "gsd-",
+    "gsdresources": "../gsd-resources/",
+    "gsdfrontend": "../gsd-frontend/",
     "repository": "",
     "author": "",
     "license": "BSD",
