@@ -13,7 +13,9 @@
         "grunt-contrib-htmlmin": "0.4.0",
         "grunt-string-replace": "1.0.0",
         "grunt-filerev": "2.1.2",
-        "grunt-contrib-clean": "0.6.0"
+        "grunt-contrib-clean": "0.6.0",
+        "grunt-jscs": "^1.5.0",
+        "load-grunt-tasks": "^3.1.0"
     },
     "description": "Happyfication",
     "main": "Gruntfile.js",

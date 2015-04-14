@@ -15,11 +15,10 @@
     };
 
     global.resizemain = function () {
-
     };
-    
+
     app.page.window.el.on(GSD.globalevents.resize, global.resizemain);
-    
+
     $(document).bind(GSD.globalevents.init, function () {
         global.resizemain();
     });

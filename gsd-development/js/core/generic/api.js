@@ -11,21 +11,21 @@
     'use strict';
 
     var url = '/gsd-api/',
-        messageBlock = $('.favicons');
+        messageBlock = $('.favicons'),
 
-    var serverError = function () {
+        serverError = function () {
 
-        api.loading();
+            api.loading();
 
-        alert('Não foi possível comunicar com o servidor. Tente mais tarde');
+            alert('Não foi possível comunicar com o servidor. Tente mais tarde');
 
-    };
+        },
 
-    var success = function () {
+        success = function () {
 
-        api.loading();
+            api.loading();
 
-    };
+        };
 
     api.loading = function (elem) {
         if ('object' !== typeof elem) {

@@ -30,9 +30,9 @@
                     .replace(/\b\ \b/g, '-');
             url.value = '/' + value.trim();
         }
-    };
+    },
 
-    var newsubmodule = function () {
+    newsubmodule = function () {
         var id = this.name.replace('pm_s_', '').split('_'),
             elm = $(this).closest('.submodule'),
             newelm = elm.clone();
@@ -46,9 +46,9 @@
             elm.after(newelm);
             newelm.find('.clearimage').trigger('click');
         }
-    };
+    },
 
-    var togglesettings = function () {
+    togglesettings = function () {
         var icon = $(this),
             parent = icon.closest('div'),
             settings = parent.find('.settings:first');

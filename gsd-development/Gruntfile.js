@@ -206,20 +206,19 @@ module.exports = function (grunt) {
                 customTests : []
             }
 
+        },
+        jscs: {
+            design: [
+                'js/**/*.js',
+                '!js/libs/*'
+            ],
+            options: {
+                config: '.jscsrc'
+            }
         }
     });
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-string-replace');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.loadNpmTasks('grunt-contrib-compass');
-    grunt.loadNpmTasks('grunt-modernizr');
-    grunt.loadNpmTasks('grunt-usemin');
-    grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-contrib-htmlmin');
-    grunt.loadNpmTasks('grunt-filerev');
-    grunt.loadNpmTasks('grunt-contrib-clean');
+
+    require('load-grunt-tasks')(grunt);
 
     grunt.registerTask('default', [
         'build',
