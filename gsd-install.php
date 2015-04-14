@@ -11,9 +11,9 @@
 if (@$_REQUEST['save']) {
     $site->main = 'STEP2';
     $site->startpoint = 'index';
-    
+
     $mysql->statement('INSERT INTO users (level, email, password, name, creator) VALUES ("admin", ?, md5(?), ?, 0);', array($_REQUEST['email'], $_REQUEST['password'], $_REQUEST['name']));
-    
+
     if ($mysql->total) {
         $tpl->setvar('STEP2_MESSAGES', 'Admin user saved with success. You can login now. Don\'t forget to remove install files.');
     }
@@ -21,7 +21,7 @@ if (@$_REQUEST['save']) {
 } else {
     $site->main = 'STEP1';
     $site->startpoint = 'index';
-    
+
     $mysql->statement('SHOW DATABASES;');
 
     $database[@$_mysql['db']] = 1;
@@ -43,7 +43,7 @@ if (@$_REQUEST['save']) {
     }
 
     $mysql->statement('SHOW TABLES;');
-    
+
     if ($mysql->total) {
         $found = serialize($mysql->result());
         $table_exists = array();
