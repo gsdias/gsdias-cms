@@ -15,35 +15,6 @@ class users extends section implements isection {
         return 0; 
     }
 
-    public function add ($defaultfields, $defaultsafter = array(), $defaultvalues = array(), $emailparams = array()) {
-        global $site;
-
-        $password = $_REQUEST['password'];
-        $_REQUEST['password'] = md5($_REQUEST['password']);
-        $result = parent::add($defaultfields, $defaultsafter, $defaultvalues);
-
-        $email = new email();
-
-        $email->setto(@$emailparams['email'] ? $emailparams['email'] : $_REQUEST['email']);
-        $email->setfrom($site->email);
-        $email->setreplyto($site->email);
-        $email->setsubject(lang('LANG_REGISTER_SUBJECT'));
-        $email->setvar('password', $password);
-
-        if (sizeof(@$emailparams['fields'])) {
-            foreach ($emailparams['fields'] as $key => $value) {
-                $email->setvar(strtolower($key), $value);
-            }
-        }
-
-        $template = is_file(CLIENTTPLPATH . '_emails/register' . TPLEXT) ? CLIENTTPLPATH . '_emails/register' . TPLEXT : TPLPATH . '_emails/register' . TPLEXT;
-
-        $email->settemplate($template);
-        $email->sendmail();
-
-        return $result;
-    }
-
     public function getlist ($numberPerPage = 10, $extrafields = array()) {
         global $mysql, $tpl;
 
@@ -132,5 +103,34 @@ class users extends section implements isection {
             $tpl->setvars($fields);
 
         }
+    }
+
+    public function add ($defaultfields, $defaultsafter = array(), $defaultvalues = array(), $emailparams = array()) {
+        global $site;
+
+        $password = $_REQUEST['password'];
+        $_REQUEST['password'] = md5($_REQUEST['password']);
+        $result = parent::add($defaultfields, $defaultsafter, $defaultvalues);
+
+        $email = new email();
+
+        $email->setto(@$emailparams['email'] ? $emailparams['email'] : $_REQUEST['email']);
+        $email->setfrom($site->email);
+        $email->setreplyto($site->email);
+        $email->setsubject(lang('LANG_REGISTER_SUBJECT'));
+        $email->setvar('password', $password);
+
+        if (sizeof(@$emailparams['fields'])) {
+            foreach ($emailparams['fields'] as $key => $value) {
+                $email->setvar(strtolower($key), $value);
+            }
+        }
+
+        $template = is_file(CLIENTTPLPATH . '_emails/register' . TPLEXT) ? CLIENTTPLPATH . '_emails/register' . TPLEXT : TPLPATH . '_emails/register' . TPLEXT;
+
+        $email->settemplate($template);
+        $email->sendmail();
+
+        return $result;
     }
 }

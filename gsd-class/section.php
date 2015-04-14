@@ -100,24 +100,7 @@ abstract class section implements isection {
             'TOTAL_PAGES' => $pages['TOTAL']
         ));
     }
-    
-    private function tablename () {
-        $class = get_class($this);
 
-        return substr($class, 0, 6) === 'client' ? substr($class, 6) : $class;
-    }
-
-    protected function extrafields () {
-        
-        $section = $this->tablename();
-        
-        $_fields = $section . 'fields';
-        
-        $fields = function_exists($_fields) ? $_fields() : array('list' => array());
-
-        return $fields['list'];
-    }
-    
     public function add ($defaultfields, $defaultsafter = array(), $defaultvalues = array()) {
         global $mysql;
         
@@ -177,5 +160,22 @@ abstract class section implements isection {
         $mysql->statement(sprintf('DELETE FROM %s WHERE %sid = ?;', $section, substr($section, 0, 1)), array($site->arg(2)));
         
         return array('total' => $mysql->total, 'errnum' => $mysql->errnum, 'id' => $site->arg(2));
+    }
+
+    private function tablename () {
+        $class = get_class($this);
+
+        return substr($class, 0, 6) === 'client' ? substr($class, 6) : $class;
+    }
+
+    protected function extrafields () {
+
+        $section = $this->tablename();
+
+        $_fields = $section . 'fields';
+
+        $fields = function_exists($_fields) ? $_fields() : array('list' => array());
+
+        return $fields['list'];
     }
 }

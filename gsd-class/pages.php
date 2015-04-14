@@ -125,6 +125,7 @@ class pages extends section implements isection {
             $tpl->setarray('PARENT', $parent);
         }
     }
+
     public function generatefields ($section) {
         global $tpl, $mysql;
 
@@ -240,6 +241,16 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item['pid']));
         $tpl->setcondition('EXTRAFIELDS', !empty($extrafields));
     }
 
+    public function add ($defaultfields, $defaultsafter = array(), $defaultvalues = array()) {
+        global $mysql, $site;
+
+        $result = parent::add($defaultfields, $defaultsafter, $defaultvalues);
+
+        $this->update_beautify($result['id']);
+
+        return $result;
+    }
+
     public function edit ($defaultfields = array()) {
         global $mysql, $site;
 
@@ -264,16 +275,6 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item['pid']));
             array_push($defaultfields, 'modified');
             $this->page_review($defaultfields, $fields);
         }
-
-        return $result;
-    }
-
-    public function add ($defaultfields, $defaultsafter = array(), $defaultvalues = array()) {
-        global $mysql, $site;
-
-        $result = parent::add($defaultfields, $defaultsafter, $defaultvalues);
-
-        $this->update_beautify($result['id']);
 
         return $result;
     }
