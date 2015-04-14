@@ -11,5 +11,4 @@ error_log
 gsd-frontend/
 gsd-tpl/_shared/_scripts.html
 gsd-tpl/_shared/_top.html
-gsd-settings.php
 *.mo
