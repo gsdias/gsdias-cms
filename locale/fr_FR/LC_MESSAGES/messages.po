@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2014-11-12 17:19-0000\n"
-"PO-Revision-Date: 2015-03-27 23:03-0000\n"
+"PO-Revision-Date: 2014-11-12 17:24-0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.7.4\n"
+"X-Generator: Poedit 1.6.10\n"
 "X-Poedit-Basepath: .\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Language: pt_PT\n"
+"Language: fr_FR\n"
 
 msgid "LANG_AT"
 msgstr "às"
@@ -35,7 +35,7 @@ msgid "LANG_ADMIN"
 msgstr "Admin"
 
 msgid "LANG_REMOVE"
-msgstr "Remover"
+msgstr "Supprimer"
 
 msgid "LANG_EMAIL"
 msgstr "Email"
@@ -122,7 +122,7 @@ msgid "LANG_PAGE_NOPERMISSION"
 msgstr "Não tem permissão para apagar páginas"
 
 msgid "LANG_USERS"
-msgstr "Utilizadores"
+msgstr "Utilisateurs"
 
 msgid "LANG_USER"
 msgstr "Utilizador"
@@ -191,7 +191,7 @@ msgid "LANG_UPLOAD_DOCUMENT"
 msgstr "Carregar documento"
 
 msgid "LANG_NO_DOCUMENTS"
-msgstr "Não existem documentos"
+msgstr "Pas de documents"
 
 msgid "LANG_DOCUMENT_UPLOADED"
 msgstr "Documento '%s' carregado"
@@ -209,16 +209,16 @@ msgid "LANG_AGO"
 msgstr "atrás"
 
 msgid "LANG_NAME"
-msgstr "Nome"
+msgstr "Nom"
 
 msgid "LANG_CREATED"
-msgstr "Criado"
+msgstr "Serviteur"
 
 msgid "LANG_CREATED_BY"
 msgstr "Criado por"
 
 msgid "LANG_ACTIONS"
-msgstr "Acções"
+msgstr "Actes"
 
 msgid "LANG_LAST_LOGIN"
 msgstr "Último Login"
@@ -242,13 +242,13 @@ msgid "LANG_RECOVER_PASSWORD"
 msgstr "Recuperar password"
 
 msgid "LANG_NEW_MALE"
-msgstr "Novo"
+msgstr "Nouveau"
 
 msgid "LANG_NEW_FEMALE"
-msgstr "Nova"
+msgstr "Nouveau"
 
 msgid "LANG_UPLOAD"
-msgstr "Carregar"
+msgstr "Charge"
 
 msgid "LANG_COPYRIGHTS"
 msgstr "Todos os direitos reservados"

@@ -1,15 +1,9 @@
 <main>
     <h1>{LANG_USERS}
-        <!-- IF IS_ADMIN -->
-        <a href="/admin/users/create" class="btn">{LANG_NEW_USER}</a>
-        <!-- ENDIF IS_ADMIN -->
+        <!-- IF IS_ADMIN --><a href="/admin/users/create" class="btn">{LANG_NEW_USER}</a><!-- ENDIF IS_ADMIN -->
     </h1>
-    <!-- IF ERRORS -->
-    <div class="errors">{ERRORS}</div>
-    <!-- ENDIF ERRORS -->
-    <!-- IF MESSAGES -->
-    <div class="errors messages">{MESSAGES}</div>
-    <!-- ENDIF MESSAGES -->
+    <!-- IF ERRORS --><div class="errors">{ERRORS}</div><!-- ENDIF ERRORS -->
+    <!-- IF MESSAGES --><div class="errors messages">{MESSAGES}</div><!-- ENDIF MESSAGES -->
     [_PAGINATOR]
     <table class="table">
         <thead>
@@ -20,21 +14,17 @@
                 <th>{LANG_ACTIONS}</th>
             </tr>
         </thead>
-        <!-- LOOP USERS -->
-        <tr>
+        <!-- LOOP USERS --><tr>
             <td>
                 <a href="/admin/users/{USERS_UID}">{USERS_NAME}</a>{USERS_DISABLED}
             </td>
             <td>{USERS_LAST_LOGIN}</td>
             <td>{USERS_CREATED}</td>
             <td class="actions">
-               <!-- IF IS_ADMIN -->
-                <a href="/admin/users/{USERS_UID}/edit">{LANG_EDIT}</a>
-                <a href="/admin/users/{USERS_UID}/remove">{LANG_REMOVE}</a>
-                <!-- ENDIF IS_ADMIN -->
+                <!-- IF IS_ADMIN --><a href="/admin/users/{USERS_UID}/edit">{LANG_EDIT}</a>
+                <a href="/admin/users/{USERS_UID}/remove">{LANG_REMOVE}</a><!-- ENDIF IS_ADMIN -->
             </td>
-        </tr>
-        <!-- ENDLOOP USERS -->
+        </tr><!-- ENDLOOP USERS -->
     </table>
     [_PAGINATOR]
 </main>
