@@ -14,22 +14,22 @@ msgstr ""
 "Language: fr_FR\n"
 
 msgid "LANG_AT"
-msgstr "às"
+msgstr "à"
 
 msgid "LANG_DAYS"
-msgstr "dias"
+msgstr "journées"
 
 msgid "LANG_DAY"
-msgstr "dia"
+msgstr "jour"
 
 msgid "LANG_MONTHS"
-msgstr "meses"
+msgstr "mois"
 
 msgid "LANG_MONTH"
-msgstr "mês"
+msgstr "mois"
 
 msgid "LANG_EDITOR"
-msgstr "Editor"
+msgstr "Éditeur"
 
 msgid "LANG_ADMIN"
 msgstr "Admin"
@@ -41,31 +41,31 @@ msgid "LANG_EMAIL"
 msgstr "Email"
 
 msgid "LANG_ADD"
-msgstr "Adicionar"
+msgstr "Ajouter"
 
 msgid "LANG_EDIT"
-msgstr "Editar"
+msgstr "Éditer"
 
 msgid "LANG_SETTINGS"
-msgstr "Definições"
+msgstr "Paramètres"
 
 msgid "LANG_DASHBOARD"
-msgstr "Páinel"
+msgstr "Painel"
 
 msgid "LANG_LAYOUTS"
 msgstr "Layouts"
 
 msgid "LANG_NEW_LAYOUT"
-msgstr "Adicionar novo"
+msgstr "Ajouter un nouveau"
 
 msgid "LANG_ALL_LAYOUTS"
-msgstr "Listar layouts"
+msgstr "Liste"
 
 msgid "LANG_NO_LAYOUTS"
-msgstr "Não existem layouts"
+msgstr "Pas de layouts"
 
 msgid "LANG_LAYOUT_ALREADY_EXISTS"
-msgstr "Já existe um layout associado a esse ficheiro"
+msgstr "Il existe déjà un layout associé à ce fichier"
 
 msgid "LANG_LAYOUT_REMOVED"
 msgstr "Layout '%s' apagado"
@@ -74,22 +74,22 @@ msgid "LANG_LAYOUT_CREATED"
 msgstr "Layout '%s' criado"
 
 msgid "LANG_LAYOUT_NOPERMISSION"
-msgstr "Não tem permissão para apagar layouts"
+msgstr "Vous n'êtes pas autorisé à supprimer layouts"
 
 msgid "LANG_LAYOUT_RELATED"
-msgstr "Existem páginas a usar este layout. Tem de apagar primeiro as páginas"
+msgstr "Il ya des pages d'utiliser ce layout. Vous devez d'abord supprimer des pages"
 
 msgid "LANG_PAGES"
-msgstr "Páginas"
+msgstr "Pages"
 
 msgid "LANG_PAGE"
-msgstr "Página"
+msgstr "Page"
 
 msgid "LANG_PAGE_REMOVE"
-msgstr "Remover página"
+msgstr "Retirer la page"
 
 msgid "LANG_FROM"
-msgstr "de"
+msgstr "à partir de"
 
 msgid "LANG_STATE"
 msgstr "Estado"
