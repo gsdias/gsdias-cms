@@ -92,13 +92,13 @@ msgid "LANG_FROM"
 msgstr "à partir de"
 
 msgid "LANG_STATE"
-msgstr "Estado"
+msgstr "État"
 
 msgid "LANG_NEW_PAGE"
-msgstr "Adicionar nova"
+msgstr "Ajouter un nouveau"
 
 msgid "LANG_ALL_PAGES"
-msgstr "Listar páginas"
+msgstr "Liste de pages"
 
 msgid "LANG_NO_PAGES"
 msgstr "Não existem páginas"
@@ -302,49 +302,49 @@ msgid "LANG_ADITIONAL_INFORMATION"
 msgstr "Informação adicional"
 
 msgid "LANG_PUBLISHED"
-msgstr "Publicada"
+msgstr "Publié"
 
 msgid "LANG_SIZE"
-msgstr "Tamanho"
+msgstr "Taille"
 
 msgid "LANG_MODIFIED"
-msgstr "Modificado"
+msgstr "Modifié"
 
 msgid "LANG_FILENAME"
-msgstr "Nome do ficheiro"
+msgstr "Nom de fichier"
 
 msgid "LANG_PAGE_BASIC_INFO"
 msgstr "Informação básica da página"
 
 msgid "LANG_NO"
-msgstr "Não"
+msgstr "Non"
 
 msgid "LANG_YES"
-msgstr "Sim"
+msgstr "Oui"
 
 msgid "LANG_PATH"
-msgstr "Caminho"
+msgstr "Chemin"
 
 msgid "LANG_FIRST"
-msgstr "Primeira"
+msgstr "Première"
 
 msgid "LANG_PREVIOUS"
-msgstr "Anterior"
+msgstr "Précédent"
 
 msgid "LANG_NEXT"
-msgstr "Seguinte"
+msgstr "Suivant"
 
 msgid "LANG_LAST"
-msgstr "Última"
+msgstr "Dernier"
 
 msgid "LANG_DISABLED"
-msgstr "Desactivo"
+msgstr "Désactivé"
 
 msgid "LANG_ENABLED"
-msgstr "Activo"
+msgstr "Actif"
 
 msgid "LANG_NEVER"
-msgstr "Nunca"
+msgstr "Jamais"
 
 msgid "LANG_PERMISSION"
 msgstr "Permissão"
