@@ -65,82 +65,82 @@ msgid "LANG_NO_LAYOUTS"
 msgstr "There are no layouts"
 
 msgid "LANG_LAYOUT_ALREADY_EXISTS"
-msgstr "Já existe um layout associado a esse ficheiro"
+msgstr "There is already a layout associated to that file"
 
 msgid "LANG_LAYOUT_REMOVED"
-msgstr "Layout '%s' apagado"
+msgstr "Layout '%s' removed"
 
 msgid "LANG_LAYOUT_CREATED"
-msgstr "Layout '%s' criado"
+msgstr "Layout '%s' created"
 
 msgid "LANG_LAYOUT_NOPERMISSION"
-msgstr "Não tem permissão para apagar layouts"
+msgstr "You don't have permission to remove layouts"
 
 msgid "LANG_LAYOUT_RELATED"
-msgstr "Existem páginas a usar este layout. Tem de apagar primeiro as páginas"
+msgstr "There are pages using that layout. First you have to remove the pages"
 
 msgid "LANG_PAGES"
-msgstr "Páginas"
+msgstr "Pages"
 
 msgid "LANG_PAGE"
-msgstr "Página"
+msgstr "Page"
 
 msgid "LANG_PAGE_REMOVE"
-msgstr "Remover página"
+msgstr "Remove page"
 
 msgid "LANG_FROM"
-msgstr "de"
+msgstr "from"
 
 msgid "LANG_STATE"
-msgstr "Estado"
+msgstr "State"
 
 msgid "LANG_NEW_PAGE"
-msgstr "Adicionar nova"
+msgstr "Add new"
 
 msgid "LANG_ALL_PAGES"
-msgstr "Listar páginas"
+msgstr "List pages"
 
 msgid "LANG_NO_PAGES"
-msgstr "Não existem páginas"
+msgstr "There are no pages"
 
 msgid "LANG_PAGE_CREATED"
-msgstr "Página '%s' criada"
+msgstr "Page '%s' created"
 
 msgid "LANG_PAGE_SAVED"
-msgstr "Página '%s' salva"
+msgstr "Page '%s' saved"
 
 msgid "LANG_PAGE_ALREADY_EXISTS"
-msgstr "Já existe uma página com esse endereço"
+msgstr "There is already a page with that url"
 
 msgid "LANG_PAGE_REMOVED"
-msgstr "Página '%s' apagada"
+msgstr "Page '%s' removed"
 
 msgid "LANG_PAGE_ERROR"
-msgstr "Houve um problema. Verifique os dados e tente novamente"
+msgstr "There was a problem. Check your data and try again"
 
 msgid "LANG_PAGE_NOPERMISSION"
 msgstr "Não tem permissão para apagar páginas"
 
 msgid "LANG_USERS"
-msgstr "Utilizadores"
+msgstr "Users"
 
 msgid "LANG_USER"
-msgstr "Utilizador"
+msgstr "User"
 
 msgid "LANG_NEW_USER"
-msgstr "Adicionar novo"
+msgstr "Add new"
 
 msgid "LANG_ALL_USERS"
-msgstr "Listar utilizadores"
+msgstr "List users"
 
 msgid "LANG_USER_ADD"
-msgstr "Adicionar utilizador"
+msgstr "Add user"
 
 msgid "LANG_USER_CREATED"
-msgstr "Utilizador '%s' criado"
+msgstr "User '%s' created"
 
 msgid "LANG_USER_SAVED"
-msgstr "Utilizador '%s' salvo"
+msgstr "User '%s' saved"
 
 msgid "LANG_USER_ALREADY_EXISTS"
 msgstr "Já existe um utilizador com esse email"
@@ -161,16 +161,16 @@ msgid "LANG_SETTINGS_ERROR"
 msgstr "Houve um erro. Tente mais tarde"
 
 msgid "LANG_IMAGES"
-msgstr "Imagens"
+msgstr "Images"
 
 msgid "LANG_IMAGE"
-msgstr "Imagem"
+msgstr "Image"
 
 msgid "LANG_UPLOAD_IMAGE"
-msgstr "Carregar imagem"
+msgstr "Upload image"
 
 msgid "LANG_NO_IMAGES"
-msgstr "Não existem imagens"
+msgstr "There are no images"
 
 msgid "LANG_IMAGE_UPLOADED"
 msgstr "Imagem '%s' carregada"
