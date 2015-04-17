@@ -57,6 +57,12 @@ $tables = array(
     'emails' => 1
 );
 
+$languages = array(
+    array('pt_PT' => 'Português'),
+    array('en_GB' => 'English'),
+    array('fr_FR' => 'Français')
+);
+
 if ($path[0] != 'admin' && is_file (CLIENTPATH . 'settings' . PHPEXT) && IS_INSTALLED) {
     include_once(CLIENTPATH . 'settings' . PHPEXT);
 }
