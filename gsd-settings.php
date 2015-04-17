@@ -58,9 +58,9 @@ $tables = array(
 );
 
 $languages = array(
-    array('pt_PT' => 'Português'),
-    array('en_GB' => 'English'),
-    array('fr_FR' => 'Français')
+    'pt_PT' => 'Português',
+    'en_GB' => 'English',
+    'fr_FR' => 'Français'
 );
 
 if ($path[0] != 'admin' && is_file (CLIENTPATH . 'settings' . PHPEXT) && IS_INSTALLED) {
