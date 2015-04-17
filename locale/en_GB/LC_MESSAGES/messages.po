@@ -119,7 +119,7 @@ msgid "LANG_PAGE_ERROR"
 msgstr "There was a problem. Check your data and try again"
 
 msgid "LANG_PAGE_NOPERMISSION"
-msgstr "Não tem permissão para apagar páginas"
+msgstr "You don't have permission to remove pages"
 
 msgid "LANG_USERS"
 msgstr "Users"
@@ -143,22 +143,22 @@ msgid "LANG_USER_SAVED"
 msgstr "User '%s' saved"
 
 msgid "LANG_USER_ALREADY_EXISTS"
-msgstr "Já existe um utilizador com esse email"
+msgstr "There is already an user with that email"
 
 msgid "LANG_USER_REMOVED"
-msgstr "Utilizador '%s' apagado"
+msgstr "User '%s' removed"
 
 msgid "LANG_USER_NOPERMISSION"
-msgstr "Não tem permissão para apagar utilizadores"
+msgstr "You don't have permission to remove users"
 
 msgid "LANG_USER_DEFAULT"
-msgstr "Não pode remover o utilizador padrão"
+msgstr "You can't remove default user"
 
 msgid "LANG_USER_ERROR"
-msgstr "Houve um erro. Tente mais tarde"
+msgstr "There was an error. Try again later"
 
 msgid "LANG_SETTINGS_ERROR"
-msgstr "Houve um erro. Tente mais tarde"
+msgstr "There was an error. Try again later"
 
 msgid "LANG_IMAGES"
 msgstr "Images"
@@ -173,109 +173,109 @@ msgid "LANG_NO_IMAGES"
 msgstr "There are no images"
 
 msgid "LANG_IMAGE_UPLOADED"
-msgstr "Imagem '%s' carregada"
+msgstr "Image '%s' uploaded"
 
 msgid "LANG_IMAGE_ERROR"
-msgstr "Houve um erro. Tente mais tarde"
+msgstr "There was an error. Try again later"
 
 msgid "LANG_IMAGE_SAVED"
-msgstr "Imagem '%s' salva"
+msgstr "Image '%s' saved"
 
 msgid "LANG_DOCUMENTS"
-msgstr "Documentos"
+msgstr "Documents"
 
 msgid "LANG_DOCUMENT"
-msgstr "Documento"
+msgstr "Document"
 
 msgid "LANG_UPLOAD_DOCUMENT"
-msgstr "Carregar documento"
+msgstr "Upload document"
 
 msgid "LANG_NO_DOCUMENTS"
-msgstr "Não existem documentos"
+msgstr "There are no documents"
 
 msgid "LANG_DOCUMENT_UPLOADED"
-msgstr "Documento '%s' carregado"
+msgstr "Document '%s' uploaded"
 
 msgid "LANG_DOCUMENT_EMPTY"
-msgstr "Sem documento"
+msgstr "No document"
 
 msgid "LANG_DOCUMENT_CHOOSE"
-msgstr "Escolher documento"
+msgstr "Choose document"
 
 msgid "LANG_DOCUMENT_CLEAN"
-msgstr "Limpar documento"
+msgstr "Clear document"
 
 msgid "LANG_AGO"
-msgstr "atrás"
+msgstr "ago"
 
 msgid "LANG_NAME"
-msgstr "Nome"
+msgstr "Name"
 
 msgid "LANG_CREATED"
-msgstr "Criado"
+msgstr "Created"
 
 msgid "LANG_CREATED_BY"
-msgstr "Criado por"
+msgstr "Created by"
 
 msgid "LANG_ACTIONS"
-msgstr "Acções"
+msgstr "Actions"
 
 msgid "LANG_LAST_LOGIN"
-msgstr "Último Login"
+msgstr "Last Login"
 
 msgid "LANG_PAGE_CREATE"
-msgstr "Criar página"
+msgstr "Create page"
 
 msgid "LANG_PAGE_EDIT"
-msgstr "Editar página"
+msgstr "Edit page"
 
 msgid "LANG_TITLE"
-msgstr "Título"
+msgstr "Title"
 
 msgid "LANG_LOGOUT"
-msgstr "Sair"
+msgstr "Logout"
 
 msgid "LANG_BACK_TO"
-msgstr "Voltar a"
+msgstr "Back to"
 
 msgid "LANG_RECOVER_PASSWORD"
-msgstr "Recuperar password"
+msgstr "Recover password"
 
 msgid "LANG_NEW_MALE"
-msgstr "Novo"
+msgstr "New"
 
 msgid "LANG_NEW_FEMALE"
-msgstr "Nova"
+msgstr "New"
 
 msgid "LANG_UPLOAD"
-msgstr "Carregar"
+msgstr "Upload"
 
 msgid "LANG_COPYRIGHTS"
-msgstr "Todos os direitos reservados"
+msgstr "All rights reserved"
 
 msgid "LANG_TEMPLATE"
 msgstr "Template"
 
 msgid "LANG_CHOOSE"
-msgstr "Escolha"
+msgstr "Choose"
 
 msgid "LANG_TYPE"
-msgstr "Tipo"
+msgstr "Type"
 
 msgid "LANG_SAVE"
-msgstr "Salvar"
+msgstr "Save"
 
 msgid "LANG_BY"
-msgstr "por"
+msgstr "by"
 
 msgid "LANG_DELETE_LAYOUT"
-msgstr "Pretende apagar o layout"
+msgstr "Do you want to remove layout"
 
 msgid "LANG_DELETE_PAGE"
-msgstr "Pretende apagar a página"
+msgstr "Do you want to remove page"
 
 msgid "LANG_DESCRIPTION"
-msgstr "Descrição"
+msgstr "Description"
 
 msgid "LANG_IMAGE_CHOOSE"
 msgstr "Choose image"
@@ -287,7 +287,7 @@ msgid "LANG_IMAGE_EMPTY"
 msgstr "No image"
 
 msgid "LANG_DELETE_IMAGE"
-msgstr "Pretende apagar a imagem"
+msgstr "Do you want to remove image"
 
 msgid "LANG_ADVANCED"
 msgstr "Advanced"
@@ -311,10 +311,10 @@ msgid "LANG_MODIFIED"
 msgstr "Modified"
 
 msgid "LANG_FILENAME"
-msgstr "Nome do ficheiro"
+msgstr "File name"
 
 msgid "LANG_PAGE_BASIC_INFO"
-msgstr "Informação básica da página"
+msgstr "Basic page information"
 
 msgid "LANG_NO"
 msgstr "No"
