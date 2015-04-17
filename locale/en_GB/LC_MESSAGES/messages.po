@@ -49,6 +49,9 @@ msgstr "Edit"
 msgid "LANG_SETTINGS"
 msgstr "Settings"
 
+msgid "LANG_SETTINGS_SAVED"
+msgstr "Settings saved"
+
 msgid "LANG_DASHBOARD"
 msgstr "Dashboard"
 

@@ -49,6 +49,9 @@ msgstr "Éditer"
 msgid "LANG_SETTINGS"
 msgstr "Paramètres"
 
+msgid "LANG_SETTINGS_SAVED"
+msgstr "Paramètres sauvée"
+
 msgid "LANG_DASHBOARD"
 msgstr "Painel"
 

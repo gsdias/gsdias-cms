@@ -49,6 +49,9 @@ msgstr "Editar"
 msgid "LANG_SETTINGS"
 msgstr "Definições"
 
+msgid "LANG_SETTINGS_SAVED"
+msgstr "Definições salvas"
+
 msgid "LANG_DASHBOARD"
 msgstr "Páinel"
 

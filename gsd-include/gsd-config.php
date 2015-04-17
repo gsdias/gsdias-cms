@@ -30,6 +30,8 @@ $user = @$_SESSION['user'] ? $_SESSION['user'] : (class_exists('clientuser') ? n
 
 $language = $user->locale ? $user->locale : $site->locale;
 
+$language = @$languages[$site->arg(0)] ? $languages[$site->arg(0)] : $language;
+
 $folder = "locale";
 $domain = "messages";
 $encoding = "UTF-8";

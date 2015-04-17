@@ -97,7 +97,7 @@ class users extends section implements isection {
                 'name' => 'level'
             ));
 
-            $types = new select( array ( 'list' => array('pt_PT' => 'Português', 'en_GB' => 'Inglês'), 'id' => 'LANGUAGE', 'selected' => $item['locale'] ) );
+            $types = new select( array ( 'list' => $languages, 'id' => 'LANGUAGE', 'selected' => $item['locale'] ) );
             $types->object();
 
             $tpl->setvars($fields);

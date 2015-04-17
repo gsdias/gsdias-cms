@@ -39,5 +39,5 @@ if (@$_REQUEST['save']) {
     }
 }
 
-$types = new select( array ( 'list' => array('pt_PT' => 'Português', 'en_GB' => 'Inglês'), 'id' => 'LANGUAGE' ) );
+$types = new select( array ( 'list' => $languages, 'id' => 'LANGUAGE' ) );
 $types->object();
