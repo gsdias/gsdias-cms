@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2014-11-12 17:19-0000\n"
-"PO-Revision-Date: 2014-11-12 17:24-0000\n"
+"PO-Revision-Date: 2015-04-20 16:39-0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -80,7 +80,8 @@ msgid "LANG_LAYOUT_NOPERMISSION"
 msgstr "Vous n'êtes pas autorisé à supprimer layouts"
 
 msgid "LANG_LAYOUT_RELATED"
-msgstr "Il ya des pages d'utiliser ce layout. Vous devez d'abord supprimer des pages"
+msgstr ""
+"Il ya des pages d'utiliser ce layout. Vous devez d'abord supprimer des pages"
 
 msgid "LANG_PAGES"
 msgstr "Pages"
@@ -96,6 +97,12 @@ msgstr "à partir de"
 
 msgid "LANG_STATE"
 msgstr "État"
+
+msgid "LANG_SEARCH"
+msgstr "Procurar"
+
+msgid "LANG_DIMENSION"
+msgstr "Dimensão"
 
 msgid "LANG_NEW_PAGE"
 msgstr "Ajouter un nouveau"
@@ -183,6 +190,9 @@ msgstr "Il y avait une erreur. Réessayez plus tard"
 
 msgid "LANG_IMAGE_SAVED"
 msgstr "Image '%s' sauvée"
+
+msgid "LANG_IMAGE_REMOVED"
+msgstr "Imagem '%s' apagada"
 
 msgid "LANG_DOCUMENTS"
 msgstr "Documents"
