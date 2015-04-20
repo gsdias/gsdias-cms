@@ -53,6 +53,7 @@ if (@$_REQUEST['save']) {
                 @$sectionname[3] ? $sectionname[3] : 1
             ));
         }
+        $_SESSION['message'] = sprintf(lang('LANG_LAYOUT_CREATED'), $_REQUEST['name']);
         header("Location: /admin/layouts", true, 302);
         exit;
     } else {
