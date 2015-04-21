@@ -18,7 +18,7 @@ function GSDClassLoading($className) {
 
 function lang ($text) {
     $translated = _($text);
-    return $translated != $text ? $translated : dcgettext('client', $text, LC_MESSAGES);
+    return $translated != $text ? $translated : dcgettext('frontend', $text, LC_MESSAGES);
 }
 
 function isuploaded ($folder, $filename) {
