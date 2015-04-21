@@ -54,11 +54,11 @@ foreach ($mysql->result() as $item) {
 
         $field = $partial;
         $extraclass = 'image';
-    } else if (strpos($item['name'], '_select') !== false) {
+    } else if ($item['name'] === 'gsd-locale_select') {
         $field = new select(array(
             'id' => $item['name'],
             'name' => $item['name'],
-            'list' => array('pt_PT' => 'Português', 'en_GB' => 'Inglês'),
+            'list' => $languages,
             'label' => $item['label'],
             'selected' => @$item['value']
         ));

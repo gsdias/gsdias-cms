@@ -21,6 +21,12 @@ if ($site->arg(2) == 1) {
 }
 
 if (@$_REQUEST['confirm'] == $afirmative) {
+    $mysql->statement('SELECT name FROM users WHERE uid = ?;', array($site->arg(2)));
+
+    $result = $mysql->singleline();
+
+    $name = $result['name'];
+
     $mysql->statement('DELETE FROM users WHERE uid = ?;', array($site->arg(2)));
     if ($mysql->errnum) {
 
@@ -28,7 +34,7 @@ if (@$_REQUEST['confirm'] == $afirmative) {
         $tpl->setcondition('ERRORS');
     } else {
 
-        $_SESSION['message'] = '{LANG_USER_REMOVED}';
+        $_SESSION['message'] = sprintf(lang('{LANG_USER_REMOVED}'), $name);
 
         header("Location: /admin/users", true, 302);
         exit;

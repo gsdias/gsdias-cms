@@ -26,7 +26,7 @@ if (@$_REQUEST['save']) {
         $tpl->setcondition('ERRORS');
     } else {
 
-        $_SESSION['message'] = '{LANG_USER_SAVED}';
+        $_SESSION['message'] = sprintf(lang('LANG_USER_SAVED'), $_REQUEST['name']);
 
         header("Location: /admin/users", true, 302);
         exit;

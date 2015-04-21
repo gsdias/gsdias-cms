@@ -74,7 +74,7 @@ class site {
         $mysql->statement('SELECT *
         FROM pages
         LEFT JOIN layouts ON layouts.lid = pages.lid
-        WHERE published IS NOT NULL AND beautify = ? LIMIT 0, 1;', array($this->uri));
+        WHERE published IS NOT NULL AND BINARY beautify = ? LIMIT 0, 1;', array($this->uri));
 
         if ($mysql->total) {
 
