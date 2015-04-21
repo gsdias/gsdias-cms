@@ -28,7 +28,7 @@ if (@$_REQUEST['save']) {
 
     if ($mysql->total) {
         foreach($mysql->result() as $db) {
-            if ($db[0] == $_mysql['db']) {
+            if ($db['Database'] == $_mysql['db']) {
                 $database[$_mysql['db']] = 0;
             }
         }

@@ -9,9 +9,7 @@
  */
 
 if (!IS_ADMIN) {
-    
     $_SESSION['error'] = '{LANG_PAGE_NOPERMISSION}';
-    
     header("Location: /admin/pages", true, 302);
     exit;
 }
