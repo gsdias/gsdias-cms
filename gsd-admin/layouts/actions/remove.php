@@ -15,6 +15,12 @@ if (!IS_ADMIN) {
 }
 
 if (@$_REQUEST['confirm'] == $afirmative) {
+    $mysql->statement('SELECT name FROM layouts WHERE lid = ?;', array($site->arg(2)));
+
+    $result = $mysql->singleline();
+
+    $name = $result['name'];
+
     $mysql->statement('DELETE FROM layouts WHERE lid = ?;', array($site->arg(2)));
 
     if ($mysql->errnum) {
@@ -24,7 +30,7 @@ if (@$_REQUEST['confirm'] == $afirmative) {
 
     } else {
 
-        $_SESSION['message'] = '{LANG_LAYOUT_REMOVED}';
+        $_SESSION['message'] = sprintf(lang('{LANG_LAYOUT_REMOVED}'), $name);
 
         header("Location: /admin/layouts", true, 302);
         exit;

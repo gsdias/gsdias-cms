@@ -64,7 +64,7 @@ class users extends section implements isection {
     }
 
     public function getcurrent ($id = 0) {
-        global $tpl, $mysql;
+        global $tpl, $mysql, $languages;
 
         $mysql->statement('SELECT users.*, users.created, users.creator AS creator_id, u.name AS creator_name FROM users LEFT JOIN users AS u ON users.creator = u.uid WHERE users.uid = ?;', array($id));
 
@@ -97,7 +97,7 @@ class users extends section implements isection {
                 'name' => 'level'
             ));
 
-            $types = new select( array ( 'list' => array('pt_PT' => 'Português', 'en_GB' => 'Inglês'), 'id' => 'LANGUAGE', 'selected' => $item['locale'] ) );
+            $types = new select( array ( 'list' => $languages, 'id' => 'LANGUAGE', 'selected' => $item['locale'] ) );
             $types->object();
 
             $tpl->setvars($fields);

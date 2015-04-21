@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2014-11-12 17:19-0000\n"
-"PO-Revision-Date: 2014-11-12 17:24-0000\n"
+"PO-Revision-Date: 2015-04-20 16:39-0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -11,343 +11,355 @@ msgstr ""
 "X-Generator: Poedit 1.6.10\n"
 "X-Poedit-Basepath: .\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Language: fr_FR\n"
+"Language: pt_PT\n"
 
 msgid "LANG_AT"
-msgstr "à"
+msgstr "às"
 
 msgid "LANG_DAYS"
-msgstr "journées"
+msgstr "dias"
 
 msgid "LANG_DAY"
-msgstr "jour"
+msgstr "dia"
 
 msgid "LANG_MONTHS"
-msgstr "mois"
+msgstr "meses"
 
 msgid "LANG_MONTH"
-msgstr "mois"
+msgstr "mês"
 
 msgid "LANG_EDITOR"
-msgstr "Éditeur"
+msgstr "Editor"
 
 msgid "LANG_ADMIN"
 msgstr "Admin"
 
 msgid "LANG_REMOVE"
-msgstr "Supprimer"
+msgstr "Remover"
 
 msgid "LANG_EMAIL"
 msgstr "Email"
 
 msgid "LANG_ADD"
-msgstr "Ajouter"
+msgstr "Adicionar"
 
 msgid "LANG_EDIT"
-msgstr "Éditer"
+msgstr "Editar"
 
 msgid "LANG_SETTINGS"
-msgstr "Paramètres"
+msgstr "Definições"
+
+msgid "LANG_SETTINGS_SAVED"
+msgstr "Definições salvas"
 
 msgid "LANG_DASHBOARD"
-msgstr "Painel"
+msgstr "Páinel"
 
 msgid "LANG_LAYOUTS"
 msgstr "Layouts"
 
 msgid "LANG_NEW_LAYOUT"
-msgstr "Ajouter un nouveau"
+msgstr "Adicionar novo"
 
 msgid "LANG_ALL_LAYOUTS"
-msgstr "Liste"
+msgstr "Listar layouts"
 
 msgid "LANG_NO_LAYOUTS"
-msgstr "Pas de layouts"
+msgstr "Não existem layouts"
 
 msgid "LANG_LAYOUT_ALREADY_EXISTS"
-msgstr "Il existe déjà un layout associé à ce fichier"
+msgstr "Já existe um layout associado a esse ficheiro"
 
 msgid "LANG_LAYOUT_REMOVED"
-msgstr "Layout '%s' supprimé"
+msgstr "Layout '%s' apagado"
 
 msgid "LANG_LAYOUT_CREATED"
-msgstr "Layout '%s' générée"
+msgstr "Layout '%s' criado"
 
 msgid "LANG_LAYOUT_NOPERMISSION"
-msgstr "Vous n'êtes pas autorisé à supprimer layouts"
+msgstr "Não tem permissão para apagar layouts"
 
 msgid "LANG_LAYOUT_RELATED"
-msgstr "Il ya des pages d'utiliser ce layout. Vous devez d'abord supprimer des pages"
+msgstr "Existem páginas a usar este layout. Tem de apagar primeiro as páginas"
 
 msgid "LANG_PAGES"
-msgstr "Pages"
+msgstr "Páginas"
 
 msgid "LANG_PAGE"
-msgstr "Page"
+msgstr "Página"
 
 msgid "LANG_PAGE_REMOVE"
-msgstr "Retirer la page"
+msgstr "Remover página"
 
 msgid "LANG_FROM"
-msgstr "à partir de"
+msgstr "de"
 
 msgid "LANG_STATE"
-msgstr "État"
+msgstr "Estado"
+
+msgid "LANG_SEARCH"
+msgstr "Procurar"
+
+msgid "LANG_DIMENSION"
+msgstr "Dimensão"
 
 msgid "LANG_NEW_PAGE"
-msgstr "Ajouter un nouveau"
+msgstr "Adicionar nova"
 
 msgid "LANG_ALL_PAGES"
-msgstr "Liste de pages"
+msgstr "Listar páginas"
 
 msgid "LANG_NO_PAGES"
-msgstr "Il n'y a pas de pages"
+msgstr "Não existem páginas"
 
 msgid "LANG_PAGE_CREATED"
-msgstr "Page '%s' générée"
+msgstr "Página '%s' criada"
 
 msgid "LANG_PAGE_SAVED"
-msgstr "Page '%s' sauvée"
+msgstr "Página '%s' salva"
 
 msgid "LANG_PAGE_ALREADY_EXISTS"
-msgstr "Il existe déjà une page avec cette adresse"
+msgstr "Já existe uma página com esse endereço"
 
 msgid "LANG_PAGE_REMOVED"
-msgstr "Page '%s' supprimée"
+msgstr "Página '%s' apagada"
 
 msgid "LANG_PAGE_ERROR"
-msgstr "Il y avait un problème. Vérifiez les données et essayez à nouveau"
+msgstr "Houve um problema. Verifique os dados e tente novamente"
 
 msgid "LANG_PAGE_NOPERMISSION"
-msgstr "Non autorisé à supprimer des pages"
+msgstr "Não tem permissão para apagar páginas"
 
 msgid "LANG_USERS"
-msgstr "Utilisateurs"
+msgstr "Utilizadores"
 
 msgid "LANG_USER"
-msgstr "Utilisateur"
+msgstr "Utilizador"
 
 msgid "LANG_NEW_USER"
-msgstr "Ajouter un nouveau"
+msgstr "Adicionar novo"
 
 msgid "LANG_ALL_USERS"
-msgstr "Liste des utilisateurs"
+msgstr "Listar utilizadores"
 
 msgid "LANG_USER_ADD"
-msgstr "Ajouter un utilisateur"
+msgstr "Adicionar utilizador"
 
 msgid "LANG_USER_CREATED"
-msgstr "Utilisateur '%s' générée"
+msgstr "Utilizador '%s' criado"
 
 msgid "LANG_USER_SAVED"
-msgstr "Utilisateur '%s' sauvée"
+msgstr "Utilizador '%s' salvo"
 
 msgid "LANG_USER_ALREADY_EXISTS"
-msgstr "Il existe déjà un utilisateur avec cet e-mail"
+msgstr "Já existe um utilizador com esse email"
 
 msgid "LANG_USER_REMOVED"
-msgstr "Utilisateur '%s' supprimée"
+msgstr "Utilizador '%s' apagado"
 
 msgid "LANG_USER_NOPERMISSION"
-msgstr "Vous n'êtes pas autorisé à supprimer des utilisateurs"
+msgstr "Não tem permissão para apagar utilizadores"
 
 msgid "LANG_USER_DEFAULT"
-msgstr "Vous ne pouvez pas supprimer l'utilisateur par défaut"
+msgstr "Não pode remover o utilizador padrão"
 
 msgid "LANG_USER_ERROR"
-msgstr "Il y avait une erreur. Réessayez plus tard"
+msgstr "Houve um erro. Tente mais tarde"
 
 msgid "LANG_SETTINGS_ERROR"
-msgstr "Il y avait une erreur. Réessayez plus tard"
+msgstr "Houve um erro. Tente mais tarde"
 
 msgid "LANG_IMAGES"
-msgstr "Images"
+msgstr "Imagens"
 
 msgid "LANG_IMAGE"
-msgstr "Image"
+msgstr "Imagem"
 
 msgid "LANG_UPLOAD_IMAGE"
-msgstr "Envoyer une image"
+msgstr "Carregar imagem"
 
 msgid "LANG_NO_IMAGES"
-msgstr "Aucune image"
+msgstr "Não existem imagens"
 
 msgid "LANG_IMAGE_UPLOADED"
-msgstr "Image '%s' expédié"
+msgstr "Imagem '%s' carregada"
 
 msgid "LANG_IMAGE_ERROR"
-msgstr "Il y avait une erreur. Réessayez plus tard"
+msgstr "Houve um erro. Tente mais tarde"
 
 msgid "LANG_IMAGE_SAVED"
-msgstr "Image '%s' sauvée"
+msgstr "Imagem '%s' salva"
+
+msgid "LANG_IMAGE_REMOVED"
+msgstr "Imagem '%s' apagada"
 
 msgid "LANG_DOCUMENTS"
-msgstr "Documents"
+msgstr "Documentos"
 
 msgid "LANG_DOCUMENT"
-msgstr "Document"
+msgstr "Documento"
 
 msgid "LANG_UPLOAD_DOCUMENT"
-msgstr "Envoyer un documento"
+msgstr "Carregar documento"
 
 msgid "LANG_NO_DOCUMENTS"
-msgstr "Pas de documents"
+msgstr "Não existem documentos"
 
 msgid "LANG_DOCUMENT_UPLOADED"
-msgstr "Document '%s' expédié"
+msgstr "Documento '%s' carregado"
 
 msgid "LANG_DOCUMENT_EMPTY"
-msgstr "Aucun document"
+msgstr "Sem documento"
 
 msgid "LANG_DOCUMENT_CHOOSE"
-msgstr "Sélection du document"
+msgstr "Escolher documento"
 
 msgid "LANG_DOCUMENT_CLEAN"
-msgstr "Effacer le document"
+msgstr "Limpar documento"
 
 msgid "LANG_AGO"
-msgstr "Il ya"
+msgstr "atrás"
 
 msgid "LANG_NAME"
-msgstr "Nom"
+msgstr "Nome"
 
 msgid "LANG_CREATED"
-msgstr "Serviteur"
+msgstr "Criado"
 
 msgid "LANG_CREATED_BY"
-msgstr "Créé par"
+msgstr "Criado por"
 
 msgid "LANG_ACTIONS"
-msgstr "Actes"
+msgstr "Acções"
 
 msgid "LANG_LAST_LOGIN"
-msgstr "Dernière Connexion"
+msgstr "Último Login"
 
 msgid "LANG_PAGE_CREATE"
-msgstr "Créer une page"
+msgstr "Criar página"
 
 msgid "LANG_PAGE_EDIT"
-msgstr "Modifier la page"
+msgstr "Editar página"
 
 msgid "LANG_TITLE"
-msgstr "Titre"
+msgstr "Título"
 
 msgid "LANG_LOGOUT"
-msgstr "Laisser"
+msgstr "Sair"
 
 msgid "LANG_BACK_TO"
-msgstr "De nouveau"
+msgstr "Voltar a"
 
 msgid "LANG_RECOVER_PASSWORD"
-msgstr "Récupérer mot de passe"
+msgstr "Recuperar password"
 
 msgid "LANG_NEW_MALE"
-msgstr "Nouveau"
+msgstr "Novo"
 
 msgid "LANG_NEW_FEMALE"
-msgstr "Nouveau"
+msgstr "Nova"
 
 msgid "LANG_UPLOAD"
-msgstr "Envoyer"
+msgstr "Carregar"
 
 msgid "LANG_COPYRIGHTS"
-msgstr "Tous droits réservés"
+msgstr "Todos os direitos reservados"
 
 msgid "LANG_TEMPLATE"
-msgstr "Modèle"
+msgstr "Template"
 
 msgid "LANG_CHOOSE"
-msgstr "Choix"
+msgstr "Escolha"
 
 msgid "LANG_TYPE"
-msgstr "Type"
+msgstr "Tipo"
 
 msgid "LANG_SAVE"
-msgstr "Enregistrer"
+msgstr "Salvar"
 
 msgid "LANG_BY"
-msgstr "par"
+msgstr "por"
 
 msgid "LANG_DELETE_LAYOUT"
-msgstr "Vous voulez supprimer le layout"
+msgstr "Pretende apagar o layout"
 
 msgid "LANG_DELETE_PAGE"
-msgstr "Vous voulez supprimer le page"
+msgstr "Pretende apagar a página"
 
 msgid "LANG_DESCRIPTION"
-msgstr "Description"
+msgstr "Descrição"
 
 msgid "LANG_IMAGE_CHOOSE"
-msgstr "Choisissez image"
+msgstr "Escolher imagem"
 
 msgid "LANG_IMAGE_CLEAN"
-msgstr "Effacer l'image"
+msgstr "Limpar imagem"
 
 msgid "LANG_IMAGE_EMPTY"
-msgstr "Pas d'image"
+msgstr "Sem imagem"
 
 msgid "LANG_DELETE_IMAGE"
-msgstr "Vous voulez supprimer le image"
+msgstr "Pretende apagar a imagem"
 
 msgid "LANG_ADVANCED"
-msgstr "Avancé"
+msgstr "Avançadas"
 
 msgid "LANG_SHOW_MENU"
-msgstr "Afficher dans le menu"
+msgstr "Mostrar no menu"
 
 msgid "LANG_REQUIRE_AUTH"
-msgstr "Requiert une authentification"
+msgstr "Requer autenticação"
 
 msgid "LANG_ADITIONAL_INFORMATION"
-msgstr "Informations complémentaires"
+msgstr "Informação adicional"
 
 msgid "LANG_PUBLISHED"
-msgstr "Publié"
+msgstr "Publicada"
 
 msgid "LANG_SIZE"
-msgstr "Taille"
+msgstr "Tamanho"
 
 msgid "LANG_MODIFIED"
-msgstr "Modifié"
+msgstr "Modificado"
 
 msgid "LANG_FILENAME"
-msgstr "Nom de fichier"
+msgstr "Nome do ficheiro"
 
 msgid "LANG_PAGE_BASIC_INFO"
-msgstr "La page d'informations de base"
+msgstr "Informação básica da página"
 
 msgid "LANG_NO"
-msgstr "Non"
+msgstr "Não"
 
 msgid "LANG_YES"
-msgstr "Oui"
+msgstr "Sim"
 
 msgid "LANG_PATH"
-msgstr "Chemin"
+msgstr "Caminho"
 
 msgid "LANG_FIRST"
-msgstr "Première"
+msgstr "Primeira"
 
 msgid "LANG_PREVIOUS"
-msgstr "Précédent"
+msgstr "Anterior"
 
 msgid "LANG_NEXT"
-msgstr "Suivant"
+msgstr "Seguinte"
 
 msgid "LANG_LAST"
-msgstr "Dernier"
+msgstr "Última"
 
 msgid "LANG_DISABLED"
-msgstr "Désactivé"
+msgstr "Desactivo"
 
 msgid "LANG_ENABLED"
-msgstr "Actif"
+msgstr "Activo"
 
 msgid "LANG_NEVER"
-msgstr "Jamais"
+msgstr "Nunca"
 
 msgid "LANG_PERMISSION"
-msgstr "Autorisation"
+msgstr "Permissão"
 
 msgid "LANG_REGISTER_SUBJECT"
-msgstr "Inscrivez-vous sur le site"
+msgstr "Registo no site"

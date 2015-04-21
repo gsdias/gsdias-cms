@@ -1,6 +1,5 @@
 {
     "name": "gsd-cms",
-    "version": "1.1",
     "devDependencies": {
         "grunt-contrib-compass": "1.0.1",
         "grunt-contrib-uglify": "0.8.0",
