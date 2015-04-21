@@ -34,7 +34,7 @@ $language = @$languages[$browserlang[0]] ? $browserlang[0] : ($user->locale ? $u
 
 $language = @$languages[$site->arg(0)] ? $site->arg(0) : $language;
 
-$folder = "locale";
+$folder = "gsd-locale";
 $domain = "messages";
 $encoding = "UTF-8";
 
@@ -49,8 +49,8 @@ if (function_exists('bindtextdomain')) {
 
     textdomain($domain);
     if (is_dir(CLIENTPATH . 'locale')) {
-        bindtextdomain('client', CLIENTPATH . $folder);
-        bind_textdomain_codeset('client', $encoding);
+        bindtextdomain($domain, CLIENTPATH . 'locale');
+        bind_textdomain_codeset($domain, $encoding);
     }
 }
 
