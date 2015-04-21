@@ -28,9 +28,13 @@ $site = new site();
 
 $user = @$_SESSION['user'] ? $_SESSION['user'] : (class_exists('clientuser') ? new clientuser() : new user());
 
-$language = $user->locale ? $user->locale : $site->locale;
+$browserlang = explode(',', str_replace('-', '_', $_SERVER['HTTP_ACCEPT_LANGUAGE']));
 
-$folder = "locale";
+$language = @$languages[$browserlang[0]] ? $browserlang[0] : ($user->locale ? $user->locale : $site->locale);
+
+$language = @$languages[$site->arg(0)] ? $site->arg(0) : $language;
+
+$folder = "gsd-locale";
 $domain = "messages";
 $encoding = "UTF-8";
 
@@ -45,8 +49,8 @@ if (function_exists('bindtextdomain')) {
 
     textdomain($domain);
     if (is_dir(CLIENTPATH . 'locale')) {
-        bindtextdomain('client', CLIENTPATH . $folder);
-        bind_textdomain_codeset('client', $encoding);
+        bindtextdomain('frontend', CLIENTPATH . 'locale');
+        bind_textdomain_codeset($domain, $encoding);
     }
 }
 
