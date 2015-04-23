@@ -22,6 +22,7 @@ if (@$_REQUEST['login'] && !$user->isLogged()) {
         } else {
             $tpl->setvar('FORM_MESSAGES', 'Login errado');
             $tpl->setvar('LOGIN_EMAIL', $_REQUEST['email']);
+            $_SESSION['message'] = 'Login errado';
         }
     } else {
         $tpl->setvar('FORM_MESSAGES', 'Verifique os dados.');
