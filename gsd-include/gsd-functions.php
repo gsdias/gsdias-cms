@@ -243,3 +243,28 @@ function toAscii($str) {
 
 	return $clean;
 }
+
+function getLanguage() {
+    global $site, $languages;
+
+    $firstLevel = $site->arg(0);
+    $languageList = array_keys($languages);
+
+    foreach ($languageList as $key) {
+        $decomposed = explode('_', $key);
+
+        if ($key === $firstLevel || $decomposed[0] === $firstLevel) {
+            return $key;
+        }
+    }
+
+    $browserlang = preg_replace('#;q=[0-9].[0-9]#s', '', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
+
+    $browserlang = explode(',', str_replace('-', '_', $browserlang));
+
+    return $browserlang[0];
+
+    //$language = @$languages[$browserlang[0]] ? $browserlang[0] : ($user->locale ? $user->locale : $site->locale);
+
+    //$language = @$languages[$site->arg(0)] ? $site->arg(0) : $language;
+}
