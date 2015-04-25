@@ -43,10 +43,10 @@ if ($action) {
             include_once($file);
         }
 
-        $csection->getcurrent($id);
+        $current = $csection->getcurrent($id);
 
         if ($action === 'edit') {
-            $csection->generatefields($section);
+            $csection->generatefields($section, $current);
         }
     }
 
@@ -63,7 +63,7 @@ if ($action) {
 
         $csection = new $classsection ();
         
-        $csection->generatefields($section);
+        $csection->generatefields($section, null);
         
         $site->main = sprintf('%s/%s', $section, $id);
         

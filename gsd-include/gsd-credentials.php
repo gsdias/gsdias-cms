@@ -26,6 +26,7 @@ if (@$_REQUEST['login'] && !$user->isLogged()) {
         }
     } else {
         $tpl->setvar('FORM_MESSAGES', 'Verifique os dados.');
+        $_SESSION['message'] = 'Verifique os dados.';
     }
 
 }

@@ -126,7 +126,7 @@ class pages extends section implements isection {
         }
     }
 
-    public function generatefields ($section) {
+    public function generatefields ($section, $current) {
         global $tpl, $mysql;
 
         parent::generatefields ($section);

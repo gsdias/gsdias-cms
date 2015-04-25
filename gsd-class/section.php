@@ -21,7 +21,7 @@ abstract class section implements isection {
 
     public function getcurrent ($id = 0) {}
 
-    public function generatefields ($section) {
+    public function generatefields ($section, $current = array()) {
         global $tpl, $mysql;
 
         $func = $section . 'fields';
