@@ -12,7 +12,7 @@
 
 $GETimages = function ($fields, $extra, $doc = false) {
     global $mysql, $api;
-    $output = array('error' => 0, 'message' => 'Não existem imagens');
+    $output = array('error' => 0, 'message' => lang('LANG_NO_IMAGES'));
     $requiredFields = array();
     $returnFields = array('iid', 'name', 'width', 'height', 'extension');
 

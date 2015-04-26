@@ -46,7 +46,7 @@ if (function_exists('bindtextdomain')) {
     textdomain($domain);
     if (is_dir(CLIENTPATH . 'locale')) {
         bindtextdomain('frontend', CLIENTPATH . 'locale');
-        bind_textdomain_codeset($domain, $encoding);
+        bind_textdomain_codeset('frontend', $encoding);
     }
 }
 
