@@ -20,11 +20,11 @@ if (@$_REQUEST['login'] && !$user->isLogged()) {
             header('location: ' . $uri);
             exit;
         } else {
-            $tpl->setvar('FORM_MESSAGES', 'Login errado');
+            $tpl->setvar('FORM_MESSAGES', lang('WRONG_LOGIN'));
             $tpl->setvar('LOGIN_EMAIL', $_REQUEST['email']);
         }
     } else {
-        $tpl->setvar('FORM_MESSAGES', 'Verifique os dados.');
+        $tpl->setvar('FORM_MESSAGES', lang('CHECK_DATA'));
     }
 
 }

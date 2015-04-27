@@ -23,9 +23,9 @@
         global.resizemain();
 
         tinymce.init({
-            selector: ".html_module",
-            plugins: "code",
-            toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+            selector: '.html_module',
+            plugins: 'code',
+            toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image'
         });
     });
 

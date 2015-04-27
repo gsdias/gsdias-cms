@@ -105,8 +105,8 @@ window.jQuery = window.$ = {};
             $('form').validate({
                 onkeyup: false
             });
-            $.validator.messages.required = 'Campo de preenchimento obrigatório';
-            $.validator.messages.email = 'Formato de email inválido';
+            $.validator.messages.required = GSD.messages.required;
+            $.validator.messages.email = GSD.messages.email;
             //$.validator.unobtrusive.parse('form');
         });
 

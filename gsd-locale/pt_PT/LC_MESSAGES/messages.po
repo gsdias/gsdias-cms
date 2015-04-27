@@ -363,3 +363,18 @@ msgstr "Permissão"
 
 msgid "LANG_REGISTER_SUBJECT"
 msgstr "Registo no site"
+
+msgid "LANG_REQUIRED"
+msgstr "Campo de preenchimento obrigatório"
+
+msgid "LANG_INVALID_EMAIL"
+msgstr "Formato de email inválido"
+
+msgid "LANG_PASSWORD"
+msgstr "Password"
+
+msgid "WRONG_LOGIN"
+msgstr "Wrong login"
+
+msgid "CHECK_DATA"
+msgstr "Verifique os dados."
