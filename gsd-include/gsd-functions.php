@@ -17,8 +17,17 @@ function GSDClassLoading($className) {
 }
 
 function lang ($text) {
-    $translated = _($text);
-    return $translated != $text ? $translated : dcgettext('frontend', $text, LC_MESSAGES);
+    global $site;
+
+    if ($site->isFrontend) {
+        $translated = dcgettext('frontend', $text, LC_MESSAGES);
+        $translated = $translated != $text ? $translated : _($text);
+    } else {
+        $translated = _($text);
+        $translated = $translated != $text ? $translated : dcgettext('frontend', $text, LC_MESSAGES);
+    }
+
+    return $translated;
 }
 
 function isuploaded ($folder, $filename) {

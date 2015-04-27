@@ -13,7 +13,7 @@
 
 class site {
 
-    public $name, $email, $ga, $fb, $uri, $page, $main, $startpoint, $pagemodules, $layout, $protocol;
+    public $name, $email, $ga, $fb, $uri, $page, $main, $startpoint, $pagemodules, $layout, $protocol, $isFrontend;
     protected $path;
 
     public function __construct () {
@@ -44,7 +44,9 @@ class site {
         $this->uri = preg_replace($pattern, '', $_SERVER['REQUEST_URI']);
 
         $this->path();
-        if ($this->path[0] !== 'admin') {
+        $this->isFrontend = $this->path[0] !== 'admin';
+
+        if ($this->isFrontend) {
             $this->page();
         } else {
             $tpl->setvars(array(
