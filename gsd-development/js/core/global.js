@@ -6,7 +6,7 @@
  * @since      File available since Release 1.0
  */
 
-(function (global, app, $, _, Backbone, tinymce, undefined) {
+(function (global, app, $, _, Backbone, undefined) {
 
     'use strict';
 
@@ -22,11 +22,13 @@
     $(document).bind(GSD.globalevents.init, function () {
         global.resizemain();
 
-        tinymce.init({
-            selector: '.html_module',
-            plugins: 'code',
-            toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image'
-        });
+        if (!app.isFrontend) {
+            tinymce.init({
+                selector: '.html_module',
+                plugins: 'code',
+                toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image'
+            });
+        }
     });
 
-}(GSD.Global = GSD.Global || {}, GSD.App, GSD.$, _, Backbone, tinymce));
+}(GSD.Global = GSD.Global || {}, GSD.App, GSD.$, _, Backbone));

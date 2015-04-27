@@ -45,6 +45,7 @@ class site {
 
         $this->path();
         $this->isFrontend = $this->path[0] !== 'admin';
+        $tpl->setcondition('CMS', !$this->isFrontend);
 
         if ($this->isFrontend) {
             $this->page();
