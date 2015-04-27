@@ -22,7 +22,7 @@
     $(document).bind(GSD.globalevents.init, function () {
         global.resizemain();
 
-        if (!app.isFrontend) {
+        if (app.isCMS) {
             tinymce.init({
                 selector: '.html_module',
                 plugins: 'code',
