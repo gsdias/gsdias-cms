@@ -17,7 +17,7 @@ foreach ($mysql->result() as $userlist) {
     $users[] = array(
         'ID' => $userlist['uid'],
         'NAME' => $userlist['name'],
-        'CREATED' => timeago(dateDif($created[0], date('Y-m-d',time())), $created[1])
+        'CREATED' => $userlist['last_login'] ? timeago(dateDif($created[0], date('Y-m-d',time())), $created[1]) : '{LANG_NEVER}'
     );
 }
 $tpl->setarray('USERS', $users);

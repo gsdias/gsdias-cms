@@ -65,7 +65,7 @@ class user implements iuser {
 
         $mysql->statement('SELECT ' . $fields . '
         FROM users
-        WHERE disabled IS NULL AND email = :email AND password = md5(:pass);', array(':email' => $email, ':pass' => $password));
+        WHERE disabled IS NULL AND email = ? AND password = md5(?);', array($email, $password));
         
         $result = $mysql->total === 1;
         
@@ -89,8 +89,8 @@ class user implements iuser {
             $this->notifications = new notification($this->id);
             $_SESSION['user'] = $this;
 
-            $mysql->statement('UPDATE users SET last_login = CURRENT_TIMESTAMP(), code = :code WHERE uid = :uid;',
-              array(':uid' => $this->id, ':code' => $this->code)
+            $mysql->statement('UPDATE users SET last_login = CURRENT_TIMESTAMP(), code = ? WHERE uid = ?;',
+              array($this->code, $this->id)
              );
         }
         
@@ -107,7 +107,7 @@ class user implements iuser {
     public function getuser ($uid) {
         global $mysql;
 
-        $mysql->statement(sprintf('SELECT code, level, name, uid, email FROM users WHERE uid = :uid;'), array(':uid' => $uuid));
+        $mysql->statement(sprintf('SELECT code, level, name, uid, email FROM users WHERE uid = ?;'), array($uid));
 
         if ($mysql->total === 1) {
             $user = $mysql->singleline();
