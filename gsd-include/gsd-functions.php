@@ -254,26 +254,32 @@ function toAscii($str) {
 }
 
 function getLanguage() {
-    global $site, $languages;
+    global $site, $languages, $user;
 
-    $firstLevel = $site->arg(0);
     $languageList = array_keys($languages);
 
-    foreach ($languageList as $key) {
-        $decomposed = explode('_', $key);
+    $browserlang = preg_replace('#;q=[0-9].[0-9]#s', '', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
+    $browserlang = explode(',', str_replace('-', '_', $browserlang));
 
-        if ($key === $firstLevel || $decomposed[0] === $firstLevel) {
-            return $key;
+    $redirect = explode('/', $_REQUEST['redirect']);
+
+    $list = array($site->arg(0), @$redirect[1]);
+
+    $list = array_merge($list, $browserlang);
+
+    $list[] = $user->locale;
+    $list[] = $site->locale;
+
+    foreach ($list as $prefered) {
+
+        foreach ($languageList as $key) {
+            $decomposed = explode('_', $key);
+
+            if ($key === $prefered || $decomposed[0] === $prefered) {
+                return $key;
+            }
         }
     }
 
-    $browserlang = preg_replace('#;q=[0-9].[0-9]#s', '', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
-
-    $browserlang = explode(',', str_replace('-', '_', $browserlang));
-
-    return $browserlang[0];
-
-    //$language = @$languages[$browserlang[0]] ? $browserlang[0] : ($user->locale ? $user->locale : $site->locale);
-
-    //$language = @$languages[$site->arg(0)] ? $site->arg(0) : $language;
+    return '';
 }
