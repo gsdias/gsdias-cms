@@ -261,7 +261,7 @@ function getLanguage() {
     $browserlang = preg_replace('#;q=[0-9].[0-9]#s', '', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
     $browserlang = explode(',', str_replace('-', '_', $browserlang));
 
-    $redirect = explode('/', $_REQUEST['redirect']);
+    $redirect = explode('/', @$_REQUEST['redirect']);
 
     $list = array($site->arg(0), @$redirect[1]);
 
