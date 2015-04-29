@@ -10,10 +10,10 @@
 
 if (@$_REQUEST['save']) {
 
-    $mysql->statement('SELECT count(*), pid FROM pages WHERE url = ?;', array($_REQUEST['url']));
+    $mysql->statement('SELECT count(*) AS total, pid FROM pages WHERE url = ?;', array($_REQUEST['url']));
     $condition = $mysql->singleline();
     
-    if ($condition[0] > 0 && $condition[1] != $site->arg(2)) {
+    if ($condition['total'] > 0 && $condition[1] != $site->arg(2)) {
         
         $tpl->setvar('ERRORS', '{LANG_PAGE_ALREADY_EXISTS}');
         $tpl->setcondition('ERRORS');
@@ -67,11 +67,19 @@ if (@$_REQUEST['save']) {
             $mysql->statement('INSERT INTO redirect (`pid`, `from`, `destination`, `creator`) VALUES (?, ?, ?, ?);', array($site->arg(2), $currenturl, $_REQUEST['url'], $user->id));
         }
 
-        $mysql->statement('UPDATE pages AS p JOIN pages AS pp ON pp.pid = p.parent SET p.url = ?, p.beautify = concat(pp.beautify, ?) WHERE p.pid = ?;', array(
+        $mysql->statement('UPDATE pages AS p
+        LEFT JOIN pages AS pp ON pp.pid = p.parent
+        SET p.url = ?, p.beautify = concat(if(pp.beautify IS NULL, "", pp.beautify), ?)
+        WHERE p.pid = ?;', array(
             $_REQUEST['url'],
             $_REQUEST['url'],
             $site->arg(2)
         ));
+
+        $mysql->statement('UPDATE pages AS p
+        LEFT JOIN pages AS pp ON pp.pid = p.parent
+        SET p.beautify = concat(if(pp.beautify IS NULL, "", pp.beautify), p.url)
+        WHERE p.parent = ?;', array($site->arg(2)));
 
         header("Location: /admin/pages", true, 302);
         exit;
