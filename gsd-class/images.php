@@ -67,9 +67,6 @@ class images extends section implements isection {
 
             $fields = array();
             foreach ($item as $field => $value) {
-                if (is_numeric($field)) {
-                    continue;
-                }
                 $fields['CURRENT_IMAGE_'. strtoupper($field)] = $value;
             }
 
