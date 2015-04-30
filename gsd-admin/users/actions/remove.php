@@ -34,7 +34,7 @@ if (@$_REQUEST['confirm'] == $afirmative) {
         $tpl->setcondition('ERRORS');
     } else {
 
-        $_SESSION['message'] = sprintf(lang('{LANG_USER_REMOVED}'), $name);
+        $_SESSION['message'] = sprintf(lang('LANG_USER_REMOVED'), $name);
 
         header("Location: /admin/users", true, 302);
         exit;

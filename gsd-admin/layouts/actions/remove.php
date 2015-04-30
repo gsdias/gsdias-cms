@@ -30,7 +30,7 @@ if (@$_REQUEST['confirm'] == $afirmative) {
 
     } else {
 
-        $_SESSION['message'] = sprintf(lang('{LANG_LAYOUT_REMOVED}'), $name);
+        $_SESSION['message'] = sprintf(lang('LANG_LAYOUT_REMOVED'), $name);
 
         header("Location: /admin/layouts", true, 302);
         exit;

@@ -20,11 +20,11 @@ if (@$_REQUEST['save']) {
     }
     
     if ($fields == 0) {
-        $_SESSION['message'] = 'Definições salvas.';
+        $_SESSION['message'] = lang('LANG_SETTINGS_SAVED');
         header("Location: /admin", true, 302);
         exit;
     } else {
-        $tpl->setvar('ERRORS', '{LANG_SETTINGS_ERROR}');
+        $tpl->setvar('ERRORS', lang('LANG_SETTINGS_ERROR'));
         $tpl->setcondition('ERRORS');
     }
 }

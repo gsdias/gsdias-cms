@@ -111,7 +111,7 @@ class pages extends section implements isection {
 
             $mysql->statement('SELECT p.pid, p.title
                 FROM pages AS p
-                WHERE pid <> ?;', array($this->item['pid']));
+                WHERE pid <> ?;', array($this->item->pid));
 
             $parent = array();
             foreach ($mysql->result() as $field) {
@@ -141,7 +141,7 @@ LEFT JOIN layoutsections AS ls ON ls.lsid = pm.lsid
 LEFT JOIN layoutsectionmoduletypes AS lsmt ON ls.lsid = lsmt.lsid
 LEFT JOIN moduletypes AS mt ON mt.mtid = lsmt.mtid
 LEFT JOIN moduletypes AS smt ON smt.mtid = lsmt.smtid
-WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item['pid']));
+WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item->pid));
 
             foreach ($mysql->result() as $item) {
 

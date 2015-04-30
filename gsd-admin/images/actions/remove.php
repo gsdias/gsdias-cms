@@ -18,7 +18,7 @@ if (@$_REQUEST['confirm'] == $afirmative) {
 
     if ($mysql->total) {
 
-        $_SESSION['message'] = sprintf(lang('{LANG_IMAGE_REMOVED}'), $image->name);
+        $_SESSION['message'] = sprintf(lang('LANG_IMAGE_REMOVED'), $image->name);
 
         header("Location: /admin/images", true, 302);
         exit;
