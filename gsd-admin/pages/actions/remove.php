@@ -29,7 +29,7 @@ if (!@$_REQUEST['confirm']) {
         $_parents = $parents;
         unset($_parents[$page->pid]);
         $pages[] = array(
-            'NAME' => $page['title'],
+            'NAME' => $page->title,
             'LIST' => new select(array(
                 'name' => 'parent[' . $page->pid . ']',
                 'list' => $_parents,

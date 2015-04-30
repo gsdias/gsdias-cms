@@ -66,7 +66,7 @@ $mysql->statement('SELECT * FROM layouttypes');
 
 $types = array();
 foreach ($mysql->result() as $item) {
-    $types[$item['ltid']] = $item['name'];
+    $types[$item->ltid] = $item->name;
 }
 
 $types = new select( array ( 'list' => $types, 'id' => 'LAYOUTTYPE' ) );

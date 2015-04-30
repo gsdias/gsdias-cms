@@ -34,7 +34,7 @@ class pages extends section implements isection {
                 foreach ($item as $field => $value) {
                     $fields[strtoupper($field)] = $value;
                 }
-                $created = explode(' ', $item['created']);
+                $created = explode(' ', $item->created);
                 $fields['CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())), $created[1]);
 
                 $list[] = $fields;
@@ -102,8 +102,8 @@ class pages extends section implements isection {
                 $review = array();
                 foreach ($mysql->result() as $field) {
                     $review[] = array(
-                        'KEY' => $field['prid'],
-                        'VALUE' => $field['modified']
+                        'KEY' => $field->prid,
+                        'VALUE' => $field->modified
                     );
                 }
                 $tpl->setarray('VERSION', $review);
@@ -117,9 +117,9 @@ class pages extends section implements isection {
             foreach ($mysql->result() as $field) {
 
                 $parent[] = array(
-                    'KEY' => $field['pid'],
-                    'VALUE' => $field['title'],
-                    'SELECTED' => $field['pid'] == $this->item['parent'] ? 'selected="selected"' : ''
+                    'KEY' => $field->pid,
+                    'VALUE' => $field->title,
+                    'SELECTED' => $field->pid == $this->item['parent'] ? 'selected="selected"' : ''
                 );
             }
             $tpl->setarray('PARENT', $parent);
@@ -145,32 +145,32 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item['pid']));
 
             foreach ($mysql->result() as $item) {
 
-                $item['data'] = unserialize($item['data']);
+                $item->data = unserialize($item->data);
 
                 $extra = array();
-                if ($item['file'] == '_image') {
+                if ($item->file == '_image') {
                     $image = new image(array(
-                        'iid' => @$item['data']['list'][0][0]['value'],
+                        'iid' => @$item->data['list'][0][0]['value'],
                         'height' => '100',
                         'width' => 'auto',
-                        'class' => sprintf('preview %s', @$item['data']['list'][0][0]['value'] ? '' : 'is-hidden')
+                        'class' => sprintf('preview %s', @$item->data['list'][0][0]['value'] ? '' : 'is-hidden')
                     ));
 
                     $extra = array(
                         'IMAGE' => $image,
-                        'EMPTY' => @$item['data']['list'][0][0]['value'] ? 'is-hidden' : ''
+                        'EMPTY' => @$item->data['list'][0][0]['value'] ? 'is-hidden' : ''
                     );
                 }
 
-                if ($item['sfile']) {
-                    $partial = $this->partialtpl($item['data'], $item['lsname'], $item['pmid'], $extra);
+                if ($item->sfile) {
+                    $partial = $this->partialtpl($item->data, $item->lsname, $item->pmid, $extra);
                 } else {
-                    $partial = $this->partialtpl($item['data']['list'][0][0], $item['lsname'], $item['pmid'], $extra);
+                    $partial = $this->partialtpl($item->data['list'][0][0], $item->lsname, $item->pmid, $extra);
                 }
 
-                if ($item['sfile']) {
+                if ($item->sfile) {
                     $list = array();
-                    foreach ($item['data']['list'] as $index => $data1) {
+                    foreach ($item->data['list'] as $index => $data1) {
 
                         $spartials = '';
                         if (gettype($data1) === 'array') {
@@ -178,7 +178,7 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item['pid']));
                                 $extra = array();
                                 $data = $data2;
 
-                                if ($item['sfile'] == '_image') {
+                                if ($item->sfile == '_image') {
                                     $image = new image(array(
                                         'iid' => @$data['value'],
                                         'height' => '100',
@@ -195,13 +195,13 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item['pid']));
                                 $spartial = new tpl();
 
                                 $spartial->setvars(array_merge(array(
-                                    'NAME' => 'value_pm_s_' . $index . '_' . $item['pmid'] . '[]',
+                                    'NAME' => 'value_pm_s_' . $index . '_' . $item->pmid . '[]',
                                     'VALUE' => $data['value'],
                                     'CLASS' => $data['class'],
                                     'STYLE' => $data['style'],
                                     'LABEL' => 'Value'
                                 ), $extra));
-                                $spartial->setfile($item['sfile']);
+                                $spartial->setfile($item->sfile);
 
                                 $spartials .= $spartial;
 
@@ -209,14 +209,14 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item['pid']));
                         }
                         $list[] = array(
                             'ITEM' => $spartials,
-                            'EXTRACLASS' => $item['sfile'] == '_image' ? 'image' : ''
+                            'EXTRACLASS' => $item->sfile == '_image' ? 'image' : ''
                         );
                     }
                         
                     $spartial = new tpl();
 
                     $spartial->setvars(array(
-                        'NAME' => 'value_pm_' . ($index + 1) . '_s' . $item['pmid'] . '[]',
+                        'NAME' => 'value_pm_' . ($index + 1) . '_s' . $item->pmid . '[]',
                         'EMPTY' => '',
                         'IMAGE' => new image(array (
                             'height' => '100',
@@ -224,12 +224,12 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item['pid']));
                             'class' => 'preview is-hidden'
                         ))
                     ));
-                    $spartial->setfile($item['sfile']);
+                    $spartial->setfile($item->sfile);
 
                     $partial->setarray('LIST', $list);
                 }
 
-                $partial->setfile($item['file']);
+                $partial->setfile($item->file);
 
                 $extrafields[] = array(
                     'FIELD' => $partial,

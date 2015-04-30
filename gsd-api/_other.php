@@ -18,8 +18,8 @@ function outputDoc ($table, $input, $returnFields) {
     $mysql->statement(sprintf('SHOW FULL COLUMNS FROM %s;', $table));
 
     foreach ($mysql->result() as $field) {
-        if (in_array($field['Field'], $returnFields))
-            $output['output'][$field['Field']] = $field['Comment'];
+        if (in_array($field->Field->, $returnFields))
+            $output['output'][$field->Field] = $field->Comment;
     }
     return $output;
 }
