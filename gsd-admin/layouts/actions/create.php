@@ -41,10 +41,10 @@ if (@$_REQUEST['save']) {
             ));
             $lsid = $mysql->lastinserted();
             $mysql->statement('SELECT mtid FROM moduletypes WHERE name like ?', array( strtolower( $sectionname[1] ) ));
-            $mtid = $mysql->singleresult();
+            $mtid = $mysql->singleresult()->mtid;
 
             $mysql->statement('SELECT mtid FROM moduletypes WHERE name like ?', array( strtolower( @$sectionname[2] ) ));
-            $smtid = $mysql->singleresult() ? $mysql->singleresult() : null;
+            $smtid = $mysql->singleresult()->mtid ? $mysql->singleresult()->mtid : null;
 
             $mysql->statement('INSERT INTO layoutsectionmoduletypes (lsid, mtid, smtid, total) values(?, ?, ?, ?);', array(
                 $lsid,

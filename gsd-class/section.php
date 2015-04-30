@@ -38,10 +38,10 @@ abstract class section implements isection {
                 switch ($sectionextrafields['types'][$key]) {
                     case 'image':
                     $image = new image(array(
-                        'iid' => @$item[$extrafield],
+                        'iid' => @$item->{$extrafield},
                         'height' => '100',
                         'width' => 'auto',
-                        'class' => sprintf('preview %s', @$item[$extrafield] ? '' : 'is-hidden')
+                        'class' => sprintf('preview %s', @$item->{$extrafield} ? '' : 'is-hidden')
                     ));
 
                     $partial = new tpl();
@@ -49,8 +49,8 @@ abstract class section implements isection {
                         'LABEL' => $sectionextrafields['labels'][$key],
                         'NAME' => $extrafield,
                         'IMAGE' => $image,
-                        'VALUE' => @$item[$extrafield] ? @$item[$extrafield] : 0,
-                        'EMPTY' => @$item[$extrafield] ? 'is-hidden' : ''
+                        'VALUE' => @$item->{$extrafield} ? @$item[$extrafield] : 0,
+                        'EMPTY' => @$item->{$extrafield} ? 'is-hidden' : ''
                     ));
                     $partial->setfile('_image');
 
@@ -63,14 +63,14 @@ abstract class section implements isection {
                         'name' => $extrafield,
                         'list' => $sectionextrafields['values'][$key],
                         'label' => $sectionextrafields['labels'][$key],
-                        'selected' => @$item[$extrafield]
+                        'selected' => @$item->{$extrafield}
                     ));
                     break;
                     default:
                     $field = (string)new input(array(
                         'id' => $extrafield,
                         'name' => $extrafield,
-                        'value' => @$item[$extrafield],
+                        'value' => @$item->{$extrafield},
                         'label' => $sectionextrafields['labels'][$key]
                     ));
                     break;
