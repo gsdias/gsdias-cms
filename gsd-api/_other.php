@@ -18,14 +18,8 @@ function outputDoc ($table, $input, $returnFields) {
     $mysql->statement(sprintf('SHOW FULL COLUMNS FROM %s;', $table));
 
     foreach ($mysql->result() as $field) {
-        if (in_array($field->Field->, $returnFields))
+        if (in_array($field->Field, $returnFields))
             $output['output'][$field->Field] = $field->Comment;
     }
     return $output;
-}
-
-function syncReset($uid) {
-    global $mysql;
-
-    $mysql->statement(sprintf('UPDATE %s.users SET sync = 1 WHERE uid = :uid', DBSHARED), array(':uid' => $uid));
 }

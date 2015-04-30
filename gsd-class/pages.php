@@ -119,7 +119,7 @@ class pages extends section implements isection {
                 $parent[] = array(
                     'KEY' => $field->pid,
                     'VALUE' => $field->title,
-                    'SELECTED' => $field->pid == $this->item['parent'] ? 'selected="selected"' : ''
+                    'SELECTED' => $field->pid == $this->item->parent ? 'selected="selected"' : ''
                 );
             }
             $tpl->setarray('PARENT', $parent);
