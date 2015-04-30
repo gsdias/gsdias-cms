@@ -106,7 +106,7 @@ class site {
             if ($mysql->total) {
                 $pagemodules = array();
                 foreach ($mysql->result() as $module) {
-                    $pagemodules[@$module['label']] = $module['data'];
+                    $pagemodules[@$module->label] = $module->data;
                 }
                 $this->pagemodules = $pagemodules;
             }
