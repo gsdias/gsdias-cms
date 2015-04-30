@@ -84,24 +84,24 @@ class site {
             $page = $mysql->singleline();
 
             $this->page = $page;
-            $this->layout = $page['file'];
+            $this->layout = $page->file;
 
             $tpl->setvars(array(
-                'PAGE_TITLE' => $page['title'],
-                'PAGE_DESCRIPTION' => $page['description'],
-                'PAGE_KEYWORDS' => $page['keywords'],
-                'PAGE_OG_TITLE' => $page['og_title'] ? $page['og_title'] : $page['title'],
-                'PAGE_OG_DESCRIPTION' => $page['og_description'],
-                'PAGE_OG_IMAGE' => $this->protocol . $_SERVER['HTTP_HOST'] . ASSETPATHURL . 'images/' . $page['og_image'],
+                'PAGE_TITLE' => $page->title,
+                'PAGE_DESCRIPTION' => $page->description,
+                'PAGE_KEYWORDS' => $page->keywords,
+                'PAGE_OG_TITLE' => $page->og_title ? $page->og_title : $page->title,
+                'PAGE_OG_DESCRIPTION' => $page->og_description,
+                'PAGE_OG_IMAGE' => $this->protocol . $_SERVER['HTTP_HOST'] . ASSETPATHURL . 'images/' . $page->og_image,
                 'PAGE_CANONICAL' => $this->protocol . $_SERVER['HTTP_HOST'] . '/' . $this->uri
             ));
 
-            $this->main = trim(str_replace('.html', '', $page['file']));
+            $this->main = trim(str_replace('.html', '', $page->file));
 
             $mysql->statement('SELECT *
             FROM pagemodules AS pm
             JOIN layoutsections AS ls ON ls.lsid = pm.lsid
-            WHERE pid = ?;', array($page['pid']));
+            WHERE pid = ?;', array($page->pid));
 
             if ($mysql->total) {
                 $pagemodules = array();

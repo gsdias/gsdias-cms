@@ -140,7 +140,7 @@
 		// -- Params : $values = null
 		// -- Purpose : executes database query
 		function execute ($values = null) {
-			global $user, $userId, $tpl;
+			global $tpl;
 			try {
               $this->executed = $this->prepared->execute($values);
             }

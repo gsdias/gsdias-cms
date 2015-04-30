@@ -19,7 +19,7 @@ if (@$_REQUEST['confirm'] == $afirmative) {
 
     $result = $mysql->singleline();
 
-    $name = $result['name'];
+    $name = $result->name;
 
     $mysql->statement('DELETE FROM layouts WHERE lid = ?;', array($site->arg(2)));
 

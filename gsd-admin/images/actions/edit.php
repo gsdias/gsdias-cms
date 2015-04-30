@@ -17,7 +17,7 @@ if (@$_REQUEST['save']) {
 
         $image = $mysql->singleline();
 
-        removefile(ASSETPATH . 'images/' . $site->arg(2) . '.' . $image['extension']);
+        removefile(ASSETPATH . 'images/' . $site->arg(2) . '.' . $image->extension);
 
         $name = explode('.', $_FILES['asset']['name']);
         $extension = end($name);

@@ -21,7 +21,7 @@ if (@$site->arg(2) == 'images') {
 
         $image = $mysql->singleline();
 
-        $asset = sprintf(ASSETPATH . 'images/%d.%s', @$image['iid'], @$image['extension']);
+        $asset = sprintf(ASSETPATH . 'images/%d.%s', @$image->iid, @$image->extension);
 
         if ($mysql->total) {
             $size = getimagesize($asset);

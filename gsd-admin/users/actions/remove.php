@@ -25,7 +25,7 @@ if (@$_REQUEST['confirm'] == $afirmative) {
 
     $result = $mysql->singleline();
 
-    $name = $result['name'];
+    $name = $result->name;
 
     $mysql->statement('DELETE FROM users WHERE uid = ?;', array($site->arg(2)));
     if ($mysql->errnum) {

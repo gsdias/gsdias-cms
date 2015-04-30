@@ -63,7 +63,7 @@ class images extends section implements isection {
         if ($mysql->total) {
 
             $item = $mysql->singleline();
-            $created = explode(' ', $item['created']);
+            $created = explode(' ', $item->created);
 
             $fields = array();
             foreach ($item as $field => $value) {

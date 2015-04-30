@@ -58,7 +58,7 @@ class layouts extends section implements isection {
             $item = $mysql->singleline();
 
             $this->item = $item;
-            $created = explode(' ', $item['created']);
+            $created = explode(' ', $item->created);
 
             $fields = array();
             foreach ($item as $field => $value) {

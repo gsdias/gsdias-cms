@@ -13,7 +13,7 @@ if (@$_REQUEST['save']) {
     $mysql->statement('SELECT count(*) AS total, pid FROM pages WHERE url = ?;', array($_REQUEST['url']));
     $condition = $mysql->singleline();
     
-    if ($condition['total'] > 0 && $condition[1] != $site->arg(2)) {
+    if ($condition->total > 0 && $condition->pid != $site->arg(2)) {
         
         $tpl->setvar('ERRORS', '{LANG_PAGE_ALREADY_EXISTS}');
         $tpl->setcondition('ERRORS');
@@ -29,7 +29,7 @@ if (@$_REQUEST['save']) {
             $fields = array();
 
             foreach ($defaultfields as $field) {
-                array_push($fields, $currentpage[$field]);
+                array_push($fields, $currentpage->{$field});
             }
 
             $mysql->statement('SELECT * FROM pages_review WHERE prid = ?;', array($_REQUEST['prid']));
@@ -39,7 +39,7 @@ if (@$_REQUEST['save']) {
 
             foreach ($defaultfields as $field) {
                 $fieldsupdate .= sprintf(", `%s` = ?", $field);
-                $review[] = $reviewpage[$field];
+                $review[] = $reviewpage->{$field};
             }
 
             $review[] = $site->arg(2);

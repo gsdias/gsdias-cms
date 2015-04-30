@@ -16,8 +16,8 @@ function pageTotal ($sql, $numberPerPage) {
     
     $result = $mysql->singleline();
 
-    $pages = @$result['p'] ? $result['p'] : 0;
-    $remain = @$result['r'] ? $result['r'] : 0;
+    $pages = @$result->p ? $result->p : 0;
+    $remain = @$result->r ? $result->r : 0;
 
     $pages = $remain > 0 ? ++$pages : $pages;
     return $pages;

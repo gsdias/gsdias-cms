@@ -46,8 +46,8 @@ if (@$_REQUEST['confirm'] == $afirmative) {
 
     $result = $mysql->singleline();
 
-    $title = $result['title'];
-    $currenturl = $result['url'];
+    $title = $result->title;
+    $currenturl = $result->url;
 
     if (!empty(@$_REQUEST['parent'])) {
         foreach($_REQUEST['parent'] as $pid => $parent) {

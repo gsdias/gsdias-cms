@@ -74,18 +74,18 @@ class user implements iuser {
             $this->code = md5($_SERVER['REMOTE_ADDR'] + '' + time());
             $user = $mysql->singleline();
             
-            if ($user['level'] == 'user' && $site->arg(0) == 'admin') {
+            if ($user->level == 'user' && $site->arg(0) == 'admin') {
                 return 0;
             }
             
-            $names = explode(' ', $user['name']);
-            $this->id = $user['uid'];
-            $this->level = $user['level'];
-            $this->locale = $user['locale'];
-            $this->name = $user['name'];
+            $names = explode(' ', $user->name);
+            $this->id = $user->uid;
+            $this->level = $user->level;
+            $this->locale = $user->locale;
+            $this->name = $user->name;
             $this->firstName = array_shift($names);
             $this->lastName = array_pop($names);
-            $this->email = $user['email'];
+            $this->email = $user->email;
             $this->notifications = new notification($this->id);
             $_SESSION['user'] = $this;
 
@@ -111,14 +111,14 @@ class user implements iuser {
 
         if ($mysql->total === 1) {
             $user = $mysql->singleline();
-            $names = explode(' ', $user['name']);
+            $names = explode(' ', $user->name);
 
-            $this->id = $user['uid'];
-            $this->level = $user['level'];
-            $this->name = $user['name'];
+            $this->id = $user->uid;
+            $this->level = $user->level;
+            $this->name = $user->name;
             $this->firstName = array_shift($names);
             $this->lastName = array_pop($names);
-            $this->email = $user['email'];
+            $this->email = $user->email;
             $this->notifications = new notification($this->id);
         }
     }

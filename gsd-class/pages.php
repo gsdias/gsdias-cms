@@ -58,7 +58,7 @@ class pages extends section implements isection {
             $item = $mysql->singleline();
 
             $this->item = $item;
-            $created = explode(' ', $item['created']);
+            $created = explode(' ', $item->created);
 
             $fields = array();
             foreach ($item as $field => $value) {
@@ -70,25 +70,25 @@ class pages extends section implements isection {
 
             $fields['CURRENT_PAGE_CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())), $created[1]);
 
-            $fields['MENU_CHECKED'] = @$item['show_menu'] ? 'checked="checked"' : '';
-            $fields['AUTH_CHECKED'] = @$item['require_auth'] ? 'checked="checked"' : '';
-            $fields['PUBLISHED_CHECKED'] = @$item['published'] ? 'checked="checked"' : '';
-            $fields['CURRENT_PAGE_STATUS'] = @$item['published'] ? 'Publicada' : 'Por publicar';
+            $fields['MENU_CHECKED'] = @$item->show_menu ? 'checked="checked"' : '';
+            $fields['AUTH_CHECKED'] = @$item->require_auth ? 'checked="checked"' : '';
+            $fields['PUBLISHED_CHECKED'] = @$item->published ? 'checked="checked"' : '';
+            $fields['CURRENT_PAGE_STATUS'] = @$item->published ? 'Publicada' : 'Por publicar';
 
             $image = new image(array(
-                'iid' => @$item['og_image'],
+                'iid' => @$item->og_image,
                 'height' => '100',
                 'width' => 'auto',
-                'class' => sprintf('preview %s', $item['og_image'] ? '' : 'is-hidden')
+                'class' => sprintf('preview %s', $item->og_image ? '' : 'is-hidden')
             ));
 
             $partial = new tpl();
             $partial->setvars(array(
                 'LABEL' => 'Imagem',
                 'NAME' => 'og_image',
-                'VALUE' => $item['og_image'] ? $item['og_image'] : 0,
+                'VALUE' => $item->og_image ? $item->og_image : 0,
                 'IMAGE' => $image,
-                'EMPTY' => $item['og_image'] ? 'is-hidden' : ''
+                'EMPTY' => $item->og_image ? 'is-hidden' : ''
             ));
             $partial->setfile('_image');
 
@@ -260,10 +260,10 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item['pid']));
         $fields = array();
 
         foreach ($defaultfields as $field) {
-            if ($currentpage[$field] != $_REQUEST[$field]) {
+            if ($currentpage->{$field} != $_REQUEST[$field]) {
                 $hasChanged = 1;
             }
-            array_push($fields, $currentpage[$field]);
+            array_push($fields, $currentpage->{$field});
         }
 
         $result = parent::edit($defaultfields);
@@ -271,7 +271,7 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item['pid']));
         $this->update_beautify($site->arg(2));
 
         if ($hasChanged) {
-            array_push($fields, $currentpage['modified']);
+            array_push($fields, $currentpage->modified);
             array_push($defaultfields, 'modified');
             $this->page_review($defaultfields, $fields);
         }
@@ -284,7 +284,7 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item['pid']));
 
         $mysql->statement('SELECT pp.beautify, p.url FROM pages AS p LEFT JOIN pages AS pp ON p.parent = pp.pid WHERE p.pid = ?;', array($pid));
         $result = $mysql->singleline();
-        $mysql->statement('UPDATE pages SET beautify = ? WHERE pid = ?;', array(vsprintf('%s%s', $result), $pid));
+        $mysql->statement('UPDATE pages SET beautify = ? WHERE pid = ?;', array(sprintf('%s%s', $result->beautify, $result->url), $pid));
     }
 
     private function page_review ($defaultfields = array(), $fields = array()) {
