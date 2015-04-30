@@ -18,7 +18,7 @@ if (!@$_REQUEST['confirm']) {
     $mysql->statement('SELECT * FROM pages;');
     $parents = array(0 => '{LANG_CHOOSE}');
     foreach($mysql->result() as $page) {
-        $parents[$page['pid']] = $page['title'];
+        $parents[$page->pid] = $page->title;
     }
 
     $mysql->statement('SELECT * FROM pages WHERE parent = ?;', array($site->arg(2)));
@@ -27,11 +27,11 @@ if (!@$_REQUEST['confirm']) {
     $pages = array();
     foreach($mysql->result() as $page) {
         $_parents = $parents;
-        unset($_parents[$page['pid']]);
+        unset($_parents[$page->pid]);
         $pages[] = array(
             'NAME' => $page['title'],
             'LIST' => new select(array(
-                'name' => 'parent[' . $page['pid'] . ']',
+                'name' => 'parent[' . $page->pid . ']',
                 'list' => $_parents,
                 'selected' => $site->arg(2)
             ))

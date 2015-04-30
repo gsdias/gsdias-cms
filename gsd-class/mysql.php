@@ -152,7 +152,7 @@
 			$this->total = $this->prepared->rowCount();
 			$erro = $this->prepared->errorInfo();
 
-			$this->result = $this->prepared->fetchAll(PDO::FETCH_ASSOC);
+			$this->result = $this->prepared->fetchAll(PDO::FETCH_OBJ);
 
 			$this->errnum = $erro[1];
 			$this->errmsg = $erro[2];

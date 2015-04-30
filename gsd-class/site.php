@@ -27,16 +27,16 @@ class site {
         $mysql->statement('SELECT * FROM options;');
 
         foreach ($mysql->result() as $option) {
-            $name = str_replace('gsd-', '', $option['name']);
-            $this->{str_replace(array('_image', '_select'), '', $name)} = $option['value'];
+            $name = str_replace('gsd-', '', $option->name);
+            $this->{str_replace(array('_image', '_select'), '', $name)} = $option->value;
 
             if (strpos($name, '_image') !== false) {
-                $image = new image(array('iid' => $option['value'], 'width' => 'auto', 'height' => 'auto'));
+                $image = new image(array('iid' => $option->value, 'width' => 'auto', 'height' => 'auto'));
                 $name = str_replace(array('_image', '_select'), '', $name);
                 $tpl->setvar('SITE_' . strtoupper($name), $image);
             } else {
                 $name = str_replace(array('_image', '_select'), '', $name);
-                $tpl->setvar('SITE_' . strtoupper($name), $option['value']);
+                $tpl->setvar('SITE_' . strtoupper($name), $option->value);
             }
         }
 
