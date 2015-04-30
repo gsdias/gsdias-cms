@@ -9,13 +9,13 @@
  */
 
 if (!IS_ADMIN) {
-    $_SESSION['error'] = '{LANG_USER_NOPERMISSION}';
+    $_SESSION['error'] = lang('LANG_USER_NOPERMISSION');
     header("Location: /admin/users", true, 302);
     exit;
 }
 
 if ($site->arg(2) == 1) {
-    $_SESSION['error'] = '{LANG_USER_DEFAULT}.';
+    $_SESSION['error'] = lang('LANG_USER_DEFAULT');
     header("Location: /admin/users", true, 302);
     exit;
 }
@@ -30,7 +30,7 @@ if (@$_REQUEST['confirm'] == $afirmative) {
     $mysql->statement('DELETE FROM users WHERE uid = ?;', array($site->arg(2)));
     if ($mysql->errnum) {
 
-        $tpl->setvar('ERRORS', '{LANG_USER_ERROR}');
+        $tpl->setvar('ERRORS', lang('LANG_USER_ERROR'));
         $tpl->setcondition('ERRORS');
     } else {
 

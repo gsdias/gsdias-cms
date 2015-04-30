@@ -9,7 +9,7 @@
  */
 
 if (!IS_ADMIN) {
-    $_SESSION['error'] = '{LANG_LAYOUT_NOPERMISSION}';
+    $_SESSION['error'] = lang('LANG_LAYOUT_NOPERMISSION');
     header("Location: /admin/layouts", true, 302);
     exit;
 }
@@ -25,7 +25,7 @@ if (@$_REQUEST['confirm'] == $afirmative) {
 
     if ($mysql->errnum) {
 
-        $tpl->setvar('ERRORS', '{LANG_LAYOUT_RELATED}');
+        $tpl->setvar('ERRORS', lang('LANG_LAYOUT_RELATED'));
         $tpl->setcondition('ERRORS');
 
     } else {

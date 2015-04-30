@@ -15,7 +15,7 @@ if (@$_REQUEST['save']) {
     
     if ($condition->total > 0 && $condition->pid != $site->arg(2)) {
         
-        $tpl->setvar('ERRORS', '{LANG_PAGE_ALREADY_EXISTS}');
+        $tpl->setvar('ERRORS', lang('LANG_PAGE_ALREADY_EXISTS'));
         $tpl->setcondition('ERRORS');
         
     } else {
@@ -59,7 +59,7 @@ if (@$_REQUEST['save']) {
         $mysql->statement('SELECT `from`, destination FROM redirect WHERE destination = ? ORDER BY created;', array($currenturl));
 
         if ($mysql->total) {
-            foreach($mysql->result() as $url) {
+            foreach ($mysql->result() as $url) {
                 //REFACTOR: THIS PART IS OUTDATED
                 $mysql->statement('INSERT INTO redirect (`pid`, `from`, `destination`, `creator`) VALUES (?, ?, ?, ?);', array($site->arg(2), $url->destination, $_REQUEST['url'], $user->id));
             }

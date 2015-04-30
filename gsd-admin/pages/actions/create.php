@@ -52,7 +52,7 @@ if (@$_REQUEST['save']) {
         header("Location: /admin/pages/$pid/edit", true, 302);
         exit;
     } else {
-        $tpl->setvar('ERRORS', '{LANG_PAGE_ALREADY_EXISTS}');
+        $tpl->setvar('ERRORS', lang('LANG_PAGE_ALREADY_EXISTS'));
         $tpl->setcondition('ERRORS');
     }
 }

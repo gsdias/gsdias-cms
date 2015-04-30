@@ -9,15 +9,15 @@
  */
 
 if (!IS_ADMIN) {
-    $_SESSION['error'] = '{LANG_PAGE_NOPERMISSION}';
+    $_SESSION['error'] = lang('LANG_PAGE_NOPERMISSION');
     header("Location: /admin/pages", true, 302);
     exit;
 }
 
 if (!@$_REQUEST['confirm']) {
     $mysql->statement('SELECT * FROM pages;');
-    $parents = array(0 => '{LANG_CHOOSE}');
-    foreach($mysql->result() as $page) {
+    $parents = array(0 => lang('LANG_CHOOSE'));
+    foreach ($mysql->result() as $page) {
         $parents[$page->pid] = $page->title;
     }
 
@@ -25,7 +25,7 @@ if (!@$_REQUEST['confirm']) {
     $tpl->setcondition('IS_PARENT', $mysql->total > 0);
 
     $pages = array();
-    foreach($mysql->result() as $page) {
+    foreach ($mysql->result() as $page) {
         $_parents = $parents;
         unset($_parents[$page->pid]);
         $pages[] = array(
@@ -65,7 +65,7 @@ if (@$_REQUEST['confirm'] == $afirmative) {
 
     if ($mysql->errnum) {
 
-        $tpl->setvar('ERRORS', '{LANG_PAGE_ERROR}');
+        $tpl->setvar('ERRORS', lang('LANG_PAGE_ERROR'));
         $tpl->setcondition('ERRORS');
 
     } else {

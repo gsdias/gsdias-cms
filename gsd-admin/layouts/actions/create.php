@@ -57,7 +57,7 @@ if (@$_REQUEST['save']) {
         header("Location: /admin/layouts", true, 302);
         exit;
     } else {
-        $tpl->setvar('ERRORS', '{LANG_LAYOUT_ALREADY_EXISTS}');
+        $tpl->setvar('ERRORS', lang('LANG_LAYOUT_ALREADY_EXISTS'));
         $tpl->setcondition('ERRORS');
     }
 }
