@@ -49,7 +49,7 @@ abstract class section implements isection {
                         'LABEL' => $sectionextrafields['labels'][$key],
                         'NAME' => $extrafield,
                         'IMAGE' => $image,
-                        'VALUE' => @$item->{$extrafield} ? @$item[$extrafield] : 0,
+                        'VALUE' => @$item->{$extrafield} ? @$item->{$extrafield} : 0,
                         'EMPTY' => @$item->{$extrafield} ? 'is-hidden' : ''
                     ));
                     $partial->setfile('_image');
