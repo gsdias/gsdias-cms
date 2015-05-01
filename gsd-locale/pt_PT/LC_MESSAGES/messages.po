@@ -88,9 +88,6 @@ msgstr "Páginas"
 msgid "LANG_PAGE"
 msgstr "Página"
 
-msgid "LANG_PAGE_REMOVE"
-msgstr "Remover página"
-
 msgid "LANG_FROM"
 msgstr "de"
 
@@ -166,6 +163,9 @@ msgstr "Não pode remover o utilizador padrão"
 msgid "LANG_USER_ERROR"
 msgstr "Houve um erro. Tente mais tarde"
 
+msgid "LANG_REMOVE_USER"
+msgstr "Pretende apagar o utilizador"
+
 msgid "LANG_SETTINGS_ERROR"
 msgstr "Houve um erro. Tente mais tarde"
 
@@ -217,11 +217,17 @@ msgstr "Escolher documento"
 msgid "LANG_DOCUMENT_CLEAN"
 msgstr "Limpar documento"
 
+msgid "LANG_REMOVE_DOCUMENT"
+msgstr "Pretende apagar o documento"
+
 msgid "LANG_AGO"
 msgstr "atrás"
 
 msgid "LANG_NAME"
 msgstr "Nome"
+
+msgid "LANG_CREATE"
+msgstr "Criar"
 
 msgid "LANG_CREATED"
 msgstr "Criado"
@@ -280,10 +286,10 @@ msgstr "Salvar"
 msgid "LANG_BY"
 msgstr "por"
 
-msgid "LANG_DELETE_LAYOUT"
+msgid "LANG_REMOVE_LAYOUT"
 msgstr "Pretende apagar o layout"
 
-msgid "LANG_DELETE_PAGE"
+msgid "LANG_REMOVE_PAGE"
 msgstr "Pretende apagar a página"
 
 msgid "LANG_DESCRIPTION"
@@ -298,7 +304,7 @@ msgstr "Limpar imagem"
 msgid "LANG_IMAGE_EMPTY"
 msgstr "Sem imagem"
 
-msgid "LANG_DELETE_IMAGE"
+msgid "LANG_REMOVE_IMAGE"
 msgstr "Pretende apagar a imagem"
 
 msgid "LANG_ADVANCED"

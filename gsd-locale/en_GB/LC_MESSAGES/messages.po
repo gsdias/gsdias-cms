@@ -223,6 +223,9 @@ msgstr "ago"
 msgid "LANG_NAME"
 msgstr "Name"
 
+msgid "LANG_CREATE"
+msgstr "Create"
+
 msgid "LANG_CREATED"
 msgstr "Created"
 

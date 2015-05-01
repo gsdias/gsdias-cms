@@ -1,5 +1,5 @@
 <main>
-    <h1>{LANG_USER_ADD}</h1>
+    <h1>{LANG_ADD} {LANG_USER}</h1>
     <!-- IF ERRORS --><div class="errors">{ERRORS}</div><!-- ENDIF ERRORS -->
     <form method="post">
         <div class="colA"><label>{LANG_NAME}</label> <input name="name" type="text" required /></div>
@@ -21,7 +21,7 @@
         <!-- IF EXTRAFIELDS --><h2>{LANG_ADITIONAL_INFORMATION}</h2>
         <!-- LOOP FIELD --><div class="colA {FIELD_EXTRACLASS}">{FIELD_FIELD}</div><!-- ENDLOOP FIELD --><!-- ENDIF EXTRAFIELDS -->
         <div class="btns">
-            <input name="save" type="submit" class="btn blue" value="{LANG_SAVE}" />
+            <input type="submit" class="btn blue" value="{LANG_SAVE}" name="save"/>
         </div>
     </form>
 </main>

@@ -12,9 +12,9 @@
 	* File with mySQL class information *
 	*************************************/
 
-class mySQL {
+class mySQL implements idatabase {
 
-    private $conn, $query, $result, $db, $host, $user, $pass, $prepared;
+    protected $conn, $query, $result, $db, $host, $user, $pass, $prepared;
     public $querylist, $total, $errnum, $errmsg, $executed;
 
     public
@@ -107,9 +107,9 @@ class mySQL {
 
     public
         // -- Function Name : statement
-        // -- Params : $query,$values = null,$id = null
+        // -- Params : $query,$values = null
         // -- Purpose : save query, prepare statement and calls execute function
-        function statement ($query, $values = null, $id = null) {
+        function statement ($query, $values = null) {
         global $tpl;
         $this->query = $query ? $query : $this->query;
 
@@ -182,11 +182,11 @@ class mySQL {
         // -- Params :
         // -- Purpose : returns database query single result
         function singleresult() {
-        return sizeof($this->result) ? array_pop($this->result) : array();
+        return sizeof($this->result) ? $this->result[0] : array();
     }
 
     public
-        // -- Function Name : singleresult
+        // -- Function Name : singleline
         // -- Params :
         // -- Purpose : returns database query single result
         function singleline() {
