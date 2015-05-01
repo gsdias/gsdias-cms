@@ -8,8 +8,8 @@
  * @since      File available since Release 1.0
  */
 
-if (!IS_ADMIN) {
-    header("Location: /admin/pages", true, 302);
+if (!IS_ADMIN && !IS_EDITOR) {
+    header("Location: /admin/" . $site->arg(1), true, 302);
     exit;
 }
 

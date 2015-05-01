@@ -8,6 +8,11 @@
  * @since      File available since Release 1.0
  */
 
+if (!IS_ADMIN && !IS_EDITOR) {
+    header("Location: /admin/" . $site->arg(1), true, 302);
+    exit;
+}
+
 if (@$_REQUEST['save']) {
 
     $defaultfields = array('name', 'description', 'tags', 'extension', 'width', 'height', 'size');
@@ -38,7 +43,7 @@ if (@$_REQUEST['save']) {
         
         $file = savefile ($_FILES['asset'], ASSETPATH . 'images/', null, null, $id);
 
-        header("Location: /admin/images", true, 302);
+        header("Location: /admin/" . $site->arg(1), true, 302);
         exit;
     }
 }

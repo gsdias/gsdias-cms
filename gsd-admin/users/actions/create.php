@@ -9,7 +9,7 @@
  */
 
 if (!IS_ADMIN) {
-    header("Location: /admin/users", true, 302);
+    header("Location: /admin/" . $site->arg(1), true, 302);
     exit;
 }
 
@@ -34,7 +34,7 @@ if (@$_REQUEST['save']) {
     } else {
         $_SESSION['message'] = sprintf(lang('LANG_USER_CREATED'), $_REQUEST['name']);
 
-        header("Location: /admin/users", true, 302);
+        header("Location: /admin/" . $site->arg(1), true, 302);
         exit;
     }
 }

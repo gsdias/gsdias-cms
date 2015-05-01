@@ -31,6 +31,7 @@ if (@$_REQUEST['login'] && !$user->isLogged()) {
 
 define('IS_LOGGED', $user->isLogged());
 define('IS_ADMIN', $user->level == 'admin');
+define('IS_EDITOR', $user->level == 'editor');
 
 if (IS_LOGGED) {
 
