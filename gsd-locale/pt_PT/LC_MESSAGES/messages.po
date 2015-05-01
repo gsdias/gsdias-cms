@@ -323,7 +323,7 @@ msgid "LANG_SETTINGS"
 msgstr "Definições"
 
 msgid "LANG_DASHBOARD"
-msgstr "Páinel"
+msgstr "Painél"
 
 msgid "LANG_LAYOUT_ALREADY_EXISTS"
 msgstr "Já existe um layout associado a esse ficheiro"

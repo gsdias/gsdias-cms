@@ -112,8 +112,11 @@ class site {
             }
 
         } else {
-            $this->startpoint = '404';
-            $tpl->setvar('PAGE_TITLE', $this->name);
+            $section = lang('LANG_' . strtoupper(@$this->path[1]));
+            $tpl->setvars(array(
+                'PAGE_TITLE' => sprintf('%s - %s', $this->name, ucwords($section == 'LANG_' ? lang('LANG_DASHBOARD') : $section)),
+                'PAGE_CANONICAL' => $this->protocol . $_SERVER['HTTP_HOST'] . '/' . $this->uri
+            ));
         }
         $tpl->setvar('PAGE_CANONICAL', $this->protocol . $_SERVER['HTTP_HOST'] . $this->uri);
     }
