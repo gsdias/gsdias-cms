@@ -34,7 +34,7 @@ class pages extends section implements isection {
                 foreach ($item as $field => $value) {
                     $fields[strtoupper($field)] = $value;
                 }
-                $created = explode(' ', $item['created']);
+                $created = explode(' ', $item->created);
                 $fields['CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())), $created[1]);
 
                 $list[] = $fields;
@@ -58,37 +58,34 @@ class pages extends section implements isection {
             $item = $mysql->singleline();
 
             $this->item = $item;
-            $created = explode(' ', $item['created']);
+            $created = explode(' ', $item->created);
 
             $fields = array();
             foreach ($item as $field => $value) {
-                if (is_numeric($field)) {
-                    continue;
-                }
                 $fields['CURRENT_PAGE_'. strtoupper($field)] = $value;
             }
 
             $fields['CURRENT_PAGE_CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())), $created[1]);
 
-            $fields['MENU_CHECKED'] = @$item['show_menu'] ? 'checked="checked"' : '';
-            $fields['AUTH_CHECKED'] = @$item['require_auth'] ? 'checked="checked"' : '';
-            $fields['PUBLISHED_CHECKED'] = @$item['published'] ? 'checked="checked"' : '';
-            $fields['CURRENT_PAGE_STATUS'] = @$item['published'] ? 'Publicada' : 'Por publicar';
+            $fields['MENU_CHECKED'] = @$item->show_menu ? 'checked="checked"' : '';
+            $fields['AUTH_CHECKED'] = @$item->require_auth ? 'checked="checked"' : '';
+            $fields['PUBLISHED_CHECKED'] = @$item->published ? 'checked="checked"' : '';
+            $fields['CURRENT_PAGE_STATUS'] = @$item->published ? 'Publicada' : 'Por publicar';
 
             $image = new image(array(
-                'iid' => @$item['og_image'],
+                'iid' => @$item->og_image,
                 'height' => '100',
                 'width' => 'auto',
-                'class' => sprintf('preview %s', $item['og_image'] ? '' : 'is-hidden')
+                'class' => sprintf('preview %s', $item->og_image ? '' : 'is-hidden')
             ));
 
             $partial = new tpl();
             $partial->setvars(array(
                 'LABEL' => 'Imagem',
                 'NAME' => 'og_image',
-                'VALUE' => $item['og_image'] ? $item['og_image'] : 0,
+                'VALUE' => $item->og_image ? $item->og_image : 0,
                 'IMAGE' => $image,
-                'EMPTY' => $item['og_image'] ? 'is-hidden' : ''
+                'EMPTY' => $item->og_image ? 'is-hidden' : ''
             ));
             $partial->setfile('_image');
 
@@ -102,8 +99,8 @@ class pages extends section implements isection {
                 $review = array();
                 foreach ($mysql->result() as $field) {
                     $review[] = array(
-                        'KEY' => $field['prid'],
-                        'VALUE' => $field['modified']
+                        'KEY' => $field->prid,
+                        'VALUE' => $field->modified
                     );
                 }
                 $tpl->setarray('VERSION', $review);
@@ -111,15 +108,15 @@ class pages extends section implements isection {
 
             $mysql->statement('SELECT p.pid, p.title
                 FROM pages AS p
-                WHERE pid <> ?;', array($this->item['pid']));
+                WHERE pid <> ?;', array($this->item->pid));
 
             $parent = array();
             foreach ($mysql->result() as $field) {
 
                 $parent[] = array(
-                    'KEY' => $field['pid'],
-                    'VALUE' => $field['title'],
-                    'SELECTED' => $field['pid'] == $this->item['parent'] ? 'selected="selected"' : ''
+                    'KEY' => $field->pid,
+                    'VALUE' => $field->title,
+                    'SELECTED' => $field->pid == $this->item->parent ? 'selected="selected"' : ''
                 );
             }
             $tpl->setarray('PARENT', $parent);
@@ -141,36 +138,36 @@ LEFT JOIN layoutsections AS ls ON ls.lsid = pm.lsid
 LEFT JOIN layoutsectionmoduletypes AS lsmt ON ls.lsid = lsmt.lsid
 LEFT JOIN moduletypes AS mt ON mt.mtid = lsmt.mtid
 LEFT JOIN moduletypes AS smt ON smt.mtid = lsmt.smtid
-WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item['pid']));
+WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item->pid));
 
             foreach ($mysql->result() as $item) {
 
-                $item['data'] = unserialize($item['data']);
+                $item->data = unserialize($item->data);
 
                 $extra = array();
-                if ($item['file'] == '_image') {
+                if ($item->file == '_image') {
                     $image = new image(array(
-                        'iid' => @$item['data']['list'][0][0]['value'],
+                        'iid' => @$item->data['list'][0][0]['value'],
                         'height' => '100',
                         'width' => 'auto',
-                        'class' => sprintf('preview %s', @$item['data']['list'][0][0]['value'] ? '' : 'is-hidden')
+                        'class' => sprintf('preview %s', @$item->data['list'][0][0]['value'] ? '' : 'is-hidden')
                     ));
 
                     $extra = array(
                         'IMAGE' => $image,
-                        'EMPTY' => @$item['data']['list'][0][0]['value'] ? 'is-hidden' : ''
+                        'EMPTY' => @$item->data['list'][0][0]['value'] ? 'is-hidden' : ''
                     );
                 }
 
-                if ($item['sfile']) {
-                    $partial = $this->partialtpl($item['data'], $item['lsname'], $item['pmid'], $extra);
+                if ($item->sfile) {
+                    $partial = $this->partialtpl($item->data, $item->lsname, $item->pmid, $extra);
                 } else {
-                    $partial = $this->partialtpl($item['data']['list'][0][0], $item['lsname'], $item['pmid'], $extra);
+                    $partial = $this->partialtpl($item->data['list'][0][0], $item->lsname, $item->pmid, $extra);
                 }
 
-                if ($item['sfile']) {
+                if ($item->sfile) {
                     $list = array();
-                    foreach ($item['data']['list'] as $index => $data1) {
+                    foreach ($item->data['list'] as $index => $data1) {
 
                         $spartials = '';
                         if (gettype($data1) === 'array') {
@@ -178,7 +175,7 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item['pid']));
                                 $extra = array();
                                 $data = $data2;
 
-                                if ($item['sfile'] == '_image') {
+                                if ($item->sfile == '_image') {
                                     $image = new image(array(
                                         'iid' => @$data['value'],
                                         'height' => '100',
@@ -195,13 +192,13 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item['pid']));
                                 $spartial = new tpl();
 
                                 $spartial->setvars(array_merge(array(
-                                    'NAME' => 'value_pm_s_' . $index . '_' . $item['pmid'] . '[]',
+                                    'NAME' => 'value_pm_s_' . $index . '_' . $item->pmid . '[]',
                                     'VALUE' => $data['value'],
                                     'CLASS' => $data['class'],
                                     'STYLE' => $data['style'],
                                     'LABEL' => 'Value'
                                 ), $extra));
-                                $spartial->setfile($item['sfile']);
+                                $spartial->setfile($item->sfile);
 
                                 $spartials .= $spartial;
 
@@ -209,14 +206,14 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item['pid']));
                         }
                         $list[] = array(
                             'ITEM' => $spartials,
-                            'EXTRACLASS' => $item['sfile'] == '_image' ? 'image' : ''
+                            'EXTRACLASS' => $item->sfile == '_image' ? 'image' : ''
                         );
                     }
                         
                     $spartial = new tpl();
 
                     $spartial->setvars(array(
-                        'NAME' => 'value_pm_' . ($index + 1) . '_s' . $item['pmid'] . '[]',
+                        'NAME' => 'value_pm_' . ($index + 1) . '_s' . $item->pmid . '[]',
                         'EMPTY' => '',
                         'IMAGE' => new image(array (
                             'height' => '100',
@@ -224,12 +221,12 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item['pid']));
                             'class' => 'preview is-hidden'
                         ))
                     ));
-                    $spartial->setfile($item['sfile']);
+                    $spartial->setfile($item->sfile);
 
                     $partial->setarray('LIST', $list);
                 }
 
-                $partial->setfile($item['file']);
+                $partial->setfile($item->file);
 
                 $extrafields[] = array(
                     'FIELD' => $partial,
@@ -260,10 +257,10 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item['pid']));
         $fields = array();
 
         foreach ($defaultfields as $field) {
-            if ($currentpage[$field] != $_REQUEST[$field]) {
+            if ($currentpage->{$field} != $_REQUEST[$field]) {
                 $hasChanged = 1;
             }
-            array_push($fields, $currentpage[$field]);
+            array_push($fields, $currentpage->{$field});
         }
 
         $result = parent::edit($defaultfields);
@@ -271,7 +268,7 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item['pid']));
         $this->update_beautify($site->arg(2));
 
         if ($hasChanged) {
-            array_push($fields, $currentpage['modified']);
+            array_push($fields, $currentpage->modified);
             array_push($defaultfields, 'modified');
             $this->page_review($defaultfields, $fields);
         }
@@ -284,7 +281,7 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item['pid']));
 
         $mysql->statement('SELECT pp.beautify, p.url FROM pages AS p LEFT JOIN pages AS pp ON p.parent = pp.pid WHERE p.pid = ?;', array($pid));
         $result = $mysql->singleline();
-        $mysql->statement('UPDATE pages SET beautify = ? WHERE pid = ?;', array(vsprintf('%s%s', $result), $pid));
+        $mysql->statement('UPDATE pages SET beautify = ? WHERE pid = ?;', array(sprintf('%s%s', $result->beautify, $result->url), $pid));
     }
 
     private function page_review ($defaultfields = array(), $fields = array()) {

@@ -17,7 +17,7 @@ if (@$_REQUEST['save']) {
 
         $image = $mysql->singleline();
 
-        removefile(ASSETPATH . 'images/' . $site->arg(2) . '.' . $image['extension']);
+        removefile(ASSETPATH . 'images/' . $site->arg(2) . '.' . $image->extension);
 
         $name = explode('.', $_FILES['asset']['name']);
         $extension = end($name);
@@ -36,7 +36,7 @@ if (@$_REQUEST['save']) {
 
     $result = $csection->edit($defaultfields);
 
-    $_SESSION['message'] = '{LANG_IMAGE_SAVED}';
+    $_SESSION['message'] = lang('LANG_IMAGE_SAVED');
 
     header("Location: /admin/images", true, 302);
     exit;

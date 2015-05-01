@@ -11,6 +11,16 @@
 * File with user class information  *
 *************************************/
 
+interface idatabase {
+    public function statement ($query, $values);
+    public function execute ($values);
+    public function result();
+    public function singleresult();
+    public function singleline();
+    public function close ();
+    public function lastInserted ();
+}
+
 interface iuser {
     public function reset ();
     public function islogged ();

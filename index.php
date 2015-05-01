@@ -37,7 +37,7 @@ if (!IS_INSTALLED) {
     }
 
     if (is_file(ROOTPATH . 'gsd-frontend/index.php') && $site->arg(0) != 'admin') {
-        if (!IS_LOGGED && $site->page['require_auth']) {
+        if (!IS_LOGGED && @$site->page->require_auth) {
             header('location: /login?redirect=' . urlencode($site->uri));
             exit;
         }

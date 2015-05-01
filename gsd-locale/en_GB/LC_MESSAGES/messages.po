@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2014-11-12 17:19-0000\n"
-"PO-Revision-Date: 2015-04-27 11:50-0000\n"
+"PO-Revision-Date: 2015-05-01 14:18-0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -46,51 +46,6 @@ msgstr "Add"
 msgid "LANG_EDIT"
 msgstr "Edit"
 
-msgid "LANG_SETTINGS"
-msgstr "Settings"
-
-msgid "LANG_SETTINGS_SAVED"
-msgstr "Settings saved"
-
-msgid "LANG_DASHBOARD"
-msgstr "Dashboard"
-
-msgid "LANG_LAYOUTS"
-msgstr "Layouts"
-
-msgid "LANG_NEW_LAYOUT"
-msgstr "Add new"
-
-msgid "LANG_ALL_LAYOUTS"
-msgstr "List layouts"
-
-msgid "LANG_NO_LAYOUTS"
-msgstr "There are no layouts"
-
-msgid "LANG_LAYOUT_ALREADY_EXISTS"
-msgstr "There is already a layout associated to that file"
-
-msgid "LANG_LAYOUT_REMOVED"
-msgstr "Layout '%s' removed"
-
-msgid "LANG_LAYOUT_CREATED"
-msgstr "Layout '%s' created"
-
-msgid "LANG_LAYOUT_NOPERMISSION"
-msgstr "You don't have permission to remove layouts"
-
-msgid "LANG_LAYOUT_RELATED"
-msgstr "There are pages using that layout. First you have to remove the pages"
-
-msgid "LANG_PAGES"
-msgstr "Pages"
-
-msgid "LANG_PAGE"
-msgstr "Page"
-
-msgid "LANG_PAGE_REMOVE"
-msgstr "Remove page"
-
 msgid "LANG_FROM"
 msgstr "from"
 
@@ -102,111 +57,6 @@ msgstr "Search"
 
 msgid "LANG_DIMENSION"
 msgstr "Dimensão"
-
-msgid "LANG_NEW_PAGE"
-msgstr "Add new"
-
-msgid "LANG_ALL_PAGES"
-msgstr "List pages"
-
-msgid "LANG_NO_PAGES"
-msgstr "There are no pages"
-
-msgid "LANG_PAGE_CREATED"
-msgstr "Page '%s' created"
-
-msgid "LANG_PAGE_SAVED"
-msgstr "Page '%s' saved"
-
-msgid "LANG_PAGE_ALREADY_EXISTS"
-msgstr "There is already a page with that url"
-
-msgid "LANG_PAGE_REMOVED"
-msgstr "Page '%s' removed"
-
-msgid "LANG_PAGE_ERROR"
-msgstr "There was a problem. Check your data and try again"
-
-msgid "LANG_PAGE_NOPERMISSION"
-msgstr "You don't have permission to remove pages"
-
-msgid "LANG_USERS"
-msgstr "Users"
-
-msgid "LANG_USER"
-msgstr "User"
-
-msgid "LANG_NEW_USER"
-msgstr "Add new"
-
-msgid "LANG_ALL_USERS"
-msgstr "List users"
-
-msgid "LANG_USER_ADD"
-msgstr "Add user"
-
-msgid "LANG_USER_CREATED"
-msgstr "User '%s' created"
-
-msgid "LANG_USER_SAVED"
-msgstr "User '%s' saved"
-
-msgid "LANG_USER_ALREADY_EXISTS"
-msgstr "There is already an user with that email"
-
-msgid "LANG_USER_REMOVED"
-msgstr "User '%s' removed"
-
-msgid "LANG_USER_NOPERMISSION"
-msgstr "You don't have permission to remove users"
-
-msgid "LANG_USER_DEFAULT"
-msgstr "You can't remove default user"
-
-msgid "LANG_USER_ERROR"
-msgstr "There was an error. Try again later"
-
-msgid "LANG_SETTINGS_ERROR"
-msgstr "There was an error. Try again later"
-
-msgid "LANG_IMAGES"
-msgstr "Images"
-
-msgid "LANG_IMAGE"
-msgstr "Image"
-
-msgid "LANG_UPLOAD_IMAGE"
-msgstr "Upload image"
-
-msgid "LANG_NO_IMAGES"
-msgstr "There are no images"
-
-msgid "LANG_IMAGE_UPLOADED"
-msgstr "Image '%s' uploaded"
-
-msgid "LANG_IMAGE_ERROR"
-msgstr "There was an error. Try again later"
-
-msgid "LANG_IMAGE_SAVED"
-msgstr "Image '%s' saved"
-
-msgid "LANG_IMAGE_REMOVED"
-msgstr "Image '%s' removed"
-
-msgid "LANG_DOCUMENTS"
-msgstr "Documents"
-
-msgid "LANG_DOCUMENT"
-msgstr "Document"
-
-msgid "LANG_UPLOAD_DOCUMENT"
-msgstr "Upload document"
-
-msgid "LANG_NO_DOCUMENTS"
-msgstr "There are no documents"
-
-msgid "LANG_DOCUMENT_UPLOADED"
-msgstr "Document '%s' uploaded"
 
 msgid "LANG_DOCUMENT_EMPTY"
 msgstr "No document"
@@ -223,6 +73,9 @@ msgstr "ago"
 msgid "LANG_NAME"
 msgstr "Name"
 
+msgid "LANG_CREATE"
+msgstr "Create"
+
 msgid "LANG_CREATED"
 msgstr "Created"
 
@@ -234,12 +87,6 @@ msgstr "Actions"
 
 msgid "LANG_LAST_LOGIN"
 msgstr "Last Login"
-
-msgid "LANG_PAGE_CREATE"
-msgstr "Create page"
-
-msgid "LANG_PAGE_EDIT"
-msgstr "Edit page"
 
 msgid "LANG_TITLE"
 msgstr "Title"
@@ -280,12 +127,6 @@ msgstr "Save"
 msgid "LANG_BY"
 msgstr "by"
 
-msgid "LANG_DELETE_LAYOUT"
-msgstr "Do you want to remove layout"
-
-msgid "LANG_DELETE_PAGE"
-msgstr "Do you want to remove page"
-
 msgid "LANG_DESCRIPTION"
 msgstr "Description"
 
@@ -297,9 +138,6 @@ msgstr "Clear image"
 
 msgid "LANG_IMAGE_EMPTY"
 msgstr "No image"
-
-msgid "LANG_DELETE_IMAGE"
-msgstr "Do you want to remove image"
 
 msgid "LANG_ADVANCED"
 msgstr "Advanced"
@@ -378,3 +216,147 @@ msgstr "Wrong login"
 
 msgid "CHECK_DATA"
 msgstr "Check your data."
+
+msgid "LANG_LAYOUT_REMOVED"
+msgstr "Layout '%s' removed"
+
+msgid "LANG_PAGE_REMOVED"
+msgstr "Page '%s' removed"
+
+msgid "LANG_USER_REMOVED"
+msgstr "User '%s' removed"
+
+msgid "LANG_IMAGE_REMOVED"
+msgstr "Image '%s' removed"
+
+msgid "LANG_DOCUMENT_REMOVED"
+msgstr "Document '%s' removed"
+
+msgid "LANG_LAYOUT_CREATED"
+msgstr "Layout '%s' created"
+
+msgid "LANG_PAGE_CREATED"
+msgstr "Page '%s' created"
+
+msgid "LANG_USER_CREATED"
+msgstr "User '%s' created"
+
+msgid "LANG_IMAGE_UPLOADED"
+msgstr "Image '%s' uploaded"
+
+msgid "LANG_DOCUMENT_UPLOADED"
+msgstr "Document '%s' uploaded"
+
+msgid "LANG_SETTINGS_SAVED"
+msgstr "Settings saved"
+
+msgid "LANG_PAGE_SAVED"
+msgstr "Page '%s' saved"
+
+msgid "LANG_USER_SAVED"
+msgstr "User '%s' saved"
+
+msgid "LANG_IMAGE_SAVED"
+msgstr "Image '%s' saved"
+
+msgid "LANG_DOCUMENT_SAVED"
+msgstr "Document '%s' saved"
+
+msgid "LANG_NO_LAYOUTS"
+msgstr "There are no layouts"
+
+msgid "LANG_NO_PAGES"
+msgstr "There are no pages"
+
+msgid "LANG_NO_IMAGES"
+msgstr "There are no images"
+
+msgid "LANG_NO_DOCUMENTS"
+msgstr "There are no documents"
+
+msgid "LANG_REMOVE_LAYOUT"
+msgstr "Do you want to remove layout"
+
+msgid "LANG_REMOVE_PAGE"
+msgstr "Do you want to remove page"
+
+msgid "LANG_REMOVE_USER"
+msgstr "Do you want to remove user"
+
+msgid "LANG_REMOVE_IMAGE"
+msgstr "Do you want to remove image"
+
+msgid "LANG_REMOVE_DOCUMENT"
+msgstr "Do you want to remove document"
+
+msgid "LANG_LAYOUTS"
+msgstr "Layouts"
+
+msgid "LANG_PAGES"
+msgstr "Pages"
+
+msgid "LANG_USERS"
+msgstr "Users"
+
+msgid "LANG_IMAGES"
+msgstr "Images"
+
+msgid "LANG_DOCUMENTS"
+msgstr "Documents"
+
+msgid "LANG_LAYOUT"
+msgstr "Layout"
+
+msgid "LANG_PAGE"
+msgstr "Page"
+
+msgid "LANG_USER"
+msgstr "User"
+
+msgid "LANG_IMAGE"
+msgstr "Image"
+
+msgid "LANG_DOCUMENT"
+msgstr "Document"
+
+msgid "LANG_SETTINGS"
+msgstr "Settings"
+
+msgid "LANG_DASHBOARD"
+msgstr "Dashboard"
+
+msgid "LANG_LAYOUT_ALREADY_EXISTS"
+msgstr "There is already a layout associated to that file"
+
+msgid "LANG_PAGE_ALREADY_EXISTS"
+msgstr "There is already a page with that url"
+
+msgid "LANG_PAGE_ERROR"
+msgstr "There was a problem. Check your data and try again"
+
+msgid "LANG_USER_ALREADY_EXISTS"
+msgstr "There is already an user with that email"
+
+msgid "LANG_USER_ERROR"
+msgstr "There was an error. Try again later"
+
+msgid "LANG_IMAGE_ERROR"
+msgstr "There was an error. Try again later"
+
+msgid "LANG_SETTINGS_ERROR"
+msgstr "There was an error. Try again later"
+
+msgid "LANG_LAYOUT_NOPERMISSION"
+msgstr "You don't have permission to remove layouts"
+
+msgid "LANG_PAGE_NOPERMISSION"
+msgstr "You don't have permission to remove pages"
+
+msgid "LANG_USER_NOPERMISSION"
+msgstr "You don't have permission to remove users"
+
+msgid "LANG_LAYOUT_RELATED"
+msgstr "There are pages using that layout. First you have to remove the pages"
+
+msgid "LANG_USER_DEFAULT"
+msgstr "You can't remove default user"

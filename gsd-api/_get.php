@@ -26,9 +26,7 @@ $GETimages = function ($fields, $extra, $doc = false) {
 
     $tags = @$fields['search'] ? sprintf('WHERE tags like "%%%s%%"', $fields['search']) : '';
 
-    $mysql->statement('SELECT * FROM images '
-        . $tags .
-        ';');
+    $mysql->statement('SELECT * FROM images ' . $tags . ';');
 
     if ($mysql->total) {
         $output['message'] = '';

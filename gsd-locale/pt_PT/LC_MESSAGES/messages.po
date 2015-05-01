@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2014-11-12 17:19-0000\n"
-"PO-Revision-Date: 2015-04-28 09:37-0000\n"
+"PO-Revision-Date: 2015-05-01 14:18-0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -46,51 +46,6 @@ msgstr "Adicionar"
 msgid "LANG_EDIT"
 msgstr "Editar"
 
-msgid "LANG_SETTINGS"
-msgstr "Definições"
-
-msgid "LANG_SETTINGS_SAVED"
-msgstr "Definições salvas"
-
-msgid "LANG_DASHBOARD"
-msgstr "Páinel"
-
-msgid "LANG_LAYOUTS"
-msgstr "Layouts"
-
-msgid "LANG_NEW_LAYOUT"
-msgstr "Adicionar novo"
-
-msgid "LANG_ALL_LAYOUTS"
-msgstr "Listar layouts"
-
-msgid "LANG_NO_LAYOUTS"
-msgstr "Não existem layouts"
-
-msgid "LANG_LAYOUT_ALREADY_EXISTS"
-msgstr "Já existe um layout associado a esse ficheiro"
-
-msgid "LANG_LAYOUT_REMOVED"
-msgstr "Layout '%s' apagado"
-
-msgid "LANG_LAYOUT_CREATED"
-msgstr "Layout '%s' criado"
-
-msgid "LANG_LAYOUT_NOPERMISSION"
-msgstr "Não tem permissão para apagar layouts"
-
-msgid "LANG_LAYOUT_RELATED"
-msgstr "Existem páginas a usar este layout. Tem de apagar primeiro as páginas"
-
-msgid "LANG_PAGES"
-msgstr "Páginas"
-
-msgid "LANG_PAGE"
-msgstr "Página"
-
-msgid "LANG_PAGE_REMOVE"
-msgstr "Remover página"
-
 msgid "LANG_FROM"
 msgstr "de"
 
@@ -102,111 +57,6 @@ msgstr "Procurar"
 
 msgid "LANG_DIMENSION"
 msgstr "Dimensão"
-
-msgid "LANG_NEW_PAGE"
-msgstr "Adicionar nova"
-
-msgid "LANG_ALL_PAGES"
-msgstr "Listar páginas"
-
-msgid "LANG_NO_PAGES"
-msgstr "Não existem páginas"
-
-msgid "LANG_PAGE_CREATED"
-msgstr "Página '%s' criada"
-
-msgid "LANG_PAGE_SAVED"
-msgstr "Página '%s' salva"
-
-msgid "LANG_PAGE_ALREADY_EXISTS"
-msgstr "Já existe uma página com esse endereço"
-
-msgid "LANG_PAGE_REMOVED"
-msgstr "Página '%s' apagada"
-
-msgid "LANG_PAGE_ERROR"
-msgstr "Houve um problema. Verifique os dados e tente novamente"
-
-msgid "LANG_PAGE_NOPERMISSION"
-msgstr "Não tem permissão para apagar páginas"
-
-msgid "LANG_USERS"
-msgstr "Utilizadores"
-
-msgid "LANG_USER"
-msgstr "Utilizador"
-
-msgid "LANG_NEW_USER"
-msgstr "Adicionar novo"
-
-msgid "LANG_ALL_USERS"
-msgstr "Listar utilizadores"
-
-msgid "LANG_USER_ADD"
-msgstr "Adicionar utilizador"
-
-msgid "LANG_USER_CREATED"
-msgstr "Utilizador '%s' criado"
-
-msgid "LANG_USER_SAVED"
-msgstr "Utilizador '%s' salvo"
-
-msgid "LANG_USER_ALREADY_EXISTS"
-msgstr "Já existe um utilizador com esse email"
-
-msgid "LANG_USER_REMOVED"
-msgstr "Utilizador '%s' apagado"
-
-msgid "LANG_USER_NOPERMISSION"
-msgstr "Não tem permissão para apagar utilizadores"
-
-msgid "LANG_USER_DEFAULT"
-msgstr "Não pode remover o utilizador padrão"
-
-msgid "LANG_USER_ERROR"
-msgstr "Houve um erro. Tente mais tarde"
-
-msgid "LANG_SETTINGS_ERROR"
-msgstr "Houve um erro. Tente mais tarde"
-
-msgid "LANG_IMAGES"
-msgstr "Imagens"
-
-msgid "LANG_IMAGE"
-msgstr "Imagem"
-
-msgid "LANG_UPLOAD_IMAGE"
-msgstr "Carregar imagem"
-
-msgid "LANG_NO_IMAGES"
-msgstr "Não existem imagens"
-
-msgid "LANG_IMAGE_UPLOADED"
-msgstr "Imagem '%s' carregada"
-
-msgid "LANG_IMAGE_ERROR"
-msgstr "Houve um erro. Tente mais tarde"
-
-msgid "LANG_IMAGE_SAVED"
-msgstr "Imagem '%s' salva"
-
-msgid "LANG_IMAGE_REMOVED"
-msgstr "Imagem '%s' apagada"
-
-msgid "LANG_DOCUMENTS"
-msgstr "Documentos"
-
-msgid "LANG_DOCUMENT"
-msgstr "Documento"
-
-msgid "LANG_UPLOAD_DOCUMENT"
-msgstr "Carregar documento"
-
-msgid "LANG_NO_DOCUMENTS"
-msgstr "Não existem documentos"
-
-msgid "LANG_DOCUMENT_UPLOADED"
-msgstr "Documento '%s' carregado"
 
 msgid "LANG_DOCUMENT_EMPTY"
 msgstr "Sem documento"
@@ -223,6 +73,9 @@ msgstr "atrás"
 msgid "LANG_NAME"
 msgstr "Nome"
 
+msgid "LANG_CREATE"
+msgstr "Criar"
+
 msgid "LANG_CREATED"
 msgstr "Criado"
 
@@ -234,12 +87,6 @@ msgstr "Acções"
 
 msgid "LANG_LAST_LOGIN"
 msgstr "Último Login"
-
-msgid "LANG_PAGE_CREATE"
-msgstr "Criar página"
-
-msgid "LANG_PAGE_EDIT"
-msgstr "Editar página"
 
 msgid "LANG_TITLE"
 msgstr "Título"
@@ -280,12 +127,6 @@ msgstr "Salvar"
 msgid "LANG_BY"
 msgstr "por"
 
-msgid "LANG_DELETE_LAYOUT"
-msgstr "Pretende apagar o layout"
-
-msgid "LANG_DELETE_PAGE"
-msgstr "Pretende apagar a página"
-
 msgid "LANG_DESCRIPTION"
 msgstr "Descrição"
 
@@ -297,9 +138,6 @@ msgstr "Limpar imagem"
 
 msgid "LANG_IMAGE_EMPTY"
 msgstr "Sem imagem"
-
-msgid "LANG_DELETE_IMAGE"
-msgstr "Pretende apagar a imagem"
 
 msgid "LANG_ADVANCED"
 msgstr "Avançadas"
@@ -378,3 +216,147 @@ msgstr "Login errado"
 
 msgid "CHECK_DATA"
 msgstr "Verifique os dados."
+
+msgid "LANG_LAYOUT_REMOVED"
+msgstr "Layout '%s' apagado"
+
+msgid "LANG_PAGE_REMOVED"
+msgstr "Página '%s' apagada"
+
+msgid "LANG_USER_REMOVED"
+msgstr "Utilizador '%s' apagado"
+
+msgid "LANG_IMAGE_REMOVED"
+msgstr "Imagem '%s' apagada"
+
+msgid "LANG_DOCUMENT_REMOVED"
+msgstr "Documento '%s' apagado"
+
+msgid "LANG_LAYOUT_CREATED"
+msgstr "Layout '%s' criado"
+
+msgid "LANG_PAGE_CREATED"
+msgstr "Página '%s' criada"
+
+msgid "LANG_USER_CREATED"
+msgstr "Utilizador '%s' criado"
+
+msgid "LANG_IMAGE_UPLOADED"
+msgstr "Imagem '%s' carregada"
+
+msgid "LANG_DOCUMENT_UPLOADED"
+msgstr "Documento '%s' carregado"
+
+msgid "LANG_SETTINGS_SAVED"
+msgstr "Definições salvas"
+
+msgid "LANG_PAGE_SAVED"
+msgstr "Página '%s' salva"
+
+msgid "LANG_USER_SAVED"
+msgstr "Utilizador '%s' salvo"
+
+msgid "LANG_IMAGE_SAVED"
+msgstr "Imagem '%s' salva"
+
+msgid "LANG_DOCUMENT_SAVED"
+msgstr "Documento '%s' salvo"
+
+msgid "LANG_NO_LAYOUTS"
+msgstr "Não existem layouts"
+
+msgid "LANG_NO_PAGES"
+msgstr "Não existem páginas"
+
+msgid "LANG_NO_IMAGES"
+msgstr "Não existem imagens"
+
+msgid "LANG_NO_DOCUMENTS"
+msgstr "Não existem documentos"
+
+msgid "LANG_REMOVE_LAYOUT"
+msgstr "Pretende apagar o layout"
+
+msgid "LANG_REMOVE_PAGE"
+msgstr "Pretende apagar a página"
+
+msgid "LANG_REMOVE_USER"
+msgstr "Pretende apagar o utilizador"
+
+msgid "LANG_REMOVE_IMAGE"
+msgstr "Pretende apagar a imagem"
+
+msgid "LANG_REMOVE_DOCUMENT"
+msgstr "Pretende apagar o documento"
+
+msgid "LANG_LAYOUTS"
+msgstr "Layouts"
+
+msgid "LANG_PAGES"
+msgstr "Páginas"
+
+msgid "LANG_USERS"
+msgstr "Utilizadores"
+
+msgid "LANG_IMAGES"
+msgstr "Imagens"
+
+msgid "LANG_DOCUMENTS"
+msgstr "Documentos"
+
+msgid "LANG_LAYOUT"
+msgstr "Layout"
+
+msgid "LANG_PAGE"
+msgstr "Página"
+
+msgid "LANG_USER"
+msgstr "Utilizador"
+
+msgid "LANG_IMAGE"
+msgstr "Imagem"
+
+msgid "LANG_DOCUMENT"
+msgstr "Documento"
+
+msgid "LANG_SETTINGS"
+msgstr "Definições"
+
+msgid "LANG_DASHBOARD"
+msgstr "Páinel"
+
+msgid "LANG_LAYOUT_ALREADY_EXISTS"
+msgstr "Já existe um layout associado a esse ficheiro"
+
+msgid "LANG_PAGE_ALREADY_EXISTS"
+msgstr "Já existe uma página com esse endereço"
+
+msgid "LANG_USER_ALREADY_EXISTS"
+msgstr "Já existe um utilizador com esse email"
+
+msgid "LANG_PAGE_ERROR"
+msgstr "Houve um problema. Verifique os dados e tente novamente"
+
+msgid "LANG_USER_ERROR"
+msgstr "Houve um erro. Tente mais tarde"
+
+msgid "LANG_IMAGE_ERROR"
+msgstr "Houve um erro. Tente mais tarde"
+
+msgid "LANG_SETTINGS_ERROR"
+msgstr "Houve um erro. Tente mais tarde"
+
+msgid "LANG_LAYOUT_NOPERMISSION"
+msgstr "Não tem permissão para apagar layouts"
+
+msgid "LANG_PAGE_NOPERMISSION"
+msgstr "Não tem permissão para apagar páginas"
+
+msgid "LANG_USER_NOPERMISSION"
+msgstr "Não tem permissão para apagar utilizadores"
+
+msgid "LANG_LAYOUT_RELATED"
+msgstr "Existem páginas a usar este layout. Tem de apagar primeiro as páginas"
+
+msgid "LANG_USER_DEFAULT"
+msgstr "Não pode remover o utilizador padrão"

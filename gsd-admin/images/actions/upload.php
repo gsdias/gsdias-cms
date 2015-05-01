@@ -29,7 +29,7 @@ if (@$_REQUEST['save']) {
     $result = $csection->add($defaultfields, $fields, $values);
 
     if ($result['errnum']) {
-        $tpl->setvar('ERRORS', '{LANG_IMAGE_ERROR}');
+        $tpl->setvar('ERRORS', lang('LANG_IMAGE_ERROR'));
         $tpl->setcondition('ERRORS');
 
     } else {

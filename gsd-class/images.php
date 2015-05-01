@@ -39,11 +39,11 @@ class images extends section implements isection {
                 foreach ($item as $field => $value) {
                     $fields[strtoupper($field)] = $value;
                 }
-                $created = explode(' ', $item['created']);
+                $created = explode(' ', $item->created);
                 $fields['CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())), $created[1]);
                 
-                $fields['ASSET'] = @$item['width'] ? new image(array('iid' => $item['iid'], 'max-height' => '100', 'height' => 'auto', 'width' => 'auto')) : '';
-                $fields['SIZE'] = sprintf('<strong>%s x %s</strong><br>%s', $item['width'], $item['height'], $item['size']);
+                $fields['ASSET'] = @$item->width ? new image(array('iid' => $item->iid, 'max-height' => '100', 'height' => 'auto', 'width' => 'auto')) : '';
+                $fields['SIZE'] = sprintf('<strong>%s x %s</strong><br>%s', $item->width, $item->height, $item->size);
                 $list[] = $fields;
             }
             $tpl->setarray('IMAGES', $list);
@@ -63,13 +63,10 @@ class images extends section implements isection {
         if ($mysql->total) {
 
             $item = $mysql->singleline();
-            $created = explode(' ', $item['created']);
+            $created = explode(' ', $item->created);
 
             $fields = array();
             foreach ($item as $field => $value) {
-                if (is_numeric($field)) {
-                    continue;
-                }
                 $fields['CURRENT_IMAGE_'. strtoupper($field)] = $value;
             }
 

@@ -33,7 +33,8 @@ class notification implements inotification {
         
         $mysql->statement('SELECT notifications FROM users WHERE uid = :uid;', array(':uid' => $uid));
         
-        $notifications = json_decode($mysql->singleresult(), true);
+//        $notifications = json_decode(array($mysql->singleresult()), true);
+        $notifications = array();
         
         $this->read = $this->unread = array();
         $this->list = is_array($notifications) ? $notifications : array();

@@ -12,13 +12,13 @@ if (@$_REQUEST['confirm'] == $afirmative) {
     $mysql->statement('SELECT extension, name FROM images WHERE iid = ?;', array($site->arg(2)));
     $image = $mysql->singleline();
 
-    removefile(ASSETPATH . 'images/' . $site->arg(2) . '.' . $image['extension']);
+    removefile(ASSETPATH . 'images/' . $site->arg(2) . '.' . $image->extension);
 
     $mysql->statement('DELETE FROM images WHERE iid = ?;', array($site->arg(2)));
 
     if ($mysql->total) {
 
-        $_SESSION['message'] = sprintf(lang('{LANG_IMAGE_REMOVED}'), $image['name']);
+        $_SESSION['message'] = sprintf(lang('LANG_IMAGE_REMOVED'), $image->name);
 
         header("Location: /admin/images", true, 302);
         exit;

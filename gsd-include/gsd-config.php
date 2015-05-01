@@ -20,7 +20,7 @@ spl_autoload_register('GSDClassLoading');
 
 @session_start();
 
-$mysql = new mysql($_mysql['db'], $_mysql['host'], $_mysql['user'], $_mysql['pass']);
+$mysql = mysqlFactory::create($_mysql['db'], $_mysql['host'], $_mysql['user'], $_mysql['pass']);
 
 $tpl = new tpl(DEBUG);
 

@@ -41,10 +41,10 @@ if (@$_REQUEST['save']) {
             ));
             $lsid = $mysql->lastinserted();
             $mysql->statement('SELECT mtid FROM moduletypes WHERE name like ?', array( strtolower( $sectionname[1] ) ));
-            $mtid = $mysql->singleresult();
+            $mtid = $mysql->singleresult()->mtid;
 
             $mysql->statement('SELECT mtid FROM moduletypes WHERE name like ?', array( strtolower( @$sectionname[2] ) ));
-            $smtid = $mysql->singleresult() ? $mysql->singleresult() : null;
+            $smtid = @$mysql->singleresult()->mtid ? $mysql->singleresult()->mtid : null;
 
             $mysql->statement('INSERT INTO layoutsectionmoduletypes (lsid, mtid, smtid, total) values(?, ?, ?, ?);', array(
                 $lsid,
@@ -57,7 +57,7 @@ if (@$_REQUEST['save']) {
         header("Location: /admin/layouts", true, 302);
         exit;
     } else {
-        $tpl->setvar('ERRORS', '{LANG_LAYOUT_ALREADY_EXISTS}');
+        $tpl->setvar('ERRORS', lang('LANG_LAYOUT_ALREADY_EXISTS'));
         $tpl->setcondition('ERRORS');
     }
 }
@@ -66,7 +66,7 @@ $mysql->statement('SELECT * FROM layouttypes');
 
 $types = array();
 foreach ($mysql->result() as $item) {
-    $types[$item['ltid']] = $item['name'];
+    $types[$item->ltid] = $item->name;
 }
 
 $types = new select( array ( 'list' => $types, 'id' => 'LAYOUTTYPE' ) );
