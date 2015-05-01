@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2014-11-12 17:19-0000\n"
-"PO-Revision-Date: 2015-04-20 16:39-0000\n"
+"PO-Revision-Date: 2015-05-01 14:18-0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -58,12 +58,6 @@ msgstr "Painel"
 msgid "LANG_LAYOUTS"
 msgstr "Layouts"
 
-msgid "LANG_NEW_LAYOUT"
-msgstr "Ajouter un nouveau"
-
-msgid "LANG_ALL_LAYOUTS"
-msgstr "Liste"
-
 msgid "LANG_NO_LAYOUTS"
 msgstr "Pas de layouts"
 
@@ -104,12 +98,6 @@ msgstr "Procurar"
 msgid "LANG_DIMENSION"
 msgstr "Dimensão"
 
-msgid "LANG_NEW_PAGE"
-msgstr "Ajouter un nouveau"
-
-msgid "LANG_ALL_PAGES"
-msgstr "Liste de pages"
-
 msgid "LANG_NO_PAGES"
 msgstr "Il n'y a pas de pages"
 
@@ -136,12 +124,6 @@ msgstr "Utilisateurs"
 
 msgid "LANG_USER"
 msgstr "Utilisateur"
-
-msgid "LANG_NEW_USER"
-msgstr "Ajouter un nouveau"
-
-msgid "LANG_ALL_USERS"
-msgstr "Liste des utilisateurs"
 
 msgid "LANG_USER_ADD"
 msgstr "Ajouter un utilisateur"
@@ -235,12 +217,6 @@ msgstr "Actes"
 
 msgid "LANG_LAST_LOGIN"
 msgstr "Dernière Connexion"
-
-msgid "LANG_PAGE_CREATE"
-msgstr "Créer une page"
-
-msgid "LANG_PAGE_EDIT"
-msgstr "Modifier la page"
 
 msgid "LANG_TITLE"
 msgstr "Titre"
