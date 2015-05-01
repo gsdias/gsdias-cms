@@ -21,6 +21,14 @@
 
     $(document).bind(GSD.globalevents.init, function () {
         global.resizemain();
+
+        if (app.isCMS) {
+            tinymce.init({
+                selector: '.html_module',
+                plugins: 'code',
+                toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image'
+            });
+        }
     });
 
 }(GSD.Global = GSD.Global || {}, GSD.App, GSD.$, _, Backbone));

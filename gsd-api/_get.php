@@ -12,7 +12,7 @@
 
 $GETimages = function ($fields, $extra, $doc = false) {
     global $mysql, $api;
-    $output = array('error' => 0, 'message' => 'Não existem imagens');
+    $output = array('error' => 0, 'message' => lang('LANG_NO_IMAGES'));
     $requiredFields = array();
     $returnFields = array('iid', 'name', 'width', 'height', 'extension');
 
@@ -26,9 +26,7 @@ $GETimages = function ($fields, $extra, $doc = false) {
 
     $tags = @$fields['search'] ? sprintf('WHERE tags like "%%%s%%"', $fields['search']) : '';
 
-    $mysql->statement('SELECT * FROM images '
-        . $tags .
-        ';');
+    $mysql->statement('SELECT * FROM images ' . $tags . ';');
 
     if ($mysql->total) {
         $output['message'] = '';

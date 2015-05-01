@@ -1,9 +1,17 @@
 <main>
     <form method="post">
-    {LANG_DELETE_PAGE} {CURRENT_PAGE_TITLE}?
-    <div class="btns">
-        <input type="submit" class="btn red" value="{LANG_YES}" name="confirm" autofocus="autofocus">
-        <input type="submit" class="btn" value="{LANG_NO}" name="confirm">
-    </div>
+       <!-- IF IS_PARENT -->
+        <p>Exitem páginas associadas a esta. Escolha outra página ascendente.</p><br>
+       <!-- LOOP CHILDS -->
+        <div class="colA"><label>{CHILDS_NAME}</label>
+            {CHILDS_LIST}
+        </div>
+       <!-- ENDLOOP CHILDS -->
+       <!-- ENDIF IS_PARENT -->
+        <p>{LANG_REMOVE_PAGE} {CURRENT_PAGE_TITLE}?</p>
+        <div class="btns">
+            <input type="submit" class="btn red" value="{LANG_YES}" name="confirm" autofocus="autofocus">
+            <input type="submit" class="btn" value="{LANG_NO}" name="confirm">
+        </div>
     </form>
 </main>

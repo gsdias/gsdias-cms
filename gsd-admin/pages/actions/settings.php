@@ -10,12 +10,12 @@
 
 if (@$_REQUEST['save']) {
 
-    $mysql->statement('SELECT count(*), pid FROM pages WHERE url = ?;', array($_REQUEST['url']));
+    $mysql->statement('SELECT count(*) AS total, pid FROM pages WHERE url = ?;', array($_REQUEST['url']));
     $condition = $mysql->singleline();
     
-    if ($condition[0] > 0 && $condition[1] != $site->arg(2)) {
+    if ($condition->total > 0 && $condition->pid != $site->arg(2)) {
         
-        $tpl->setvar('ERRORS', '{LANG_PAGE_ALREADY_EXISTS}');
+        $tpl->setvar('ERRORS', lang('LANG_PAGE_ALREADY_EXISTS'));
         $tpl->setcondition('ERRORS');
         
     } else {
@@ -29,7 +29,7 @@ if (@$_REQUEST['save']) {
             $fields = array();
 
             foreach ($defaultfields as $field) {
-                array_push($fields, $currentpage[$field]);
+                array_push($fields, $currentpage->{$field});
             }
 
             $mysql->statement('SELECT * FROM pages_review WHERE prid = ?;', array($_REQUEST['prid']));
@@ -39,7 +39,7 @@ if (@$_REQUEST['save']) {
 
             foreach ($defaultfields as $field) {
                 $fieldsupdate .= sprintf(", `%s` = ?", $field);
-                $review[] = $reviewpage[$field];
+                $review[] = $reviewpage->{$field};
             }
 
             $review[] = $site->arg(2);
@@ -59,19 +59,27 @@ if (@$_REQUEST['save']) {
         $mysql->statement('SELECT `from`, destination FROM redirect WHERE destination = ? ORDER BY created;', array($currenturl));
 
         if ($mysql->total) {
-            foreach($mysql->result() as $url) {
+            foreach ($mysql->result() as $url) {
                 //REFACTOR: THIS PART IS OUTDATED
-                $mysql->statement('INSERT INTO redirect (`pid`, `from`, `destination`, `creator`) VALUES (?, ?, ?, ?);', array($site->arg(2), $url[1], $_REQUEST['url'], $user->id));
+                $mysql->statement('INSERT INTO redirect (`pid`, `from`, `destination`, `creator`) VALUES (?, ?, ?, ?);', array($site->arg(2), $url->destination, $_REQUEST['url'], $user->id));
             }
         } else {
             $mysql->statement('INSERT INTO redirect (`pid`, `from`, `destination`, `creator`) VALUES (?, ?, ?, ?);', array($site->arg(2), $currenturl, $_REQUEST['url'], $user->id));
         }
 
-        $mysql->statement('UPDATE pages AS p JOIN pages AS pp ON pp.pid = p.parent SET p.url = ?, p.beautify = concat(pp.beautify, ?) WHERE p.pid = ?;', array(
+        $mysql->statement('UPDATE pages AS p
+        LEFT JOIN pages AS pp ON pp.pid = p.parent
+        SET p.url = ?, p.beautify = concat(if(pp.beautify IS NULL, "", pp.beautify), ?)
+        WHERE p.pid = ?;', array(
             $_REQUEST['url'],
             $_REQUEST['url'],
             $site->arg(2)
         ));
+
+        $mysql->statement('UPDATE pages AS p
+        LEFT JOIN pages AS pp ON pp.pid = p.parent
+        SET p.beautify = concat(if(pp.beautify IS NULL, "", pp.beautify), p.url)
+        WHERE p.parent = ?;', array($site->arg(2)));
 
         header("Location: /admin/pages", true, 302);
         exit;

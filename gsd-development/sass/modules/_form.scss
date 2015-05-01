@@ -11,6 +11,7 @@ label {
 
     &.error {
         color: red;
+        margin-top: 10px;
         text-align: left;
         width: auto;
     }
@@ -49,6 +50,12 @@ input {
         color: #9B870C;
         max-width: 200px;
         min-width: 150px;
+    }
+}
+
+select {
+    &.error {
+        border-color: red;
     }
 }
 

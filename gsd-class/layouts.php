@@ -34,7 +34,7 @@ class layouts extends section implements isection {
                 foreach ($item as $field => $value) {
                     $fields[strtoupper($field)] = $value;
                 }
-                $created = explode(' ', $item['created']);
+                $created = explode(' ', $item->created);
                 $fields['CREATED'] = timeago(dateDif($created[0], date('Y-m-d', time())), $created[1]);
 
                 $list[] = $fields;
@@ -58,13 +58,10 @@ class layouts extends section implements isection {
             $item = $mysql->singleline();
 
             $this->item = $item;
-            $created = explode(' ', $item['created']);
+            $created = explode(' ', $item->created);
 
             $fields = array();
             foreach ($item as $field => $value) {
-                if (is_numeric($field)) {
-                    continue;
-                }
                 $fields['CURRENT_LAYOUT_'. strtoupper($field)] = $value;
             }
 

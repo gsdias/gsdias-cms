@@ -20,11 +20,11 @@ if (@$_REQUEST['save']) {
     }
     
     if ($fields == 0) {
-        $_SESSION['message'] = 'Definições salvas.';
+        $_SESSION['message'] = lang('LANG_SETTINGS_SAVED');
         header("Location: /admin", true, 302);
         exit;
     } else {
-        $tpl->setvar('ERRORS', '{LANG_SETTINGS_ERROR}');
+        $tpl->setvar('ERRORS', lang('LANG_SETTINGS_ERROR'));
         $tpl->setcondition('ERRORS');
     }
 }
@@ -34,36 +34,36 @@ $mysql->statement('SELECT * FROM options ORDER BY `index`;');
 $options = array();
 foreach ($mysql->result() as $item) {
     $extraclass = '';
-    if (strpos($item['name'], '_image') !== false) {
+    if (strpos($item->name, '_image') !== false) {
         $image = new image(array(
-            'iid' => $item['value'],
+            'iid' => $item->value,
             'height' => '100',
             'width' => 'auto',
-            'class' => sprintf('preview %s', $item['value'] ? '' : 'is-hidden')
+            'class' => sprintf('preview %s', $item->value ? '' : 'is-hidden')
         ));
 
         $partial = new tpl();
         $partial->setvars(array(
-            'LABEL' => $item['label'],
-            'NAME' => $item['name'],
+            'LABEL' => $item->label,
+            'NAME' => $item->name,
             'IMAGE' => $image,
-            'VALUE' => @$item['value'] ? @$item['value'] : 0,
-            'EMPTY' => @$item['value'] ? 'is-hidden' : ''
+            'VALUE' => @$item->value ? @$item->value : 0,
+            'EMPTY' => @$item->value ? 'is-hidden' : ''
         ));
         $partial->setfile('_image');
 
         $field = $partial;
         $extraclass = 'image';
-    } else if ($item['name'] === 'gsd-locale_select') {
+    } else if ($item->name === 'gsd-locale_select') {
         $field = new select(array(
-            'id' => $item['name'],
-            'name' => $item['name'],
+            'id' => $item->name,
+            'name' => $item->name,
             'list' => $languages,
-            'label' => $item['label'],
-            'selected' => @$item['value']
+            'label' => $item->label,
+            'selected' => @$item->value
         ));
     } else {
-        $field = (string)new input(array('name' => $item['name'], 'value' => @$item['value'], 'label' => $item['label']));
+        $field = (string)new input(array('name' => $item->name, 'value' => @$item->value, 'label' => $item->label));
     }
 
     $options[] = array(

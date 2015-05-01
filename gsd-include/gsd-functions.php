@@ -17,8 +17,17 @@ function GSDClassLoading($className) {
 }
 
 function lang ($text) {
-    $translated = _($text);
-    return $translated != $text ? $translated : dcgettext('client', $text, LC_MESSAGES);
+    global $site;
+
+    if ($site->isFrontend) {
+        $translated = dcgettext('frontend', $text, LC_MESSAGES);
+        $translated = $translated != $text ? $translated : _($text);
+    } else {
+        $translated = _($text);
+        $translated = $translated != $text ? $translated : dcgettext('frontend', $text, LC_MESSAGES);
+    }
+
+    return $translated;
 }
 
 function isuploaded ($folder, $filename) {
@@ -104,9 +113,9 @@ function timeago ($seconds = 0, $hour = 0) {
     $months = round($months, 0);
     
     if ($months > 0) {
-        $label = sprintf('%d %s %s', $months, $months > 1 ? ' {LANG_MONTHS}' : '{LANG_MONTH}', '{LANG_AGO}');
+        $label = sprintf('%d %s %s', $months, $months > 1 ? ' {LANG_MONTHS}' : lang('LANG_MONTH'), lang('LANG_AGO'));
     } else {
-        $label = $days > 0 ? $days . ( $days == 1 ? ' {LANG_DAY} ' : ' {LANG_DAYS} ') . '{LANG_AGO}' : '{LANG_AT} ' . date('H:i', strtotime($hour));
+        $label = $days > 0 ? $days . ( $days == 1 ? ' {LANG_DAY} ' : ' {LANG_DAYS} ') . lang('LANG_AGO') : '{LANG_AT} ' . date('H:i', strtotime($hour));
     }
     
     return $label;
@@ -242,4 +251,35 @@ function toAscii($str) {
 	$clean = preg_replace("/[\/_| -]+/", '-', $clean);
 
 	return $clean;
+}
+
+function getLanguage() {
+    global $site, $languages, $user;
+
+    $languageList = array_keys($languages);
+
+    $browserlang = preg_replace('#;q=[0-9].[0-9]#s', '', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
+    $browserlang = explode(',', str_replace('-', '_', $browserlang));
+
+    $redirect = explode('/', @$_REQUEST['redirect']);
+
+    $list = array($site->arg(0), @$redirect[1]);
+
+    $list = array_merge($list, $browserlang);
+
+    $list[] = $user->locale;
+    $list[] = @$site->locale;
+
+    foreach ($list as $prefered) {
+
+        foreach ($languageList as $key) {
+            $decomposed = explode('_', $key);
+
+            if ($key === $prefered || $decomposed[0] === $prefered) {
+                return $key;
+            }
+        }
+    }
+
+    return '';
 }

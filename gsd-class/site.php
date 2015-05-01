@@ -13,7 +13,7 @@
 
 class site {
 
-    public $name, $email, $ga, $fb, $uri, $page, $main, $startpoint, $pagemodules, $layout, $protocol;
+    public $name, $email, $ga, $fb, $uri, $page, $main, $startpoint, $pagemodules, $layout, $protocol, $isFrontend;
     protected $path;
 
     public function __construct () {
@@ -27,16 +27,16 @@ class site {
         $mysql->statement('SELECT * FROM options;');
 
         foreach ($mysql->result() as $option) {
-            $name = str_replace('gsd-', '', $option['name']);
-            $this->{str_replace(array('_image', '_select'), '', $name)} = $option['value'];
+            $name = str_replace('gsd-', '', $option->name);
+            $this->{str_replace(array('_image', '_select'), '', $name)} = $option->value;
 
             if (strpos($name, '_image') !== false) {
-                $image = new image(array('iid' => $option['value'], 'width' => 'auto', 'height' => 'auto'));
+                $image = new image(array('iid' => $option->value, 'width' => 'auto', 'height' => 'auto'));
                 $name = str_replace(array('_image', '_select'), '', $name);
                 $tpl->setvar('SITE_' . strtoupper($name), $image);
             } else {
                 $name = str_replace(array('_image', '_select'), '', $name);
-                $tpl->setvar('SITE_' . strtoupper($name), $option['value']);
+                $tpl->setvar('SITE_' . strtoupper($name), $option->value);
             }
         }
 
@@ -44,7 +44,10 @@ class site {
         $this->uri = preg_replace($pattern, '', $_SERVER['REQUEST_URI']);
 
         $this->path();
-        if ($this->path[0] !== 'admin') {
+        $this->isFrontend = $this->path[0] !== 'admin';
+        $tpl->setcondition('CMS', !$this->isFrontend);
+
+        if ($this->isFrontend) {
             $this->page();
         } else {
             $tpl->setvars(array(
@@ -81,29 +84,29 @@ class site {
             $page = $mysql->singleline();
 
             $this->page = $page;
-            $this->layout = $page['file'];
+            $this->layout = $page->file;
 
             $tpl->setvars(array(
-                'PAGE_TITLE' => $page['title'],
-                'PAGE_DESCRIPTION' => $page['description'],
-                'PAGE_KEYWORDS' => $page['keywords'],
-                'PAGE_OG_TITLE' => $page['og_title'] ? $page['og_title'] : $page['title'],
-                'PAGE_OG_DESCRIPTION' => $page['og_description'],
-                'PAGE_OG_IMAGE' => $this->protocol . $_SERVER['HTTP_HOST'] . ASSETPATHURL . 'images/' . $page['og_image'],
+                'PAGE_TITLE' => $page->title,
+                'PAGE_DESCRIPTION' => $page->description,
+                'PAGE_KEYWORDS' => $page->keywords,
+                'PAGE_OG_TITLE' => $page->og_title ? $page->og_title : $page->title,
+                'PAGE_OG_DESCRIPTION' => $page->og_description,
+                'PAGE_OG_IMAGE' => $this->protocol . $_SERVER['HTTP_HOST'] . ASSETPATHURL . 'images/' . $page->og_image,
                 'PAGE_CANONICAL' => $this->protocol . $_SERVER['HTTP_HOST'] . '/' . $this->uri
             ));
 
-            $this->main = trim(str_replace('.html', '', $page['file']));
+            $this->main = trim(str_replace('.html', '', $page->file));
 
             $mysql->statement('SELECT *
             FROM pagemodules AS pm
             JOIN layoutsections AS ls ON ls.lsid = pm.lsid
-            WHERE pid = ?;', array($page['pid']));
+            WHERE pid = ?;', array($page->pid));
 
             if ($mysql->total) {
                 $pagemodules = array();
                 foreach ($mysql->result() as $module) {
-                    $pagemodules[@$module['label']] = $module['data'];
+                    $pagemodules[@$module->label] = $module->data;
                 }
                 $this->pagemodules = $pagemodules;
             }

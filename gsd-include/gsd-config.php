@@ -20,7 +20,7 @@ spl_autoload_register('GSDClassLoading');
 
 @session_start();
 
-$mysql = new mysql($_mysql['db'], $_mysql['host'], $_mysql['user'], $_mysql['pass']);
+$mysql = mysqlFactory::create($_mysql['db'], $_mysql['host'], $_mysql['user'], $_mysql['pass']);
 
 $tpl = new tpl(DEBUG);
 
@@ -28,11 +28,7 @@ $site = new site();
 
 $user = @$_SESSION['user'] ? $_SESSION['user'] : (class_exists('clientuser') ? new clientuser() : new user());
 
-$browserlang = explode(',', str_replace('-', '_', $_SERVER['HTTP_ACCEPT_LANGUAGE']));
-
-$language = @$languages[$browserlang[0]] ? $browserlang[0] : ($user->locale ? $user->locale : $site->locale);
-
-$language = @$languages[$site->arg(0)] ? $site->arg(0) : $language;
+$language = getLanguage();
 
 $folder = "gsd-locale";
 $domain = "messages";
@@ -50,7 +46,7 @@ if (function_exists('bindtextdomain')) {
     textdomain($domain);
     if (is_dir(CLIENTPATH . 'locale')) {
         bindtextdomain('frontend', CLIENTPATH . 'locale');
-        bind_textdomain_codeset($domain, $encoding);
+        bind_textdomain_codeset('frontend', $encoding);
     }
 }
 
@@ -58,7 +54,7 @@ $tpl->setpaths($config['tplpath']);
 
 $resources = $config['resources'];
 
-$tpl->setVar('SCRIPT', sprintf('GSD.ga = "%s";GSD.fb = "%s";', $site->ga, $site->fb));
+$tpl->setVar('SCRIPT', sprintf('GSD.ga = "%s";GSD.fb = "%s";GSD.App = { isCMS: %s };', $site->ga, $site->fb, !$site->isFrontend ? 1 : 0));
 $tpl->setVar('CDN', $resources);
 $tpl->setVar('CLIENT_RESOURCES', @$config['client_resources']);
 $tpl->setVar('CLIENT_PATH', @$config['client_path']);

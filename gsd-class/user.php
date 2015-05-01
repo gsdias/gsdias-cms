@@ -65,7 +65,7 @@ class user implements iuser {
 
         $mysql->statement('SELECT ' . $fields . '
         FROM users
-        WHERE disabled IS NULL AND email = :email AND password = md5(:pass);', array(':email' => $email, ':pass' => $password));
+        WHERE disabled IS NULL AND email = ? AND password = md5(?);', array($email, $password));
         
         $result = $mysql->total === 1;
         
@@ -74,23 +74,23 @@ class user implements iuser {
             $this->code = md5($_SERVER['REMOTE_ADDR'] + '' + time());
             $user = $mysql->singleline();
             
-            if ($user['level'] == 'user' && $site->arg(0) == 'admin') {
+            if ($user->level == 'user' && $site->arg(0) == 'admin') {
                 return 0;
             }
             
-            $names = explode(' ', $user['name']);
-            $this->id = $user['uid'];
-            $this->level = $user['level'];
-            $this->locale = $user['locale'];
-            $this->name = $user['name'];
+            $names = explode(' ', $user->name);
+            $this->id = $user->uid;
+            $this->level = $user->level;
+            $this->locale = $user->locale;
+            $this->name = $user->name;
             $this->firstName = array_shift($names);
             $this->lastName = array_pop($names);
-            $this->email = $user['email'];
+            $this->email = $user->email;
             $this->notifications = new notification($this->id);
             $_SESSION['user'] = $this;
 
-            $mysql->statement('UPDATE users SET last_login = CURRENT_TIMESTAMP(), code = :code WHERE uid = :uid;',
-              array(':uid' => $this->id, ':code' => $this->code)
+            $mysql->statement('UPDATE users SET last_login = CURRENT_TIMESTAMP(), code = ? WHERE uid = ?;',
+              array($this->code, $this->id)
              );
         }
         
@@ -107,18 +107,18 @@ class user implements iuser {
     public function getuser ($uid) {
         global $mysql;
 
-        $mysql->statement(sprintf('SELECT code, level, name, uid, email FROM users WHERE uid = :uid;'), array(':uid' => $uuid));
+        $mysql->statement(sprintf('SELECT code, level, name, uid, email FROM users WHERE uid = ?;'), array($uid));
 
         if ($mysql->total === 1) {
             $user = $mysql->singleline();
-            $names = explode(' ', $user['name']);
+            $names = explode(' ', $user->name);
 
-            $this->id = $user['uid'];
-            $this->level = $user['level'];
-            $this->name = $user['name'];
+            $this->id = $user->uid;
+            $this->level = $user->level;
+            $this->name = $user->name;
             $this->firstName = array_shift($names);
             $this->lastName = array_pop($names);
-            $this->email = $user['email'];
+            $this->email = $user->email;
             $this->notifications = new notification($this->id);
         }
     }

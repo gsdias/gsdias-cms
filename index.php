@@ -16,10 +16,13 @@ include_once('gsd-include/gsd-config.php');
 
 $tpl->setvar('HTML_CLASS', 'gsd');
 
-if (is_file('gsd-install' . PHPEXT)) {
+if (!IS_INSTALLED) {
     $site->main = 'STEP1';
     require_once('gsd-install' . PHPEXT);
     
+    $tpl->includeFiles('MAIN', $site->main);
+    $tpl->setFile($site->startpoint);
+
 } elseif ($site->arg(1) == 'assets') {
     require_once('gsd-assets' . PHPEXT);
 } else {
@@ -34,7 +37,7 @@ if (is_file('gsd-install' . PHPEXT)) {
     }
 
     if (is_file(ROOTPATH . 'gsd-frontend/index.php') && $site->arg(0) != 'admin') {
-        if (!IS_LOGGED && $site->page['require_auth']) {
+        if (!IS_LOGGED && @$site->page->require_auth) {
             header('location: /login?redirect=' . urlencode($site->uri));
             exit;
         }

@@ -20,7 +20,7 @@ if (@$_REQUEST['save']) {
 
     if ($result['errnum']) {
 
-        $tpl->setvar('ERRORS', '{LANG_PAGE_ERROR}');
+        $tpl->setvar('ERRORS', lang('LANG_PAGE_ERROR'));
         $tpl->setcondition('ERRORS');
     } else {
 

@@ -1,5 +1,5 @@
 <main>
-    <h1>{LANG_PAGE_EDIT}</h1>
+    <h1>{LANG_EDIT} {LANG_PAGE}</h1>
     <!-- IF ERRORS --><div class="errors">{ERRORS}</div><!-- ENDIF ERRORS -->
     <!-- IF MESSAGES --><div class="errors messages">{MESSAGES}</div><!-- ENDIF MESSAGES -->
     <form method="post" enctype="multipart/form-data">
@@ -31,12 +31,3 @@
         </div>
     </form>
 </main>
-
-<script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script>
-<script type="text/javascript">
-tinymce.init({
-    selector: ".html_module",
-    plugins: "code",
-    toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
-});
-</script>

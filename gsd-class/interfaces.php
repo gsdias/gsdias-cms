@@ -11,6 +11,16 @@
 * File with user class information  *
 *************************************/
 
+interface idatabase {
+    public function statement ($query, $values);
+    public function execute ($values);
+    public function result();
+    public function singleresult();
+    public function singleline();
+    public function close ();
+    public function lastInserted ();
+}
+
 interface iuser {
     public function reset ();
     public function islogged ();
@@ -22,7 +32,7 @@ interface iuser {
 interface isection {
     public function getlist ($numberPerPage);
     public function getcurrent ($id);
-    public function generatefields ($id);
+    public function generatefields ($id, $current);
     public function generatepaginator ($pages);
     public function add ($defaultfields, $defaultsafter, $defaultvalues);
     public function edit ($defaultfields);

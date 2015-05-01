@@ -20,45 +20,40 @@ if (@$_REQUEST['login'] && !$user->isLogged()) {
             header('location: ' . $uri);
             exit;
         } else {
-            $tpl->setvar('FORM_MESSAGES', 'Login errado');
+            $tpl->setvar('FORM_MESSAGES', lang('WRONG_LOGIN'));
             $tpl->setvar('LOGIN_EMAIL', $_REQUEST['email']);
         }
     } else {
-        $tpl->setvar('FORM_MESSAGES', 'Verifique os dados.');
+        $tpl->setvar('FORM_MESSAGES', lang('CHECK_DATA'));
     }
 
 }
 
-if ($user->isLogged()) {
+define('IS_LOGGED', $user->isLogged());
+define('IS_ADMIN', $user->level == 'admin');
+
+if (IS_LOGGED) {
+
+    $tpl->setcondition('IS_LOGGED');
+    $tpl->setvar('USER_ID', $user->id);
 
     if ($site->arg(0) == 'login') {
         header('location: /');
         exit;
     }
     
-    if ($user->level == 'admin') {
+    if (IS_ADMIN) {
         $tpl->setcondition('IS_ADMIN');
-
     }
 
     if ($site->arg(0) == 'admin') {
-        if ($user->level != 'user') {
-            $tpl->setcondition('IS_LOGGED');
-            define('IS_ADMIN', $user->level == 'admin');
-            define('IS_LOGGED', 1);
-            $tpl->setvar('USER_NAME', $user->name);
-            $tpl->setvar('USER_ID', $user->id);
-        } else {
+        if ($user->level == 'user') {
             $user->logout();
         }
-    } else {
-        $tpl->setcondition('IS_LOGGED');
-        define('IS_LOGGED', 1);
-        $tpl->setvar('USER_ID', $user->id);
+
+        $tpl->setvar('USER_NAME', $user->name);
     }
-    
-} else {
-    define('IS_LOGGED', 0);
+
 }
 
 if ($uri == '/admin/auth' || $uri == '/admin/auth/') {

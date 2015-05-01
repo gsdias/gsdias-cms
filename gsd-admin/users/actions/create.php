@@ -28,7 +28,7 @@ if (@$_REQUEST['save']) {
     $result = $csection->add($defaultfields, $fields, $values);
     
     if ($result['errnum']) {
-        $tpl->setvar('ERRORS', '{LANG_USER_ALREADY_EXISTS}');
+        $tpl->setvar('ERRORS', lang('LANG_USER_ALREADY_EXISTS'));
         $tpl->setcondition('ERRORS');
 
     } else {

@@ -34,11 +34,11 @@ class documents extends section implements isection {
                 foreach ($item as $field => $value) {
                     $fields[strtoupper($field)] = $value;
                 }
-                $created = explode(' ', $item['created']);
+                $created = explode(' ', $item->created);
                 $fields['CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())), $created[1]);
 
-                $fields['ASSET'] = $item['name'];
-                $fields['SIZE'] = sprintf('%s', $item['size']);
+                $fields['ASSET'] = $item->name;
+                $fields['SIZE'] = sprintf('%s', $item->size);
                 $list[] = $fields;
             }
             $tpl->setarray('DOCUMENTS', $list);
@@ -58,13 +58,10 @@ class documents extends section implements isection {
         if ($mysql->total) {
 
             $item = $mysql->singleline();
-            $created = explode(' ', $item['created']);
+            $created = explode(' ', $item->created);
 
             $fields = array();
             foreach ($item as $field => $value) {
-                if (is_numeric($field)) {
-                    continue;
-                }
                 $fields['CURRENT_DOCUMENT_'. strtoupper($field)] = $value;
             }
 

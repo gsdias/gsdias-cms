@@ -43,11 +43,11 @@ class users extends section implements isection {
                 foreach ($item as $field => $value) {
                     $fields[strtoupper($field)] = $value;
                 }
-                $created = explode(' ', $item['created']);
-                $last_login = explode(' ', @$item['last_login']);
+                $created = explode(' ', $item->created);
+                $last_login = explode(' ', @$item->last_login);
                 $fields['CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())), $created[1]);
-                $fields['LAST_LOGIN'] = sizeof($last_login) ? ($last_login[0] ? timeago(dateDif($last_login[0], date('Y-m-d',time())), $last_login[1]) : '{LANG_NEVER}') : '';
-                $fields['DISABLED'] = $item['disabled'] ? '<br>({LANG_DISABLED})' : '';
+                $fields['LAST_LOGIN'] = sizeof($last_login) ? ($last_login[0] ? timeago(dateDif($last_login[0], date('Y-m-d',time())), $last_login[1]) : lang('LANG_NEVER')) : '';
+                $fields['DISABLED'] = $item->disabled ? '<br>({LANG_DISABLED})' : '';
                 $list[] = $fields;
             }
             if (!sizeof($extrafields)) {
@@ -73,18 +73,15 @@ class users extends section implements isection {
             $item = $mysql->singleline();
 
             $this->item = $item;
-            $created = explode(' ', $item['created']);
+            $created = explode(' ', $item->created);
 
             $fields = array();
             foreach ($item as $field => $value) {
-                if (is_numeric($field)) {
-                    continue;
-                }
                 $fields['CURRENT_USER_'. strtoupper($field)] = $value;
             }
 
-            $fields['CURRENT_USER_DISABLED'] = $item['disabled'] ? 'checked="checked"': '';
-            $fields['CURRENT_USER_STATUS'] = !$item['disabled'] ? '{LANG_ENABLED}': '{LANG_DISABLED}';
+            $fields['CURRENT_USER_DISABLED'] = $item->disabled ? 'checked="checked"': '';
+            $fields['CURRENT_USER_STATUS'] = !$item->disabled ? lang('LANG_ENABLED'): lang('LANG_DISABLED');
 
             $fields['PERMISSION'] = new select(array(
                 'list' => array(
@@ -92,12 +89,12 @@ class users extends section implements isection {
                     'editor' => 'editor',
                     'user' => 'user'
                 ),
-                'label' => '{LANG_PERMISSION}',
-                'selected' => $item['level'],
+                'label' => lang('LANG_PERMISSION'),
+                'selected' => $item->level,
                 'name' => 'level'
             ));
 
-            $types = new select( array ( 'list' => $languages, 'id' => 'LANGUAGE', 'selected' => $item['locale'] ) );
+            $types = new select( array ( 'list' => $languages, 'id' => 'LANGUAGE', 'selected' => $item->locale ) );
             $types->object();
 
             $tpl->setvars($fields);

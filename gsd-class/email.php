@@ -114,12 +114,12 @@ class email {
         $info = $mysql->singleline();
 
         if ($mysql->total) {
-            $subject = $info['subject'];
-            $from = $info['from'];
-            $to = $info['to'];
-            $cc = $info['cc'];
-            $bcc = $info['bcc'];
-            $attachment = $info['attachment'];
+            $subject = $info->subject;
+            $from = $info->from;
+            $to = $info->to;
+            $cc = $info->cc;
+            $bcc = $info->bcc;
+            $attachment = $info->attachment;
             if ($subject != '') {
                 $result = preg_match_all($pattern, $subject, $matches);
                 foreach ($matches['name'] as $match) {
