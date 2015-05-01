@@ -30,12 +30,12 @@ $user = @$_SESSION['user'] ? $_SESSION['user'] : (class_exists('clientuser') ? n
 
 $language = getLanguage();
 
-$folder = "gsd-locale";
-$domain = "messages";
-$encoding = "UTF-8";
+$folder = 'gsd-locale';
+$domain = 'messages';
+$encoding = 'UTF-8';
 
 clearstatcache();
-putenv("LANG=" . $language);
+putenv('LANG=' . $language);
 setlocale(LC_ALL, $language);
 
 clearstatcache ();
@@ -59,7 +59,7 @@ $tpl->setVar('CDN', $resources);
 $tpl->setVar('CLIENT_RESOURCES', @$config['client_resources']);
 $tpl->setVar('CLIENT_PATH', @$config['client_path']);
 $tpl->setVar('ASSETPATH', ASSETPATHURL);
-$tpl->setVar('REDIRECT', @$_REQUEST['redirect'] ? sprintf("?redirect=%s", $_REQUEST['redirect']) : '');
+$tpl->setVar('REDIRECT', @$_REQUEST['redirect'] ? sprintf('?redirect=%s', $_REQUEST['redirect']) : '');
 
 
 if ($site->arg(0) != 'admin' && is_file (CLIENTPATH . 'config' . PHPEXT) && IS_INSTALLED) {
