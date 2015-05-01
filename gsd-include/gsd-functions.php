@@ -19,7 +19,7 @@ function GSDClassLoading($className) {
 function lang ($text) {
     global $site;
 
-    if ($site->isFrontend) {
+    if (@$site->isFrontend) {
         $translated = dcgettext('frontend', $text, LC_MESSAGES);
         $translated = $translated != $text ? $translated : _($text);
     } else {
