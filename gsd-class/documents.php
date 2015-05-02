@@ -58,12 +58,8 @@ class documents extends section implements isection {
         if ($mysql->total) {
 
             $item = $mysql->singleline();
-            $created = explode(' ', $item->created);
 
-            $fields = array();
-            foreach ($item as $field => $value) {
-                $fields['CURRENT_DOCUMENT_'. strtoupper($field)] = $value;
-            }
+            $fields = parent::getcurrent($item);
 
             $tpl->setvars($fields);
 

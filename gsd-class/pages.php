@@ -21,7 +21,7 @@ class pages extends section implements isection {
         FROM pages AS p
         LEFT JOIN users AS u ON p.creator = u.uid
         LEFT JOIN pages AS pp ON p.parent = pp.pid
-        ORDER BY p.pid ' . pageLimit(pageNumber(), $numberPerPage));
+        ORDER BY p.`index` ' . pageLimit(pageNumber(), $numberPerPage));
 
         $list = array();
 
@@ -36,6 +36,7 @@ class pages extends section implements isection {
                 }
                 $created = explode(' ', $item->created);
                 $fields['CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())), $created[1]);
+                $fields['UNPUBLISHED'] = $item->published ? '<br>({LANG_UNPUBLISHED})' : '';
 
                 $list[] = $fields;
             }
@@ -60,10 +61,7 @@ class pages extends section implements isection {
             $this->item = $item;
             $created = explode(' ', $item->created);
 
-            $fields = array();
-            foreach ($item as $field => $value) {
-                $fields['CURRENT_PAGE_'. strtoupper($field)] = $value;
-            }
+            $fields = parent::getcurrent($item);
 
             $fields['CURRENT_PAGE_CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())), $created[1]);
 
@@ -83,7 +81,7 @@ class pages extends section implements isection {
             $partial->setvars(array(
                 'LABEL' => 'Imagem',
                 'NAME' => 'og_image',
-                'VALUE' => $item->og_image ? $item->og_image : 0,
+                'VALUE' => $item->og_image,
                 'IMAGE' => $image,
                 'EMPTY' => $item->og_image ? 'is-hidden' : ''
             ));
@@ -238,7 +236,7 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item->pid));
         $tpl->setcondition('EXTRAFIELDS', !empty($extrafields));
     }
 
-    public function add ($defaultfields, $defaultsafter = array(), $defaultvalues = array()) {
+    public function add ($defaultfields = array(), $defaultsafter = array(), $defaultvalues = array()) {
         global $mysql, $site;
 
         $result = parent::add($defaultfields, $defaultsafter, $defaultvalues);
@@ -248,7 +246,7 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item->pid));
         return $result;
     }
 
-    public function edit ($defaultfields = array()) {
+    public function edit ($defaultfields = array(), $defaultsafter = array(), $defaultvalues = array()) {
         global $mysql, $site;
 
         $mysql->statement('SELECT * FROM pages WHERE pid = ?;', array($site->arg(2)));
@@ -263,7 +261,7 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item->pid));
             array_push($fields, $currentpage->{$field});
         }
 
-        $result = parent::edit($defaultfields);
+        $result = parent::edit($defaultfields, $defaultsafter, $defaultvalues);
 
         $this->update_beautify($site->arg(2));
 

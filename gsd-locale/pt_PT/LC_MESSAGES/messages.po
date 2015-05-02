@@ -13,6 +13,12 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Language: pt_PT\n"
 
+msgid "LANG_AUTH"
+msgstr "Login"
+
+msgid "LANG_LANGUAGE"
+msgstr "Língua"
+
 msgid "LANG_AT"
 msgstr "às"
 
@@ -153,6 +159,9 @@ msgstr "Informação adicional"
 
 msgid "LANG_PUBLISHED"
 msgstr "Publicada"
+
+msgid "LANG_UNPUBLISHED"
+msgstr "Por publicar"
 
 msgid "LANG_SIZE"
 msgstr "Tamanho"

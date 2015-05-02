@@ -19,7 +19,15 @@ abstract class section implements isection {
 
     public function getlist ($numberPerPage = 10) {}
 
-    public function getcurrent ($id = 0) {}
+    public function getcurrent ($current) {
+        $fields = array();
+
+        foreach ($current as $field => $value) {
+            $fields['CURRENT_' . strtoupper(substr($this->tablename(), 0, -1)) . '_'. strtoupper($field)] = $value;
+        }
+
+        return $fields;
+    }
 
     public function generatefields ($section, $current = array()) {
         global $tpl, $mysql;
@@ -127,7 +135,7 @@ abstract class section implements isection {
         return array('total' => $mysql->total, 'errnum' => $mysql->errnum, 'errmsg' => $mysql->errmsg, 'id' => $mysql->lastinserted());
     }
     
-    public function edit ($defaultfields) {
+    public function edit ($defaultfields, $defaultsafter = array(), $defaultvalues = array()) {
         global $mysql, $site;
         
         $section = $this->tablename();
@@ -143,6 +151,11 @@ abstract class section implements isection {
         foreach ($allfields as $field) {
             $fields .= sprintf(", `%s` = ?", $field);
             $values[] = $field == 'password' ? md5(@$_REQUEST[$field]) : @$_REQUEST[$field];
+        }
+
+        foreach ($defaultsafter as $index => $field) {
+            $fields .= sprintf(", `%s` = ?", $field);
+            $values[] = $field == 'password' ? md5($_REQUEST[$defaultvalues[$index]]) : $defaultvalues[$index];
         }
 
         $values[] = $site->arg(2);

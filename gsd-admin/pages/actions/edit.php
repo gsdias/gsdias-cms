@@ -8,15 +8,24 @@
  * @since      File available since Release 1.0
  */
 
+if (!IS_ADMIN && !IS_EDITOR) {
+    header("Location: /admin/" . $site->arg(1), true, 302);
+    exit;
+}
+
 if (@$_REQUEST['save']) {
 
-    $defaultfields = array('title', 'description', 'tags', 'keywords', 'og_title', 'og_description', 'og_image', 'parent', 'show_menu', 'require_auth', 'published');
+    $defaultfields = array('title', 'description', 'tags', 'keywords', 'og_title', 'og_description', 'og_image', 'parent');
 
-    $_REQUEST['show_menu'] = @$_REQUEST['menu'] ? @$_REQUEST['menu'] : null;
-    $_REQUEST['require_auth'] = @$_REQUEST['auth'] ? @$_REQUEST['auth'] : null;
-    $_REQUEST['published'] = @$_REQUEST['published'] ? @$_REQUEST['published'] : null;
+    $fields = array('show_menu', 'require_auth', 'published');
 
-    $result = $csection->edit($defaultfields);
+    $values = array(
+        @$_REQUEST['menu'] ? @$_REQUEST['menu'] : null,
+        @$_REQUEST['auth'] ? @$_REQUEST['auth'] : null,
+        @$_REQUEST['published'] ? @$_REQUEST['published'] : null
+    );
+
+    $result = $csection->edit($defaultfields, $fields, $values);
 
     if ($result['errnum']) {
 

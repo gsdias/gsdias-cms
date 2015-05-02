@@ -16,7 +16,7 @@ function GSDClassLoading($className) {
     }
 }
 
-function lang ($text) {
+function lang ($text, $option = 'NONE') {
     global $site;
 
     if (@$site->isFrontend) {
@@ -25,6 +25,21 @@ function lang ($text) {
     } else {
         $translated = _($text);
         $translated = $translated != $text ? $translated : dcgettext('frontend', $text, LC_MESSAGES);
+    }
+
+    switch ($option) {
+        case 'CAMEL':
+            $translated = ucwords($translated);
+        break;
+        case 'UPPER':
+            $translated = strtoupper($translated);
+        break;
+        case 'LOWER':
+            $translated = strtolower($translated);
+        break;
+        case 'FIRST':
+            $translated = ucfirst($translated);
+        break;
     }
 
     return $translated;

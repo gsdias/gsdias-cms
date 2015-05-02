@@ -60,10 +60,7 @@ class layouts extends section implements isection {
             $this->item = $item;
             $created = explode(' ', $item->created);
 
-            $fields = array();
-            foreach ($item as $field => $value) {
-                $fields['CURRENT_LAYOUT_'. strtoupper($field)] = $value;
-            }
+            $fields = $fields = parent::getcurrent($item);
 
             $tpl->setvars($fields);
 

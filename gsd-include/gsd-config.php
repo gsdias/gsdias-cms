@@ -61,6 +61,13 @@ $tpl->setVar('CLIENT_PATH', @$config['client_path']);
 $tpl->setVar('ASSETPATH', ASSETPATHURL);
 $tpl->setVar('REDIRECT', @$_REQUEST['redirect'] ? sprintf('?redirect=%s', $_REQUEST['redirect']) : '');
 
+if (!$site->isFrontend) {
+    $section = lang('LANG_' . strtoupper(@$site->arg(1)));
+    $tpl->setvars(array(
+        'PAGE_TITLE' => sprintf('%s - %s', $site->name, ucwords($section == 'LANG_' ? lang('LANG_DASHBOARD') : $section)),
+        'PAGE_CANONICAL' => $site->protocol . $_SERVER['HTTP_HOST'] . '/' . $site->uri
+    ));
+}
 
 if ($site->arg(0) != 'admin' && is_file (CLIENTPATH . 'config' . PHPEXT) && IS_INSTALLED) {
     include_once(CLIENTPATH . 'config' . PHPEXT);

@@ -75,10 +75,7 @@ class users extends section implements isection {
             $this->item = $item;
             $created = explode(' ', $item->created);
 
-            $fields = array();
-            foreach ($item as $field => $value) {
-                $fields['CURRENT_USER_'. strtoupper($field)] = $value;
-            }
+            $fields = parent::getcurrent($item);
 
             $fields['CURRENT_USER_DISABLED'] = $item->disabled ? 'checked="checked"': '';
             $fields['CURRENT_USER_STATUS'] = !$item->disabled ? lang('LANG_ENABLED'): lang('LANG_DISABLED');

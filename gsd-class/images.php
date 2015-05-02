@@ -58,17 +58,16 @@ class images extends section implements isection {
     public function getcurrent ($id = 0) {
         global $mysql, $tpl;
 
-        $mysql->statement('SELECT images.*, images.created FROM images LEFT JOIN users AS u ON images.creator = u.uid WHERE images.iid = ?;', array($id));
+        $mysql->statement('SELECT images.*, images.created
+        FROM images
+        LEFT JOIN users AS u ON images.creator = u.uid
+        WHERE images.iid = ?;', array($id));
 
         if ($mysql->total) {
 
             $item = $mysql->singleline();
-            $created = explode(' ', $item->created);
 
-            $fields = array();
-            foreach ($item as $field => $value) {
-                $fields['CURRENT_IMAGE_'. strtoupper($field)] = $value;
-            }
+            $fields = parent::getcurrent($item);
 
             $tpl->setvars($fields);
 

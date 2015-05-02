@@ -135,7 +135,9 @@ class tpl {
         preg_match_all('#{LANG_(.*?)}#s', $content, $matches, PREG_SET_ORDER);
 
         foreach ($matches as $match) {
-            $replace = lang('LANG_' . $match[1]);
+            $option = explode(' ', $match[1]);
+            $replace = lang('LANG_' . $option[0], @$option[1]);
+
             $content = preg_replace(sprintf('#%s#s', $match[0]), $replace, $content, 1);
         }
 

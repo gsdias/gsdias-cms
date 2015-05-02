@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS `pages` (
   `url` varchar(60) NOT NULL,
   `beautify` varchar(120) DEFAULT NULL,
   `lid` int DEFAULT NULL,
+  `index` int DEFAULT 0,
   `parent` int(11) DEFAULT NULL,
   `title` varchar(120) NOT NULL,
   `description` TEXT DEFAULT NULL,
