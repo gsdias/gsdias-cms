@@ -91,6 +91,6 @@ if ($action) {
         
         $csection = new $classsection ();
 
-        $csection->getlist($numberPerPage);
+        $csection->getlist(array('numberPerPage' => $numberPerPage));
     }
 }

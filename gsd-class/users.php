@@ -15,52 +15,44 @@ class users extends section implements isection {
         return 0; 
     }
 
-    public function getlist ($numberPerPage = 10, $extrafields = array()) {
+    public function getlist ($options) {
         global $mysql, $tpl;
 
-        $result = false;
-        $fields = 'users.uid, users.name, users.last_login, users.created, users.disabled, users.creator AS creator_id, u.name AS creator_name';
+        $numberPerPage = $options['numberPerPage'];
+        $fields = empty($options['fields']) ? array() : $options['fields'];
 
-        if (!empty($extrafields)) {
-            foreach ($extrafields as $field) {
-                $fields .= sprintf(", %s", $field);
+        $_fields = 'users.*, users.creator AS creator_id, u.name AS creator_name';
+
+        if (!empty($fields)) {
+            foreach ($fields as $field) {
+                $_fields .= sprintf(", %s", $field);
             }
         }
 
-        $mysql->statement('SELECT ' . $fields . '
+        $mysql->statement('SELECT ' . $_fields . '
         FROM users 
         LEFT JOIN users AS u ON users.creator = u.uid 
         ORDER BY users.uid ' . pageLimit(pageNumber(), $numberPerPage));
 
-        $list = array();
+        $result = parent::getlist(array(
+            'results' => $mysql->result(),
+            'sql' => 'FROM users ORDER BY users.uid;',
+            'numberPerPage' => $options['numberPerPage'],
+            'fields' => array_merge(array('uid', 'name', 'creator_name', 'creator_id', 'index'), $fields)
+        ));
 
-        $tpl->setcondition('USERS_EXIST', $mysql->total > 0);
-
-        if ($mysql->total) {
-
-            foreach ($mysql->result() as $item) {
-                $fields = array();
-                foreach ($item as $field => $value) {
-                    $fields[strtoupper($field)] = $value;
-                }
-                $created = explode(' ', $item->created);
+        if (!empty($result['list'])) {
+            foreach ($result['results'] as $index => $item) {
                 $last_login = explode(' ', @$item->last_login);
-                $fields['CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())), $created[1]);
-                $fields['LAST_LOGIN'] = sizeof($last_login) ? ($last_login[0] ? timeago(dateDif($last_login[0], date('Y-m-d',time())), $last_login[1]) : lang('LANG_NEVER')) : '';
-                $fields['DISABLED'] = $item->disabled ? '<br>({LANG_DISABLED})' : '';
-                $list[] = $fields;
-            }
-            if (!sizeof($extrafields)) {
-                $tpl->setarray('USERS', $list);
-            }
-            $pages = pageGenerator('FROM users LEFT JOIN users AS u ON users.creator = u.uid ORDER BY users.uid;');
 
-            $tpl->setcondition('PAGINATOR', $pages['TOTAL'] > 1);
+                $result['list'][$index]['LAST_LOGIN'] = sizeof($last_login) ? ($last_login[0] ? timeago(dateDif($last_login[0], date('Y-m-d',time())), $last_login[1]) : lang('LANG_NEVER')) : '';
+                $result['list'][$index]['DISABLED'] = $item->disabled ? '<br>({LANG_DISABLED})' : '';
+            }
 
-            $this->generatepaginator($pages);
+            $tpl->setarray('USERS', $result['list']);
         }
 
-        return $list;
+        return $result;
     }
 
     public function getcurrent ($id = 0) {

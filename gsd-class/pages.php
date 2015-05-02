@@ -14,8 +14,11 @@ class pages extends section implements isection {
         return 0; 
     }
 
-    public function getlist ($numberPerPage = 10) {
+    public function getlist ($options) {
         global $mysql, $tpl;
+
+        $numberPerPage = $options['numberPerPage'];
+        $fields = empty($options['fields']) ? array() : $options['fields'];
 
         $mysql->statement('SELECT p.*, concat(if(pp.url = "/" OR pp.url IS NULL, "", pp.url), p.url) AS url, p.creator AS creator_id, u.name AS creator_name
         FROM pages AS p
@@ -23,30 +26,22 @@ class pages extends section implements isection {
         LEFT JOIN pages AS pp ON p.parent = pp.pid
         ORDER BY p.`index` ' . pageLimit(pageNumber(), $numberPerPage));
 
-        $list = array();
+        $result = parent::getlist(array(
+            'results' => $mysql->result(),
+            'sql' => 'FROM pages ORDER BY pages.pid;',
+            'numberPerPage' => $options['numberPerPage'],
+            'fields' => array_merge(array('pid', 'title', 'beautify', 'creator', 'creator_name', 'creator_id', 'index'), $fields)
+        ));
 
-        $tpl->setcondition('PAGES_EXIST', $mysql->total > 0);
-
-        if ($mysql->total) {
-
-            foreach ($mysql->result() as $item) {
-                $fields = array();
-                foreach ($item as $field => $value) {
-                    $fields[strtoupper($field)] = $value;
-                }
-                $created = explode(' ', $item->created);
-                $fields['CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())), $created[1]);
-                $fields['UNPUBLISHED'] = $item->published ? '' : '<br>({LANG_UNPUBLISHED})';
-
-                $list[] = $fields;
+        if (!empty($result['list'])) {
+            foreach ($result['results'] as $index => $item) {
+                $result['list'][$index]['UNPUBLISHED'] = $item->published ? '' : '<br>({LANG_UNPUBLISHED})';
             }
-            $tpl->setarray('PAGES', $list);
-            $pages = pageGenerator('FROM pages LEFT JOIN users AS u ON pages.creator = u.uid ORDER BY pages.pid;');
 
-            $tpl->setcondition('PAGINATOR', $pages['TOTAL'] > 1);
-
-            parent::generatepaginator($pages);
+            $tpl->setarray('PAGES', $result['list']);
         }
+
+        return $result;
     }
 
     public function getcurrent ($id = 0) {
@@ -276,9 +271,16 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item->pid));
     private function update_beautify ($pid) {
         global $mysql;
 
-        $mysql->statement('SELECT pp.beautify, p.url FROM pages AS p LEFT JOIN pages AS pp ON p.parent = pp.pid WHERE p.pid = ?;', array($pid));
+        $mysql->statement('SELECT pp.beautify, p.url
+        FROM pages AS p
+        LEFT JOIN pages AS pp ON p.parent = pp.pid
+        WHERE p.pid = ?;', array($pid));
+
         $result = $mysql->singleline();
-        $mysql->statement('UPDATE pages SET beautify = ? WHERE pid = ?;', array(sprintf('%s%s', $result->beautify, $result->url), $pid));
+
+        $mysql->statement('UPDATE pages
+        SET beautify = ?
+        WHERE pid = ?;', array(sprintf('%s%s', $result->beautify, $result->url), $pid));
     }
 
     private function page_review ($defaultfields = array(), $fields = array()) {

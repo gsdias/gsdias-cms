@@ -17,7 +17,37 @@ abstract class section implements isection {
         return 0;
     }
 
-    public function getlist ($numberPerPage = 10) {}
+    public function getlist ($options) {
+        global $tpl;
+
+        $numberPerPage = @$options['numberPerPage'] ? $options['numberPerPage'] : 10;
+        $results = empty($options['results']) ? array() : $options['results'];
+        $sql = @$options['sql'];
+        $fields = empty($options['fields']) ? array() : $options['fields'];
+
+        foreach ($results as $line) {
+            $item = array();
+
+            foreach ($fields as $field) {
+                $item[strtoupper($field)] = $line->{$field};
+            }
+
+            $created = explode(' ', $line->created);
+            $item['CREATED'] = timeago(dateDif($created[0], date('Y-m-d', time())), $created[1]);
+
+            $list[] = $item;
+        }
+
+        $tpl->setcondition(strtoupper($this->tablename($this)) . '_EXIST', !empty($list));
+
+        $pages = pageGenerator($sql);
+
+        $tpl->setcondition('PAGINATOR', $pages['TOTAL'] > 1);
+
+        $this->generatepaginator($pages);
+
+        return array('list' => $list, 'results' => $results);
+    }
 
     public function getcurrent ($item = array()) {
         global $site;

@@ -15,8 +15,11 @@ class images extends section implements isection {
         return 0; 
     }
     
-    public function getlist ($numberPerPage = 10) {
+    public function getlist ($options) {
         global $mysql, $tpl;
+
+        $numberPerPage = $options['numberPerPage'];
+        $fields = empty($options['fields']) ? array() : $options['fields'];
         
         $tags = @$_REQUEST['search'] ? sprintf(' WHERE tags like "%%%s%%" ', $_REQUEST['search']) : '';
 
@@ -28,31 +31,23 @@ class images extends section implements isection {
         . $tags .
         'ORDER BY images.iid ' . pageLimit(pageNumber(), $numberPerPage));
 
-        $list = array();
+        $result = parent::getlist(array(
+            'results' => $mysql->result(),
+            'sql' => 'FROM images ' . $tags . 'ORDER BY images.iid;',
+            'numberPerPage' => $options['numberPerPage'],
+            'fields' => array_merge(array('iid', 'name', 'description', 'creator', 'creator_name', 'creator_id'), $fields)
+        ));
 
-        $tpl->setcondition('IMAGES_EXIST', $mysql->total > 0);
-        
-        if ($mysql->total) {
-            
-            foreach ($mysql->result() as $item) {
-                $fields = array();
-                foreach ($item as $field => $value) {
-                    $fields[strtoupper($field)] = $value;
-                }
-                $created = explode(' ', $item->created);
-                $fields['CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())), $created[1]);
-                
-                $fields['ASSET'] = @$item->width ? new image(array('iid' => $item->iid, 'max-height' => '100', 'height' => 'auto', 'width' => 'auto')) : '';
-                $fields['SIZE'] = sprintf('<strong>%s x %s</strong><br>%s', $item->width, $item->height, $item->size);
-                $list[] = $fields;
+        if (!empty($result['list'])) {
+            foreach ($result['results'] as $index => $item) {
+                $result['list'][$index]['ASSET'] = @$item->width ? new image(array('iid' => $item->iid, 'max-height' => '100', 'height' => 'auto', 'width' => 'auto')) : '';
+                $result['list'][$index]['SIZE'] = sprintf('<strong>%s x %s</strong><br>%s', $item->width, $item->height, $item->size);
             }
-            $tpl->setarray('IMAGES', $list);
-            $pages = pageGenerator('FROM images LEFT JOIN users AS u ON images.creator = u.uid ' . $tags . 'ORDER BY images.iid;');
             
-            $tpl->setcondition('PAGINATOR', $pages['TOTAL'] > 1);
-            
-            $this->generatepaginator($pages);
+            $tpl->setarray('IMAGES', $result['list']);
         }
+
+        return $result;
     }
     
     public function getcurrent ($id = 0) {

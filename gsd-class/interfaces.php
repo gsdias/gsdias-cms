@@ -30,7 +30,7 @@ interface iuser {
 }
 
 interface isection {
-    public function getlist ($numberPerPage);
+    public function getlist ($options);
     public function getcurrent ($id);
     public function generatefields ($id, $current);
     public function generatepaginator ($pages);

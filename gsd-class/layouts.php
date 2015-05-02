@@ -15,36 +15,28 @@ class layouts extends section implements isection {
         return 0;
     }
 
-    public function getlist ($numberPerPage = 10) {
+    public function getlist ($options) {
         global $mysql, $tpl;
+
+        $numberPerPage = $options['numberPerPage'];
+        $fields = empty($options['fields']) ? array() : $options['fields'];
 
         $mysql->statement('SELECT layouts.*, u.name AS creator_name, u.uid AS creator_id
         FROM layouts
         LEFT JOIN users AS u ON layouts.creator = u.uid
         ORDER BY lid ' . pageLimit(pageNumber(), $numberPerPage));
 
-        $list = array();
+        $result = parent::getlist(array(
+            'results' => $mysql->result(),
+            'sql' => 'FROM layouts ORDER BY lid;',
+            'numberPerPage' => $options['numberPerPage'],
+            'fields' => array_merge(array('lid', 'name', 'creator', 'creator_name', 'creator_id'), $fields)
+        ));
 
-        $tpl->setcondition('LAYOUTS_EXIST', $mysql->total > 0);
-
-        if ($mysql->total) {
-
-            foreach ($mysql->result() as $item) {
-                $fields = array();
-                foreach ($item as $field => $value) {
-                    $fields[strtoupper($field)] = $value;
-                }
-                $created = explode(' ', $item->created);
-                $fields['CREATED'] = timeago(dateDif($created[0], date('Y-m-d', time())), $created[1]);
-
-                $list[] = $fields;
-            }
-            $tpl->setarray('LAYOUTS', $list);
-            $pages = pageGenerator('FROM layouts LEFT JOIN users AS u ON layouts.creator = u.uid ORDER BY lid;');
-
-            $tpl->setcondition('PAGINATOR', $pages['TOTAL'] > 1);
-
-            $this->generatepaginator($pages);
+        if (!empty($result['list'])) {
+            $tpl->setarray('LAYOUTS', $result['list']);
         }
+
+        return $result;
     }
 }
