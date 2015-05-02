@@ -13,7 +13,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 10;
+    z-index: 20;
     display: none;
 
     header {
@@ -26,10 +26,15 @@
         .close {
             width: 30px;
             height: 30px;
-            border: solid 1px #000;
             float: right;
             margin-right: 10px;
             cursor: pointer;
+            text-align: center;
+            color: $gsd-color;
+
+            &:hover {
+                text-shadow: 0 0 3px #000;
+            }
         }
     }
 

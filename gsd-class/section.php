@@ -12,21 +12,30 @@ abstract class section implements isection {
 
     public $item = array();
 
-    public function __construct ($id = null) {
+    public function __construct ($id = 0) {
 
         return 0;
     }
 
     public function getlist ($numberPerPage = 10) {}
 
-    public function getcurrent ($current) {
+    public function getcurrent ($item = array()) {
+        global $site;
+
+        if (empty($item)) {
+            header("Location: /admin/" . $site->arg(1), true, 302);
+            exit;
+        }
+
+        $this->item = $item;
+
         $fields = array();
 
-        foreach ($current as $field => $value) {
+        foreach ($item as $field => $value) {
             $fields['CURRENT_' . strtoupper(substr($this->tablename(), 0, -1)) . '_'. strtoupper($field)] = $value;
         }
 
-        return $fields;
+        return array('item' => $item, 'fields' => $fields);
     }
 
     public function generatefields ($section, $current = array()) {

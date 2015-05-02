@@ -63,11 +63,11 @@ class images extends section implements isection {
         LEFT JOIN users AS u ON images.creator = u.uid
         WHERE images.iid = ?;', array($id));
 
-        if ($mysql->total) {
+        $result = parent::getcurrent($mysql->singleline());
 
-            $item = $mysql->singleline();
+        if (!empty($result['item'])) {
 
-            $fields = parent::getcurrent($item);
+            $fields = $result['fields'];
 
             $tpl->setvars($fields);
 

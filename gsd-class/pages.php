@@ -36,7 +36,7 @@ class pages extends section implements isection {
                 }
                 $created = explode(' ', $item->created);
                 $fields['CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())), $created[1]);
-                $fields['UNPUBLISHED'] = $item->published ? '<br>({LANG_UNPUBLISHED})' : '';
+                $fields['UNPUBLISHED'] = $item->published ? '' : '<br>({LANG_UNPUBLISHED})';
 
                 $list[] = $fields;
             }
@@ -54,14 +54,13 @@ class pages extends section implements isection {
 
         $mysql->statement('SELECT pages.*, pages.created, u.name AS creator FROM pages LEFT JOIN users AS u ON pages.creator = u.uid WHERE pages.pid = ?;', array($id));
 
-        if ($mysql->total) {
+        $result = parent::getcurrent($mysql->singleline());
 
-            $item = $mysql->singleline();
+        if (!empty($result['item'])) {
 
-            $this->item = $item;
+            $item = $result['item'];
             $created = explode(' ', $item->created);
-
-            $fields = parent::getcurrent($item);
+            $fields = $result['fields'];
 
             $fields['CURRENT_PAGE_CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())), $created[1]);
 

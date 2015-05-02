@@ -68,14 +68,13 @@ class users extends section implements isection {
 
         $mysql->statement('SELECT users.*, users.created, users.creator AS creator_id, u.name AS creator_name FROM users LEFT JOIN users AS u ON users.creator = u.uid WHERE users.uid = ?;', array($id));
 
-        if ($mysql->total) {
+        $result = parent::getcurrent($mysql->singleline());
 
-            $item = $mysql->singleline();
+        if (!empty($result['item'])) {
 
-            $this->item = $item;
+            $item = $result['item'];
             $created = explode(' ', $item->created);
-
-            $fields = parent::getcurrent($item);
+            $fields = $result['fields'];
 
             $fields['CURRENT_USER_DISABLED'] = $item->disabled ? 'checked="checked"': '';
             $fields['CURRENT_USER_STATUS'] = !$item->disabled ? lang('LANG_ENABLED'): lang('LANG_DISABLED');

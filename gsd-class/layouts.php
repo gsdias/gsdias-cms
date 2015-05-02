@@ -47,23 +47,4 @@ class layouts extends section implements isection {
             $this->generatepaginator($pages);
         }
     }
-
-    public function getcurrent ($id = 0) {
-        global $mysql, $tpl;
-
-        $mysql->statement('SELECT layouts.*, layouts.created FROM layouts LEFT JOIN users AS u ON layouts.creator = u.uid WHERE layouts.lid = ?;', array($id));
-
-        if ($mysql->total) {
-
-            $item = $mysql->singleline();
-
-            $this->item = $item;
-            $created = explode(' ', $item->created);
-
-            $fields = $fields = parent::getcurrent($item);
-
-            $tpl->setvars($fields);
-
-        }
-    }
 }

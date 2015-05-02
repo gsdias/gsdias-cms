@@ -53,13 +53,16 @@ class documents extends section implements isection {
     public function getcurrent ($id = 0) {
         global $mysql, $tpl;
 
-        $mysql->statement('SELECT documents.*, documents.created FROM documents LEFT JOIN users AS u ON documents.creator = u.uid WHERE documents.did = ?;', array($id));
+        $mysql->statement('SELECT documents.*, documents.created
+        FROM documents
+        LEFT JOIN users AS u ON documents.creator = u.uid
+        WHERE documents.did = ?;', array($id));
 
-        if ($mysql->total) {
+        $result = parent::getcurrent($mysql->singleline());
 
-            $item = $mysql->singleline();
+        if (!empty($result['item'])) {
 
-            $fields = parent::getcurrent($item);
+            $fields = $result['fields'];
 
             $tpl->setvars($fields);
 
