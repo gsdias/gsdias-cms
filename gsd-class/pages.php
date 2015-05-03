@@ -83,7 +83,7 @@ class pages extends section implements isection {
 
             $fields['CURRENT_PAGE_OG_IMAGE'] = $partial;
 
-            $tpl->setvars($fields);
+            $tpl->repvars($fields);
 
             $mysql->statement('SELECT * FROM pages_review WHERE pid = ?;', array($id));
 

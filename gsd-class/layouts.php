@@ -33,10 +33,6 @@ class layouts extends section implements isection {
             'fields' => array_merge(array('lid', 'name', 'creator', 'creator_name', 'creator_id'), $fields)
         ));
 
-        if (!empty($result['list'])) {
-            $tpl->setarray('LAYOUTS', $result['list']);
-        }
-
         return $result;
     }
 }

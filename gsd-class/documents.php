@@ -53,13 +53,5 @@ class documents extends section implements isection {
         WHERE documents.did = ?;', array($id));
 
         $result = parent::getcurrent($mysql->singleline());
-
-        if (!empty($result['item'])) {
-
-            $fields = $result['fields'];
-
-            $tpl->setvars($fields);
-
-        }
     }
 }

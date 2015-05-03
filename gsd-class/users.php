@@ -38,7 +38,7 @@ class users extends section implements isection {
             'results' => $mysql->result(),
             'sql' => 'FROM users ORDER BY users.uid;',
             'numberPerPage' => $options['numberPerPage'],
-            'fields' => array_merge(array('uid', 'name', 'creator_name', 'creator_id', 'index'), $fields)
+            'fields' => array_merge(array('uid', 'name', 'creator_name', 'creator_id'), $fields)
         ));
 
         if (!empty($result['list'])) {
@@ -85,7 +85,7 @@ class users extends section implements isection {
             $types = new select( array ( 'list' => $languages, 'id' => 'LANGUAGE', 'selected' => $item->locale ) );
             $types->object();
 
-            $tpl->setvars($fields);
+            $tpl->repvars($fields);
 
         }
     }

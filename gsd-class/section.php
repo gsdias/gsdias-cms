@@ -25,11 +25,15 @@ abstract class section implements isection {
         $sql = @$options['sql'];
         $fields = empty($options['fields']) ? array() : $options['fields'];
 
+        $list = array();
+
         foreach ($results as $line) {
             $item = array();
 
             foreach ($fields as $field) {
-                $item[strtoupper($field)] = $line->{$field};
+                if (@$line->{$field}) {
+                    $item[strtoupper($field)] = $line->{$field};
+                }
             }
 
             $created = explode(' ', $line->created);
@@ -39,6 +43,8 @@ abstract class section implements isection {
         }
 
         $tpl->setcondition(strtoupper($this->tablename($this)) . '_EXIST', !empty($list));
+
+        $tpl->setarray(strtoupper($this->tablename($this)), $list);
 
         $pages = pageGenerator($sql);
 
@@ -50,7 +56,7 @@ abstract class section implements isection {
     }
 
     public function getcurrent ($item = array()) {
-        global $site;
+        global $site, $tpl;
 
         if (empty($item)) {
             header("Location: /admin/" . $site->arg(1), true, 302);
@@ -64,6 +70,8 @@ abstract class section implements isection {
         foreach ($item as $field => $value) {
             $fields['CURRENT_' . strtoupper(substr($this->tablename(), 0, -1)) . '_'. strtoupper($field)] = $value;
         }
+
+        $tpl->setvars($fields);
 
         return array('item' => $item, 'fields' => $fields);
     }

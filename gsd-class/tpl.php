@@ -60,6 +60,20 @@ class tpl {
     }
     
     /** 
+      * @desc Saves the value of a template's variable
+      * @param string $id - given id
+      * @param string $value - given value
+      * @return nothing
+    */
+    function repVars ($values = array()) {
+        if (!empty($values)) {
+            foreach ($values as $id => $value) {
+                $this->repvar($id, $value);
+            }
+        }
+    }
+
+    /**
       * @desc Saves an array of a template's loop
       * @param string $id - given id
       * @param array $value - given list
