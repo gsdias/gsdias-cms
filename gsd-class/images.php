@@ -59,5 +59,7 @@ class images extends section implements isection {
         WHERE images.iid = ?;', array($id));
 
         $result = parent::getcurrent($mysql->singleline());
+
+        return $result['item'];
     }
 }

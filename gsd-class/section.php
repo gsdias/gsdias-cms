@@ -68,7 +68,7 @@ abstract class section implements isection {
         $fields = array();
 
         foreach ($item as $field => $value) {
-            $fields['CURRENT_' . strtoupper(substr($this->tablename(), 0, -1)) . '_'. strtoupper($field)] = $value;
+            $fields['CURRENT_' . strtoupper($this->tablename()) . '_'. strtoupper($field)] = $value;
         }
 
         $tpl->setvars($fields);

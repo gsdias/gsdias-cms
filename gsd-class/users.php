@@ -68,8 +68,8 @@ class users extends section implements isection {
             $created = explode(' ', $item->created);
             $fields = $result['fields'];
 
-            $fields['CURRENT_USER_DISABLED'] = $item->disabled ? 'checked="checked"': '';
-            $fields['CURRENT_USER_STATUS'] = !$item->disabled ? lang('LANG_ENABLED'): lang('LANG_DISABLED');
+            $fields['CURRENT_USERS_DISABLED'] = $item->disabled ? 'checked="checked"': '';
+            $fields['CURRENT_USERS_STATUS'] = !$item->disabled ? lang('LANG_ENABLED'): lang('LANG_DISABLED');
 
             $fields['PERMISSION'] = new select(array(
                 'list' => array(
@@ -86,8 +86,9 @@ class users extends section implements isection {
             $types->object();
 
             $tpl->repvars($fields);
-
         }
+
+        return $result['item'];
     }
 
     public function add ($defaultfields, $defaultsafter = array(), $defaultvalues = array(), $emailparams = array()) {

@@ -57,12 +57,12 @@ class pages extends section implements isection {
             $created = explode(' ', $item->created);
             $fields = $result['fields'];
 
-            $fields['CURRENT_PAGE_CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())), $created[1]);
+            $fields['CURRENT_PAGES_CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())), $created[1]);
 
             $fields['MENU_CHECKED'] = @$item->show_menu ? 'checked="checked"' : '';
             $fields['AUTH_CHECKED'] = @$item->require_auth ? 'checked="checked"' : '';
             $fields['PUBLISHED_CHECKED'] = @$item->published ? 'checked="checked"' : '';
-            $fields['CURRENT_PAGE_STATUS'] = @$item->published ? 'Publicada' : 'Por publicar';
+            $fields['CURRENT_PAGES_STATUS'] = @$item->published ? 'Publicada' : 'Por publicar';
 
             $image = new image(array(
                 'iid' => @$item->og_image,
@@ -81,7 +81,7 @@ class pages extends section implements isection {
             ));
             $partial->setfile('_image');
 
-            $fields['CURRENT_PAGE_OG_IMAGE'] = $partial;
+            $fields['CURRENT_PAGES_OG_IMAGE'] = $partial;
 
             $tpl->repvars($fields);
 
@@ -113,6 +113,8 @@ class pages extends section implements isection {
             }
             $tpl->setarray('PARENT', $parent);
         }
+
+        return $result['item'];
     }
 
     public function generatefields ($section, $current) {

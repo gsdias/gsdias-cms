@@ -53,5 +53,7 @@ class documents extends section implements isection {
         WHERE documents.did = ?;', array($id));
 
         $result = parent::getcurrent($mysql->singleline());
+
+        return $result['item'];
     }
 }
