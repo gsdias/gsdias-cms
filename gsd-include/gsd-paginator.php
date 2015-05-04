@@ -35,7 +35,7 @@ function pageLimit ($number = 0, $numberPerPage = 50) {
     return ' LIMIT ' . $limit . ', ' . $numberPerPage;
 }
 
-function pageGenerator ($sql, $NumberPerPage = 10) {
+function pageGenerator ($sql, $NumberPerPage = 50) {
 
     $pages = pageTotal($sql, $NumberPerPage);
 

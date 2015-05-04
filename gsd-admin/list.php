@@ -81,7 +81,7 @@ if ($action) {
 
     //LISTING
     } else {
-        $numberPerPage = 10;
+        $numberPerPage = 30;
         
         if (class_exists('client' . $section)) {
             $classsection = 'client' . $section;

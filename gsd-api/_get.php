@@ -50,6 +50,7 @@ $GETpages = function ($fields, $extra, $doc = false) {
     $output = array('error' => 0, 'message' => lang('LANG_NO_IMAGES'));
     $requiredFields = array('page');
     $returnFields = array('pid', 'title', 'beautify', 'created', 'creator_id', 'creator_name', 'index');
+    $numberPerPage = 30;
 
     if ($doc) {
         return outputDoc('pages', array('pages' => 'Page number'), $returnFields);
@@ -64,7 +65,7 @@ $GETpages = function ($fields, $extra, $doc = false) {
         LEFT JOIN pages AS pp ON p.parent = pp.pid
         ORDER BY p.`index` ';
 
-    $mysql->statement('SELECT p.*, concat(if(pp.url = "/" OR pp.url IS NULL, "", pp.url), p.url) AS url, p.creator AS creator_id, u.name AS creator_name' . $sql . pageLimit($fields['page'], 10));
+    $mysql->statement('SELECT p.*, concat(if(pp.url = "/" OR pp.url IS NULL, "", pp.url), p.url) AS url, p.creator AS creator_id, u.name AS creator_name' . $sql . pageLimit($fields['page'], $numberPerPage));
 
     if ($mysql->total) {
         $output['message'] = '';
@@ -84,7 +85,7 @@ $GETpages = function ($fields, $extra, $doc = false) {
 
         $tpl = new tpl();
         $tpl->setcondition('PAGINATOR');
-        $pages = pageGenerator($sql, 10);
+        $pages = pageGenerator($sql, $numberPerPage);
 
         $first_page = new anchor(array('text' => '&lt; {LANG_FIRST}', 'href' => '?page=1'));
         $prev_page = new anchor(array('text' => lang('LANG_PREVIOUS'), 'href' => '?page=' . $pages['PREV']));

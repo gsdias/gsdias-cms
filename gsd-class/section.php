@@ -46,7 +46,7 @@ abstract class section implements isection {
 
         $tpl->setarray(strtoupper($this->tablename($this)), $list);
 
-        $pages = pageGenerator($sql);
+        $pages = pageGenerator($sql, $numberPerPage);
 
         $tpl->setcondition('PAGINATOR', $pages['TOTAL'] > 1);
 
