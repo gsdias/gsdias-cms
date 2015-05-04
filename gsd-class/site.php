@@ -118,6 +118,11 @@ class site {
         return @$this->path[$pos];
     }
 
+    public function param ($name) {
+
+        return @$_REQUEST[$name];
+    }
+
     public function searchpage ($givenpath) {
         $temp = $this->uri;
         $this->startpoint = 'index';

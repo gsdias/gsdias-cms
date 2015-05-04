@@ -38,7 +38,7 @@ class documents extends section implements isection {
                 $result['list'][$index]['ASSET'] = $item->name;
                 $result['list'][$index]['SIZE'] = sprintf('%s', $item->size);
             }
-            $tpl->setarray('DOCUMENTS', $list);
+            $tpl->setarray('DOCUMENTS', $result['list']);
         }
 
         return $result;

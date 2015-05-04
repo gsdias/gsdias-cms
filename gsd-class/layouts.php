@@ -35,4 +35,16 @@ class layouts extends section implements isection {
 
         return $result;
     }
+
+    public function getcurrent ($id = 0) {
+        global $mysql, $tpl;
+
+        $mysql->statement('SELECT *
+        FROM layouts
+        WHERE lid = ?;', array($id));
+
+        $result = parent::getcurrent($mysql->singleline());
+
+        return $result['item'];
+    }
 }

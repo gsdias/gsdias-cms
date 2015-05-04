@@ -117,10 +117,10 @@ class pages extends section implements isection {
         return $result['item'];
     }
 
-    public function generatefields ($section, $current) {
+    public function generatefields () {
         global $tpl, $mysql;
 
-        parent::generatefields ($section);
+        parent::generatefields ();
 
         $extrafields = array();
 

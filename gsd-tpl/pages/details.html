@@ -1,14 +1,14 @@
 <main>
     <h1>{LANG_PAGE}: {CURRENT_PAGES_TITLE}</h1>
-    Status: {CURRENT_PAGES_STATUS}<br>
+    {LANG_STATE}: {CURRENT_PAGES_STATUS}<br>
     {LANG_TITLE}: {CURRENT_PAGES_TITLE}<br>
     Url: {CURRENT_PAGES_URL}<br>
     {LANG_DESCRIPTION}: {CURRENT_PAGES_DESCRIPTION}<br>
     Keywords: {CURRENT_PAGES_KEYWORDS}<br>
     Tags: {CURRENT_PAGES_TAGS}<br>
-    Criado: {CURRENT_PAGES_CREATED} {LANG_BY} {CURRENT_PAGES_CREATOR}<br>
+    {LANG_CREATED}: {CURRENT_PAGES_CREATED} {LANG_BY} {CURRENT_PAGES_CREATOR}<br>
     <div class="btns">
-        <!-- IF IS_ADMIN --><a href="/admin/pages/{CURRENT_PAGES_PID}/remove" class="btn red">{LANG_PAGE_REMOVE}</a><!-- ENDIF IS_ADMIN -->
+        <!-- IF IS_ADMIN --><a href="/admin/pages/{CURRENT_PAGES_PID}/remove" class="btn red">{LANG_REMOVE} {LANG_PAGE}</a><!-- ENDIF IS_ADMIN -->
         <!--<a href="#" class="btn">Discard draft</a>-->
     </div>
 </main>

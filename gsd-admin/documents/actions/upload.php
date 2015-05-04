@@ -15,7 +15,7 @@ if (!IS_ADMIN && !IS_EDITOR) {
 
 if (@$_REQUEST['save']) {
 
-    $defaultfields = array('name', 'description', 'extension', 'size', 'creator');
+    $defaultfields = array('name', 'description', 'extension', 'size');
 
     $fields = array('creator');
 

@@ -31,13 +31,13 @@ abstract class section implements isection {
             $item = array();
 
             foreach ($fields as $field) {
-                if (@$line->{$field}) {
+                if (property_exists($line, $field)) {
                     $item[strtoupper($field)] = $line->{$field};
                 }
             }
 
-            $created = explode(' ', $line->created);
-            $item['CREATED'] = timeago(dateDif($created[0], date('Y-m-d', time())), $created[1]);
+            $created = explode(' ', @$line->created);
+            $item['CREATED'] = timeago(dateDif(@$created[0], date('Y-m-d', time())), @$created[1]);
 
             $list[] = $item;
         }
@@ -76,10 +76,10 @@ abstract class section implements isection {
         return array('item' => $item, 'fields' => $fields);
     }
 
-    public function generatefields ($section, $current = array()) {
+    public function generatefields () {
         global $tpl, $mysql;
 
-        $func = $section . 'fields';
+        $func = $this->tablename() . 'fields';
         $item = $this->item;
 
         $sectionextrafields = function_exists($func) ? $func() : array();
@@ -142,7 +142,7 @@ abstract class section implements isection {
     public function generatepaginator ($pages) {
         global $tpl;
 
-        $first_page = new anchor(array('text' => '&lt; {LANG_FIRST}', 'href' => '?'));
+        $first_page = new anchor(array('text' => '&lt; {LANG_FIRST}', 'href' => '?page=1'));
         $prev_page = new anchor(array('text' => lang('LANG_PREVIOUS'), 'href' => '?page=' . $pages['PREV']));
         $next_page = new anchor(array('text' => lang('LANG_NEXT'), 'href' => '?page=' . $pages['NEXT']));
         $last_page = new anchor(array('text' => '{LANG_LAST} &gt;', 'href' => '?page=' . $pages['LAST']));

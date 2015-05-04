@@ -6,7 +6,7 @@
  * @since      File available since Release 1.0
  */
 
-(function (pages, app, api, $, _, Backbone, document, undefined) {
+(function (pages, app, api, global, $, _, Backbone, document, undefined) {
 
     'use strict';
 
@@ -134,21 +134,48 @@
             }, function () {
                 api.loading();
             });
+        },
+
+        requestPage = function (e) {
+            e.preventDefault();
+
+            var page = this.href.split('=');
+
+            api.call($(e.currentTarget), 'GET', 'pages', { page: page[1] }, function (response) {
+                tbody.el.empty();
+
+                _.each(response.data.list, function (item) {
+                    tbody.el.append(_.template($('#pageBlock').html(), item));
+                });
+
+                $('.paginator').replaceWith(response.data.paginator);
+
+                global.updateHistory('?page=' + page[1]);
+                updateInternals();
+
+                api.loading();
+            }, function () {
+                api.loading();
+            });
+        },
+
+        updateInternals = function () {
+
+            tbody.width = tbody.el.outerWidth(true);
+            tbody.height = tbody.el.outerHeight(true);
+            tbody.top = tbody.el.position().top;
+            tbody.bottom = tbody.el.position().top + tbody.el.outerHeight(true);
+            tbody.middle = tbody.el.find('tr:first').height() / 2;
+            tbody.tr = tbody.el.find('tr');
         };
 
     $(document).bind(GSD.globalevents.init, function () {
         var $tbody = $('.pages tbody');
 
         if ($tbody.length) {
-            tbody = {
-                el: $tbody,
-                width: $tbody.outerWidth(true),
-                height: $tbody.outerHeight(true),
-                top: $tbody.position().top,
-                bottom: $tbody.position().top + $tbody.outerHeight(true),
-                middle: $tbody.find('tr:first').height() / 2,
-                tr: $tbody.find('tr')
-            };
+            tbody.el= $tbody;
+
+            updateInternals();
 
             tbody.el.on('mousedown', '.order', startDrag);
             $('.pages').on('click', '.refresh', updateOrder);
@@ -156,6 +183,7 @@
         $('[name="title"]').on('blur', generateurl);
         $('body').on('change', '.item_value', newsubmodule);
         $('body').on('click', '.icon-gear', togglesettings);
+        $('body').on('click', '.paginator a', requestPage);
     });
 
-}(GSD.Pages = GSD.Pages || {}, GSD.App, GSD.Api, GSD.$, _, Backbone, document));
+}(GSD.Pages = GSD.Pages || {}, GSD.App, GSD.Api, GSD.Global, GSD.$, _, Backbone, document));

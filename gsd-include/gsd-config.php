@@ -69,6 +69,8 @@ if (!$site->isFrontend) {
     ));
 }
 
+$frontendindex = is_file(ROOTPATH . 'gsd-frontend/index.php') ? ROOTPATH . 'gsd-frontend/index.php' : '';
+
 if ($site->arg(0) != 'admin' && is_file (CLIENTPATH . 'config' . PHPEXT) && IS_INSTALLED) {
     include_once(CLIENTPATH . 'config' . PHPEXT);
 }
