@@ -124,8 +124,11 @@ class mySQL implements idatabase {
         }
 
         if (defined('DEBUG') && DEBUG) {
-
-            $tpl->adderror(vsprintf(str_replace('?', '"%s"', $query), $values));
+            if (!empty($values)) {
+                $tpl->adderror(vsprintf(str_replace('?', '"%s"', $query), $values));
+            } else {
+                $tpl->adderror($query);
+            }
 
             array_push($this->querylist, $query);
             if ($this->errnum) {

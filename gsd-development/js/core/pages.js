@@ -136,29 +136,6 @@
             });
         },
 
-        requestPage = function (e) {
-            e.preventDefault();
-
-            var page = this.href.split('=');
-
-            api.call($(e.currentTarget), 'GET', 'pages', { page: page[1] }, function (response) {
-                tbody.el.empty();
-
-                _.each(response.data.list, function (item) {
-                    tbody.el.append(_.template($('#pageBlock').html(), item));
-                });
-
-                $('.paginator').replaceWith(response.data.paginator);
-
-                global.updateHistory('?page=' + page[1]);
-                updateInternals();
-
-                api.loading();
-            }, function () {
-                api.loading();
-            });
-        },
-
         updateInternals = function () {
 
             tbody.width = tbody.el.outerWidth(true);
@@ -173,17 +150,18 @@
         var $tbody = $('.pages tbody');
 
         if ($tbody.length) {
-            tbody.el= $tbody;
+            tbody.el = $tbody;
 
             updateInternals();
 
             tbody.el.on('mousedown', '.order', startDrag);
             $('.pages').on('click', '.refresh', updateOrder);
+
+            $(document).bind(GSD.globalevents.updateInternals, updateInternals);
         }
         $('[name="title"]').on('blur', generateurl);
         $('body').on('change', '.item_value', newsubmodule);
         $('body').on('click', '.icon-gear', togglesettings);
-        $('body').on('click', '.paginator a', requestPage);
     });
 
 }(GSD.Pages = GSD.Pages || {}, GSD.App, GSD.Api, GSD.Global, GSD.$, _, Backbone, document));

@@ -16,7 +16,8 @@ GSD.globalevents = {
     init: 'pageinit.gsd',
     frontend: 'pagefrontend.gsd',
     resize: 'pageresize.gsd',
-    scroll: 'pagescroll.gsd'
+    scroll: 'pagescroll.gsd',
+    updateInternals: 'updateinternals.gsd'
 };
 
 // App settings

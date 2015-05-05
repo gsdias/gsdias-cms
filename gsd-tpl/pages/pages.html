@@ -5,7 +5,7 @@
     <!-- IF ERRORS --><div class="errors">{ERRORS}</div><!-- ENDIF ERRORS -->
     <!-- IF MESSAGES --><div class="errors messages">{MESSAGES}</div><!-- ENDIF MESSAGES -->
     <!-- IF PAGES_EXIST -->[_PAGINATOR]
-    <table class="table pages">
+    <table class="table pages hasPages" data-type="pages">
         <thead>
             <tr>
                 <th>{LANG_PATH}</th>
@@ -28,14 +28,3 @@
     
     <!-- IF !PAGES_EXIST --><span class="warning">{LANG_NO_PAGES}</span><!-- ENDIF !PAGES_EXIST -->
 </main>
-<script type="text/template" id="pageBlock">
-<tr data-pid="((pid))" data-index="((index))">
-    <td>
-        ((title))<br>
-        <a href="/admin/pages/((pid))">((beautify))</a>((unpublished))
-    </td>
-    <td><em class="ago">((created))</em> <br>{LANG_BY} <a href="/admin/users/((creator_id))">((creator_name))</a></td>
-    <td class="actions"><a href="/admin/pages/((pid))/settings">{LANG_SETTINGS}</a><a href="/admin/pages/((pid))/edit">{LANG_EDIT}</a></td>
-    <td><i class="fa fa-arrows-v fa-1x order"></i></td>
-</tr>
-</script>

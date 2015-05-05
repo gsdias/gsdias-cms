@@ -1,0 +1,27 @@
+<script type="text/template" id="imageBlock">
+<td><image src="{ASSETPATH}images/((iid)).((extension))" height="100"></td>
+<td>((name))</td>
+<td><a href="#((iid))" data-image="{ASSETPATH}images/((iid)).((extension))" class="use">Usar</a></td>
+</script>
+<script type="text/template" id="pagesBlock">
+<tr data-pid="((pid))" data-index="((index))">
+    <td>
+        ((title))<br>
+        <a href="/admin/pages/((pid))">((beautify))</a>((unpublished))
+    </td>
+    <td><em class="ago">((created))</em> <br>{LANG_BY} <a href="/admin/users/((creator_id))">((creator_name))</a></td>
+    <td class="actions"><a href="/admin/pages/((pid))/settings">{LANG_SETTINGS}</a><a href="/admin/pages/((pid))/edit">{LANG_EDIT}</a></td>
+    <td><i class="fa fa-arrows-v fa-1x order"></i></td>
+</tr>
+</script>
+<script type="text/template" id="imagesBlock">
+<tr>
+    <td>
+        ((asset))
+    </td>
+    <td>((size))</td>
+    <td>((description))</td>
+    <td><em class="ago">((created))</em> <br>{LANG_BY} <a href="/admin/users/((creator_id))">((creator_name))</a></td>
+    <td class="actions"><a href="/admin/images/((iid))/settings">{LANG_SETTINGS}</a><a href="/admin/images/((iid))/edit">{LANG_EDIT}</a></td>
+</tr>
+</script>
