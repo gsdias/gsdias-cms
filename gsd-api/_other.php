@@ -24,7 +24,7 @@ function outputDoc ($table, $input, $returnFields) {
     return $output;
 }
 
-$paginatorPages = function ($page, $numberPerPage, $output) {
+function paginatorPages($page, $numberPerPage, $output) {
     global $mysql, $api, $defaultValues;
 
     $returnFields = array('pid', 'title', 'beautify', 'created', 'creator_id', 'creator_name', 'index');
@@ -59,7 +59,7 @@ $paginatorPages = function ($page, $numberPerPage, $output) {
     return $output;
 };
 
-$paginatorImages = function ($page, $numberPerPage, $output) {
+function paginatorImages($page, $numberPerPage, $output) {
     global $mysql, $api, $defaultValues;
 
     $returnFields = array('iid', 'description', 'creator_id', 'creator_name');

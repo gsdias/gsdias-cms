@@ -46,7 +46,8 @@ $GETimages = function ($fields, $extra, $doc = false) {
 };
 
 $GETpages = function ($fields, $extra, $doc = false) {
-    global $mysql, $api, $paginatorPages, $paginatorImages;
+    global $mysql, $api;
+
     $output = array('error' => 0, 'message' => lang('LANG_NO_IMAGES'));
     $requiredFields = array('page', 'type');
     $returnFields = array();
@@ -60,14 +61,9 @@ $GETpages = function ($fields, $extra, $doc = false) {
         return array('error' => -3, 'message' => 'Missing required fields' );
     }
 
-    switch ($fields['type']) {
-        case 'pages':
-            $output = $paginatorPages($fields['page'], $numberPerPage, $output);
-        break;
-        case 'images':
-            $output = $paginatorImages($fields['page'], $numberPerPage, $output);
-        break;
-    }
+    $functionname = 'paginator' . ucwords($fields['type']);
+
+    $output = $functionname($fields['page'], $numberPerPage, $output);
 
     return $output;
 };
