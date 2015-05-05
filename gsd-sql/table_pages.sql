@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS `pages` (
   `og_image` varchar(100) DEFAULT NULL,
   `show_menu` tinyint(1) DEFAULT 1,
   `require_auth` tinyint(1) DEFAULT NULL,
-  `creator` int(11) DEFAULT NULL,
+  `creator` int(11) DEFAULT 1,
   `created` timestamp NULL DEFAULT NULL,
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `published` tinyint(1) DEFAULT NULL,
