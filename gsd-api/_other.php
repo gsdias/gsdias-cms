@@ -25,16 +25,21 @@ function outputDoc ($table, $input, $returnFields) {
 }
 
 $paginatorPages = function ($page, $numberPerPage, $output) {
-    global $mysql, $api, $createPaginator, $defaultValues;
+    global $mysql, $api, $defaultValues;
 
     $returnFields = array('pid', 'title', 'beautify', 'created', 'creator_id', 'creator_name', 'index');
 
+    $tags = @$_REQUEST['search'] ? sprintf(' WHERE p.title like "%%%s%%" ', $_REQUEST['search']) : '';
+
     $sql = ' FROM pages AS p
         LEFT JOIN users AS u ON p.creator = u.uid
-        LEFT JOIN pages AS pp ON p.parent = pp.pid
-        ORDER BY p.`index` ';
+        LEFT JOIN pages AS pp ON p.parent = pp.pid '
+        . $tags .
+        'ORDER BY p.`index` ';
 
-    $mysql->statement('SELECT p.*, concat(if(pp.url = "/" OR pp.url IS NULL, "", pp.url), p.url) AS url, p.creator AS creator_id, u.name AS creator_name' . $sql . pageLimit($page, $numberPerPage));
+    $paginator = new paginator($sql, $numberPerPage, $page);
+
+    $mysql->statement('SELECT p.*, concat(if(pp.url = "/" OR pp.url IS NULL, "", pp.url), p.url) AS url, p.creator AS creator_id, u.name AS creator_name' . $sql . $paginator->pageLimit());
 
     if ($mysql->total) {
         $output['message'] = '';
@@ -48,14 +53,14 @@ $paginatorPages = function ($page, $numberPerPage, $output) {
             array_push($output['data']['list'], $array);
         }
 
-        $output['data']['paginator'] = $createPaginator($sql, $numberPerPage);
+        $output['data']['paginator'] = (string)$paginator;
     }
 
     return $output;
 };
 
 $paginatorImages = function ($page, $numberPerPage, $output) {
-    global $mysql, $api, $createPaginator, $defaultValues;
+    global $mysql, $api, $defaultValues;
 
     $returnFields = array('iid', 'description', 'creator_id', 'creator_name');
 
@@ -66,7 +71,9 @@ $paginatorImages = function ($page, $numberPerPage, $output) {
         . $tags .
         'ORDER BY images.iid ';
 
-    $mysql->statement('SELECT images.*, images.creator AS creator_id, u.name AS creator_name' . $sql . pageLimit($page, $numberPerPage));
+    $paginator = new paginator($sql, $numberPerPage, $page);
+
+    $mysql->statement('SELECT images.*, images.creator AS creator_id, u.name AS creator_name' . $sql . $paginator->pageLimit());
 
     if ($mysql->total) {
         $output['message'] = '';
@@ -81,7 +88,7 @@ $paginatorImages = function ($page, $numberPerPage, $output) {
             array_push($output['data']['list'], $array);
         }
 
-        $output['data']['paginator'] = $createPaginator($sql, $numberPerPage);
+        $output['data']['paginator'] = (string)$paginator;
     }
 
     return $output;
@@ -97,27 +104,4 @@ $defaultValues = function ($row, $returnFields) {
     }
 
     return $array;
-};
-
-$createPaginator = function ($sql, $numberPerPage) {
-    $tpl = new tpl();
-    $tpl->setcondition('PAGINATOR');
-    $pages = pageGenerator($sql, $numberPerPage);
-
-    $first_page = new anchor(array('text' => '&lt; {LANG_FIRST}', 'href' => '?page=1'));
-    $prev_page = new anchor(array('text' => lang('LANG_PREVIOUS'), 'href' => '?page=' . $pages['PREV']));
-    $next_page = new anchor(array('text' => lang('LANG_NEXT'), 'href' => '?page=' . $pages['NEXT']));
-    $last_page = new anchor(array('text' => '{LANG_LAST} &gt;', 'href' => '?page=' . $pages['LAST']));
-    $tpl->setvars(array(
-        'FIRST_PAGE' => $first_page,
-        'PREV_PAGE' => $prev_page,
-        'NEXT_PAGE' => $next_page,
-        'LAST_PAGE' => $last_page,
-        'CURRENT_PAGE' => $pages['CURRENT'],
-        'TOTAL_PAGES' => $pages['TOTAL']
-    ));
-    $tpl->includeFiles('MAIN', '_paginator');
-    $tpl->setFile('_paginator');
-
-    return sprintf('%s', $tpl);
 };

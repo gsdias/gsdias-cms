@@ -7,9 +7,6 @@
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
-/*************************************
-* File with user class information  *
-*************************************/
 
 class user implements iuser {
     

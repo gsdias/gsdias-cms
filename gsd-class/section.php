@@ -20,10 +20,9 @@ abstract class section implements isection {
     public function getlist ($options) {
         global $tpl;
 
-        $numberPerPage = @$options['numberPerPage'] ? $options['numberPerPage'] : 10;
         $results = empty($options['results']) ? array() : $options['results'];
-        $sql = @$options['sql'];
         $fields = empty($options['fields']) ? array() : $options['fields'];
+        $paginator = $options['paginator'];
 
         $list = array();
 
@@ -46,11 +45,7 @@ abstract class section implements isection {
 
         $tpl->setarray(strtoupper($this->tablename($this)), $list);
 
-        $pages = pageGenerator($sql, $numberPerPage);
-
-        $tpl->setcondition('PAGINATOR', $pages['TOTAL'] > 1);
-
-        $this->generatepaginator($pages);
+        $tpl->setvar('PAGINATOR', $paginator);
 
         return array('list' => $list, 'results' => $results);
     }
@@ -137,23 +132,6 @@ abstract class section implements isection {
             $tpl->setarray('FIELD', $extrafields);
             $tpl->setcondition('EXTRAFIELDS');
         }
-    }
-
-    public function generatepaginator ($pages) {
-        global $tpl;
-
-        $first_page = new anchor(array('text' => '&lt; {LANG_FIRST}', 'href' => '?page=1'));
-        $prev_page = new anchor(array('text' => lang('LANG_PREVIOUS'), 'href' => '?page=' . $pages['PREV']));
-        $next_page = new anchor(array('text' => lang('LANG_NEXT'), 'href' => '?page=' . $pages['NEXT']));
-        $last_page = new anchor(array('text' => '{LANG_LAST} &gt;', 'href' => '?page=' . $pages['LAST']));
-        $tpl->setvars(array(
-            'FIRST_PAGE' => $first_page,
-            'PREV_PAGE' => $prev_page,
-            'NEXT_PAGE' => $next_page,
-            'LAST_PAGE' => $last_page,
-            'CURRENT_PAGE' => $pages['CURRENT'],
-            'TOTAL_PAGES' => $pages['TOTAL']
-        ));
     }
 
     public function add ($defaultfields, $defaultsafter = array(), $defaultvalues = array()) {

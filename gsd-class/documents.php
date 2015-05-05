@@ -18,19 +18,18 @@ class documents extends section implements isection {
     public function getlist ($options) {
         global $mysql, $tpl;
         
-        $numberPerPage = $options['numberPerPage'];
+        $paginator = new paginator('FROM documents ORDER BY documents.did;', @$options['numberPerPage'], @$_REQUEST['page']);
         $fields = empty($options['fields']) ? array() : $options['fields'];
 
         $mysql->statement('SELECT documents.*, documents.creator AS creator_id, u.name AS creator_name 
         FROM documents 
         LEFT JOIN users AS u ON documents.creator = u.uid 
-        ORDER BY documents.did ' . pageLimit(pageNumber(), $numberPerPage));
+        ORDER BY documents.did ' . $paginator->pageLimit());
 
         $result = parent::getlist(array(
             'results' => $mysql->result(),
-            'sql' => 'FROM documents ORDER BY documents.did;',
-            'numberPerPage' => $options['numberPerPage'],
-            'fields' => array_merge(array('did', 'name', 'description', 'creator', 'creator_name', 'creator_id'), $fields)
+            'fields' => array_merge(array('did', 'name', 'description', 'creator', 'creator_name', 'creator_id'), $fields),
+            'paginator' => $paginator
         ));
 
         if (!empty($result['list'])) {

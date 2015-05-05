@@ -17,20 +17,21 @@ class pages extends section implements isection {
     public function getlist ($options) {
         global $mysql, $tpl;
 
-        $numberPerPage = $options['numberPerPage'];
+        $search = @$_REQUEST['search'] ? sprintf(' WHERE p.title like "%%%s%%" ', $_REQUEST['search']) : '';
+        $fromsql = sprintf('FROM pages AS p
+        LEFT JOIN users AS u ON p.creator = u.uid
+        LEFT JOIN pages AS pp ON p.parent = pp.pid %s ORDER BY p.`index`', $search);
+        $paginator = new paginator('FROM pages WHERE title like "%' . @$_REQUEST['search'] . '%" ORDER BY `index`;', @$options['numberPerPage'], @$_REQUEST['page']);
         $fields = empty($options['fields']) ? array() : $options['fields'];
 
-        $mysql->statement('SELECT p.*, concat(if(pp.url = "/" OR pp.url IS NULL, "", pp.url), p.url) AS url, p.creator AS creator_id, u.name AS creator_name
-        FROM pages AS p
-        LEFT JOIN users AS u ON p.creator = u.uid
-        LEFT JOIN pages AS pp ON p.parent = pp.pid
-        ORDER BY p.`index` ' . pageLimit(pageNumber(), $numberPerPage));
+        $tpl->setvar('SEARCH_VALUE', @$_REQUEST['search']);
+
+        $mysql->statement('SELECT p.*, concat(if(pp.url = "/" OR pp.url IS NULL, "", pp.url), p.url) AS url, p.creator AS creator_id, u.name AS creator_name ' . $fromsql . $paginator->pageLimit());
 
         $result = parent::getlist(array(
             'results' => $mysql->result(),
-            'sql' => 'FROM pages ORDER BY pages.pid;',
-            'numberPerPage' => $options['numberPerPage'],
-            'fields' => array_merge(array('pid', 'title', 'beautify', 'creator', 'creator_name', 'creator_id', 'index'), $fields)
+            'fields' => array_merge(array('pid', 'title', 'beautify', 'creator', 'creator_name', 'creator_id', 'index'), $fields),
+            'paginator' => $paginator
         ));
 
         if (!empty($result['list'])) {

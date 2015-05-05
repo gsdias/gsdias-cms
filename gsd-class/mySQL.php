@@ -8,10 +8,6 @@
  * @since      File available since Release 1.0
  */
 
-    /*************************************
-	* File with mySQL class information *
-	*************************************/
-
 class mySQL implements idatabase {
 
     protected $conn, $query, $result, $db, $host, $user, $pass, $prepared;

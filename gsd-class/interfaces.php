@@ -7,9 +7,6 @@
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
-/*************************************
-* File with user class information  *
-*************************************/
 
 interface idatabase {
     public function statement ($query, $values);
@@ -33,7 +30,6 @@ interface isection {
     public function getlist ($options);
     public function getcurrent ($id);
     public function generatefields ();
-    public function generatepaginator ($pages);
     public function add ($defaultfields, $defaultsafter, $defaultvalues);
     public function edit ($defaultfields);
     public function remove ();

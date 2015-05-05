@@ -8,10 +8,6 @@
  * @since      File available since Release 1.0
  */
 
-    /*************************************
-	* File with mySQL class information *
-	*************************************/
-
 class mySQLFactory extends mySQL {
     static function create ($db, $host, $user, $pass) {
         return new mySQL($db, $host, $user, $pass);

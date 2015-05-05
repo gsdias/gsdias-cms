@@ -9,7 +9,7 @@
     <div class="errors messages">{MESSAGES}</div>
     <!-- ENDIF MESSAGES -->
     <!-- IF DOCUMENTS_EXIST -->
-    [_PAGINATOR]
+    {PAGINATOR}
     <table class="table hasPages">
         <thead>
             <tr>
@@ -35,7 +35,7 @@
         </tr>
         <!-- ENDLOOP DOCUMENTS -->
     </table>
-    [_PAGINATOR]
+    {PAGINATOR}
     <!-- ENDIF DOCUMENTS_EXIST -->
     
     <!-- IF !DOCUMENTS_EXIST -->

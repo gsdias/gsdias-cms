@@ -18,10 +18,9 @@ class images extends section implements isection {
     public function getlist ($options) {
         global $mysql, $tpl;
 
-        $numberPerPage = $options['numberPerPage'];
-        $fields = empty($options['fields']) ? array() : $options['fields'];
-        
         $tags = @$_REQUEST['search'] ? sprintf(' WHERE tags like "%%%s%%" ', $_REQUEST['search']) : '';
+        $paginator = new paginator('FROM images ' . $tags . 'ORDER BY images.iid;', @$options['numberPerPage'], @$_REQUEST['page']);
+        $fields = empty($options['fields']) ? array() : $options['fields'];
 
         $tpl->setvar('SEARCH_VALUE', @$_REQUEST['search']);
 
@@ -29,13 +28,12 @@ class images extends section implements isection {
         FROM images 
         LEFT JOIN users AS u ON images.creator = u.uid '
         . $tags .
-        'ORDER BY images.iid ' . pageLimit(pageNumber(), $numberPerPage));
+        'ORDER BY images.iid ' . $paginator->pageLimit());
 
         $result = parent::getlist(array(
             'results' => $mysql->result(),
-            'sql' => 'FROM images ' . $tags . 'ORDER BY images.iid;',
-            'numberPerPage' => $options['numberPerPage'],
-            'fields' => array_merge(array('iid', 'name', 'description', 'creator', 'creator_name', 'creator_id'), $fields)
+            'fields' => array_merge(array('iid', 'name', 'description', 'creator', 'creator_name', 'creator_id'), $fields),
+            'paginator' => $paginator
         ));
 
         if (!empty($result['list'])) {

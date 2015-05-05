@@ -18,19 +18,18 @@ class layouts extends section implements isection {
     public function getlist ($options) {
         global $mysql, $tpl;
 
-        $numberPerPage = $options['numberPerPage'];
+        $paginator = new paginator('FROM layouts ORDER BY lid;', @$options['numberPerPage'], @$_REQUEST['page']);
         $fields = empty($options['fields']) ? array() : $options['fields'];
 
         $mysql->statement('SELECT layouts.*, u.name AS creator_name, u.uid AS creator_id
         FROM layouts
         LEFT JOIN users AS u ON layouts.creator = u.uid
-        ORDER BY lid ' . pageLimit(pageNumber(), $numberPerPage));
+        ORDER BY lid ' . $paginator->pageLimit());
 
         $result = parent::getlist(array(
             'results' => $mysql->result(),
-            'sql' => 'FROM layouts ORDER BY lid;',
-            'numberPerPage' => $options['numberPerPage'],
-            'fields' => array_merge(array('lid', 'name', 'creator', 'creator_name', 'creator_id'), $fields)
+            'fields' => array_merge(array('lid', 'name', 'creator', 'creator_name', 'creator_id'), $fields),
+            'paginator' => $paginator
         ));
 
         return $result;

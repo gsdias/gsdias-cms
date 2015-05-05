@@ -9,10 +9,13 @@
  */
 
 function GSDClassLoading($className) {
-    if (is_file(CLIENTCLASSPATH . $className . PHPEXT)) {
-        include_once(CLIENTCLASSPATH . $className . PHPEXT);
-    } elseif (is_file(CLASSPATH . $className . PHPEXT)) {
-        include_once(CLASSPATH . $className . PHPEXT);
+
+    $className = str_replace(array('GSD\\', 'FRONTEND\\'), array(CLASSPATH, CLIENTCLASSPATH), $className);
+
+    if (is_file(CLASSPATH.$className.PHPEXT)) {
+        include_once(CLASSPATH.$className.PHPEXT);
+    } else if (is_file(CLIENTCLASSPATH.$className.PHPEXT)) {
+        include_once(CLIENTCLASSPATH.$className.PHPEXT);
     }
 }
 
@@ -273,7 +276,7 @@ function getLanguage() {
 
     $languageList = array_keys($languages);
 
-    $browserlang = preg_replace('#;q=[0-9].[0-9]#s', '', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
+    $browserlang = preg_replace('#;q=[0-9].[0-9]#s', '', @$_SERVER['HTTP_ACCEPT_LANGUAGE']);
     $browserlang = explode(',', str_replace('-', '_', $browserlang));
 
     $redirect = explode('/', @$_REQUEST['redirect']);
