@@ -3,13 +3,10 @@
 /**
  * @author     Goncalo Silva Dias <mail@gsdias.pt>
  * @copyright  2014-2015 GSDias
- * @version    1.1
+ * @version    1.2
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
-/*************************************
-* File with user class information  *
-*************************************/
 
 interface idatabase {
     public function statement ($query, $values);
@@ -30,10 +27,9 @@ interface iuser {
 }
 
 interface isection {
-    public function getlist ($numberPerPage);
+    public function getlist ($options);
     public function getcurrent ($id);
-    public function generatefields ($id, $current);
-    public function generatepaginator ($pages);
+    public function generatefields ();
     public function add ($defaultfields, $defaultsafter, $defaultvalues);
     public function edit ($defaultfields);
     public function remove ();

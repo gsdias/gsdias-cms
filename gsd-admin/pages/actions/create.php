@@ -3,29 +3,34 @@
 /**
  * @author     Goncalo Silva Dias <mail@gsdias.pt>
  * @copyright  2014-2015 GSDias
- * @version    1.1
+ * @version    1.2
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
 
-if (!IS_ADMIN) {
-    header("Location: /admin/pages", true, 302);
+if (!IS_ADMIN && !IS_EDITOR) {
+    header("Location: /admin/" . $site->arg(1), true, 302);
     exit;
 }
 
 if (@$_REQUEST['save']) {
     
-    $defaultfields = array('title', 'url', 'lid', 'description', 'keywords', 'tags', 'og_title', 'og_image', 'og_description', 'parent', 'show_menu', 'require_auth', 'created');
+    $defaultfields = array('title', 'url', 'lid', 'description', 'keywords', 'tags', 'og_title', 'og_image', 'og_description', 'parent');
     
-    $fields = array('creator');
-    
-    $values = array($user->id);        
-    
-    $_REQUEST['require_auth'] = @$_REQUEST['auth'] ? @$_REQUEST['auth'] : null;
-    $_REQUEST['show_menu'] = @$_REQUEST['menu'] ? @$_REQUEST['menu'] : null;
-    $_REQUEST['created'] = date('Y-m-d H:i:s', time());
+    $fields = array('creator', '`index`', 'show_menu', 'require_auth', 'created');
     
     $mysql->statement('DELETE FROM redirect WHERE `from` = ?;', array($_REQUEST['url']));
+    $mysql->statement('SELECT max(`index`) AS max FROM pages;');
+    
+    $index = @$mysql->singleresult()->max;
+
+    $values = array(
+        $user->id,
+        ($index != null ? $index + 1 : 0),
+        @$_REQUEST['menu'] ? @$_REQUEST['menu'] : null,
+        @$_REQUEST['auth'] ? @$_REQUEST['auth'] : null,
+        date('Y-m-d H:i:s', time())
+    );
 
     $result = $csection->add($defaultfields, $fields, $values);
 

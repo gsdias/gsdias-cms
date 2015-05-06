@@ -3,7 +3,7 @@
 /**
  * @author     Goncalo Silva Dias <mail@gsdias.pt>
  * @copyright  2014-2015 GSDias
- * @version    1.1
+ * @version    1.2
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
@@ -14,38 +14,35 @@ class pages extends section implements isection {
         return 0; 
     }
 
-    public function getlist ($numberPerPage = 10) {
+    public function getlist ($options) {
         global $mysql, $tpl;
 
-        $mysql->statement('SELECT p.*, concat(if(pp.url = "/" OR pp.url IS NULL, "", pp.url), p.url) AS url, p.creator AS creator_id, u.name AS creator_name
-        FROM pages AS p
+        $search = @$_REQUEST['search'] ? sprintf(' WHERE p.title like "%%%s%%" ', $_REQUEST['search']) : '';
+        $fromsql = sprintf('FROM pages AS p
         LEFT JOIN users AS u ON p.creator = u.uid
-        LEFT JOIN pages AS pp ON p.parent = pp.pid
-        ORDER BY p.pid ' . pageLimit(pageNumber(), $numberPerPage));
+        LEFT JOIN pages AS pp ON p.parent = pp.pid %s ORDER BY p.`index`', $search);
+        $paginator = new paginator('FROM pages WHERE title like "%' . @$_REQUEST['search'] . '%" ORDER BY `index`;', @$options['numberPerPage'], @$_REQUEST['page']);
+        $fields = empty($options['fields']) ? array() : $options['fields'];
 
-        $list = array();
+        $tpl->setvar('SEARCH_VALUE', @$_REQUEST['search']);
 
-        $tpl->setcondition('PAGES_EXIST', $mysql->total > 0);
+        $mysql->statement('SELECT p.*, concat(if(pp.url = "/" OR pp.url IS NULL, "", pp.url), p.url) AS url, p.creator AS creator_id, u.name AS creator_name ' . $fromsql . $paginator->pageLimit());
 
-        if ($mysql->total) {
+        $result = parent::getlist(array(
+            'results' => $mysql->result(),
+            'fields' => array_merge(array('pid', 'title', 'beautify', 'creator', 'creator_name', 'creator_id', 'index'), $fields),
+            'paginator' => $paginator
+        ));
 
-            foreach ($mysql->result() as $item) {
-                $fields = array();
-                foreach ($item as $field => $value) {
-                    $fields[strtoupper($field)] = $value;
-                }
-                $created = explode(' ', $item->created);
-                $fields['CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())), $created[1]);
-
-                $list[] = $fields;
+        if (!empty($result['list'])) {
+            foreach ($result['results'] as $index => $item) {
+                $result['list'][$index]['UNPUBLISHED'] = $item->published ? '' : '<br>({LANG_UNPUBLISHED})';
             }
-            $tpl->setarray('PAGES', $list);
-            $pages = pageGenerator('FROM pages LEFT JOIN users AS u ON pages.creator = u.uid ORDER BY pages.pid;');
 
-            $tpl->setcondition('PAGINATOR', $pages['TOTAL'] > 1);
-
-            parent::generatepaginator($pages);
+            $tpl->setarray('PAGES', $result['list']);
         }
+
+        return $result;
     }
 
     public function getcurrent ($id = 0) {
@@ -53,24 +50,20 @@ class pages extends section implements isection {
 
         $mysql->statement('SELECT pages.*, pages.created, u.name AS creator FROM pages LEFT JOIN users AS u ON pages.creator = u.uid WHERE pages.pid = ?;', array($id));
 
-        if ($mysql->total) {
+        $result = parent::getcurrent($mysql->singleline());
 
-            $item = $mysql->singleline();
+        if (!empty($result['item'])) {
 
-            $this->item = $item;
+            $item = $result['item'];
             $created = explode(' ', $item->created);
+            $fields = $result['fields'];
 
-            $fields = array();
-            foreach ($item as $field => $value) {
-                $fields['CURRENT_PAGE_'. strtoupper($field)] = $value;
-            }
-
-            $fields['CURRENT_PAGE_CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())), $created[1]);
+            $fields['CURRENT_PAGES_CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())), $created[1]);
 
             $fields['MENU_CHECKED'] = @$item->show_menu ? 'checked="checked"' : '';
             $fields['AUTH_CHECKED'] = @$item->require_auth ? 'checked="checked"' : '';
             $fields['PUBLISHED_CHECKED'] = @$item->published ? 'checked="checked"' : '';
-            $fields['CURRENT_PAGE_STATUS'] = @$item->published ? 'Publicada' : 'Por publicar';
+            $fields['CURRENT_PAGES_STATUS'] = @$item->published ? 'Publicada' : 'Por publicar';
 
             $image = new image(array(
                 'iid' => @$item->og_image,
@@ -83,15 +76,15 @@ class pages extends section implements isection {
             $partial->setvars(array(
                 'LABEL' => 'Imagem',
                 'NAME' => 'og_image',
-                'VALUE' => $item->og_image ? $item->og_image : 0,
+                'VALUE' => $item->og_image,
                 'IMAGE' => $image,
                 'EMPTY' => $item->og_image ? 'is-hidden' : ''
             ));
             $partial->setfile('_image');
 
-            $fields['CURRENT_PAGE_OG_IMAGE'] = $partial;
+            $fields['CURRENT_PAGES_OG_IMAGE'] = $partial;
 
-            $tpl->setvars($fields);
+            $tpl->repvars($fields);
 
             $mysql->statement('SELECT * FROM pages_review WHERE pid = ?;', array($id));
 
@@ -121,12 +114,14 @@ class pages extends section implements isection {
             }
             $tpl->setarray('PARENT', $parent);
         }
+
+        return $result['item'];
     }
 
-    public function generatefields ($section, $current) {
+    public function generatefields () {
         global $tpl, $mysql;
 
-        parent::generatefields ($section);
+        parent::generatefields ();
 
         $extrafields = array();
 
@@ -238,7 +233,7 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item->pid));
         $tpl->setcondition('EXTRAFIELDS', !empty($extrafields));
     }
 
-    public function add ($defaultfields, $defaultsafter = array(), $defaultvalues = array()) {
+    public function add ($defaultfields = array(), $defaultsafter = array(), $defaultvalues = array()) {
         global $mysql, $site;
 
         $result = parent::add($defaultfields, $defaultsafter, $defaultvalues);
@@ -248,7 +243,7 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item->pid));
         return $result;
     }
 
-    public function edit ($defaultfields = array()) {
+    public function edit ($defaultfields = array(), $defaultsafter = array(), $defaultvalues = array()) {
         global $mysql, $site;
 
         $mysql->statement('SELECT * FROM pages WHERE pid = ?;', array($site->arg(2)));
@@ -263,7 +258,7 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item->pid));
             array_push($fields, $currentpage->{$field});
         }
 
-        $result = parent::edit($defaultfields);
+        $result = parent::edit($defaultfields, $defaultsafter, $defaultvalues);
 
         $this->update_beautify($site->arg(2));
 
@@ -279,9 +274,16 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item->pid));
     private function update_beautify ($pid) {
         global $mysql;
 
-        $mysql->statement('SELECT pp.beautify, p.url FROM pages AS p LEFT JOIN pages AS pp ON p.parent = pp.pid WHERE p.pid = ?;', array($pid));
+        $mysql->statement('SELECT pp.beautify, p.url
+        FROM pages AS p
+        LEFT JOIN pages AS pp ON p.parent = pp.pid
+        WHERE p.pid = ?;', array($pid));
+
         $result = $mysql->singleline();
-        $mysql->statement('UPDATE pages SET beautify = ? WHERE pid = ?;', array(sprintf('%s%s', $result->beautify, $result->url), $pid));
+
+        $mysql->statement('UPDATE pages
+        SET beautify = ?
+        WHERE pid = ?;', array(sprintf('%s%s', $result->beautify, $result->url), $pid));
     }
 
     private function page_review ($defaultfields = array(), $fields = array()) {

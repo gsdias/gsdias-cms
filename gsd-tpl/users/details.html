@@ -1,11 +1,11 @@
 <main>
-    <h1>{LANG_USER}: {CURRENT_USER_NAME}</h1>
-    {LANG_EMAIL}: {CURRENT_USER_EMAIL}<br>
-    {LANG_STATE}: {CURRENT_USER_STATUS}<br>
-    Último login: {CURRENT_USER_LAST_LOGIN}<br>
-    Criado por <a href="/admin/users/{CURRENT_USER_CREATOR_ID}" class="btn">{CURRENT_USER_CREATOR_NAME}</a><br>
-    Criado a: {CURRENT_USER_CREATED}<br>
+    <h1>{LANG_USER}: {CURRENT_USERS_NAME}</h1>
+    {LANG_EMAIL}: {CURRENT_USERS_EMAIL}<br>
+    {LANG_STATE}: {CURRENT_USERS_STATUS}<br>
+    {LANG_LAST_LOGIN}: {CURRENT_USERS_LAST_LOGIN}<br>
+    {LANG_CREATED_BY} <a href="/admin/users/{CURRENT_USERS_CREATOR_ID}" class="btn">{CURRENT_USERS_CREATOR_NAME}</a><br>
+    {LANG_CREATED}: {CURRENT_USERS_CREATED}<br>
     <!-- IF IS_ADMIN --><div class="btns red">
-        <a href="/admin/users/{CURRENT_USER_UID}/remove" class="btn red">Apagar utilizador</a>
+        <a href="/admin/users/{CURRENT_USERS_UID}/remove" class="btn red">{LANG_REMOVE} {LANG_USER}</a>
     </div><!-- ENDIF IS_ADMIN -->
 </main>

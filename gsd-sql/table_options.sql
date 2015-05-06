@@ -12,4 +12,4 @@ CREATE TABLE IF NOT EXISTS `options` (
 --
 -- Indexes for table `options`
 --
-INSERT INTO options (`name`, `label`, `value`, `index`) VALUES ('gsd-name', 'Nome', NULL, 1), ('gsd-email', 'Email', NULL, 2), ('gsd-ga', 'Google Analytics', NULL, 3), ('gsd-fb', 'Facebook', NULL, 4), ('gsd-locale_select', 'Lingua', 'pt_PT', 5);
+INSERT INTO options (`name`, `label`, `value`, `index`) VALUES ('gsd-name', '{LANG_NAME}', NULL, 1), ('gsd-email', '{LANG_EMAIL}', NULL, 2), ('gsd-ga', 'Google Analytics', NULL, 3), ('gsd-fb', 'Facebook', NULL, 4), ('gsd-locale_select', '{LANG_LANGUAGE}', 'pt_PT', 5);

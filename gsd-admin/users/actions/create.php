@@ -3,13 +3,13 @@
 /**
  * @author     Goncalo Silva Dias <mail@gsdias.pt>
  * @copyright  2014-2015 GSDias
- * @version    1.1
+ * @version    1.2
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
 
 if (!IS_ADMIN) {
-    header("Location: /admin/users", true, 302);
+    header("Location: /admin/" . $site->arg(1), true, 302);
     exit;
 }
 
@@ -34,7 +34,7 @@ if (@$_REQUEST['save']) {
     } else {
         $_SESSION['message'] = sprintf(lang('LANG_USER_CREATED'), $_REQUEST['name']);
 
-        header("Location: /admin/users", true, 302);
+        header("Location: /admin/" . $site->arg(1), true, 302);
         exit;
     }
 }

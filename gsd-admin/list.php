@@ -3,7 +3,7 @@
 /**
  * @author     Goncalo Silva Dias <mail@gsdias.pt>
  * @copyright  2014-2015 GSDias
- * @version    1.1
+ * @version    1.2
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
@@ -43,10 +43,10 @@ if ($action) {
             include_once($file);
         }
 
-        $current = $csection->getcurrent($id);
+        $csection->getcurrent($id);
 
         if ($action === 'edit') {
-            $csection->generatefields($section, $current);
+            $csection->generatefields();
         }
     }
 
@@ -63,7 +63,7 @@ if ($action) {
 
         $csection = new $classsection ();
         
-        $csection->generatefields($section, null);
+        $csection->generatefields();
         
         $site->main = sprintf('%s/%s', $section, $id);
         
@@ -91,6 +91,6 @@ if ($action) {
         
         $csection = new $classsection ();
 
-        $csection->getlist($numberPerPage);
+        $csection->getlist(array('numberPerPage' => $numberPerPage));
     }
 }

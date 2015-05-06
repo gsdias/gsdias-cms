@@ -3,7 +3,7 @@
 /**
  * @author     Goncalo Silva Dias <mail@gsdias.pt>
  * @copyright  2014-2015 GSDias
- * @version    1.1
+ * @version    1.2
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
@@ -15,10 +15,12 @@ class images extends section implements isection {
         return 0; 
     }
     
-    public function getlist ($numberPerPage = 10) {
+    public function getlist ($options) {
         global $mysql, $tpl;
-        
+
         $tags = @$_REQUEST['search'] ? sprintf(' WHERE tags like "%%%s%%" ', $_REQUEST['search']) : '';
+        $paginator = new paginator('FROM images ' . $tags . 'ORDER BY images.iid;', @$options['numberPerPage'], @$_REQUEST['page']);
+        $fields = empty($options['fields']) ? array() : $options['fields'];
 
         $tpl->setvar('SEARCH_VALUE', @$_REQUEST['search']);
 
@@ -26,52 +28,36 @@ class images extends section implements isection {
         FROM images 
         LEFT JOIN users AS u ON images.creator = u.uid '
         . $tags .
-        'ORDER BY images.iid ' . pageLimit(pageNumber(), $numberPerPage));
+        'ORDER BY images.iid ' . $paginator->pageLimit());
 
-        $list = array();
+        $result = parent::getlist(array(
+            'results' => $mysql->result(),
+            'fields' => array_merge(array('iid', 'name', 'description', 'creator', 'creator_name', 'creator_id'), $fields),
+            'paginator' => $paginator
+        ));
 
-        $tpl->setcondition('IMAGES_EXIST', $mysql->total > 0);
-        
-        if ($mysql->total) {
-            
-            foreach ($mysql->result() as $item) {
-                $fields = array();
-                foreach ($item as $field => $value) {
-                    $fields[strtoupper($field)] = $value;
-                }
-                $created = explode(' ', $item->created);
-                $fields['CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())), $created[1]);
-                
-                $fields['ASSET'] = @$item->width ? new image(array('iid' => $item->iid, 'max-height' => '100', 'height' => 'auto', 'width' => 'auto')) : '';
-                $fields['SIZE'] = sprintf('<strong>%s x %s</strong><br>%s', $item->width, $item->height, $item->size);
-                $list[] = $fields;
+        if (!empty($result['list'])) {
+            foreach ($result['results'] as $index => $item) {
+                $result['list'][$index]['ASSET'] = @$item->width ? new image(array('iid' => $item->iid, 'max-height' => '100', 'height' => 'auto', 'width' => 'auto')) : '';
+                $result['list'][$index]['SIZE'] = sprintf('<strong>%s x %s</strong><br>%s', $item->width, $item->height, $item->size);
             }
-            $tpl->setarray('IMAGES', $list);
-            $pages = pageGenerator('FROM images LEFT JOIN users AS u ON images.creator = u.uid ' . $tags . 'ORDER BY images.iid;');
             
-            $tpl->setcondition('PAGINATOR', $pages['TOTAL'] > 1);
-            
-            $this->generatepaginator($pages);
+            $tpl->setarray('IMAGES', $result['list']);
         }
+
+        return $result;
     }
     
     public function getcurrent ($id = 0) {
         global $mysql, $tpl;
 
-        $mysql->statement('SELECT images.*, images.created FROM images LEFT JOIN users AS u ON images.creator = u.uid WHERE images.iid = ?;', array($id));
+        $mysql->statement('SELECT images.*, images.created
+        FROM images
+        LEFT JOIN users AS u ON images.creator = u.uid
+        WHERE images.iid = ?;', array($id));
 
-        if ($mysql->total) {
+        $result = parent::getcurrent($mysql->singleline());
 
-            $item = $mysql->singleline();
-            $created = explode(' ', $item->created);
-
-            $fields = array();
-            foreach ($item as $field => $value) {
-                $fields['CURRENT_IMAGE_'. strtoupper($field)] = $value;
-            }
-
-            $tpl->setvars($fields);
-
-        }
+        return $result['item'];
     }
 }

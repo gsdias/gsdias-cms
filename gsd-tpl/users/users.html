@@ -1,11 +1,11 @@
 <main>
     <h1>{LANG_USERS}
-        <!-- IF IS_ADMIN --><a href="/admin/users/create" class="btn">{LANG_ADD} {LANG_NEW_MALE}</a><!-- ENDIF IS_ADMIN -->
+        <!-- IF IS_ADMIN --><a href="/admin/users/create" class="btn">{LANG_ADD} {LANG_NEW_MALE LOWER}</a><!-- ENDIF IS_ADMIN -->
     </h1>
     <!-- IF ERRORS --><div class="errors">{ERRORS}</div><!-- ENDIF ERRORS -->
     <!-- IF MESSAGES --><div class="errors messages">{MESSAGES}</div><!-- ENDIF MESSAGES -->
-    [_PAGINATOR]
-    <table class="table">
+    {PAGINATOR}
+    <table class="table hasPages">
         <thead>
             <tr>
                 <th>{LANG_NAME}</th>
@@ -26,5 +26,5 @@
             </td>
         </tr><!-- ENDLOOP USERS -->
     </table>
-    [_PAGINATOR]
+    {PAGINATOR}
 </main>

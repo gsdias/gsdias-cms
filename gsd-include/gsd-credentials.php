@@ -3,7 +3,7 @@
 /**
  * @author     Goncalo Silva Dias <mail@gsdias.pt>
  * @copyright  2014-2015 GSDias
- * @version    1.1
+ * @version    1.2
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
@@ -31,6 +31,7 @@ if (@$_REQUEST['login'] && !$user->isLogged()) {
 
 define('IS_LOGGED', $user->isLogged());
 define('IS_ADMIN', $user->level == 'admin');
+define('IS_EDITOR', $user->level == 'editor');
 
 if (IS_LOGGED) {
 

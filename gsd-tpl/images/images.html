@@ -15,8 +15,8 @@
     <div class="errors messages">{MESSAGES}</div>
     <!-- ENDIF MESSAGES -->
     <!-- IF IMAGES_EXIST -->
-    [_PAGINATOR]
-    <table class="table">
+    {PAGINATOR}
+    <table class="table hasPages" data-type="images">
         <thead>
             <tr>
                 <th>{LANG_IMAGE}</th>
@@ -28,18 +28,18 @@
         </thead>
         <!-- LOOP IMAGES --><tr>
             <td>
-                <a href="/admin/images/{IMAGES_IID}">{IMAGES_ASSET}</a>
+                {IMAGES_ASSET}
             </td>
             <td>{IMAGES_SIZE}</td>
             <td>{IMAGES_DESCRIPTION}</td>
-            <td>{IMAGES_CREATED} <br>por <a href="/admin/users/{IMAGES_CREATOR_ID}">{IMAGES_CREATOR_NAME}</a></td>
+            <td>{IMAGES_CREATED} <br>{LANG_BY} <a href="/admin/users/{IMAGES_CREATOR_ID}">{IMAGES_CREATOR_NAME}</a></td>
             <td class="actions">
                 <a href="/admin/images/{IMAGES_IID}/edit">{LANG_EDIT}</a>
                 <a href="/admin/images/{IMAGES_IID}/remove">{LANG_REMOVE}</a>
             </td>
         </tr><!-- ENDLOOP IMAGES -->
     </table>
-    [_PAGINATOR]
+    {PAGINATOR}
     <!-- ENDIF IMAGES_EXIST -->
     <!-- IF !IMAGES_EXIST --><span class="warning">{LANG_NO_IMAGES}</span><!-- ENDIF !IMAGES_EXIST -->
 </main>

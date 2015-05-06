@@ -3,28 +3,46 @@
 /**
  * @author     Goncalo Silva Dias <mail@gsdias.pt>
  * @copyright  2014-2015 GSDias
- * @version    1.1
+ * @version    1.2
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
 
 function GSDClassLoading($className) {
-    if (is_file(CLIENTCLASSPATH . $className . PHPEXT)) {
-        include_once(CLIENTCLASSPATH . $className . PHPEXT);
-    } elseif (is_file(CLASSPATH . $className . PHPEXT)) {
-        include_once(CLASSPATH . $className . PHPEXT);
+
+    $className = str_replace(array('GSD\\', 'FRONTEND\\'), array(CLASSPATH, CLIENTCLASSPATH), $className);
+
+    if (is_file(CLASSPATH.$className.PHPEXT)) {
+        include_once(CLASSPATH.$className.PHPEXT);
+    } else if (is_file(CLIENTCLASSPATH.$className.PHPEXT)) {
+        include_once(CLIENTCLASSPATH.$className.PHPEXT);
     }
 }
 
-function lang ($text) {
+function lang ($text, $option = 'NONE') {
     global $site;
 
-    if ($site->isFrontend) {
+    if (@$site->isFrontend) {
         $translated = dcgettext('frontend', $text, LC_MESSAGES);
         $translated = $translated != $text ? $translated : _($text);
     } else {
         $translated = _($text);
         $translated = $translated != $text ? $translated : dcgettext('frontend', $text, LC_MESSAGES);
+    }
+
+    switch ($option) {
+        case 'CAMEL':
+            $translated = ucwords($translated);
+        break;
+        case 'UPPER':
+            $translated = strtoupper($translated);
+        break;
+        case 'LOWER':
+            $translated = strtolower($translated);
+        break;
+        case 'FIRST':
+            $translated = ucfirst($translated);
+        break;
     }
 
     return $translated;
@@ -113,9 +131,9 @@ function timeago ($seconds = 0, $hour = 0) {
     $months = round($months, 0);
     
     if ($months > 0) {
-        $label = sprintf('%d %s %s', $months, $months > 1 ? ' {LANG_MONTHS}' : lang('LANG_MONTH'), lang('LANG_AGO'));
+        $label = sprintf('%d %s %s', $months, $months > 1 ? sprintf(' %s', lang('LANG_MONTHS')) : lang('LANG_MONTH'), lang('LANG_AGO'));
     } else {
-        $label = $days > 0 ? $days . ( $days == 1 ? ' {LANG_DAY} ' : ' {LANG_DAYS} ') . lang('LANG_AGO') : '{LANG_AT} ' . date('H:i', strtotime($hour));
+        $label = $days > 0 ? $days . ( $days == 1 ? sprintf(' %s ', lang('LANG_DAY')) : sprintf(' %s ', lang('LANG_DAYS'))) . lang('LANG_AGO') : sprintf('%s ', lang('LANG_AT')) . date('H:i', strtotime($hour));
     }
     
     return $label;
@@ -258,7 +276,7 @@ function getLanguage() {
 
     $languageList = array_keys($languages);
 
-    $browserlang = preg_replace('#;q=[0-9].[0-9]#s', '', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
+    $browserlang = preg_replace('#;q=[0-9].[0-9]#s', '', @$_SERVER['HTTP_ACCEPT_LANGUAGE']);
     $browserlang = explode(',', str_replace('-', '_', $browserlang));
 
     $redirect = explode('/', @$_REQUEST['redirect']);

@@ -1,14 +1,14 @@
 <main>
-    <h1>{LANG_PAGE}: {CURRENT_PAGE_TITLE}</h1>
-    Status: {CURRENT_PAGE_STATUS}<br>
-    {LANG_TITLE}: {CURRENT_PAGE_TITLE}<br>
-    Url: {CURRENT_PAGE_URL}<br>
-    {LANG_DESCRIPTION}: {CURRENT_PAGE_DESCRIPTION}<br>
-    Keywords: {CURRENT_PAGE_KEYWORDS}<br>
-    Tags: {CURRENT_PAGE_TAGS}<br>
-    Criado: {CURRENT_PAGE_CREATED} {LANG_BY} {CURRENT_PAGE_CREATOR}<br>
+    <h1>{LANG_PAGE}: {CURRENT_PAGES_TITLE}</h1>
+    {LANG_STATE}: {CURRENT_PAGES_STATUS}<br>
+    {LANG_TITLE}: {CURRENT_PAGES_TITLE}<br>
+    Url: {CURRENT_PAGES_URL}<br>
+    {LANG_DESCRIPTION}: {CURRENT_PAGES_DESCRIPTION}<br>
+    Keywords: {CURRENT_PAGES_KEYWORDS}<br>
+    Tags: {CURRENT_PAGES_TAGS}<br>
+    {LANG_CREATED}: {CURRENT_PAGES_CREATED} {LANG_BY} {CURRENT_PAGES_CREATOR}<br>
     <div class="btns">
-        <!-- IF IS_ADMIN --><a href="/admin/pages/{CURRENT_PAGE_PID}/remove" class="btn red">{LANG_PAGE_REMOVE}</a><!-- ENDIF IS_ADMIN -->
+        <!-- IF IS_ADMIN --><a href="/admin/pages/{CURRENT_PAGES_PID}/remove" class="btn red">{LANG_REMOVE} {LANG_PAGE}</a><!-- ENDIF IS_ADMIN -->
         <!--<a href="#" class="btn">Discard draft</a>-->
     </div>
 </main>

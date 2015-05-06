@@ -1,28 +1,36 @@
 <main>
     <h1>{LANG_PAGES}
-        <!-- IF IS_ADMIN --><a href="/admin/pages/create" class="btn">{LANG_ADD} {LANG_NEW_FEMALE}</a><!-- ENDIF IS_ADMIN -->
+        <!-- IF IS_ADMIN --><a href="/admin/pages/create" class="btn">{LANG_ADD} {LANG_NEW_FEMALE LOWER}</a><!-- ENDIF IS_ADMIN -->
     </h1>
+    <div class="search">
+        <form method="post">
+            <input type="text" value="{SEARCH_VALUE}" name="search">
+            <input type="submit" value="{LANG_SEARCH}" name="search_submit">
+        </form>
+    </div>
     <!-- IF ERRORS --><div class="errors">{ERRORS}</div><!-- ENDIF ERRORS -->
     <!-- IF MESSAGES --><div class="errors messages">{MESSAGES}</div><!-- ENDIF MESSAGES -->
-    <!-- IF PAGES_EXIST -->[_PAGINATOR]
-    <table class="table">
+    <!-- IF PAGES_EXIST -->{PAGINATOR}
+    <table class="table pages hasPages" data-type="pages">
         <thead>
             <tr>
                 <th>{LANG_PATH}</th>
                 <th>{LANG_CREATED}</th>
                 <th>{LANG_ACTIONS}</th>
+                <th><i class="fa fa-refresh fa-1x refresh"></i></th>
             </tr>
         </thead>
-        <!-- LOOP PAGES --><tr>
+        <!-- LOOP PAGES --><tr data-pid="{PAGES_PID}" data-index="{PAGES_INDEX}">
             <td>
                 {PAGES_TITLE}<br>
-                <a href="/admin/pages/{PAGES_PID}">{PAGES_BEAUTIFY}</a>
+                <a href="/admin/pages/{PAGES_PID}">{PAGES_BEAUTIFY}</a>{PAGES_UNPUBLISHED}
             </td>
             <td><em class="ago">({PAGES_CREATED})</em> <br>{LANG_BY} <a href="/admin/users/{PAGES_CREATOR_ID}">{PAGES_CREATOR_NAME}</a></td>
             <td class="actions"><a href="/admin/pages/{PAGES_PID}/settings">{LANG_SETTINGS}</a><a href="/admin/pages/{PAGES_PID}/edit">{LANG_EDIT}</a></td>
+            <td><i class="fa fa-arrows-v fa-1x order"></i></td>
         </tr><!-- ENDLOOP PAGES -->
     </table>
-    [_PAGINATOR]<!-- ENDIF PAGES_EXIST -->
+    {PAGINATOR}<!-- ENDIF PAGES_EXIST -->
     
     <!-- IF !PAGES_EXIST --><span class="warning">{LANG_NO_PAGES}</span><!-- ENDIF !PAGES_EXIST -->
 </main>

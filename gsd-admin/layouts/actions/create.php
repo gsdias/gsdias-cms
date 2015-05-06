@@ -3,29 +3,31 @@
 /**
  * @author     Goncalo Silva Dias <mail@gsdias.pt>
  * @copyright  2014-2015 GSDias
- * @version    1.1
+ * @version    1.2
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
 
-if (!IS_ADMIN) {
-    header("Location: /admin/pages", true, 302);
+if (!IS_ADMIN && !IS_EDITOR) {
+    header("Location: /admin/" . $site->arg(1), true, 302);
     exit;
 }
 
 if (@$_REQUEST['save']) {
     
+    $defaultfields = array('name', 'ltid', 'file');
+
+    $fields = array('creator');
+
+    $values = array($user->id);
+
     $content = file_get_contents(sprintf(CLIENTTPLPATH . '_layouts/%s', $_REQUEST['layout']));
 
-    $fields = array(
-        $_REQUEST['name'],
-        str_replace('.html', '', $_REQUEST['layout']),
-        $_REQUEST['ltid'],
-        $user->id
-    );
+    $_REQUEST['file'] = str_replace('.html', '', $_REQUEST['layout']);
 
-    $mysql->statement('INSERT INTO layouts (name, file, ltid, creator) values(?, ?, ?, ?);', $fields);
-    $lid = $mysql->lastinserted();
+    $result = $csection->add($defaultfields, $fields, $values);
+
+    $lid = $result['id'];
 
     if ($lid) {
         preg_match_all(sprintf('#<!-- %s (.*?) -->#s', 'PLACEHOLDER'), $content, $matches, PREG_SET_ORDER);
@@ -34,11 +36,7 @@ if (@$_REQUEST['save']) {
 
         while ($key = array_pop($list)) {
             $sectionname = explode(' ', $key);
-            $mysql->statement('INSERT INTO layoutsections (lid, label, creator) values(?, ?, ?);', array(
-                $lid,
-                $sectionname[0],
-                $user->id
-            ));
+            $mysql->statement('INSERT INTO layoutsections (lid, label, creator) values(?, ?, ?);', array($lid, $sectionname[0], $user->id));
             $lsid = $mysql->lastinserted();
             $mysql->statement('SELECT mtid FROM moduletypes WHERE name like ?', array( strtolower( $sectionname[1] ) ));
             $mtid = $mysql->singleresult()->mtid;
@@ -46,15 +44,10 @@ if (@$_REQUEST['save']) {
             $mysql->statement('SELECT mtid FROM moduletypes WHERE name like ?', array( strtolower( @$sectionname[2] ) ));
             $smtid = @$mysql->singleresult()->mtid ? $mysql->singleresult()->mtid : null;
 
-            $mysql->statement('INSERT INTO layoutsectionmoduletypes (lsid, mtid, smtid, total) values(?, ?, ?, ?);', array(
-                $lsid,
-                $mtid,
-                $smtid,
-                @$sectionname[3] ? $sectionname[3] : 1
-            ));
+            $mysql->statement('INSERT INTO layoutsectionmoduletypes (lsid, mtid, smtid, total) values(?, ?, ?, ?);', array($lsid, $mtid, $smtid, @$sectionname[3] ? $sectionname[3] : 1));
         }
         $_SESSION['message'] = sprintf(lang('LANG_LAYOUT_CREATED'), $_REQUEST['name']);
-        header("Location: /admin/layouts", true, 302);
+        header("Location: /admin/" . $site->arg(1), true, 302);
         exit;
     } else {
         $tpl->setvar('ERRORS', lang('LANG_LAYOUT_ALREADY_EXISTS'));

@@ -3,7 +3,7 @@
 /**
  * @author     Goncalo Silva Dias <mail@gsdias.pt>
  * @copyright  2014-2015 GSDias
- * @version    1.1
+ * @version    1.2
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
@@ -60,6 +60,20 @@ class tpl {
     }
     
     /** 
+      * @desc Saves the value of a template's variable
+      * @param string $id - given id
+      * @param string $value - given value
+      * @return nothing
+    */
+    function repVars ($values = array()) {
+        if (!empty($values)) {
+            foreach ($values as $id => $value) {
+                $this->repvar($id, $value);
+            }
+        }
+    }
+
+    /**
       * @desc Saves an array of a template's loop
       * @param string $id - given id
       * @param array $value - given list
@@ -135,7 +149,9 @@ class tpl {
         preg_match_all('#{LANG_(.*?)}#s', $content, $matches, PREG_SET_ORDER);
 
         foreach ($matches as $match) {
-            $replace = lang('LANG_' . $match[1]);
+            $option = explode(' ', $match[1]);
+            $replace = lang('LANG_' . $option[0], @$option[1]);
+
             $content = preg_replace(sprintf('#%s#s', $match[0]), $replace, $content, 1);
         }
 

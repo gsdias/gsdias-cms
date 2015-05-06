@@ -3,7 +3,7 @@
 /**
  * @author     Goncalo Silva Dias <mail@gsdias.pt>
  * @copyright  2014-2015 GSDias
- * @version    1.1
+ * @version    1.2
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
@@ -12,19 +12,69 @@ abstract class section implements isection {
 
     public $item = array();
 
-    public function __construct ($id = null) {
+    public function __construct ($id = 0) {
 
         return 0;
     }
 
-    public function getlist ($numberPerPage = 10) {}
+    public function getlist ($options) {
+        global $tpl;
 
-    public function getcurrent ($id = 0) {}
+        $results = empty($options['results']) ? array() : $options['results'];
+        $fields = empty($options['fields']) ? array() : $options['fields'];
+        $paginator = $options['paginator'];
 
-    public function generatefields ($section, $current = array()) {
+        $list = array();
+
+        foreach ($results as $line) {
+            $item = array();
+
+            foreach ($fields as $field) {
+                if (property_exists($line, $field)) {
+                    $item[strtoupper($field)] = $line->{$field};
+                }
+            }
+
+            $created = explode(' ', @$line->created);
+            $item['CREATED'] = timeago(dateDif(@$created[0], date('Y-m-d', time())), @$created[1]);
+
+            $list[] = $item;
+        }
+
+        $tpl->setcondition(strtoupper($this->tablename($this)) . '_EXIST', !empty($list));
+
+        $tpl->setarray(strtoupper($this->tablename($this)), $list);
+
+        $tpl->setvar('PAGINATOR', $paginator);
+
+        return array('list' => $list, 'results' => $results);
+    }
+
+    public function getcurrent ($item = array()) {
+        global $site, $tpl;
+
+        if (empty($item)) {
+            header("Location: /admin/" . $site->arg(1), true, 302);
+            exit;
+        }
+
+        $this->item = $item;
+
+        $fields = array();
+
+        foreach ($item as $field => $value) {
+            $fields['CURRENT_' . strtoupper($this->tablename()) . '_'. strtoupper($field)] = $value;
+        }
+
+        $tpl->setvars($fields);
+
+        return array('item' => $item, 'fields' => $fields);
+    }
+
+    public function generatefields () {
         global $tpl, $mysql;
 
-        $func = $section . 'fields';
+        $func = $this->tablename() . 'fields';
         $item = $this->item;
 
         $sectionextrafields = function_exists($func) ? $func() : array();
@@ -84,23 +134,6 @@ abstract class section implements isection {
         }
     }
 
-    public function generatepaginator ($pages) {
-        global $tpl;
-
-        $first_page = new anchor(array('text' => '&lt; {LANG_FIRST}', 'href' => '?'));
-        $prev_page = new anchor(array('text' => lang('LANG_PREVIOUS'), 'href' => '?page=' . $pages['PREV']));
-        $next_page = new anchor(array('text' => lang('LANG_NEXT'), 'href' => '?page=' . $pages['NEXT']));
-        $last_page = new anchor(array('text' => '{LANG_LAST} &gt;', 'href' => '?page=' . $pages['LAST']));
-        $tpl->setvars(array(
-            'FIRST_PAGE' => $first_page,
-            'PREV_PAGE' => $prev_page,
-            'NEXT_PAGE' => $next_page,
-            'LAST_PAGE' => $last_page,
-            'CURRENT_PAGE' => $pages['CURRENT'],
-            'TOTAL_PAGES' => $pages['TOTAL']
-        ));
-    }
-
     public function add ($defaultfields, $defaultsafter = array(), $defaultvalues = array()) {
         global $mysql;
         
@@ -127,7 +160,7 @@ abstract class section implements isection {
         return array('total' => $mysql->total, 'errnum' => $mysql->errnum, 'errmsg' => $mysql->errmsg, 'id' => $mysql->lastinserted());
     }
     
-    public function edit ($defaultfields) {
+    public function edit ($defaultfields, $defaultsafter = array(), $defaultvalues = array()) {
         global $mysql, $site;
         
         $section = $this->tablename();
@@ -143,6 +176,11 @@ abstract class section implements isection {
         foreach ($allfields as $field) {
             $fields .= sprintf(", `%s` = ?", $field);
             $values[] = $field == 'password' ? md5(@$_REQUEST[$field]) : @$_REQUEST[$field];
+        }
+
+        foreach ($defaultsafter as $index => $field) {
+            $fields .= sprintf(", `%s` = ?", $field);
+            $values[] = $field == 'password' ? md5($_REQUEST[$defaultvalues[$index]]) : $defaultvalues[$index];
         }
 
         $values[] = $site->arg(2);

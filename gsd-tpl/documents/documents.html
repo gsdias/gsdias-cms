@@ -9,8 +9,8 @@
     <div class="errors messages">{MESSAGES}</div>
     <!-- ENDIF MESSAGES -->
     <!-- IF DOCUMENTS_EXIST -->
-    [_PAGINATOR]
-    <table class="table">
+    {PAGINATOR}
+    <table class="table hasPages">
         <thead>
             <tr>
                 <th>{LANG_DOCUMENT}</th>
@@ -23,11 +23,11 @@
         <!-- LOOP DOCUMENTS -->
         <tr>
             <td>
-                <a href="/admin/documents/{DOCUMENTS_DID}">{DOCUMENTS_ASSET}</a>
+                {DOCUMENTS_ASSET}
             </td>
             <td>{DOCUMENTS_SIZE}</td>
             <td>{DOCUMENTS_DESCRIPTION}</td>
-            <td>{DOCUMENTS_CREATED} <br>por <a href="/admin/users/{DOCUMENTS_CREATOR_ID}">{DOCUMENTS_CREATOR_NAME}</a></td>
+            <td>{DOCUMENTS_CREATED} <br>{LANG_BY} <a href="/admin/users/{DOCUMENTS_CREATOR_ID}">{DOCUMENTS_CREATOR_NAME}</a></td>
             <td class="actions">
                 <a href="/admin/documents/{DOCUMENTS_DID}/edit">{LANG_EDIT}</a>
                 <a href="/admin/documents/{DOCUMENTS_DID}/remove">{LANG_REMOVE}</a>
@@ -35,7 +35,7 @@
         </tr>
         <!-- ENDLOOP DOCUMENTS -->
     </table>
-    [_PAGINATOR]
+    {PAGINATOR}
     <!-- ENDIF DOCUMENTS_EXIST -->
     
     <!-- IF !DOCUMENTS_EXIST -->

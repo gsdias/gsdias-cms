@@ -1,7 +1,7 @@
 /**
  * @author     Goncalo Silva Dias <mail@gsdias.pt>
  * @copyright  2014-2015 GSDias
- * @version    1.1
+ * @version    1.2
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
@@ -14,7 +14,7 @@ header {
     //box-shadow: 0 0 10px 0px rgba(0, 0, 0, .5);
 
     .bar {
-        background: #276876;
+        background: $gsd-color;
         color: #fff;
         padding: 5px 0 5px 10px;
         margin-top: 10px;
@@ -33,7 +33,7 @@ header {
 
     .logout {
         overflow: hidden;
-        color: #276876;
+        color: $gsd-color;
         display: block;
         text-align: start;
         position: relative;

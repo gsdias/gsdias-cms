@@ -3,14 +3,10 @@
 /**
  * @author     Goncalo Silva Dias <mail@gsdias.pt>
  * @copyright  2014-2015 GSDias
- * @version    1.1
+ * @version    1.2
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
-
-    /*************************************
-	* File with mySQL class information *
-	*************************************/
 
 class mySQL implements idatabase {
 
@@ -126,8 +122,11 @@ class mySQL implements idatabase {
         }
 
         if (defined('DEBUG') && DEBUG) {
-
-            $tpl->adderror(vsprintf(str_replace('?', '"%s"', $query), $values));
+            if (!empty($values)) {
+                $tpl->adderror(vsprintf(str_replace('?', '"%s"', $query), $values));
+            } else {
+                $tpl->adderror($query);
+            }
 
             array_push($this->querylist, $query);
             if ($this->errnum) {

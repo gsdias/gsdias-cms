@@ -1,7 +1,7 @@
 /**
  * @author     Goncalo Silva Dias <mail@gsdias.pt>
  * @copyright  2014-2015 GSDias
- * @version    1.1
+ * @version    1.2
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
@@ -16,7 +16,8 @@ GSD.globalevents = {
     init: 'pageinit.gsd',
     frontend: 'pagefrontend.gsd',
     resize: 'pageresize.gsd',
-    scroll: 'pagescroll.gsd'
+    scroll: 'pagescroll.gsd',
+    updateInternals: 'updateinternals.gsd'
 };
 
 // App settings
