@@ -18,7 +18,11 @@ class users extends section implements isection {
     public function getlist ($options) {
         global $mysql, $tpl;
 
-        $paginator = new paginator('FROM users ORDER BY users.uid;', @$options['numberPerPage'], @$_REQUEST['page']);
+        $search = @$_REQUEST['search'] ? sprintf(' WHERE users.name like "%%%s%%" ', $_REQUEST['search']) : '';
+        $fromsql = sprintf(' FROM users
+        LEFT JOIN users AS u ON users.creator = u.uid %s
+        ORDER BY users.uid ', $search);
+        $paginator = new paginator($fromsql, @$options['numberPerPage'], @$_REQUEST['page']);
         $fields = empty($options['fields']) ? array() : $options['fields'];
 
         $_fields = 'users.*, users.creator AS creator_id, u.name AS creator_name';
@@ -29,10 +33,7 @@ class users extends section implements isection {
             }
         }
 
-        $mysql->statement('SELECT ' . $_fields . '
-        FROM users 
-        LEFT JOIN users AS u ON users.creator = u.uid 
-        ORDER BY users.uid ' . $paginator->pageLimit());
+        $mysql->statement('SELECT ' . $_fields . $fromsql . $paginator->pageLimit());
 
         $result = parent::getlist(array(
             'results' => $mysql->result(),
