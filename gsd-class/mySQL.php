@@ -215,8 +215,9 @@ class mySQL implements idatabase {
         $this->_from = '';
         $this->_join = array();
         $this->_on = array();
-        $this->_order = array();
         $this->_where = array();
+        $this->_order = array();
+        $this->_limit = '';
         $this->_values = array();
         
         return $this;
@@ -257,8 +258,8 @@ class mySQL implements idatabase {
         return $this;
     }
     
-    public function order ($value) {
-        array_push($this->_order, $value);
+    public function order ($value, $ord = 'ASC') {
+        array_push($this->_order, $value . ' ' . $ord);
         
         return $this;
     }
@@ -279,6 +280,12 @@ class mySQL implements idatabase {
         return $this;
     }
     
+    public function limit ($offset = 0, $cut) {
+        $this->_limit = " LIMIT $offset, $cut";
+
+        return $this;
+    }
+
     public function exec () {
         $string = '';
         
@@ -290,9 +297,10 @@ class mySQL implements idatabase {
             }
         }
         $string .= !empty($this->_where) ? ' WHERE ' . implode(' ', $this->_where) : '';
-        $string .= !empty($this->_order) ? ' ORDER BY ' . implode(' ', $this->_order) : '';
+        $string .= !empty($this->_order) ? ' ORDER BY ' . implode(', ', $this->_order) : '';
+        $string .= $this->_limit ? $this->_limit : '';
         
-        $this->query = $string;
+        $this->query = $string . ';';
         
         $this->_values = empty($this->_values) ? array() : $this->formatDates($this->_values);
 
