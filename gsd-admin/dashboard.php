@@ -22,6 +22,16 @@ foreach ($mysql->result() as $userlist) {
 }
 $tpl->setarray('USERS', $users);
 
+
+
+
+$mysql->reset()
+        ->select('*')
+        ->from('pages')
+        ->where('published IS NOT NULL')
+        ->order('created')
+        ->exec();
+
 $mysql->statement('SELECT * FROM pages WHERE published IS NOT NULL LIMIT 0, 5');
 
 $pages = array();
@@ -38,6 +48,12 @@ if ($mysql->total) {
     }
     $tpl->setarray('PAGES', $pages);
 }
+
+
+
+
+
+
 
 $mysql->statement('SELECT * FROM images LIMIT 0, 5');
 

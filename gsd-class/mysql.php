@@ -16,6 +16,8 @@ class mySQL implements idatabase {
 
     protected $conn, $query, $result, $db, $host, $user, $pass, $prepared;
     public $querylist, $total, $errnum, $errmsg, $executed;
+    
+    protected $_query, $_select, $_from, $_where, $_join, $_on, $_order, $_values;
 
     public
         // -- Function Name : __construct
@@ -207,6 +209,103 @@ class mySQL implements idatabase {
         // -- Purpose : returns last inserted id
         function lastInserted () {
         return $this->conn->lastInsertId();
+    }
+    
+    public function reset () {
+        $this->_select = '';
+        $this->_from = '';
+        $this->_join = array();
+        $this->_on = array();
+        $this->_order = array();
+        $this->_where = array();
+        $this->_values = array();
+        
+        return $this;
+    }
+    
+    public function select ($value = '*') {
+        $this->_select .= $value;
+        
+        return $this;
+    }
+    
+    public function from ($value) {
+        $this->_from .= $value;
+        
+        return $this;
+    }
+    
+    public function join ($value, $side = '') {
+        $side = strtoupper($side);
+        switch ($side) {
+            case 'LEFT':
+                $value = ' LEFT JOIN ' . $value;
+            break;
+            case 'RIGHT':
+                $value = ' RIGHT JOIN ' . $value;
+            break;
+            default:
+                $value = ' JOIN ' . $value;
+        }
+        array_push($this->_join, $value);
+        
+        return $this;
+    }
+    
+    public function on ($value) {
+        array_push($this->_on, $value);
+        
+        return $this;
+    }
+    
+    public function order ($value) {
+        array_push($this->_order, $value);
+        
+        return $this;
+    }
+    
+    public function values ($values = array()) {
+        if (is_array($values)) {
+            array_merge($this->_values, $values);
+        } else {
+            array_push($this->_values, $values);
+        }
+        
+        return $this;
+    }
+    
+    public function where ($value) {
+        array_push($this->_where, $value);
+        
+        return $this;
+    }
+    
+    public function exec () {
+        $string = '';
+        
+        $string .= $this->_select ? 'SELECT ' . $this->_select : '';
+        $string .= $this->_from ? ' FROM ' . $this->_from : '';
+        if (!empty($this->_join) && sizeof($this->_join) === sizeof($this->_on)) {
+            foreach ($this->_join as $index => $join) {
+                $string .= $join . ' ON ' . $this->_on[$index];
+            }
+        }
+        $string .= !empty($this->_where) ? ' WHERE ' . implode(' ', $this->_where) : '';
+        $string .= !empty($this->_order) ? ' ORDER BY ' . implode(' ', $this->_order) : '';
+        
+        $this->query = $string;
+        
+        $this->_values = empty($this->_values) ? array() : $this->formatDates($this->_values);
+
+        if (!$this->conn) {
+            $this->connect();
+        }
+        if ($this->conn) {
+            $this->prepared = $this->conn->prepare($this->query);
+            $this->execute($this->_values);
+        }
+        
+        return $this;
     }
 
 }
