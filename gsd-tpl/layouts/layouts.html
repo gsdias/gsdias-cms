@@ -10,7 +10,7 @@
     <!-- ENDIF MESSAGES -->
     <!-- IF LAYOUTS_EXIST -->
     {PAGINATOR}
-    <table class="table hasPages">
+    <table class="table hasPages" data-type="layouts">
         <thead>
             <tr>
                 <th>{LANG_NAME}</th>
@@ -21,8 +21,7 @@
         <!-- LOOP LAYOUTS -->
         <tr>
             <td>
-                {LAYOUTS_NAME}<br>
-                <a href="/admin/layouts/{LAYOUTS_LID}">{LAYOUTS_URL}</a>
+                {LAYOUTS_NAME}
             </td>
             <td><em class="ago">({LAYOUTS_CREATED})</em> <br>{LANG_BY} <a href="/admin/users/{LAYOUTS_CREATOR_ID}">{LAYOUTS_CREATOR_NAME}</a></td>
             <td class="actions">

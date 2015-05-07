@@ -24,37 +24,36 @@ class api {
 
     private $loginRequired, $output;
 
-    public $user;
+    public $user, $method, $extended;
 
     public
     // -- Function Name : __construct
-    function __construct () {
+    function __construct ($method, $extended) {
         $this->output = array('error' => 0, 'message' => '');
         $this->user = isset($_SESSION['user']) ? $_SESSION['user'] : (class_exists('clientuser') ? new clientuser() : new user());
-        $this->loginRequired = array(
-            'vacancy',
-            'reference',
-            'users'
-        );
-        $this->adminRequired = array(
-            ''
-        );
+        $this->method = $method;
+        $this->extended = $extended;
+        $this->loginRequired = array();
+        $this->adminRequired = array();
     }
 
 
     public function method ($type, $cmd, $extra = null, $fields = null, $doc = false, $commands) {
+        global $_extra;
 
         $method = $type . $cmd;
 
         if (($this->checkCredentials($cmd) && $this->checkPermission($method, $cmd)) || $doc) {
 
+            $this->output = $this->method->{$cmd}($fields, $extra, $doc);
+
             if (isset($commands[$method])) {
                 global $$method;
-                $this->output = $$method($fields, $extra, $doc);
+//                $this->output = $$method($fields, $extra, $doc);
 
             } else {
 
-                $this->output = array('error' => -1, 'message' => "I don't recognize that command");
+//                $this->output = array('error' => -1, 'message' => "I don't recognize that command");
 
             }
 
@@ -87,10 +86,8 @@ class api {
         foreach ($fields as $field) {
 
             if ($field) {
-
                 $field = explode('=', $field);
                 $output[$field[0]] = $field[1];
-
             }
 
         }

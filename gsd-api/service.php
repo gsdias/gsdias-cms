@@ -22,3 +22,11 @@ $method = CLIENTPATH . 'api/_' . strtolower($_SERVER['REQUEST_METHOD']) . PHPEXT
 if (is_file($method)) {
     require_once($method);
 }
+
+$classname = 'api' . ucwords($_SERVER['REQUEST_METHOD']);
+$classnameextended = 'apiExtended' . ucwords($_SERVER['REQUEST_METHOD']);
+
+$_extra = array(
+    'method' => class_exists($classnameextended) ? new $classnameextended() : new $classname(),
+    'other' => class_exists('apiExtendedOther') ? new apiExtendedOther() : new apiOther()
+);

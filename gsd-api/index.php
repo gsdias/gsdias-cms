@@ -75,7 +75,7 @@ parse_str($input, $post_vars);
 
 $fields = sizeof($post_vars) ? $post_vars : $_REQUEST;
 
-$api = new api();
+$api = new api($_extra['method'], $_extra['other']);
 
 $fields['json'] = $json;
 

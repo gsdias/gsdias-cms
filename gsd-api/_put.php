@@ -10,25 +10,27 @@
 
 #### PUT
 
-$PUTpageorder = function ($fields, $extra, $doc = false) {
-    global $mysql, $api;
+class apiPut {
 
-    $output = array('error' => 0, 'message' => 'Salva lista');
-    $requiredFields = array('list');
-    $returnFields = array();
+    function pageorder ($fields, $extra, $doc = false) {
+        global $mysql, $api;
 
-    if ($doc) {
-        return outputDoc('images', array('iid' => 'Identification of the image'), $returnFields);
+        $output = array('error' => 0, 'message' => 'Salva lista');
+        $requiredFields = array('list');
+        $returnFields = array();
+
+        if ($doc) {
+            return outputDoc('images', array('iid' => 'Identification of the image'), $returnFields);
+        }
+
+        if (!$api->requiredFields($fields, $requiredFields)) {
+            return array('error' => -3, 'message' => 'Missing required fields' );
+        }
+
+        foreach (json_decode($fields['list']) as $item) {
+            $mysql->statement('UPDATE PAGES SET `index` = ? WHERE pid = ?;', array($item->i, $item->pid));
+        }
+
+        return $output;
     }
-
-    if (!$api->requiredFields($fields, $requiredFields)) {
-        return array('error' => -3, 'message' => 'Missing required fields' );
-    }
-
-    foreach (json_decode($fields['list']) as $item) {
-        print_r($item->i);
-        $mysql->statement('UPDATE PAGES SET `index` = ? WHERE pid = ?;', array($item->i, $item->pid));
-    }
-
-    return $output;
-};
+}

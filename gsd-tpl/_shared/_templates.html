@@ -21,8 +21,43 @@
     </td>
     <td>((size))</td>
     <td>((description))</td>
-    <td><em class="ago">((created))</em> <br>{LANG_BY} <a href="/admin/users/((creator_id))">((creator_name))</a></td>
+    <td>((created)) <br>{LANG_BY} <a href="/admin/users/((creator_id))">((creator_name))</a></td>
     <td class="actions"><a href="/admin/images/((iid))/edit">{LANG_EDIT}</a><a href="/admin/images/((iid))/remove">{LANG_REMOVE}</a></td>
+</tr>
+</script>
+<script type="text/template" id="documentsBlock">
+<tr>
+    <td>
+        ((asset))
+    </td>
+    <td>((size))</td>
+    <td>((description))</td>
+    <td>((created)) <br>{LANG_BY} <a href="/admin/users/((creator_id))">((creator_name))</a></td>
+    <td class="actions"><a href="/admin/documents/((did))/edit">{LANG_EDIT}</a><a href="/admin/documents/((did))/remove">{LANG_REMOVE}</a></td>
+</tr>
+</script>
+<script type="text/template" id="usersBlock">
+<tr>
+    <td>
+        <a href="/admin/users/((uid))">((name))</a>((disabled))
+    </td>
+    <td>((last_login))</td>
+    <td>((created))</td>
+    <td class="actions">
+        <!-- IF IS_ADMIN --><a href="/admin/users/((uid))/edit">{LANG_EDIT}</a>
+        <a href="/admin/users/((uid))/remove">{LANG_REMOVE}</a><!-- ENDIF IS_ADMIN -->
+    </td>
+</tr>
+</script>
+<script type="text/template" id="layoutsBlock">
+<tr>
+    <td>
+        ((name))
+    </td>
+    <td><em class="ago">((created))</em> <br>{LANG_BY} <a href="/admin/users/((creator_id))">((creator_name))</a></td>
+    <td class="actions">
+        <a href="/admin/layouts/((lid))/remove">{LANG_REMOVE}</a>
+    </td>
 </tr>
 </script>
 [_CLIENTTEMPLATES]

@@ -20,10 +20,11 @@
                 search = $('[name="search"]').val();
 
             api.call($(e.currentTarget), 'GET', 'pages', { page: page[1], type: tbody.type, search: search }, function (response) {
+                var template = $('#' + tbody.type + 'ExtendedBlock').length ? $('#' + tbody.type + 'ExtendedBlock') : $('#' + tbody.type + 'Block');
                 tbody.el.empty();
 
                 _.each(response.data.list, function (item) {
-                    tbody.el.append(_.template($('#' + tbody.type + 'Block').html(), item));
+                    tbody.el.append(_.template(template.html(), item));
                 });
 
                 $(classPaginator).replaceWith(response.data.paginator);
