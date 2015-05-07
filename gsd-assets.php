@@ -14,7 +14,13 @@ if (@$site->arg(2) == 'images') {
 
     if (sizeof($name) === 2 || $iid) {
         if (sizeof($name) === 2) {
-            $mysql->statement('SELECT iid, extension FROM images WHERE name = ? AND extension = ?;', array($name[0], @$name[1]));
+            $mysql->reset()
+                ->select('iid, extension')
+                ->from('images')
+                ->where('name = ?')
+                ->where('AND extension = ?')
+                ->values(array($name[0], @$name[1]))
+                ->exec();
         } else {
             $mysql->statement('SELECT iid, extension FROM images WHERE iid = ?;', array($iid));
         }

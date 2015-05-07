@@ -13,7 +13,7 @@ class mySQL implements idatabase {
     protected $conn, $query, $result, $db, $host, $user, $pass, $prepared;
     public $querylist, $total, $errnum, $errmsg, $executed;
     
-    protected $_query, $_select, $_from, $_where, $_join, $_on, $_order, $_values;
+    protected $_query, $_select, $_from, $_where, $_join, $_on, $_order, $_values, $_fields, $_insert, $_update, $_delete;
 
     public
         // -- Function Name : __construct
@@ -213,6 +213,10 @@ class mySQL implements idatabase {
     public function reset () {
         $this->_select = '';
         $this->_from = '';
+        $this->_insert = '';
+        $this->_update = '';
+        $this->_delete = '';
+        $this->_fields = array();
         $this->_join = array();
         $this->_on = array();
         $this->_where = array();
@@ -266,7 +270,7 @@ class mySQL implements idatabase {
     
     public function values ($values = array()) {
         if (is_array($values)) {
-            array_merge($this->_values, $values);
+            $this->_values = array_merge($this->_values, $values);
         } else {
             array_push($this->_values, $values);
         }
@@ -280,6 +284,34 @@ class mySQL implements idatabase {
         return $this;
     }
     
+    public function insert ($value) {
+        $this->_insert .= $value;
+
+        return $this;
+    }
+
+    public function update ($value) {
+        $this->_update .= $value;
+
+        return $this;
+    }
+
+    public function delete ($value) {
+        $this->_delete .= 'DELETE ';
+
+        return $this;
+    }
+
+    public function fields ($values = array()) {
+        if (is_array($values)) {
+            $this->_fields = array_merge($this->_fields, $values);
+        } else {
+            array_push($this->_fields, $values);
+        }
+
+        return $this;
+    }
+
     public function limit ($offset = 0, $cut) {
         $this->_limit = " LIMIT $offset, $cut";
 
@@ -290,6 +322,23 @@ class mySQL implements idatabase {
         $string = '';
         
         $string .= $this->_select ? 'SELECT ' . $this->_select : '';
+        $string .= $this->_insert ? 'INSERT INTO ' . $this->_insert : '';
+        $string .= $this->_update ? 'UPDATE ' . $this->_update : '';
+        $string .= $this->_delete ? $this->_delete : '';
+
+        if ($this->_insert) {
+            $string .= !empty($this->_fields) ? sprintf(' (%s) VALUES (%s)', implode(', ', $this->_fields), substr(str_repeat(", ? ", sizeof($this->_fields)), 2)) : '';
+        }
+        if ($this->_update && !empty($this->_fields)) {
+            $string .=  ' SET ';
+            foreach ($this->_fields as $i => $field) {
+                if ($i) {
+                    $string .= ', ';
+                }
+                $string .=  sprintf('`%s` = ?', $field);
+            }
+        }
+
         $string .= $this->_from ? ' FROM ' . $this->_from : '';
         if (!empty($this->_join) && sizeof($this->_join) === sizeof($this->_on)) {
             foreach ($this->_join as $index => $join) {

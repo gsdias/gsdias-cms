@@ -151,11 +151,13 @@ abstract class section implements isection {
 
         $fields = array_merge($fields, $defaultsafter);
 
-        $values = array_merge($values, $defaultvalues);    
+        $values = array_merge($values, $defaultvalues);
 
-        $questions = str_repeat(", ? ", sizeof($fields));
-
-        $mysql->statement(sprintf('INSERT INTO %s (%s) values (%s);', $section, implode(', ', $fields), substr($questions, 2)), $values);
+        $mysql->reset()
+            ->insert($section)
+            ->fields($fields)
+            ->values($values)
+            ->exec();
         
         return array('total' => $mysql->total, 'errnum' => $mysql->errnum, 'errmsg' => $mysql->errmsg, 'id' => $mysql->lastinserted());
     }
@@ -167,25 +169,26 @@ abstract class section implements isection {
         
         $extrafields = $this->extrafields ();
 
-        $fields = '';
-
         $values = array();
 
         $allfields = array_merge($defaultfields, $extrafields);
 
         foreach ($allfields as $field) {
-            $fields .= sprintf(", `%s` = ?", $field);
             $values[] = $field == 'password' ? md5(@$_REQUEST[$field]) : @$_REQUEST[$field];
         }
 
         foreach ($defaultsafter as $index => $field) {
-            $fields .= sprintf(", `%s` = ?", $field);
             $values[] = $field == 'password' ? md5($_REQUEST[$defaultvalues[$index]]) : $defaultvalues[$index];
         }
 
         $values[] = $site->arg(2);
 
-        $mysql->statement(sprintf('UPDATE %s SET %s WHERE %sid = ?;', $section, substr($fields, 2), substr($section, 0, 1)), $values);
+        $mysql->reset()
+            ->update($section)
+            ->fields(array_merge($allfields, $defaultsafter))
+            ->where(sprintf('%sid = ?', substr($section, 0, 1)))
+            ->values($values)
+            ->exec();
         
         return array('total' => $mysql->total, 'errnum' => $mysql->errnum, 'id' => $site->arg(2));
     }
@@ -195,7 +198,12 @@ abstract class section implements isection {
         
         $section = $this->tablename();
         
-        $mysql->statement(sprintf('DELETE FROM %s WHERE %sid = ?;', $section, substr($section, 0, 1)), array($site->arg(2)));
+        $mysql->reset()
+            ->delete()
+            ->from($section)
+            ->where(sprintf('%sid = ?', substr($section, 0, 1)))
+            ->values($site->arg(2))
+            ->exec();
         
         return array('total' => $mysql->total, 'errnum' => $mysql->errnum, 'id' => $site->arg(2));
     }

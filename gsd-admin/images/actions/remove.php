@@ -9,14 +9,20 @@
  */
 
 if (@$_REQUEST['confirm'] == $afirmative) {
-    $mysql->statement('SELECT extension, name FROM images WHERE iid = ?;', array($site->arg(2)));
+    $mysql->reset()
+        ->select('extension, name')
+        ->from('images')
+        ->where('iid = ?')
+        ->values(array($site->arg(2)))
+        ->exec();
+
     $image = $mysql->singleline();
 
     removefile(ASSETPATH . 'images/' . $site->arg(2) . '.' . $image->extension);
 
-    $mysql->statement('DELETE FROM images WHERE iid = ?;', array($site->arg(2)));
+    $result = $csection->remove();
 
-    if ($mysql->total) {
+    if (!$result['errnum']) {
 
         $_SESSION['message'] = sprintf(lang('LANG_IMAGE_REMOVED'), $image->name);
 
