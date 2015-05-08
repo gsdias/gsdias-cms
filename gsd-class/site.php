@@ -23,6 +23,8 @@ class site {
 
         $mysql->statement('SELECT * FROM options;');
 
+        define('IS_INSTALLED', $mysql->errnum !== 1146 && $mysql->errnum !== 1049 && $mysql->errnum !== 1046);
+
         foreach ($mysql->result() as $option) {
             $name = str_replace('gsd-', '', $option->name);
             $this->{str_replace(array('_image', '_select'), '', $name)} = $option->value;
@@ -59,6 +61,10 @@ class site {
 
     public function page () {
         global $tpl, $mysql, $config;
+
+        if (!IS_INSTALLED) {
+            return;
+        }
 
         $mysql->statement('SELECT destination FROM redirect WHERE `from` = :uri', array(':uri' => $this->uri));
         if ($mysql->total) {
