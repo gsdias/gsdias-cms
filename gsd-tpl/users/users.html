@@ -5,14 +5,14 @@
     <!-- IF ERRORS --><div class="errors">{ERRORS}</div><!-- ENDIF ERRORS -->
     <!-- IF MESSAGES --><div class="errors messages">{MESSAGES}</div><!-- ENDIF MESSAGES -->
     {PAGINATOR}
-    <table class="table hasPages" data-type="users">
+    <table class="table pages hasPages" data-type="users">
         <thead>
             <tr>
                 <th>{LANG_NAME}</th>
                 <th>{LANG_LAST_LOGIN}</th>
                 <th>{LANG_CREATED}</th>
                 <th>{LANG_ACTIONS}</th>
-                <th width="10"><i class="fa fa-check-square-o fa-1x"></i></th>
+                <th width="10"><i class="fa fa-check-square-o fa-1x selection"></i></th>
             </tr>
         </thead>
         <!-- LOOP USERS --><tr>
@@ -25,7 +25,7 @@
                 <!-- IF IS_ADMIN --><a href="/admin/users/{USERS_UID}/edit">{LANG_EDIT}</a>
                 <a href="/admin/users/{USERS_UID}/remove">{LANG_REMOVE}</a><!-- ENDIF IS_ADMIN -->
             </td>
-            <td><input type="checkbox"></td>
+            <td><input value="{USERS_UID}" type="checkbox"></td>
         </tr><!-- ENDLOOP USERS -->
     </table>
     {PAGINATOR}

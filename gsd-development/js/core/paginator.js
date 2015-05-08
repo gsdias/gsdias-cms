@@ -11,7 +11,10 @@
     'use strict';
 
     var tbody = {},
+        $options = {},
+        $check = {},
         classPaginator = '.paginator',
+        list = '.pages',
 
         requestPage = function (e) {
             e.preventDefault();
@@ -36,6 +39,41 @@
             }, function () {
                 api.loading();
             });
+        },
+
+        showOption = function () {
+            if ($(this).hasClass('selection')) {
+                $check.filter(':not(:checked)').trigger('click');
+            }
+            $options.toggleClass('is-visible', $check.filter(':checked').length > 0);
+            $(this).toggleClass('is-visible');
+        },
+
+        action = function (e) {
+            if ($(this).hasClass('clear')) {
+                $check.filter(':checked').trigger('click');
+            }
+
+            if ($(this).hasClass('revert')) {
+                $check.trigger('click');
+            }
+
+            if ($(this).hasClass('remove')) {
+                var list = [];
+                $check.filter(':checked').each(function(index, elem) {
+                    list.push(elem.value);
+                });
+                api.call($(this), 'DELETE', tbody.type, { list: list.join(',') }, function (response) {
+                    api.loading();
+                    _.each(response, function(id) {
+                        tbody.el.find('tr[data-pid="' + id + '"]').slideUp(function() {
+                            $(this).remove();
+                        });
+                    });
+                }, function () {
+                    api.loading();
+                });
+            }
         };
 
     $(document).bind(GSD.globalevents.init, function () {
@@ -44,9 +82,14 @@
         if ($tbody.length) {
             tbody.el = $tbody;
             tbody.type = $('.hasPages').data('type');
+
+            $options = $('.multi-options');
+            $check = $('.hasPages input');
         }
 
         $('body').on('click', classPaginator + ' a', requestPage);
+        $('body').on('click', list + ' input, ' + list + ' .selection', showOption);
+        $('.multi-options').on('click', 'button', action);
     });
 
 }(GSD.Pages = GSD.Pages || {}, GSD.App, GSD.Api, GSD.Global, GSD.$, _, Backbone, document));

@@ -1,0 +1,36 @@
+/**
+ * @author     Goncalo Silva Dias <mail@gsdias.pt>
+ * @copyright  2014-2015 GSDias
+ * @version    1.2
+ * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
+ * @since      File available since Release 1.2
+ */
+
+.multi-options {
+    background: $gsd-color;
+    display: none;
+    height: 55px;
+    position: fixed;
+    text-align: center;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+
+    &.is-visible {
+        display: block;
+    }
+
+    button {
+        background: #fff;
+        color: $gsd-color;
+        border-radius: 5px;
+        margin-top: 15px;
+        padding: 5px;
+        border: none;
+
+        &:hover {
+            box-shadow: 0 0 6px 0px #fff;
+        }
+    }
+}
+

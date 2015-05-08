@@ -10,13 +10,13 @@
     <!-- ENDIF MESSAGES -->
     <!-- IF LAYOUTS_EXIST -->
     {PAGINATOR}
-    <table class="table hasPages" data-type="layouts">
+    <table class="table pages hasPages" data-type="layouts">
         <thead>
             <tr>
                 <th>{LANG_NAME}</th>
                 <th>{LANG_CREATED}</th>
                 <th>{LANG_ACTIONS}</th>
-                <th width="10"><i class="fa fa-check-square-o fa-1x"></i></th>
+                <th width="10"><i class="fa fa-check-square-o fa-1x selection"></i></th>
             </tr>
         </thead>
         <!-- LOOP LAYOUTS -->
@@ -28,7 +28,7 @@
             <td class="actions">
                 <a href="/admin/layouts/{LAYOUTS_LID}/remove">{LANG_REMOVE}</a>
             </td>
-            <td><input type="checkbox"></td>
+            <td><input value="{LAYOUTS_LID}" type="checkbox"></td>
         </tr>
         <!-- ENDLOOP LAYOUTS -->
     </table>
