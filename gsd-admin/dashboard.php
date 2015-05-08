@@ -9,12 +9,12 @@
  */
 
 $mysql->reset()
-        ->select()
-        ->from('users')
-        ->where('disabled IS NULL')
-        ->order('created')
-        ->limit(0, 5)
-        ->exec();
+    ->select()
+    ->from('users')
+    ->where('disabled IS NULL')
+    ->order('created')
+    ->limit(0, 5)
+    ->exec();
 
 $users = array();
 
@@ -29,12 +29,12 @@ foreach ($mysql->result() as $userlist) {
 $tpl->setarray('USERS', $users);
 
 $mysql->reset()
-        ->select()
-        ->from('pages')
-        ->where('published IS NOT NULL')
-        ->order('created')
-        ->limit(0, 5)
-        ->exec();
+    ->select()
+    ->from('pages')
+    ->where('published IS NOT NULL')
+    ->order('created')
+    ->limit(0, 5)
+    ->exec();
 
 $pages = array();
 
@@ -52,10 +52,10 @@ if ($mysql->total) {
 }
 
 $mysql->reset()
-        ->select()
-        ->from('images')
-        ->limit(0, 5)
-        ->exec();
+    ->select()
+    ->from('images')
+    ->limit(0, 5)
+    ->exec();
 
 $images = array();
 
@@ -73,10 +73,10 @@ if ($mysql->total) {
 }
 
 $mysql->reset()
-        ->select()
-        ->from('documents')
-        ->limit(0, 5)
-        ->exec();
+    ->select()
+    ->from('documents')
+    ->limit(0, 5)
+    ->exec();
 
 $documents = array();
 

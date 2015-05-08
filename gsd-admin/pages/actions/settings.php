@@ -11,11 +11,11 @@
 if (@$_REQUEST['save']) {
 
     $mysql->reset()
-            ->select('count(*) AS total, pid')
-            ->from('pages')
-            ->where('url = ?')
-            ->values($_REQUEST['url'])
-            ->exec();
+        ->select('count(*) AS total, pid')
+        ->from('pages')
+        ->where('url = ?')
+        ->values($_REQUEST['url'])
+        ->exec();
 
     $condition = $mysql->singleline();
     
@@ -83,37 +83,37 @@ if (@$_REQUEST['save']) {
         }
 
         $mysql->reset()
-                ->select('url')
-                ->from('pages')
-                ->where('pid = ?')
-                ->values($site->arg(2))
-                ->exec();
+            ->select('url')
+            ->from('pages')
+            ->where('pid = ?')
+            ->values($site->arg(2))
+            ->exec();
 
         $currenturl = $mysql->singleresult();
 
         $mysql->reset()
-                ->delete()
-                ->from('redirect')
-                ->where('`from` = ?')
-                ->values($_REQUEST['url'])
-                ->exec();
+            ->delete()
+            ->from('redirect')
+            ->where('`from` = ?')
+            ->values($_REQUEST['url'])
+            ->exec();
 
         $mysql->reset()
-                ->select('`from`, destination')
-                ->from('redirect')
-                ->where('destination = ?')
-                ->order('created')
-                ->values($currenturl)
-                ->exec();
+            ->select('`from`, destination')
+            ->from('redirect')
+            ->where('destination = ?')
+            ->order('created')
+            ->values($currenturl)
+            ->exec();
 
         if ($mysql->total) {
             foreach ($mysql->result() as $url) {
                 //REFACTOR: THIS PART IS OUTDATED
                 $mysql->reset()
-                ->insert('redirect')
-                ->fields(array('`pid`', '`from`', '`destination`', '`creator`'))
-                ->values(array($site->arg(2), $url->destination, $_REQUEST['url'], $user->id))
-                ->exec();
+                    ->insert('redirect')
+                    ->fields(array('`pid`', '`from`', '`destination`', '`creator`'))
+                    ->values(array($site->arg(2), $url->destination, $_REQUEST['url'], $user->id))
+                    ->exec();
             }
         } else {
             $mysql->reset()
