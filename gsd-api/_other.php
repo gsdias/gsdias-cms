@@ -121,7 +121,7 @@ class apiOther {
             }
         }
 
-        $paginator = new paginator($fromsql, $numberPerPage, $page);
+        $paginator = new GSD\paginator($sql, $numberPerPage, $page);
 
         $mysql->statement('SELECT ' . $_fields . $fromsql . $paginator->pageLimit());
 
@@ -161,8 +161,8 @@ class apiOther {
             . $search .
             'ORDER BY images.iid ';
 
-        $paginator = new paginator($sql, $numberPerPage, $page);
-
+        $paginator = new GSD\paginator($sql, $numberPerPage, $page);
+        
         $mysql->statement('SELECT images.*, images.creator AS creator_id, u.name AS creator_name' . $sql . $paginator->pageLimit());
 
         if ($mysql->total) {
@@ -177,7 +177,7 @@ class apiOther {
                 $array['size'] = sprintf('<strong>%s x %s</strong><br>%s', $row->width, $row->height, $row->size);
                 array_push($output['data']['list'], $array);
             }
-
+            
             $output['data']['paginator'] = (string)$paginator;
         }
 

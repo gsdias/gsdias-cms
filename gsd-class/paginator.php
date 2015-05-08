@@ -8,6 +8,8 @@
  * @since      File available since Release 1.2
  */
 
+namespace GSD;
+
 class paginator {
 
     public $total, $page, $numberPerPage;

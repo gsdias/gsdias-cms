@@ -8,7 +8,10 @@
  * @since      File available since Release 1.0
  */
 
-class mySQLFactory extends mySQL {
+namespace GSD;
+
+class mySQLFactory {
+
     static function create ($db, $host, $user, $pass) {
         return new mySQL($db, $host, $user, $pass);
     }

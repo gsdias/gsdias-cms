@@ -8,7 +8,13 @@
  * @since      File available since Release 1.0
  */
 
-$mysql->statement('SELECT * FROM users WHERE disabled IS NULL LIMIT 0, 5');
+$mysql->reset()
+    ->select()
+    ->from('users')
+    ->where('disabled IS NULL')
+    ->order('created')
+    ->limit(0, 5)
+    ->exec();
 
 $users = array();
 
@@ -17,12 +23,18 @@ foreach ($mysql->result() as $userlist) {
     $users[] = array(
         'ID' => $userlist->uid,
         'NAME' => $userlist->name,
-        'CREATED' => $userlist->last_login ? timeago(dateDif($created[0], date('Y-m-d',time())), $created[1]) : lang('LANG_NEVER')
+        'CREATED' => $userlist->last_login ? timeago(dateDif($created[0], date('Y-m-d', time())), $created[1]) : lang('LANG_NEVER')
     );
 }
 $tpl->setarray('USERS', $users);
 
-$mysql->statement('SELECT * FROM pages WHERE published IS NOT NULL LIMIT 0, 5');
+$mysql->reset()
+    ->select()
+    ->from('pages')
+    ->where('published IS NOT NULL')
+    ->order('created')
+    ->limit(0, 5)
+    ->exec();
 
 $pages = array();
 
@@ -39,7 +51,11 @@ if ($mysql->total) {
     $tpl->setarray('PAGES', $pages);
 }
 
-$mysql->statement('SELECT * FROM images LIMIT 0, 5');
+$mysql->reset()
+    ->select()
+    ->from('images')
+    ->limit(0, 5)
+    ->exec();
 
 $images = array();
 
@@ -56,7 +72,11 @@ if ($mysql->total) {
     $tpl->setarray('IMAGES', $images);
 }
 
-$mysql->statement('SELECT * FROM documents LIMIT 0, 5');
+$mysql->reset()
+    ->select()
+    ->from('documents')
+    ->limit(0, 5)
+    ->exec();
 
 $documents = array();
 

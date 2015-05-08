@@ -15,15 +15,20 @@ if (!IS_ADMIN) {
 }
 
 if (@$_REQUEST['confirm'] == $afirmative) {
-    $mysql->statement('SELECT name FROM layouts WHERE lid = ?;', array($site->arg(2)));
+    $mysql->reset()
+        ->select('name')
+        ->from('layouts')
+        ->where('lid = ?')
+        ->values(array($site->arg(2)))
+        ->exec();
 
     $result = $mysql->singleline();
 
     $name = $result->name;
 
-    $mysql->statement('DELETE FROM layouts WHERE lid = ?;', array($site->arg(2)));
+    $result = $csection->remove();
 
-    if ($mysql->errnum) {
+    if ($result['errnum']) {
 
         $tpl->setvar('ERRORS', lang('LANG_LAYOUT_RELATED'));
         $tpl->setcondition('ERRORS');

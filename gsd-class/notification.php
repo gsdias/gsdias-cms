@@ -8,6 +8,8 @@
  * @since      File available since Release 1.0
  */
 
+namespace GSD;
+
 interface inotification {
     public function reset ($uid);
     public function mark ();

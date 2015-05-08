@@ -62,7 +62,7 @@ foreach ($mysql->result() as $item) {
     $types[$item->ltid] = $item->name;
 }
 
-$types = new select( array ( 'list' => $types, 'id' => 'LAYOUTTYPE' ) );
+$types = new GSD\select( array ( 'list' => $types, 'id' => 'LAYOUTTYPE' ) );
 $types->object();
 
 $templatefiles = scandir(CLIENTTPLPATH . '_layouts');
@@ -75,5 +75,5 @@ foreach ($templatefiles as $file) {
     }
 }
 
-$templates = new select( array ( 'list' => $templates, 'id' => 'LAYOUT' ) );
+$templates = new GSD\select( array ( 'list' => $templates, 'id' => 'LAYOUT' ) );
 $templates->object();

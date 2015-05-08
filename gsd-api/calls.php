@@ -30,7 +30,7 @@ class api {
     // -- Function Name : __construct
     function __construct ($method, $extended) {
         $this->output = array('error' => 0, 'message' => '');
-        $this->user = isset($_SESSION['user']) ? $_SESSION['user'] : (class_exists('clientuser') ? new clientuser() : new user());
+        $this->user = isset($_SESSION['user']) ? $_SESSION['user'] : (class_exists('extendeduser') ? new GSD\extendeduser() : new GSD\user());
         $this->method = $method;
         $this->extended = $extended;
         $this->loginRequired = array();

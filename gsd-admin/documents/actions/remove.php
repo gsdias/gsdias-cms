@@ -9,16 +9,22 @@
  */
 
 if (@$_REQUEST['confirm'] == $afirmative) {
-    $mysql->statement('SELECT extension, name FROM documents WHERE did = ?;', array($site->arg(2)));
-    $image = $mysql->singleline();
+    $mysql->reset()
+        ->select('extension, name')
+        ->from('documents')
+        ->where('did = ?')
+        ->values(array($site->arg(2)))
+        ->exec();
 
-    removefile(ASSETPATH . 'documents/' . $site->arg(2) . '.' . $image->extension);
+    $document = $mysql->singleline();
 
-    $mysql->statement('DELETE FROM documents WHERE did = ?;', array($site->arg(2)));
+    removefile(ASSETPATH . 'documents/' . $site->arg(2) . '.' . $document->extension);
 
-    if ($mysql->total) {
+    $result = $csection->remove();
 
-        $_SESSION['message'] = sprintf(lang('LANG_DOCUMENT_REMOVED'), $image->name);
+    if (!$result['errnum']) {
+
+        $_SESSION['message'] = sprintf(lang('LANG_DOCUMENT_REMOVED'), $document->name);
 
         header("Location: /admin/documents", true, 302);
         exit;

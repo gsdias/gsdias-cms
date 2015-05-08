@@ -19,8 +19,17 @@ if (@$_REQUEST['save']) {
     
     $fields = array('creator', '`index`', 'show_menu', 'require_auth', 'created');
     
-    $mysql->statement('DELETE FROM redirect WHERE `from` = ?;', array($_REQUEST['url']));
-    $mysql->statement('SELECT max(`index`) AS max FROM pages;');
+    $mysql->reset()
+        ->delete()
+        ->from('redirect')
+        ->where('`from` = ?')
+        ->values(array($_REQUEST['url']))
+        ->exec();
+
+    $mysql->reset()
+        ->select('max(`index`) AS max')
+        ->from('pages')
+        ->exec();
     
     $index = @$mysql->singleresult()->max;
 
@@ -36,10 +45,15 @@ if (@$_REQUEST['save']) {
 
     if ($result['total']) {
         $pid = $result['id'];
-        $mysql->statement('SELECT *
-        FROM layoutsections AS ls
-        JOIN layoutsectionmoduletypes AS lsmt ON lsmt.lsid = ls.lsid
-        WHERE lid = ?;', array(@$_REQUEST['lid']));
+
+        $mysql->reset()
+            ->select()
+            ->from('layoutsections AS ls')
+            ->join('layoutsectionmoduletypes AS lsmt')
+            ->on('lsmt.lsid = ls.lsid')
+            ->where('lid = ?')
+            ->values(array(@$_REQUEST['lid']))
+            ->exec();
 
         foreach ($mysql->result() as $section) {
             $defaultdata = array('class' => '', 'style' => '', 'value' => '');
@@ -62,22 +76,28 @@ if (@$_REQUEST['save']) {
     }
 }
 
-$mysql->statement('SELECT * FROM layouts');
+$mysql->reset()
+    ->select('lid, name')
+    ->from('layouts')
+    ->exec();
 
 $types = array();
 foreach ($mysql->result() as $item) {
     $types[$item->lid] = $item->name;
 }
 
-$types = new select( array ( 'list' => $types, 'id' => 'LAYOUT' ) );
+$types = new GSD\select( array ( 'list' => $types, 'id' => 'LAYOUT' ) );
 $types->object();
 
-$mysql->statement('SELECT pid, title FROM pages');
+$mysql->reset()
+    ->select('pid, title')
+    ->from('pages')
+    ->exec();
 
 $types = array();
 foreach ($mysql->result() as $item) {
     $types[$item->pid] = $item->title;
 }
 
-$types = new select( array ( 'list' => $types, 'id' => 'PARENT' ) );
+$types = new GSD\select( array ( 'list' => $types, 'id' => 'PARENT' ) );
 $types->object();

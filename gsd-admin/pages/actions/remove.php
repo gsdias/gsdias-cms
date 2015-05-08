@@ -15,13 +15,23 @@ if (!IS_ADMIN) {
 }
 
 if (!@$_REQUEST['confirm']) {
-    $mysql->statement('SELECT * FROM pages;');
+    $mysql->reset()
+        ->select()
+        ->from('pages')
+        ->exec();
+
     $parents = array(0 => lang('LANG_CHOOSE'));
     foreach ($mysql->result() as $page) {
         $parents[$page->pid] = $page->title;
     }
 
-    $mysql->statement('SELECT * FROM pages WHERE parent = ?;', array($site->arg(2)));
+    $mysql->reset()
+        ->select()
+        ->from('pages')
+        ->where('parent = ?')
+        ->values(array($site->arg(2)))
+        ->exec();
+
     $tpl->setcondition('IS_PARENT', $mysql->total > 0);
 
     $pages = array();
@@ -30,7 +40,7 @@ if (!@$_REQUEST['confirm']) {
         unset($_parents[$page->pid]);
         $pages[] = array(
             'NAME' => $page->title,
-            'LIST' => new select(array(
+            'LIST' => new GSD\select(array(
                 'name' => 'parent[' . $page->pid . ']',
                 'list' => $_parents,
                 'selected' => $site->arg(2)
@@ -42,7 +52,12 @@ if (!@$_REQUEST['confirm']) {
 }
 
 if (@$_REQUEST['confirm'] == $afirmative) {
-    $mysql->statement('SELECT url, title FROM pages WHERE pid = ?;', array($site->arg(2)));
+    $mysql->reset()
+        ->select('url, title')
+        ->from('pages')
+        ->where('pid = ?')
+        ->values(array($site->arg(2)))
+        ->exec();
 
     $result = $mysql->singleline();
 
@@ -52,6 +67,7 @@ if (@$_REQUEST['confirm'] == $afirmative) {
     if (!empty(@$_REQUEST['parent'])) {
         foreach($_REQUEST['parent'] as $pid => $parent) {
             $parent = $parent == $site->arg(2) ? 0 : $parent;
+
             $mysql->statement('UPDATE pages AS p
             LEFT JOIN pages AS parent ON parent.pid = ?
             SET p.parent = ?, p.beautify = concat(if(parent.beautify IS NULL, "", parent.beautify), p.url)
@@ -61,9 +77,9 @@ if (@$_REQUEST['confirm'] == $afirmative) {
 
     $mysql->statement('DELETE FROM redirect WHERE `destination` = ?;', array($currenturl));
 
-    $mysql->statement('DELETE FROM pages WHERE pid = ?;', array($site->arg(2)));
+    $result = $csection->remove();
 
-    if ($mysql->errnum) {
+    if ($result['errnum']) {
 
         $tpl->setvar('ERRORS', lang('LANG_PAGE_ERROR'));
         $tpl->setcondition('ERRORS');

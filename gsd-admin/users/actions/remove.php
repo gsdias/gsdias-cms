@@ -21,14 +21,20 @@ if ($site->arg(2) == 1) {
 }
 
 if (@$_REQUEST['confirm'] == $afirmative) {
-    $mysql->statement('SELECT name FROM users WHERE uid = ?;', array($site->arg(2)));
+    $mysql->reset()
+        ->select('name')
+        ->from('users')
+        ->where('uid = ?')
+        ->values(array($site->arg(2)))
+        ->exec();
 
     $result = $mysql->singleline();
 
     $name = $result->name;
 
-    $mysql->statement('DELETE FROM users WHERE uid = ?;', array($site->arg(2)));
-    if ($mysql->errnum) {
+    $result = $csection->remove();
+
+    if ($result['errnum']) {
 
         $tpl->setvar('ERRORS', lang('LANG_USER_ERROR'));
         $tpl->setcondition('ERRORS');

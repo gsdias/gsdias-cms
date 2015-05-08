@@ -8,6 +8,8 @@
  * @since      File available since Release 1.0
  */
 
+namespace GSD;
+
 interface idatabase {
     public function statement ($query, $values);
     public function execute ($values);

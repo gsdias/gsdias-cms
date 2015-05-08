@@ -10,12 +10,12 @@
 
 function GSDClassLoading($className) {
 
-    $className = str_replace(array('GSD\\', 'FRONTEND\\'), array(CLASSPATH, CLIENTCLASSPATH), $className);
+    $className = str_replace(array('GSD\\Extended\\', 'GSD\\'), array(CLIENTCLASSPATH, CLASSPATH), $className);
 
-    if (is_file(CLASSPATH.$className.PHPEXT)) {
-        include_once(CLASSPATH.$className.PHPEXT);
-    } else if (is_file(CLIENTCLASSPATH.$className.PHPEXT)) {
-        include_once(CLIENTCLASSPATH.$className.PHPEXT);
+    if (is_file($className.PHPEXT)) {
+        include_once($className.PHPEXT);
+    } else if (is_file($className.PHPEXT)) {
+        include_once($className.PHPEXT);
     }
 }
 
@@ -23,11 +23,11 @@ function lang ($text, $option = 'NONE') {
     global $site;
 
     if (@$site->isFrontend) {
-        $translated = dcgettext('frontend', $text, LC_MESSAGES);
+        $translated = dcgettext('extended', $text, LC_MESSAGES);
         $translated = $translated != $text ? $translated : _($text);
     } else {
         $translated = _($text);
-        $translated = $translated != $text ? $translated : dcgettext('frontend', $text, LC_MESSAGES);
+        $translated = $translated != $text ? $translated : dcgettext('extended', $text, LC_MESSAGES);
     }
 
     switch ($option) {

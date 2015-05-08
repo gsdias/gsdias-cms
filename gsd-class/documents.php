@@ -8,6 +8,8 @@
  * @since      File available since Release 1.0
  */
 
+namespace GSD;
+
 class documents extends section implements isection {
     
     public function __construct ($id = null) {
