@@ -3,7 +3,7 @@
  * @copyright  2014-2015 GSDias
  * @version    1.2
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
- * @since      File available since Release 1.0
+ * @since      File available since Release 1.2
  */
 
 (function (pages, app, api, global, $, _, Backbone, document, undefined) {
