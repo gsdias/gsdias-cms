@@ -10,12 +10,6 @@
 
 define('ROOTPATH', dirname(__FILE__) . '/../');
 
-if (is_file('gsd-install.php')) {
-    exit;
-} else {
-    define('IS_INSTALLED', 1);
-}
-
 include_once(ROOTPATH . 'gsd-include/gsd-config.php');
 
 require_once('service.php');
