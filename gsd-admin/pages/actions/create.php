@@ -86,7 +86,7 @@ foreach ($mysql->result() as $item) {
     $types[$item->lid] = $item->name;
 }
 
-$types = new select( array ( 'list' => $types, 'id' => 'LAYOUT' ) );
+$types = new GSD\select( array ( 'list' => $types, 'id' => 'LAYOUT' ) );
 $types->object();
 
 $mysql->reset()
@@ -99,5 +99,5 @@ foreach ($mysql->result() as $item) {
     $types[$item->pid] = $item->title;
 }
 
-$types = new select( array ( 'list' => $types, 'id' => 'PARENT' ) );
+$types = new GSD\select( array ( 'list' => $types, 'id' => 'PARENT' ) );
 $types->object();

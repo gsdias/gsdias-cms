@@ -10,7 +10,13 @@
 
 if (@$_REQUEST['save']) {
 
-    $mysql->statement('SELECT count(*) AS total, pid FROM pages WHERE url = ?;', array($_REQUEST['url']));
+    $mysql->reset()
+            ->select('count(*) AS total, pid')
+            ->from('pages')
+            ->where('url = ?')
+            ->values($_REQUEST['url'])
+            ->exec();
+
     $condition = $mysql->singleline();
     
     if ($condition->total > 0 && $condition->pid != $site->arg(2)) {
@@ -22,9 +28,14 @@ if (@$_REQUEST['save']) {
     
         if ($_REQUEST['prid']) {
             $defaultfields = array('pid', 'title', 'description', 'tags', 'keywords', 'og_title', 'og_description', 'og_image', 'show_menu', 'require_auth', 'published', 'creator', 'modified');
-            $questions = str_repeat(", ? ", sizeof($defaultfields));
 
-            $mysql->statement('SELECT * FROM pages WHERE pid = ?;', array($site->arg(2)));
+            $mysql->reset()
+                ->select()
+                ->from('pages')
+                ->where('pid = ?')
+                ->values($site->arg(2))
+                ->exec();
+
             $currentpage = $mysql->singleline();
             $fields = array();
 
@@ -32,7 +43,13 @@ if (@$_REQUEST['save']) {
                 array_push($fields, $currentpage->{$field});
             }
 
-            $mysql->statement('SELECT * FROM pages_review WHERE prid = ?;', array($_REQUEST['prid']));
+            $mysql->reset()
+                ->select()
+                ->from('pages_review')
+                ->where('prid = ?')
+                ->values($_REQUEST['prid'])
+                ->exec();
+
             $reviewpage = $mysql->singleline();
             $review = array();
             $fieldsupdate = '';
@@ -44,28 +61,80 @@ if (@$_REQUEST['save']) {
 
             $review[] = $site->arg(2);
 
-            $mysql->statement(sprintf('INSERT INTO pages_review (%s) values (%s);', implode(',', $defaultfields), substr($questions, 2)), $fields);
-            $mysql->statement(sprintf('UPDATE pages SET %s WHERE pid = ?;', substr($fieldsupdate, 2)), $review);
-            $mysql->statement('DELETE FROM pages_review WHERE prid = ?;', array($_REQUEST['prid']));
+            $mysql->reset()
+                ->insert('pages_review')
+                ->fields($defaultfields)
+                ->values($fields)
+                ->exec();
+
+            $mysql->reset()
+                ->update('pages')
+                ->fields($defaultfields)
+                ->values($review)
+                ->exec();
+
+            $mysql->reset()
+                ->delete()
+                ->from('pages_review')
+                ->where('prid = ?')
+                ->values($_REQUEST['prid'])
+                ->exec();
 
         }
 
-        $mysql->statement('SELECT url FROM pages WHERE pid = ?;', array($site->arg(2)));
+        $mysql->reset()
+                ->select('url')
+                ->from('pages')
+                ->where('pid = ?')
+                ->values($site->arg(2))
+                ->exec();
 
         $currenturl = $mysql->singleresult();
 
-        $mysql->statement('DELETE FROM redirect WHERE `from` = ?;', array($_REQUEST['url']));
+        $mysql->reset()
+                ->delete()
+                ->from('redirect')
+                ->where('`from` = ?')
+                ->values($_REQUEST['url'])
+                ->exec();
 
-        $mysql->statement('SELECT `from`, destination FROM redirect WHERE destination = ? ORDER BY created;', array($currenturl));
+        $mysql->reset()
+                ->select('`from`, destination')
+                ->from('redirect')
+                ->where('destination = ?')
+                ->order('created')
+                ->values($currenturl)
+                ->exec();
 
         if ($mysql->total) {
             foreach ($mysql->result() as $url) {
                 //REFACTOR: THIS PART IS OUTDATED
-                $mysql->statement('INSERT INTO redirect (`pid`, `from`, `destination`, `creator`) VALUES (?, ?, ?, ?);', array($site->arg(2), $url->destination, $_REQUEST['url'], $user->id));
+                $mysql->reset()
+                ->insert('redirect')
+                ->fields(array('`pid`', '`from`', '`destination`', '`creator`'))
+                ->values(array($site->arg(2), $url->destination, $_REQUEST['url'], $user->id))
+                ->exec();
             }
         } else {
-            $mysql->statement('INSERT INTO redirect (`pid`, `from`, `destination`, `creator`) VALUES (?, ?, ?, ?);', array($site->arg(2), $currenturl, $_REQUEST['url'], $user->id));
+            $mysql->reset()
+                ->insert('redirect')
+                ->fields(array('`pid`', '`from`', '`destination`', '`creator`'))
+                ->values(array($site->arg(2), $currenturl, $_REQUEST['url'], $user->id))
+                ->exec();
         }
+
+//        $mysql->reset()
+//            ->update('pages AS p')
+//            ->join('pages AS pp', 'LEFT')
+//            ->on('pp.pid = p.parent')
+//            ->fields(array('p.url', 'p.beautify'))
+//            ->values(array(
+//                $_REQUEST['url'],
+//                sprintf('concat(if(pp.beautify IS NULL, "", pp.beautify), %s)', mysql_real_escape_string($_REQUEST['url'])),
+//                $site->arg(2)
+//            ))
+//            ->where('p.pid = ?')
+//            ->exec();
 
         $mysql->statement('UPDATE pages AS p
         LEFT JOIN pages AS pp ON pp.pid = p.parent
@@ -75,6 +144,18 @@ if (@$_REQUEST['save']) {
             $_REQUEST['url'],
             $site->arg(2)
         ));
+
+//        $mysql->reset()
+//            ->update('pages AS p')
+//            ->join('pages AS pp', 'LEFT')
+//            ->on('pp.pid = p.parent')
+//            ->fields(array('p.beautify'))
+//            ->values(array(
+//                'concat(if(pp.beautify IS NULL, "", pp.beautify), p.url)',
+//                $site->arg(2)
+//            ))
+//            ->where('p.parent = ?')
+//            ->exec();
 
         $mysql->statement('UPDATE pages AS p
         LEFT JOIN pages AS pp ON pp.pid = p.parent

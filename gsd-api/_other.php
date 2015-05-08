@@ -37,7 +37,7 @@ function paginatorPages($page, $numberPerPage, $output) {
         . $tags .
         'ORDER BY p.`index` ';
 
-    $paginator = new paginator($sql, $numberPerPage, $page);
+    $paginator = new GSD\paginator($sql, $numberPerPage, $page);
 
     $mysql->statement('SELECT p.*, concat(if(pp.url = "/" OR pp.url IS NULL, "", pp.url), p.url) AS url, p.creator AS creator_id, u.name AS creator_name' . $sql . $paginator->pageLimit());
 
@@ -71,7 +71,7 @@ function paginatorImages($page, $numberPerPage, $output) {
         . $tags .
         'ORDER BY images.iid ';
 
-    $paginator = new paginator($sql, $numberPerPage, $page);
+    $paginator = new GSD\paginator($sql, $numberPerPage, $page);
 
     $mysql->statement('SELECT images.*, images.creator AS creator_id, u.name AS creator_name' . $sql . $paginator->pageLimit());
 
@@ -83,7 +83,7 @@ function paginatorImages($page, $numberPerPage, $output) {
 
             $created = explode(' ', @$row->created);
             $array['created'] = '(' . timeago(dateDif(@$created[0], date('Y-m-d', time())), @$created[1]) . ')';
-            $array['asset'] = @$row->width ? (string)new image(array('iid' => $row->iid, 'max-height' => '100', 'height' => 'auto', 'width' => 'auto')) : '';
+            $array['asset'] = @$row->width ? (string)new GSD\image(array('iid' => $row->iid, 'max-height' => '100', 'height' => 'auto', 'width' => 'auto')) : '';
             $array['size'] = sprintf('<strong>%s x %s</strong><br>%s', $row->width, $row->height, $row->size);
             array_push($output['data']['list'], $array);
         }

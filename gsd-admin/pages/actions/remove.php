@@ -40,7 +40,7 @@ if (!@$_REQUEST['confirm']) {
         unset($_parents[$page->pid]);
         $pages[] = array(
             'NAME' => $page->title,
-            'LIST' => new select(array(
+            'LIST' => new GSD\select(array(
                 'name' => 'parent[' . $page->pid . ']',
                 'list' => $_parents,
                 'selected' => $site->arg(2)

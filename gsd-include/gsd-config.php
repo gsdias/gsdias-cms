@@ -19,13 +19,13 @@ spl_autoload_register('GSDClassLoading');
 
 @session_start();
 
-$mysql = mysqlFactory::create($_mysql['db'], $_mysql['host'], $_mysql['user'], $_mysql['pass']);
+$mysql = GSD\mysqlFactory::create($_mysql['db'], $_mysql['host'], $_mysql['user'], $_mysql['pass']);
 
-$tpl = new tpl(DEBUG);
+$tpl = new GSD\tpl(DEBUG);
 
-$site = new site();
+$site = new GSD\site();
 
-$user = @$_SESSION['user'] ? $_SESSION['user'] : (class_exists('clientuser') ? new clientuser() : new user());
+$user = @$_SESSION['user'] ? $_SESSION['user'] : (class_exists('\\GSD\\Extended\\extendeduser') ? new GSD\Extended\extendeduser() : new GSD\user());
 
 $language = getLanguage();
 
@@ -44,8 +44,8 @@ if (function_exists('bindtextdomain')) {
 
     textdomain($domain);
     if (is_dir(CLIENTPATH . 'locale')) {
-        bindtextdomain('frontend', CLIENTPATH . 'locale');
-        bind_textdomain_codeset('frontend', $encoding);
+        bindtextdomain('extended', CLIENTPATH . 'locale');
+        bind_textdomain_codeset('extended', $encoding);
     }
 }
 

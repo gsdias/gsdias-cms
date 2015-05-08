@@ -17,18 +17,20 @@ if (is_file($file)) {
     include_once($file);
 }
 
+if (class_exists('GSD\\Extended\\extended' . $section)) {
+    $classsection = 'extended' . $section;
+} elseif (class_exists('GSD\\' . $section)) {
+    $classsection = $section;
+} else {
+    $classsection = '';
+}
+
 //ACTION DETECTED
 if ($action) {
     
-    if (class_exists($section) || class_exists('client' . $section)) {
+    if ($classsection) {
 
-        if (class_exists('client' . $section)) {
-            $classsection = 'client' . $section;
-        } else {
-            $classsection = $section;
-        }
-
-        $csection = new $classsection ();
+        $csection = \GSD\sectionFactory::create($classsection);
 
         $site->main = sprintf('%s/%s', $section, $action);
         
@@ -54,14 +56,8 @@ if ($action) {
 
     //ID DETECTED
     if ($id) {
-        
-        if (class_exists('client' . $section)) {
-            $classsection = 'client' . $section;
-        } else {
-            $classsection = $section;
-        }
 
-        $csection = new $classsection ();
+        $csection = \GSD\sectionFactory::create($classsection);
         
         $csection->generatefields();
         
@@ -83,13 +79,7 @@ if ($action) {
     } else {
         $numberPerPage = 10;
         
-        if (class_exists('client' . $section)) {
-            $classsection = 'client' . $section;
-        } else {
-            $classsection = $section;
-        }
-        
-        $csection = new $classsection ();
+        $csection = \GSD\sectionFactory::create($classsection);
 
         $csection->getlist(array('numberPerPage' => $numberPerPage));
     }

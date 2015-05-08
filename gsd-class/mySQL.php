@@ -8,6 +8,9 @@
  * @since      File available since Release 1.0
  */
 
+namespace GSD;
+use PDO;
+
 class mySQL implements idatabase {
 
     protected $conn, $query, $result, $db, $host, $user, $pass, $prepared;
@@ -39,10 +42,10 @@ class mySQL implements idatabase {
 
             $this->conn = new \PDO('mysql:host=' . $this->host . ';charset=utf8;' . $db, $this->user, $this->pass, array(
                 \PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true,
-                //\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
-                //\PDO::ATTR_PERSISTENT => false
+                \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
+                \PDO::ATTR_PERSISTENT => true
             ));
-            $this->conn->exec("SET time_zone = 'Europe/London';");
+            $this->conn->exec("SET time_zone = '+00:00';");
 
         }
 
@@ -268,7 +271,7 @@ class mySQL implements idatabase {
         return $this;
     }
     
-    public function values ($values = array()) {
+    public function values ($values) {
         if (is_array($values)) {
             $this->_values = array_merge($this->_values, $values);
         } else {
@@ -296,7 +299,7 @@ class mySQL implements idatabase {
         return $this;
     }
 
-    public function delete ($value) {
+    public function delete () {
         $this->_delete .= 'DELETE ';
 
         return $this;

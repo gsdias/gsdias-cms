@@ -40,7 +40,7 @@ if (!IS_LOGGED) {
         if ($site->arg(1) == 'settings') {
             $file = 'gsd-admin/settings' . PHPEXT;
         } else {
-            if (class_exists($site->arg(1)) || class_exists('client' . $site->arg(1))) {
+            if (class_exists('\\GSD\\' . $site->arg(1)) || class_exists('\\GSD\\Extended\extended' . $site->arg(1))) {
                 $file = 'gsd-admin/list' . PHPEXT;
             } else {
                 $site->main = '404';

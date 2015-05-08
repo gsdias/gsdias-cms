@@ -35,14 +35,14 @@ $options = array();
 foreach ($mysql->result() as $item) {
     $extraclass = '';
     if (strpos($item->name, '_image') !== false) {
-        $image = new image(array(
+        $image = new GSD\image(array(
             'iid' => $item->value,
             'height' => '100',
             'width' => 'auto',
             'class' => sprintf('preview %s', $item->value ? '' : 'is-hidden')
         ));
 
-        $partial = new tpl();
+        $partial = new GSD\tpl();
         $partial->setvars(array(
             'LABEL' => $item->label,
             'NAME' => $item->name,
@@ -55,7 +55,7 @@ foreach ($mysql->result() as $item) {
         $field = $partial;
         $extraclass = 'image';
     } else if ($item->name === 'gsd-locale_select') {
-        $field = new select(array(
+        $field = new GSD\select(array(
             'id' => $item->name,
             'name' => $item->name,
             'list' => $languages,
@@ -63,7 +63,7 @@ foreach ($mysql->result() as $item) {
             'selected' => @$item->value
         ));
     } else {
-        $field = (string)new input(array('name' => $item->name, 'value' => @$item->value, 'label' => $item->label));
+        $field = (string)new GSD\input(array('name' => $item->name, 'value' => @$item->value, 'label' => $item->label));
     }
 
     $options[] = array(

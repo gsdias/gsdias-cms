@@ -8,6 +8,8 @@
  * @since      File available since Release 1.0
  */
 
+namespace GSD;
+
 class site {
 
     public $name, $email, $ga, $fb, $uri, $page, $main, $startpoint, $pagemodules, $layout, $protocol, $isFrontend;
@@ -28,7 +30,7 @@ class site {
             $this->{str_replace(array('_image', '_select'), '', $name)} = $option->value;
 
             if (strpos($name, '_image') !== false) {
-                $image = new image(array('iid' => $option->value, 'width' => 'auto', 'height' => 'auto'));
+                $image = new GSD\image(array('iid' => $option->value, 'width' => 'auto', 'height' => 'auto'));
                 $name = str_replace(array('_image', '_select'), '', $name);
                 $tpl->setvar('SITE_' . strtoupper($name), $image);
             } else {

@@ -8,6 +8,8 @@
  * @since      File available since Release 1.0
  */
 
+namespace GSD;
+
 abstract class section implements isection {
 
     public $item = array();
@@ -209,9 +211,9 @@ abstract class section implements isection {
     }
 
     private function tablename () {
-        $class = get_class($this);
+        $class = str_replace('GSD\\', '', get_class($this));
 
-        return substr($class, 0, 6) === 'client' ? substr($class, 6) : $class;
+        return substr($class, 0, 8) === 'Extended' ? substr($class, 17) : $class;
     }
 
     protected function extrafields () {

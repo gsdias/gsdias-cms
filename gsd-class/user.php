@@ -8,6 +8,8 @@
  * @since      File available since Release 1.0
  */
 
+namespace GSD;
+
 class user implements iuser {
     
     public $level, $email, $name, $firstName, $lastName, $id, $notifications, $code, $locale;

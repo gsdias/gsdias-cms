@@ -39,5 +39,5 @@ if (@$_REQUEST['save']) {
     }
 }
 
-$types = new select( array ( 'list' => $languages, 'id' => 'LANGUAGE' ) );
+$types = new GSD\select( array ( 'list' => $languages, 'id' => 'LANGUAGE' ) );
 $types->object();

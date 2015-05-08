@@ -8,6 +8,8 @@
  * @since      File available since Release 1.0
  */
 
+namespace GSD;
+
 class tpl {
     var $config = array(
         'vars' => array(), 
@@ -112,7 +114,7 @@ class tpl {
         $item = $site->pagemodules[$placeholder[0]];
         $item = unserialize($item);
 
-        $item = new image(array(
+        $item = new GSD\image(array(
             'iid' => @$item['list'][0][0]['value'],
             'width' => 'auto',
             'class' => @$item['list'][0][0]['class'],
@@ -162,7 +164,7 @@ class tpl {
         $li = '';
         foreach ($items as $item) {
             if ($placeholder[2] == 'IMAGE' && $item['value']) {
-                $li .= new image(array(
+                $li .= new GSD\image(array(
                     'iid' => $item['value'],
                     'width' => 'auto',
                     'class' => $item['class'],
