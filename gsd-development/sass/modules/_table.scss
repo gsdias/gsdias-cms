@@ -49,3 +49,20 @@
         box-shadow: 0 0 1px $border-color;
     }
 }
+
+.pages {
+
+    input {
+        visibility: hidden;
+
+        &.is-visible {
+            visibility: visible;
+        }
+    }
+
+    &:hover {
+        input {
+            visibility: visible;
+        }
+    }
+}

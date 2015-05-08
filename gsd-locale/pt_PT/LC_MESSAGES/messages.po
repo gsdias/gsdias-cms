@@ -13,6 +13,9 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Language: pt_PT\n"
 
+msgid "LANG_ERROR"
+msgstr "Houve um problema. Tente novamente mais tarde"
+
 msgid "LANG_AUTH"
 msgstr "Login"
 

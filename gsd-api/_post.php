@@ -9,3 +9,7 @@
  */
 
 #### POST
+
+class apiPost {
+
+}

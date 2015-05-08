@@ -10,8 +10,6 @@
 
 define('ROOTPATH', dirname(__FILE__) . '/');
 
-define('IS_INSTALLED', !is_file('gsd-install.php'));
-
 include_once('gsd-include/gsd-config.php');
 
 $tpl->setvar('HTML_CLASS', 'gsd');

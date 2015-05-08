@@ -9,3 +9,7 @@
  */
 
 #### PATCH
+
+class apiPatch {
+
+}
