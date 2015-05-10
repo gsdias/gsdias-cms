@@ -11,11 +11,9 @@
  */
 function GSDClassLoading($className)
 {
-    $className = str_replace(array('GSD\\Extended\\', 'GSD\\'), array(CLIENTCLASSPATH, CLASSPATH), $className);
+    $className = str_replace(array('GSD\\Extended\\', 'GSD\\Api\\Extended\\', 'GSD\\Api\\', 'GSD\\'), array(CLIENTCLASSPATH, CLIENTPATH.'api/', ROOTPATH.'gsd-api/', CLASSPATH), $className);
 
     if (is_file($className.PHPEXT)) {
-        include_once $className.PHPEXT;
-    } elseif (is_file($className.PHPEXT)) {
         include_once $className.PHPEXT;
     }
 }

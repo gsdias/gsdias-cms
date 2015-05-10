@@ -11,6 +11,9 @@
  */
 
 #### POST
+namespace GSD\Api;
+
+use GSD;
 
 class apiPost
 {

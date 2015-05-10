@@ -11,6 +11,9 @@
  */
 
 #### PUT
+namespace GSD\Api;
+
+use GSD;
 
 class apiPut
 {

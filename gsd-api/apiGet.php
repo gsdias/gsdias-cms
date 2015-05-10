@@ -11,6 +11,9 @@
  */
 
 #### GET
+namespace GSD\Api;
+
+use GSD;
 
 class apiGet
 {

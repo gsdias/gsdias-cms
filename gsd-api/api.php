@@ -9,6 +9,10 @@
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
+namespace GSD\Api;
+
+use GSD;
+
 class api
 {
     /*
@@ -31,28 +35,25 @@ class api
     public function __construct($method, $extended)
     {
         $this->output = array('error' => 0, 'message' => '');
-        $this->user = isset($_SESSION['user']) ? $_SESSION['user'] : (class_exists('extendeduser') ? new GSD\extendeduser() : new GSD\user());
+        $this->user = @$_SESSION['user'] ? $_SESSION['user'] : (class_exists('\\GSD\\Extended\\extendeduser') ? new GSD\Extended\extendeduser() : new GSD\user());
         $this->method = $method;
         $this->extended = $extended;
         $this->loginRequired = array();
         $this->adminRequired = array();
+
     }
 
-    public function method($type, $cmd, $extra = null, $fields = null, $doc = false, $commands)
+    public function method($type, $cmd, $extra = null, $fields = null, $doc = false)
     {
         global $_extra;
 
         $method = $type.$cmd;
 
         if (($this->checkCredentials($cmd) && $this->checkPermission($method, $cmd)) || $doc) {
-            $this->output = $this->method->{$cmd}($fields, $extra, $doc);
-
-            if (isset($commands[$method])) {
-                global $$method;
-//                $this->output = $$method($fields, $extra, $doc);
+            if (method_exists($this->method, $cmd)) {
+                $this->output = $this->method->{$cmd}($fields, $extra, $doc);
             } else {
-
-//                $this->output = array('error' => -1, 'message' => "I don't recognize that command");
+                $this->output = array('error' => -1, 'message' => "I don't recognize that command");
             }
         } else {
             $this->output = array('error' => -2, 'message' => "You don't have the right permission");

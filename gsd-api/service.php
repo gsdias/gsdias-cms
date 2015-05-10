@@ -9,25 +9,11 @@
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
-require_once '_other'.PHPEXT;
-require_once '_'.strtolower($_SERVER['REQUEST_METHOD']).PHPEXT;
 
-$other = CLIENTPATH.'api/_other'.PHPEXT;
-
-if (is_file($other)) {
-    require_once $other;
-}
-
-$method = CLIENTPATH.'api/_'.strtolower($_SERVER['REQUEST_METHOD']).PHPEXT;
-
-if (is_file($method)) {
-    require_once $method;
-}
-
-$classname = 'api'.ucwords($_SERVER['REQUEST_METHOD']);
-$classnameextended = 'apiExtended'.ucwords($_SERVER['REQUEST_METHOD']);
+$classname = 'GSD\\Api\\api'.ucwords($_SERVER['REQUEST_METHOD']);
+$classnameextended = 'GSD\\Api\\Extended\\apiExtended'.ucwords($_SERVER['REQUEST_METHOD']);
 
 $_extra = array(
     'method' => class_exists($classnameextended) ? new $classnameextended() : new $classname(),
-    'other' => class_exists('apiExtendedOther') ? new apiExtendedOther() : new apiOther(),
+    'other' => class_exists('GSD\\Api\\Extended\\apiExtendedOther') ? new GSD\Api\Extended\apiExtendedOther() : new GSD\Api\apiOther(),
 );

@@ -11,6 +11,9 @@
  */
 
 #### OTHER
+namespace GSD\Api;
+
+use GSD;
 
 class apiOther
 {
@@ -129,7 +132,7 @@ class apiOther
             }
         }
 
-        $paginator = new GSD\paginator($sql, $numberPerPage, $page);
+        $paginator = new GSD\paginator($fromsql, $numberPerPage, $page);
 
         $mysql->statement('SELECT '.$_fields.$fromsql.$paginator->pageLimit());
 
@@ -142,7 +145,7 @@ class apiOther
                 $created = explode(' ', @$row->created);
                 $last_login = explode(' ', @$row->last_login);
                 $array['created'] = timeago(dateDif(@$created[0], date('Y-m-d', time())), @$created[1]);
-                $array['last_login'] = timeago(dateDif($last_login[0], date('Y-m-d', time())), $last_login[1]);
+                $array['last_login'] = @$last_login[1] ? timeago(dateDif($last_login[0], date('Y-m-d', time())), @$last_login[1]) : lang('LANG_NEVER');
                 $array['disabled'] = $row->disabled ? '<br>('.lang('LANG_DISABLED').')' : '';
                 array_push($output['data']['list'], $array);
             }

@@ -14,22 +14,12 @@ define('ROOTPATH', dirname(__FILE__).'/../');
 include_once ROOTPATH.'gsd-include/gsd-config.php';
 
 require_once 'service.php';
-require_once 'calls.php';
-
-$methods = get_defined_functions();
-$methods = $methods['user'];
+require_once 'api.php';
 
 @session_start();
 
-$_arr = array();
 if (!isset($_SERVER['REDIRECT_URL'])) {
-    foreach ($methods as $method) {
-        if (strpos($method, 'get') === 0) {
-            array_push($_arr, array('method' => $method, 'description' => $method(null, null, true)));
-        }
-    }
-
-    $api->output();
+    echo 'Missing command';
     exit;
 }
 
@@ -64,10 +54,10 @@ parse_str($input, $post_vars);
 
 $fields = sizeof($post_vars) ? $post_vars : $_REQUEST;
 
-$api = new api($_extra['method'], $_extra['other']);
+$api = new \GSD\Api\api($_extra['method'], $_extra['other']);
 
 $fields['json'] = $json;
 
-$api->method($_SERVER['REQUEST_METHOD'], $cmd, $extra, $fields, $doc, get_defined_vars());
+$api->method($_SERVER['REQUEST_METHOD'], $cmd, $extra, $fields, $doc);
 
 $api->output();
