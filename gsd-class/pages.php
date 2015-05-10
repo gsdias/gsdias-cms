@@ -248,7 +248,13 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item->pid));
     public function edit ($defaultfields = array(), $defaultsafter = array(), $defaultvalues = array()) {
         global $mysql, $site;
 
-        $mysql->statement('SELECT * FROM pages WHERE pid = ?;', array($site->arg(2)));
+        $mysql->reset()
+            ->select()
+            ->from('pages')
+            ->where('pid = ?')
+            ->values($site->arg(2))
+            ->exec();
+
         $currentpage = $mysql->singleline();
         $hasChanged = 0;
         $fields = array();

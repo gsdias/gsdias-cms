@@ -13,7 +13,12 @@ if (@$_REQUEST['save']) {
     $defaultfields = array('name', 'description', 'tags');
 
     if ($_FILES['asset']['error'] == 0) {
-        $mysql->statement('SELECT extension FROM images WHERE iid = ?;', array($site->arg(2)));
+        $mysql->reset()
+            ->select('extension')
+            ->from('images')
+            ->where('iid = ?')
+            ->values($site->arg(2))
+            ->exec();
 
         $image = $mysql->singleline();
 

@@ -28,7 +28,12 @@ class apiPut {
         }
 
         foreach (json_decode($fields['list']) as $item) {
-            $mysql->statement('UPDATE PAGES SET `index` = ? WHERE pid = ?;', array($item->i, $item->pid));
+            $mysql->reset()
+                ->update('pages')
+                ->fields('index')
+                ->where('pid = ?')
+                ->values(array($item->i, $item->pid))
+                ->exec();
         }
 
         return $output;

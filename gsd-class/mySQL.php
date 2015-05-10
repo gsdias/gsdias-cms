@@ -16,7 +16,7 @@ class mySQL implements idatabase {
     protected $conn, $query, $result, $db, $host, $user, $pass, $prepared;
     public $querylist, $total, $errnum, $errmsg, $executed;
     
-    protected $_query, $_select, $_from, $_where, $_join, $_on, $_order, $_values, $_fields, $_insert, $_update, $_delete;
+    protected $_query, $_select, $_from, $_where, $_join, $_on, $_order, $_values, $_fields, $_insert, $_update, $_delete, $_show;
 
     public
         // -- Function Name : __construct
@@ -41,9 +41,9 @@ class mySQL implements idatabase {
             $db = $withdb ? sprintf('dbname=%s', $this->db) : '';
 
             $this->conn = new \PDO('mysql:host=' . $this->host . ';charset=utf8;' . $db, $this->user, $this->pass, array(
-                \PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true,
-                \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
-                \PDO::ATTR_PERSISTENT => true
+//                \PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true,
+//                \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
+//                \PDO::ATTR_PERSISTENT => true
             ));
             $this->conn->exec("SET time_zone = '+00:00';");
 
@@ -212,6 +212,24 @@ class mySQL implements idatabase {
         function lastInserted () {
         return $this->conn->lastInsertId();
     }
+
+    public function use ($db = '') {
+        if ($this->conn) {
+            $this->prepared = $this->conn->prepare('USE ' . $db . ';');
+            $this->execute();
+        }
+
+        return $this;
+    }
+
+    public function show ($table = '') {
+        if ($this->conn) {
+            $this->prepared = $this->conn->prepare('SHOW ' . $table . ';');
+            $this->execute();
+        }
+
+        return $this;
+    }
     
     public function reset () {
         $this->_select = '';
@@ -219,6 +237,7 @@ class mySQL implements idatabase {
         $this->_insert = '';
         $this->_update = '';
         $this->_delete = '';
+        $this->_show = '';
         $this->_fields = array();
         $this->_join = array();
         $this->_on = array();
@@ -231,13 +250,13 @@ class mySQL implements idatabase {
     }
     
     public function select ($value = '*') {
-        $this->_select .= $value;
+        $this->_select = $value;
         
         return $this;
     }
     
     public function from ($value) {
-        $this->_from .= $value;
+        $this->_from = $value;
         
         return $this;
     }
@@ -266,7 +285,7 @@ class mySQL implements idatabase {
     }
     
     public function order ($value, $ord = 'ASC') {
-        array_push($this->_order, $value . ' ' . $ord);
+        array_push($this->_order, '`' . $value . '` ' . $ord);
         
         return $this;
     }
@@ -288,25 +307,35 @@ class mySQL implements idatabase {
     }
     
     public function insert ($value) {
-        $this->_insert .= $value;
+        $this->_insert = $value;
 
         return $this;
     }
 
     public function update ($value) {
-        $this->_update .= $value;
+        $this->_update = $value;
 
         return $this;
     }
 
     public function delete () {
-        $this->_delete .= 'DELETE ';
+        $this->_delete = 'DELETE ';
+
+        return $this;
+    }
+
+    public function show ($value) {
+        $this->_show = $value;
 
         return $this;
     }
 
     public function fields ($values = array()) {
         if (is_array($values)) {
+            foreach ($values as $i => $value) {
+                $value = explode('.', $value);
+                $values[$i] = sprintf('`%s`', $value[0]) . (@$value[1] ? sprintf('.`%s`', $value[1]) : '');
+            }
             $this->_fields = array_merge($this->_fields, $values);
         } else {
             array_push($this->_fields, $values);
@@ -328,6 +357,7 @@ class mySQL implements idatabase {
         $string .= $this->_insert ? 'INSERT INTO ' . $this->_insert : '';
         $string .= $this->_update ? 'UPDATE ' . $this->_update : '';
         $string .= $this->_delete ? $this->_delete : '';
+        $string .= $this->_show ? 'SHOW ' . $this->_show : '';
 
         if ($this->_insert) {
             $string .= !empty($this->_fields) ? sprintf(' (%s) VALUES (%s)', implode(', ', $this->_fields), substr(str_repeat(", ? ", sizeof($this->_fields)), 2)) : '';

@@ -30,7 +30,13 @@ class apiDelete {
         $deleted = array();
 
         foreach($list as $id) {
-            $mysql->statement('DELETE FROM layouts WHERE lid = ?', array($id));
+            $mysql->reset()
+                ->delete()
+                ->from('layouts')
+                ->where('lid = ?')
+                ->values($id)
+                ->exec();
+
             if ($mysql->total) {
                 $deleted[] = $id;
             }
@@ -57,7 +63,13 @@ class apiDelete {
         $deleted = array();
 
         foreach($list as $id) {
-            $mysql->statement('DELETE FROM pages WHERE pid = ?', array($id));
+            $mysql->reset()
+                ->delete()
+                ->from('pages')
+                ->where('pid = ?')
+                ->values($id)
+                ->exec();
+
             if ($mysql->total) {
                 $deleted[] = $id;
             }
@@ -84,7 +96,13 @@ class apiDelete {
         $deleted = array();
 
         foreach($list as $id) {
-            $mysql->statement('DELETE FROM users WHERE uid = ?', array($id));
+            $mysql->reset()
+                ->delete()
+                ->from('users')
+                ->where('uid = ?')
+                ->values($id)
+                ->exec();
+
             if ($mysql->total) {
                 $deleted[] = $id;
             }
@@ -111,7 +129,13 @@ class apiDelete {
         $deleted = array();
 
         foreach($list as $id) {
-            $mysql->statement('DELETE FROM images WHERE iid = ?', array($id));
+            $mysql->reset()
+                ->delete()
+                ->from('images')
+                ->where('iid = ?')
+                ->values($id)
+                ->exec();
+
             if ($mysql->total) {
                 $deleted[] = $id;
             }
@@ -138,7 +162,13 @@ class apiDelete {
         $deleted = array();
 
         foreach($list as $id) {
-            $mysql->statement('DELETE FROM documents WHERE did = ?', array($id));
+            $mysql->reset()
+                ->delete()
+                ->from('documents')
+                ->where('did = ?')
+                ->values($id)
+                ->exec();
+
             if ($mysql->total) {
                 $deleted[] = $id;
             }

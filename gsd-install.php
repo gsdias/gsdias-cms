@@ -12,7 +12,11 @@ if (@$_REQUEST['save']) {
     $site->main = 'STEP2';
     $site->startpoint = 'index';
 
-    $mysql->statement('INSERT INTO users (level, email, password, name, creator) VALUES ("admin", ?, md5(?), ?, 0);', array($_REQUEST['email'], $_REQUEST['password'], $_REQUEST['name']));
+    $mysql->reset()
+        ->insert('users')
+        ->fields(array('level', 'email', 'password', 'name', 'creator'))
+        ->values(array('admin', $_REQUEST['email'], md5($_REQUEST['password']), $_REQUEST['name'], 0))
+        ->exec();
 
     if ($mysql->total) {
         $tpl->setvar('STEP2_MESSAGES', 'Admin user saved with success. You can login now. Don\'t forget to remove install files.');
@@ -22,7 +26,9 @@ if (@$_REQUEST['save']) {
     $site->main = 'STEP1';
     $site->startpoint = 'index';
 
-    $mysql->statement('SHOW DATABASES;');
+    $mysql->reset()
+        ->show('DATABASES')
+        ->exec();
 
     $database[@$_mysql['db']] = 1;
 
@@ -34,15 +40,15 @@ if (@$_REQUEST['save']) {
         }
     } else {
         $mysql->statement(sprintf('CREATE DATABASE IF NOT EXISTS %s;', $_mysql['db']));
-        $mysql->statement(sprintf('Use %s;', $_mysql['db']));
+        $mysql->use($_mysql['db']);
     }
 
     if ($database[$_mysql['db']]) {
         $mysql->statement(sprintf('CREATE DATABASE IF NOT EXISTS %s', $_mysql['db']));
-        $mysql->statement(sprintf('Use %s;', $_mysql['db']));
+        $mysql->use($_mysql['db']);
     }
 
-    $mysql->statement('SHOW TABLES;');
+    $mysql->show('TABLES');
 
     if ($mysql->total) {
         $found = serialize($mysql->result());
@@ -83,7 +89,11 @@ if (@$_REQUEST['save']) {
         $site->main = 'STEP2';
         $site->startpoint = 'index';
 
-        $mysql->statement('SELECT count(*) FROM users;');
+        $mysql->reset()
+            ->select('count(*)')
+            ->from('users')
+            ->exec();
+
         if ($mysql->singleresult()) {
             $tpl->setvar('STEP2_MESSAGES', 'There is already an user on the database.');
         } else {
@@ -91,12 +101,10 @@ if (@$_REQUEST['save']) {
         }
     }
 
-    $dir = CLIENTPATH . 'assets';
-
-    if (!is_dir($dir)) {
-        mkdir($dir, 0755);
-        mkdir($dir . '/images', 0755);
-        mkdir($dir . '/documents', 0755);
+    if (!is_dir(ASSETPATH)) {
+        mkdir(ASSETPATH, 0755);
+        mkdir(ASSETPATH . '/images', 0755);
+        mkdir(ASSETPATH . '/documents', 0755);
     }
 }
 

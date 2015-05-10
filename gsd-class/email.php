@@ -108,7 +108,12 @@ class email {
 
         $file = explode('/', $file);
         $file = explode('.', $file[sizeof($file) - 1]);
-        $mysql->statement('SELECT subject, `from`, `to`, cc, bcc, attachment FROM emails WHERE template = ?;', array($file[0]));
+        $mysql->reset()
+            ->select('subject, from, to, cc, bcc, attachment')
+            ->from('emails')
+            ->where('template = ?')
+            ->values($file[0])
+            ->exec();
 
         $info = $mysql->singleline();
 

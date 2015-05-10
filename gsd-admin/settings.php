@@ -14,7 +14,13 @@ if (@$_REQUEST['save']) {
     foreach ($_REQUEST as $name => $value) {
         if (strpos($name, 'gsd-') !== false) {
             $fields++;
-            $mysql->statement('UPDATE options SET value = ? WHERE name = ?', array($value, $name));
+            $mysql->reset()
+                ->update('options')
+                ->fields(array('value'))
+                ->where('name = ?')
+                ->values($name)
+                ->exec());
+
             $fields += !$mysql->errnum ? -1 : 0;
         }
     }
@@ -29,7 +35,11 @@ if (@$_REQUEST['save']) {
     }
 }
 
-$mysql->statement('SELECT * FROM options ORDER BY `index`;');
+$mysql->reset()
+    ->select()
+    ->from('options')
+    ->order('index')
+    ->exec();
 
 $options = array();
 foreach ($mysql->result() as $item) {

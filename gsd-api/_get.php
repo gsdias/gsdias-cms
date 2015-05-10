@@ -26,9 +26,14 @@ class apiGet {
             return array('error' => -3, 'message' => 'Missing required fields' );
         }
 
-        $tags = @$fields['search'] ? sprintf('WHERE tags like "%%%s%%"', $fields['search']) : '';
+        $mysql->reset()
+            ->select()
+            ->from('images');
+        if (@$fields['search']) {
+            $mysql->where(sprintf('tags like "%%%s%%"', $fields['search']));
+        }
 
-        $mysql->statement('SELECT * FROM images ' . $tags . ';');
+        $mysql->exec();
 
         if ($mysql->total) {
             $output['message'] = '';

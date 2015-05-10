@@ -111,14 +111,14 @@ if (@$_REQUEST['save']) {
                 //REFACTOR: THIS PART IS OUTDATED
                 $mysql->reset()
                     ->insert('redirect')
-                    ->fields(array('`pid`', '`from`', '`destination`', '`creator`'))
+                    ->fields(array('pid', 'from', 'destination', 'creator'))
                     ->values(array($site->arg(2), $url->destination, $_REQUEST['url'], $user->id))
                     ->exec();
             }
         } else {
             $mysql->reset()
                 ->insert('redirect')
-                ->fields(array('`pid`', '`from`', '`destination`', '`creator`'))
+                ->fields(array('pid', 'from', 'destination', 'creator'))
                 ->values(array($site->arg(2), $currenturl, $_REQUEST['url'], $user->id))
                 ->exec();
         }

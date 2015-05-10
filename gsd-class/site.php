@@ -23,7 +23,10 @@ class site {
         $this->startpoint = 'index';
         $this->main = '';
 
-        $mysql->statement('SELECT * FROM options;');
+        $mysql->reset()
+            ->select()
+            ->from('options')
+            ->exec();
 
         define('IS_INSTALLED', $mysql->errnum !== 1146 && $mysql->errnum !== 1049 && $mysql->errnum !== 1046);
 
@@ -68,16 +71,27 @@ class site {
             return;
         }
 
-        $mysql->statement('SELECT destination FROM redirect WHERE `from` = :uri', array(':uri' => $this->uri));
+        $mysql->reset()
+            ->select('destination')
+            ->from('redirect')
+            ->where('`from` = ?')
+            ->values($this->uri)
+            ->exec();
+
         if ($mysql->total) {
             header('Location: ' . $mysql->singleresult(), true, 301);
             exit;
         }
 
-        $mysql->statement('SELECT *
-        FROM pages
-        LEFT JOIN layouts ON layouts.lid = pages.lid
-        WHERE published IS NOT NULL AND BINARY beautify = ? LIMIT 0, 1;', array($this->uri));
+        $mysql->reset()
+            ->select()
+            ->from('pages')
+            ->join('layouts', 'LEFT')
+            ->on('layouts.lid = pages.lid')
+            ->where('published IS NOT NULL AND BINARY beautify = ?')
+            ->limit(0, 1)
+            ->values($this->uri)
+            ->exec();
 
         if ($mysql->total) {
 
@@ -98,10 +112,14 @@ class site {
 
             $this->main = trim(str_replace('.html', '', $page->file));
 
-            $mysql->statement('SELECT *
-            FROM pagemodules AS pm
-            JOIN layoutsections AS ls ON ls.lsid = pm.lsid
-            WHERE pid = ?;', array($page->pid));
+            $mysql->reset()
+                ->select()
+                ->from('pagemodules AS pm')
+                ->join('layoutsections AS ls')
+                ->on('ls.lsid = pm.lsid')
+                ->where('pid = ?')
+                ->values($page->pid)
+                ->exec();
 
             if ($mysql->total) {
                 $pagemodules = array();

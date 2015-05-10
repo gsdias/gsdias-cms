@@ -17,7 +17,7 @@ if (@$_REQUEST['save']) {
     
     $defaultfields = array('title', 'url', 'lid', 'description', 'keywords', 'tags', 'og_title', 'og_image', 'og_description', 'parent');
     
-    $fields = array('creator', '`index`', 'show_menu', 'require_auth', 'created');
+    $fields = array('creator', 'index', 'show_menu', 'require_auth', 'created');
     
     $mysql->reset()
         ->delete()
@@ -58,13 +58,11 @@ if (@$_REQUEST['save']) {
         foreach ($mysql->result() as $section) {
             $defaultdata = array('class' => '', 'style' => '', 'value' => '');
             $data = array('list' => array(array_fill(0, $section->total, $defaultdata)), 'class' => '', 'style' => '');
-            $mysql->statement('INSERT INTO pagemodules (lsid, mtid, pid, data, creator) values(?, ?, ?, ?, ?);', array(
-                $section->lsid,
-                $section->mtid,
-                $pid,
-                serialize($data),
-                $user->id
-            ));
+            $mysql->reset()
+                ->insert('pagemodules')
+                ->fields(array('lsid', 'mtid', 'pid', 'data', 'creator'))
+                ->values(array($section->lsid, $section->mtid, $pid, serialize($data), $user->id))
+                ->exec();
         }
 
         $_SESSION['message'] = sprintf(lang('LANG_PAGE_CREATED'), $_REQUEST['title']);

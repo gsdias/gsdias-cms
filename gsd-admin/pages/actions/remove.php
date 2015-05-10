@@ -75,7 +75,12 @@ if (@$_REQUEST['confirm'] == $afirmative) {
         }
     }
 
-    $mysql->statement('DELETE FROM redirect WHERE `destination` = ?;', array($currenturl));
+    $mysql->reset()
+        ->delete()
+        ->from('redirect')
+        ->where('destination = ?')
+        ->values($currenturl)
+        ->exec();
 
     $result = $csection->remove();
 

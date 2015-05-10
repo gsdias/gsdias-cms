@@ -31,7 +31,13 @@ class image {
             $height = is_numeric($this->args['height']) || $this->args['height'] == 'auto' ? $this->args['height'] : $this->height;
             $this->args['src'] = sprintf("/gsd-image.php?width=%s&height=%s", $width, $height);
         } else if ($this->args['iid']) {
-            $mysql->statement('SELECT extension FROM images WHERE iid = ?;', array($this->args['iid']));
+
+            $mysql->reset()
+                ->select('extension')
+                ->from('images')
+                ->where('iid = ?')
+                ->values($this->args['iid'])
+                ->exec();
 
             $this->args['src'] = sprintf(ASSETPATHURL . "images/%s.%s", $this->args['iid'], $mysql->singleresult()->extension);
         }

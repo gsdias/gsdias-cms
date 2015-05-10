@@ -16,7 +16,12 @@ if (@$_REQUEST['save']) {
         $site->arg(2)
     );
 
-    $mysql->statement('UPDATE documents SET name = ?, description = ? WHERE did = ?;', $defaultfields);
+    $mysql->reset()
+        ->update('documents')
+        ->fields(array('name', 'description'))
+        ->where('did = ?')
+        ->values($defaultfields)
+        ->exec();
 
     if ($_FILES['asset']['error'] == 0) {
 
@@ -37,7 +42,13 @@ if (@$_REQUEST['save']) {
 
         $file = savefile ($_FILES['asset'], ASSETPATH . 'images/' . $site->arg(2) . '/', null, null, $site->arg(2));
 
-        $mysql->statement('UPDATE documents SET extension = ?, width = ?, height = ?, size = ? WHERE did = ?;', $fields);
+        $mysql->reset()
+        ->update('documents')
+        ->fields(array('extension', 'width', 'width', 'height', 'size'))
+        ->where('did = ?')
+        ->values($fields)
+        ->exec();
+
     }
     header("Location: /admin/documents", true, 302);
     exit;

@@ -36,15 +36,33 @@ if (@$_REQUEST['save']) {
 
         while ($key = array_pop($list)) {
             $sectionname = explode(' ', $key);
-            $mysql->statement('INSERT INTO layoutsections (lid, label, creator) values(?, ?, ?);', array($lid, $sectionname[0], $user->id));
+            $mysql->reset()
+                ->insert('layoutsections')
+                ->fields(array('lid', 'label', 'creator'))
+                ->values(array($lid, $sectionname[0], $user->id))
+                ->exec();
             $lsid = $mysql->lastinserted();
-            $mysql->statement('SELECT mtid FROM moduletypes WHERE name like ?', array( strtolower( $sectionname[1] ) ));
+            $mysql->reset()
+                ->select('mtid')
+                ->from('moduletypes')
+                ->where('name like ?')
+                ->values(strtolower($sectionname[1]))
+                ->exec();
             $mtid = $mysql->singleresult()->mtid;
 
-            $mysql->statement('SELECT mtid FROM moduletypes WHERE name like ?', array( strtolower( @$sectionname[2] ) ));
+            $mysql->reset()
+                ->select('mtid')
+                ->from('moduletypes')
+                ->where('name like ?')
+                ->values(strtolower(@$sectionname[2]))
+                ->exec();
             $smtid = @$mysql->singleresult()->mtid ? $mysql->singleresult()->mtid : null;
 
-            $mysql->statement('INSERT INTO layoutsectionmoduletypes (lsid, mtid, smtid, total) values(?, ?, ?, ?);', array($lsid, $mtid, $smtid, @$sectionname[3] ? $sectionname[3] : 1));
+            $mysql->reset()
+                ->insert('layoutsectionmoduletypes')
+                ->fields(array('lsid', 'mtid', 'smtid', 'total'))
+                ->values(array($lsid, $mtid, $smtid, @$sectionname[3] ? $sectionname[3] : 1))
+                ->exec();
         }
         $_SESSION['message'] = sprintf(lang('LANG_LAYOUT_CREATED'), $_REQUEST['name']);
         header("Location: /admin/" . $site->arg(1), true, 302);
@@ -55,7 +73,10 @@ if (@$_REQUEST['save']) {
     }
 }
 
-$mysql->statement('SELECT * FROM layouttypes');
+$mysql->reset()
+    ->select()
+    ->from('layouttypes')
+    ->exec();
 
 $types = array();
 foreach ($mysql->result() as $item) {

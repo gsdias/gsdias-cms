@@ -22,7 +22,12 @@ if (@$site->arg(2) == 'images') {
                 ->values(array($name[0], @$name[1]))
                 ->exec();
         } else {
-            $mysql->statement('SELECT iid, extension FROM images WHERE iid = ?;', array($iid));
+            $mysql->reset()
+                ->select('iid, extension')
+                ->from('images')
+                ->where('iid = ?')
+                ->values($iid)
+                ->exec();
         }
 
         $image = $mysql->singleline();

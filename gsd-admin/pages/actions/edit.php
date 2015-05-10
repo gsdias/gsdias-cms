@@ -73,14 +73,24 @@ if (@$_REQUEST['save']) {
                     'style' => ''
                 );
 
-                $mysql->statement('UPDATE pagemodules SET data = ? WHERE pmid = ?;', array(serialize($value), substr($module, 9)));
+                $mysql->reset()
+                    ->update('pagemodules')
+                    ->fields(array('data'))
+                    ->where('pmid = ?')
+                    ->values(array(serialize($value), substr($module, 9)))
+                    ->exec();
 
             }
         }
 
         if (sizeof($modules)) {
             foreach ($modules as $id => $value) {
-                $mysql->statement('UPDATE pagemodules SET data = ? WHERE pmid = ?;', array(serialize($value), $id));
+                $mysql->reset()
+                    ->update('pagemodules')
+                    ->fields(array('data'))
+                    ->where('pmid = ?')
+                    ->values(array(serialize($value), $id))
+                    ->exec();
             }
         }
 
