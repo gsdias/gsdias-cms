@@ -3,18 +3,18 @@
 /**
  * @author     Goncalo Silva Dias <mail@gsdias.pt>
  * @copyright  2014-2015 GSDias
+ *
  * @version    1.2
+ *
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
-
 if (!IS_ADMIN && !IS_EDITOR) {
-    header("Location: /admin/" . $site->arg(1), true, 302);
+    header('Location: /admin/'.$site->arg(1), true, 302);
     exit;
 }
 
 if (@$_REQUEST['save']) {
-
     $defaultfields = array('name', 'description', 'tags', 'extension', 'width', 'height', 'size');
 
     $fields = array('creator');
@@ -23,27 +23,25 @@ if (@$_REQUEST['save']) {
 
     $name = explode('.', $_FILES['asset']['name']);
     $extension = end($name);
-        
-    $size = getimagesize($_FILES['asset']["tmp_name"]);
-    
+
+    $size = getimagesize($_FILES['asset']['tmp_name']);
+
     $_REQUEST['extension'] = $extension;
     $_REQUEST['width'] = $size[0];
     $_REQUEST['height'] = $size[1];
-    $_REQUEST['size'] = round(filesize($_FILES['asset']["tmp_name"]) / 1000, 0) . 'KB';
-    
+    $_REQUEST['size'] = round(filesize($_FILES['asset']['tmp_name']) / 1000, 0).'KB';
+
     $result = $csection->add($defaultfields, $fields, $values);
 
     if ($result['errnum']) {
         $tpl->setvar('ERRORS', lang('LANG_IMAGE_ERROR'));
         $tpl->setcondition('ERRORS');
-
     } else {
-        
         $id = $mysql->lastInserted();
-        
-        $file = savefile ($_FILES['asset'], ASSETPATH . 'images/', null, null, $id);
 
-        header("Location: /admin/" . $site->arg(1), true, 302);
+        $file = savefile($_FILES['asset'], ASSETPATH.'images/', null, null, $id);
+
+        header('Location: /admin/'.$site->arg(1), true, 302);
         exit;
     }
 }

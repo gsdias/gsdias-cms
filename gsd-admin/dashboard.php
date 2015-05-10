@@ -3,11 +3,12 @@
 /**
  * @author     Goncalo Silva Dias <mail@gsdias.pt>
  * @copyright  2014-2015 GSDias
+ *
  * @version    1.2
+ *
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
-
 $mysql->reset()
     ->select()
     ->from('users')
@@ -23,7 +24,7 @@ foreach ($mysql->result() as $userlist) {
     $users[] = array(
         'ID' => $userlist->uid,
         'NAME' => $userlist->name,
-        'CREATED' => $userlist->last_login ? timeago(dateDif($created[0], date('Y-m-d', time())), $created[1]) : lang('LANG_NEVER')
+        'CREATED' => $userlist->last_login ? timeago(dateDif($created[0], date('Y-m-d', time())), $created[1]) : lang('LANG_NEVER'),
     );
 }
 $tpl->setarray('USERS', $users);
@@ -45,7 +46,7 @@ if ($mysql->total) {
         $pages[] = array(
             'ID' => $pagelist->pid,
             'NAME' => $pagelist->url,
-            'CREATED' => timeago(dateDif($created[0], date('Y-m-d',time())), $created[1])
+            'CREATED' => timeago(dateDif($created[0], date('Y-m-d', time())), $created[1]),
         );
     }
     $tpl->setarray('PAGES', $pages);
@@ -66,7 +67,7 @@ if ($mysql->total) {
         $images[] = array(
             'ID' => $imagelist->iid,
             'NAME' => $imagelist->name,
-            'CREATED' => timeago(dateDif($created[0], date('Y-m-d',time())), $created[1])
+            'CREATED' => timeago(dateDif($created[0], date('Y-m-d', time())), $created[1]),
         );
     }
     $tpl->setarray('IMAGES', $images);
@@ -87,14 +88,14 @@ if ($mysql->total) {
         $documents[] = array(
             'ID' => $documentlist->did,
             'NAME' => $documentlist->name,
-            'CREATED' => timeago(dateDif($created[0], date('Y-m-d',time())), $created[1])
+            'CREATED' => timeago(dateDif($created[0], date('Y-m-d', time())), $created[1]),
         );
     }
     $tpl->setarray('DOCUMENTS', $documents);
 }
 
-$file = CLIENTPATH . 'include/admin/dashboard' . PHPEXT;
+$file = CLIENTPATH.'include/admin/dashboard'.PHPEXT;
 
 if (is_file($file)) {
-    include_once($file);
+    include_once $file;
 }

@@ -216,6 +216,17 @@ module.exports = function (grunt) {
             options: {
                 config: '.jscsrc'
             }
+        },
+        phpcsfixer: {
+            app: {
+                dir: '../gsd-class' // or ['src/models', 'src/lib']
+            },
+            options: {
+                bin: '/Users/goncalo.silvadias/.composer/vendor/bin/php-cs-fixer',
+                ignoreExitCode: true,
+                level: 'all',
+                quiet: true
+            }
         }
     });
 

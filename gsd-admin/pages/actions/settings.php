@@ -3,13 +3,13 @@
 /**
  * @author     Goncalo Silva Dias <mail@gsdias.pt>
  * @copyright  2014-2015 GSDias
+ *
  * @version    1.2
+ *
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
-
 if (@$_REQUEST['save']) {
-
     $mysql->reset()
         ->select('count(*) AS total, pid')
         ->from('pages')
@@ -18,14 +18,11 @@ if (@$_REQUEST['save']) {
         ->exec();
 
     $condition = $mysql->singleline();
-    
+
     if ($condition->total > 0 && $condition->pid != $site->arg(2)) {
-        
         $tpl->setvar('ERRORS', lang('LANG_PAGE_ALREADY_EXISTS'));
         $tpl->setcondition('ERRORS');
-        
     } else {
-    
         if ($_REQUEST['prid']) {
             $defaultfields = array('pid', 'title', 'description', 'tags', 'keywords', 'og_title', 'og_description', 'og_image', 'show_menu', 'require_auth', 'published', 'creator', 'modified');
 
@@ -55,7 +52,7 @@ if (@$_REQUEST['save']) {
             $fieldsupdate = '';
 
             foreach ($defaultfields as $field) {
-                $fieldsupdate .= sprintf(", `%s` = ?", $field);
+                $fieldsupdate .= sprintf(', `%s` = ?', $field);
                 $review[] = $reviewpage->{$field};
             }
 
@@ -79,7 +76,6 @@ if (@$_REQUEST['save']) {
                 ->where('prid = ?')
                 ->values($_REQUEST['prid'])
                 ->exec();
-
         }
 
         $mysql->reset()
@@ -142,7 +138,7 @@ if (@$_REQUEST['save']) {
         WHERE p.pid = ?;', array(
             $_REQUEST['url'],
             $_REQUEST['url'],
-            $site->arg(2)
+            $site->arg(2),
         ));
 
 //        $mysql->reset()
@@ -162,7 +158,7 @@ if (@$_REQUEST['save']) {
         SET p.beautify = concat(if(pp.beautify IS NULL, "", pp.beautify), p.url)
         WHERE p.parent = ?;', array($site->arg(2)));
 
-        header("Location: /admin/pages", true, 302);
+        header('Location: /admin/pages', true, 302);
         exit;
     }
 }

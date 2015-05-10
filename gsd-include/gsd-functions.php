@@ -3,23 +3,25 @@
 /**
  * @author     Goncalo Silva Dias <mail@gsdias.pt>
  * @copyright  2014-2015 GSDias
+ *
  * @version    1.2
+ *
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
-
-function GSDClassLoading($className) {
-
+function GSDClassLoading($className)
+{
     $className = str_replace(array('GSD\\Extended\\', 'GSD\\'), array(CLIENTCLASSPATH, CLASSPATH), $className);
 
     if (is_file($className.PHPEXT)) {
-        include_once($className.PHPEXT);
-    } else if (is_file($className.PHPEXT)) {
-        include_once($className.PHPEXT);
+        include_once $className.PHPEXT;
+    } elseif (is_file($className.PHPEXT)) {
+        include_once $className.PHPEXT;
     }
 }
 
-function lang ($text, $option = 'NONE') {
+function lang($text, $option = 'NONE')
+{
     global $site;
 
     if (@$site->isFrontend) {
@@ -48,59 +50,79 @@ function lang ($text, $option = 'NONE') {
     return $translated;
 }
 
-function isuploaded ($folder, $filename) {
+function isuploaded($folder, $filename)
+{
     $found = '';
     if ($handle = opendir($folder)) {
         while (false !== ($file = readdir($handle))) {
-            if (strpos($file, $filename) > -1) $found = $folder . '/' . $file;
+            if (strpos($file, $filename) > -1) {
+                $found = $folder.'/'.$file;
+            }
         }
         closedir($handle);
     }
+
     return $found;
 }
 
-/** 
-  * @desc compare extension file with given list
-  * @param string $filename - name of the file
-  * @param array $allowedtypes - list of allowed types
-  * @return bool - success or failure 
-*/  
-function checkfiletype ($filename, $allowedtypes = array()) {
+/**
+ * @desc compare extension file with given list
+ *
+ * @param string $filename - name of the file
+ * @param array $allowedtypes - list of allowed types
+ *
+ * @return bool - success or failure
+ */
+function checkfiletype($filename, $allowedtypes = array())
+{
     $allowed = 0;
-    $filename = explode(".",$filename);
-    foreach ($allowedtypes as $type)
-        if (strtolower($type) == strtolower($filename[sizeof($filename)-1]))
-        $allowed = 1;
-        return $allowed;
-}
+    $filename = explode('.', $filename);
+    foreach ($allowedtypes as $type) {
+        if (strtolower($type) == strtolower($filename[sizeof($filename) - 1])) {
+            $allowed = 1;
+        }
+    }
 
-/** 
-  * @desc trims given text with given length
-  * @param string $text - text to be treated
-  * @param int $length - number characters before trims the text
-  * @return string - trimmed text with ellipsis if needed
-*/  
-function trimtext ($text, $length) {
-    return mb_strlen($text) < $length ? $text : mb_substr ($text, 0, mb_strpos($text, ' ', $length)) . '(...)';
-}
-
-/** 
-  * @desc changes the name of a given file keeping the same extension
-  * @param string $old - current name of file with extension
-  * @param string $new - name of file to be changed
-  * @return string - new name with same extension
-*/  
-function filerename ($old, $new) {
-    $old = explode(".", $old);
-    return $new . '.' . strtolower($old[sizeof($old) - 1]);
+    return $allowed;
 }
 
 /**
-  * @desc presents the date with the right format (DD/MM/YYYY)
-  * @param string $date - date
-  * @return string $date - formated date
-*/
-function dateformat ($date = '') {
+ * @desc trims given text with given length
+ *
+ * @param string $text - text to be treated
+ * @param int $length - number characters before trims the text
+ *
+ * @return string - trimmed text with ellipsis if needed
+ */
+function trimtext($text, $length)
+{
+    return mb_strlen($text) < $length ? $text : mb_substr($text, 0, mb_strpos($text, ' ', $length)).'(...)';
+}
+
+/**
+ * @desc changes the name of a given file keeping the same extension
+ *
+ * @param string $old - current name of file with extension
+ * @param string $new - name of file to be changed
+ *
+ * @return string - new name with same extension
+ */
+function filerename($old, $new)
+{
+    $old = explode('.', $old);
+
+    return $new.'.'.strtolower($old[sizeof($old) - 1]);
+}
+
+/**
+ * @desc presents the date with the right format (DD/MM/YYYY)
+ *
+ * @param string $date - date
+ *
+ * @return string $date - formated date
+ */
+function dateformat($date = '')
+{
     $express = '/^([\d]{1,2})-([\d]{1,2})-([\d]{4})$/';
 
     preg_match($express, $date, $matches);
@@ -112,40 +134,48 @@ function dateformat ($date = '') {
 }
 
 /**
-  * @desc calculates difference between to dates
-  * @param string $first - first date
-  * @param string $second - second date
-  * @return int - result of the difference in days
-*/  
-function dateDif ($first = null, $second = null) {
+ * @desc calculates difference between to dates
+ *
+ * @param string $first - first date
+ * @param string $second - second date
+ *
+ * @return int - result of the difference in days
+ */
+function dateDif($first = null, $second = null)
+{
     $first = isDate($first) ? explode('-', dateformat($first)) : time();
     $second = isDate($second) ? explode('-', dateformat($second)) : time();
+
     return mktime('0', '0', '0', $second[1], $second[2], $second[0]) - mktime('0', '0', '0', $first[1], $first[2], $first[0]);
 }
 
-function timeago ($seconds = 0, $hour = 0) {
+function timeago($seconds = 0, $hour = 0)
+{
     global $lang, $config;
-    
+
     $days = ceil($seconds / 3600 / 24);
     $months = $days > 30 ? $days / 30 : 0;
     $months = round($months, 0);
-    
+
     if ($months > 0) {
         $label = sprintf('%d %s %s', $months, $months > 1 ? sprintf(' %s', lang('LANG_MONTHS')) : lang('LANG_MONTH'), lang('LANG_AGO'));
     } else {
-        $label = $days > 0 ? $days . ( $days == 1 ? sprintf(' %s ', lang('LANG_DAY')) : sprintf(' %s ', lang('LANG_DAYS'))) . lang('LANG_AGO') : sprintf('%s ', lang('LANG_AT')) . date('H:i', strtotime($hour));
+        $label = $days > 0 ? $days.($days == 1 ? sprintf(' %s ', lang('LANG_DAY')) : sprintf(' %s ', lang('LANG_DAYS'))).lang('LANG_AGO') : sprintf('%s ', lang('LANG_AT')).date('H:i', strtotime($hour));
     }
-    
+
     return $label;
 }
 
-/** 
-  * @desc checks if the given input is a valid date
-  * @param string $date - given date
-  * @return boolean - success of failure
-*/  
-function isDate ($date = null) {
-    $date = str_replace(array("/", "."), array("-", "-"), $date);
+/**
+ * @desc checks if the given input is a valid date
+ *
+ * @param string $date - given date
+ *
+ * @return bool - success of failure
+ */
+function isDate($date = null)
+{
+    $date = str_replace(array('/', '.'), array('-', '-'), $date);
 
     $express = '/^([\d]{4})-([\d]{1,2})-([\d]{1,2})$/';
 
@@ -166,63 +196,77 @@ function isDate ($date = null) {
     return 0;
 }
 
-/** 
-  * @desc converts english date to portuguese
-  * @param string $date - given date
-  * @return string - changed date
-*/  
-function datapt ($date = null) {
+/**
+ * @desc converts english date to portuguese
+ *
+ * @param string $date - given date
+ *
+ * @return string - changed date
+ */
+function datapt($date = null)
+{
     $date = str_replace(array('Feb', 'Apr', 'May', 'Aug', 'Sep', 'Oct', 'Dec'), array('Fev', 'Abr', 'Mai', 'Ago', 'Set', 'Out', 'Dez'), $date);
+
     return $date;
 }
 
 /**
- * Formata uma data
+ * Formata uma data.
  */
-function data ($data = null) {
+function data($data = null)
+{
     $data = $data ? explode('-', $data) : $data;
-    $data[1] = str_replace(array('01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'),array('Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'), $data[1]);
-    return $data[2] . ' de ' . $data[1] . ' de ' . $data[0];
+    $data[1] = str_replace(array('01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'), array('Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'), $data[1]);
+
+    return $data[2].' de '.$data[1].' de '.$data[0];
 }
 
 /**
- * Inverte o formato de uma data
+ * Inverte o formato de uma data.
  */
-function reverseData ($data) {
-    if (!$data)
+function reverseData($data)
+{
+    if (!$data) {
         return;
-    $data = str_replace(array("/", "."), array("-", "-"), $data);
+    }
+    $data = str_replace(array('/', '.'), array('-', '-'), $data);
     $data = explode('-', $data);
-    return $data[2] . '-' . $data[1] . '-' . $data[0];
+
+    return $data[2].'-'.$data[1].'-'.$data[0];
 }
 
 /**
- * Inverte o formato de uma data
+ * Inverte o formato de uma data.
  */
-function smallData ($data) {
-    if (!$data)
+function smallData($data)
+{
+    if (!$data) {
         return;
-    $data = str_replace(array("/", "."), array("-", "-"), $data);
+    }
+    $data = str_replace(array('/', '.'), array('-', '-'), $data);
     $data = explode('-', $data);
-    return substr($data[0], 2, 2) . '-' . $data[1] . '-' . $data[2];
+
+    return substr($data[0], 2, 2).'-'.$data[1].'-'.$data[2];
 }
 
-/** 
-  * @desc save file to disk
-  * @param string $file - name of file
-  * @param string $path - internal path to save
-  * @param string $type - allowed file types
-  * @param string $nottype - not allowed file types
-  * @param string $rename - new name of file
-  * @return string - return new file name if given
-*/  
-function savefile ($file, $path, $type = null, $nottype = null, $rename = null) {
-
+/**
+ * @desc save file to disk
+ *
+ * @param string $file - name of file
+ * @param string $path - internal path to save
+ * @param string $type - allowed file types
+ * @param string $nottype - not allowed file types
+ * @param string $rename - new name of file
+ *
+ * @return string - return new file name if given
+ */
+function savefile($file, $path, $type = null, $nottype = null, $rename = null)
+{
     if ($file['error'] == 0) {
         $newfilename = $file['name'];
-        $typefile = explode("/", $file['type']);
+        $typefile = explode('/', $file['type']);
         if (($type && $type == $typefile[0]) || ($nottype && $nottype != $typefile[0]) || (!$type && !$nottype)) {
-            $ext = explode(".", $file['name']);
+            $ext = explode('.', $file['name']);
             $ext = $ext[sizeof($ext) - 1];
             if ($rename) {
                 $newfilename = filerename($file['name'], $rename);
@@ -231,47 +275,47 @@ function savefile ($file, $path, $type = null, $nottype = null, $rename = null) 
             if (!is_dir($path)) {
                 mkdir($path, 0777);
             }
-            
-            move_uploaded_file($file["tmp_name"], $path . $newfilename);
+
+            move_uploaded_file($file['tmp_name'], $path.$newfilename);
+
             return $newfilename;
         }
     }
+
     return '';
 }
 
 #http://stackoverflow.com/questions/1334398/how-to-delete-a-folder-with-contents-using-php
-function removefile ($path) {
-    if (is_dir($path) === true)
-    {
+function removefile($path)
+{
+    if (is_dir($path) === true) {
         $files = array_diff(scandir($path), array('.', '..'));
 
-        foreach ($files as $file)
-        {
-            removefile(realpath($path) . '/' . $file);
+        foreach ($files as $file) {
+            removefile(realpath($path).'/'.$file);
         }
 
         return rmdir($path);
-    }
-
-    else if (is_file($path) === true)
-    {
+    } elseif (is_file($path) === true) {
         return unlink($path);
     }
 
     return false;
 }
 
-function toAscii($str) {
+function toAscii($str)
+{
     setlocale(LC_ALL, 'en_US.UTF8');
-	$clean = iconv('UTF-8', 'ASCII//TRANSLIT', $str);
-	$clean = preg_replace("/[^a-zA-Z0-9\/_| -]/", '', $clean);
-	$clean = strtolower(trim($clean, '-'));
-	$clean = preg_replace("/[\/_| -]+/", '-', $clean);
+    $clean = iconv('UTF-8', 'ASCII//TRANSLIT', $str);
+    $clean = preg_replace("/[^a-zA-Z0-9\/_| -]/", '', $clean);
+    $clean = strtolower(trim($clean, '-'));
+    $clean = preg_replace("/[\/_| -]+/", '-', $clean);
 
-	return $clean;
+    return $clean;
 }
 
-function getLanguage() {
+function getLanguage()
+{
     global $site, $languages, $user;
 
     $languageList = array_keys($languages);
@@ -289,7 +333,6 @@ function getLanguage() {
     $list[] = @$site->locale;
 
     foreach ($list as $prefered) {
-
         foreach ($languageList as $key) {
             $decomposed = explode('_', $key);
 

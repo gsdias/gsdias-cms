@@ -3,16 +3,19 @@
 /**
  * @author     Goncalo Silva Dias <mail@gsdias.pt>
  * @copyright  2014-2015 GSDias
+ *
  * @version    1.2
+ *
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
 
 #### GET
 
-class apiGet {
-
-    function images ($fields, $extra, $doc = false) {
+class apiGet
+{
+    public function images($fields, $extra, $doc = false)
+    {
         global $mysql, $api;
         $output = array('error' => 0, 'message' => lang('LANG_NO_IMAGES'));
         $requiredFields = array();
@@ -23,7 +26,7 @@ class apiGet {
         }
 
         if (!$api->requiredFields($fields, $requiredFields)) {
-            return array('error' => -3, 'message' => 'Missing required fields' );
+            return array('error' => -3, 'message' => 'Missing required fields');
         }
 
         $mysql->reset()
@@ -47,12 +50,15 @@ class apiGet {
                 }
                 array_push($output['data']['list'], $array);
             }
+
             return $output['data']['list'];
         }
+
         return $output;
     }
 
-    function pages ($fields, $extra, $doc = false) {
+    public function pages($fields, $extra, $doc = false)
+    {
         global $mysql, $api;
 
         $output = array('error' => 0, 'message' => lang('LANG_NO_IMAGES'));
@@ -65,10 +71,10 @@ class apiGet {
         }
 
         if (!$api->requiredFields($fields, $requiredFields)) {
-            return array('error' => -3, 'message' => 'Missing required fields' );
+            return array('error' => -3, 'message' => 'Missing required fields');
         }
 
-        $functionname = 'paginator' . ucwords($fields['type']);
+        $functionname = 'paginator'.ucwords($fields['type']);
 
         $output = $api->extended->{$functionname}(array('page' => $fields['page'], 'numberPerPage' => $numberPerPage, 'output' => $output));
 

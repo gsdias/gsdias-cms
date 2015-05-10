@@ -3,25 +3,25 @@
 /**
  * @author     Goncalo Silva Dias <mail@gsdias.pt>
  * @copyright  2014-2015 GSDias
+ *
  * @version    1.2
+ *
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
-
 if (!IS_ADMIN && !IS_EDITOR) {
-    header("Location: /admin/" . $site->arg(1), true, 302);
+    header('Location: /admin/'.$site->arg(1), true, 302);
     exit;
 }
 
 if (@$_REQUEST['save']) {
-    
     $defaultfields = array('name', 'ltid', 'file');
 
     $fields = array('creator');
 
     $values = array($user->id);
 
-    $content = file_get_contents(sprintf(CLIENTTPLPATH . '_layouts/%s', $_REQUEST['layout']));
+    $content = file_get_contents(sprintf(CLIENTTPLPATH.'_layouts/%s', $_REQUEST['layout']));
 
     $_REQUEST['file'] = str_replace('.html', '', $_REQUEST['layout']);
 
@@ -31,8 +31,10 @@ if (@$_REQUEST['save']) {
 
     if ($lid) {
         preg_match_all(sprintf('#<!-- %s (.*?) -->#s', 'PLACEHOLDER'), $content, $matches, PREG_SET_ORDER);
-        $list = array ();
-        foreach ($matches as $match) array_push($list, $match[1]);
+        $list = array();
+        foreach ($matches as $match) {
+            array_push($list, $match[1]);
+        }
 
         while ($key = array_pop($list)) {
             $sectionname = explode(' ', $key);
@@ -65,7 +67,7 @@ if (@$_REQUEST['save']) {
                 ->exec();
         }
         $_SESSION['message'] = sprintf(lang('LANG_LAYOUT_CREATED'), $_REQUEST['name']);
-        header("Location: /admin/" . $site->arg(1), true, 302);
+        header('Location: /admin/'.$site->arg(1), true, 302);
         exit;
     } else {
         $tpl->setvar('ERRORS', lang('LANG_LAYOUT_ALREADY_EXISTS'));
@@ -83,10 +85,10 @@ foreach ($mysql->result() as $item) {
     $types[$item->ltid] = $item->name;
 }
 
-$types = new GSD\select( array ( 'list' => $types, 'id' => 'LAYOUTTYPE' ) );
+$types = new GSD\select(array('list' => $types, 'id' => 'LAYOUTTYPE'));
 $types->object();
 
-$templatefiles = scandir(CLIENTTPLPATH . '_layouts');
+$templatefiles = scandir(CLIENTTPLPATH.'_layouts');
 
 $templates = array();
 
@@ -96,5 +98,5 @@ foreach ($templatefiles as $file) {
     }
 }
 
-$templates = new GSD\select( array ( 'list' => $templates, 'id' => 'LAYOUT' ) );
+$templates = new GSD\select(array('list' => $templates, 'id' => 'LAYOUT'));
 $templates->object();

@@ -3,14 +3,15 @@
 /**
  * @author     Goncalo Silva Dias <mail@gsdias.pt>
  * @copyright  2014-2015 GSDias
+ *
  * @version    1.2
+ *
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
-
 if (!IS_ADMIN) {
     $_SESSION['error'] = lang('LANG_PAGE_NOPERMISSION');
-    header("Location: /admin/pages", true, 302);
+    header('Location: /admin/pages', true, 302);
     exit;
 }
 
@@ -41,10 +42,10 @@ if (!@$_REQUEST['confirm']) {
         $pages[] = array(
             'NAME' => $page->title,
             'LIST' => new GSD\select(array(
-                'name' => 'parent[' . $page->pid . ']',
+                'name' => 'parent['.$page->pid.']',
                 'list' => $_parents,
-                'selected' => $site->arg(2)
-            ))
+                'selected' => $site->arg(2),
+            )),
         );
     }
 
@@ -65,7 +66,7 @@ if (@$_REQUEST['confirm'] == $afirmative) {
     $currenturl = $result->url;
 
     if (!empty(@$_REQUEST['parent'])) {
-        foreach($_REQUEST['parent'] as $pid => $parent) {
+        foreach ($_REQUEST['parent'] as $pid => $parent) {
             $parent = $parent == $site->arg(2) ? 0 : $parent;
 
             $mysql->statement('UPDATE pages AS p
@@ -85,21 +86,17 @@ if (@$_REQUEST['confirm'] == $afirmative) {
     $result = $csection->remove();
 
     if ($result['errnum']) {
-
         $tpl->setvar('ERRORS', lang('LANG_PAGE_ERROR'));
         $tpl->setcondition('ERRORS');
-
     } else {
-
         $_SESSION['message'] = sprintf(lang('LANG_PAGE_REMOVED'), $title);
 
-        header("Location: /admin/pages", true, 302);
+        header('Location: /admin/pages', true, 302);
         exit;
-
     }
 }
 
 if (@$_REQUEST['confirm'] == $negative) {
-    header("Location: /admin/pages", true, 302);
+    header('Location: /admin/pages', true, 302);
     exit;
 }

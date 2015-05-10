@@ -3,37 +3,39 @@
 /**
  * @author     Goncalo Silva Dias <mail@gsdias.pt>
  * @copyright  2014-2015 GSDias
+ *
  * @version    1.2
+ *
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
-
 namespace GSD;
 
-class user implements iuser {
-    
+class user implements iuser
+{
     public $level, $email, $name, $firstName, $lastName, $id, $notifications, $code, $locale;
-    
-    public function __construct ($id = 0) {
-        
-        $this->reset(); 
+
+    public function __construct($id = 0)
+    {
+        $this->reset();
 
         if ($id !== 0) {
             $this->getuser($id);
         }
 
-        return 0; 
+        return 0;
     }
-    
-    public function reset () {
-        
+
+    public function reset()
+    {
         $this->level = -1;
         $this->email = $this->name = $this->id = null;
         $this->notifications = array();
-        $this->code = md5(sprintf("%s%s", rand(), time()));
+        $this->code = md5(sprintf('%s%s', rand(), time()));
     }
 
-    public function islogged () { 
+    public function islogged()
+    {
         global $mysql;
 
         $isLogged = $this->id != null;
@@ -46,37 +48,37 @@ class user implements iuser {
 //            }
 //        }
 
-        return $isLogged; 
+        return $isLogged;
     }
 
-    public function login ($email, $password, $extrafields = array()) {
+    public function login($email, $password, $extrafields = array())
+    {
         global $mysql, $site;
 
         $result = false;
         $fields = 'code, level, name, uid, email, locale';
         $user = array();
-        
+
         if (!empty($extrafields)) {
             foreach ($extrafields as $field) {
-                $fields .= sprintf(", %s", $field);
+                $fields .= sprintf(', %s', $field);
             }
         }
 
-        $mysql->statement('SELECT ' . $fields . '
+        $mysql->statement('SELECT '.$fields.'
         FROM users
         WHERE disabled IS NULL AND email = ? AND password = md5(?);', array($email, $password));
-        
+
         $result = $mysql->total === 1;
-        
+
         if ($result) {
-            
             $this->code = md5($_SERVER['REMOTE_ADDR'] + '' + time());
             $user = $mysql->singleline();
-            
+
             if ($user->level == 'user' && $site->arg(0) == 'admin') {
                 return 0;
             }
-            
+
             $names = explode(' ', $user->name);
             $this->id = $user->uid;
             $this->level = $user->level;
@@ -92,18 +94,20 @@ class user implements iuser {
               array($this->code, $this->id)
              );
         }
-        
+
         return !empty($extrafields) ? $user : $result;
     }
-    
-    public function logout(){
+
+    public function logout()
+    {
         unset($_SESSION);
         @session_destroy();
         header('location: /');
         exit;
     }
-    
-    public function getuser ($uid) {
+
+    public function getuser($uid)
+    {
         global $mysql;
 
         $mysql->statement(sprintf('SELECT code, level, name, uid, email FROM users WHERE uid = ?;'), array($uid));

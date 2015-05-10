@@ -3,22 +3,22 @@
 /**
  * @author     Goncalo Silva Dias <mail@gsdias.pt>
  * @copyright  2014-2015 GSDias
+ *
  * @version    1.2
+ *
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
-
 if (!IS_ADMIN && !IS_EDITOR) {
-    header("Location: /admin/" . $site->arg(1), true, 302);
+    header('Location: /admin/'.$site->arg(1), true, 302);
     exit;
 }
 
 if (@$_REQUEST['save']) {
-    
     $defaultfields = array('title', 'url', 'lid', 'description', 'keywords', 'tags', 'og_title', 'og_image', 'og_description', 'parent');
-    
+
     $fields = array('creator', 'index', 'show_menu', 'require_auth', 'created');
-    
+
     $mysql->reset()
         ->delete()
         ->from('redirect')
@@ -30,7 +30,7 @@ if (@$_REQUEST['save']) {
         ->select('max(`index`) AS max')
         ->from('pages')
         ->exec();
-    
+
     $index = @$mysql->singleresult()->max;
 
     $values = array(
@@ -38,7 +38,7 @@ if (@$_REQUEST['save']) {
         ($index != null ? $index + 1 : 0),
         @$_REQUEST['menu'] ? @$_REQUEST['menu'] : null,
         @$_REQUEST['auth'] ? @$_REQUEST['auth'] : null,
-        date('Y-m-d H:i:s', time())
+        date('Y-m-d H:i:s', time()),
     );
 
     $result = $csection->add($defaultfields, $fields, $values);
@@ -84,7 +84,7 @@ foreach ($mysql->result() as $item) {
     $types[$item->lid] = $item->name;
 }
 
-$types = new GSD\select( array ( 'list' => $types, 'id' => 'LAYOUT' ) );
+$types = new GSD\select(array('list' => $types, 'id' => 'LAYOUT'));
 $types->object();
 
 $mysql->reset()
@@ -97,5 +97,5 @@ foreach ($mysql->result() as $item) {
     $types[$item->pid] = $item->title;
 }
 
-$types = new GSD\select( array ( 'list' => $types, 'id' => 'PARENT' ) );
+$types = new GSD\select(array('list' => $types, 'id' => 'PARENT'));
 $types->object();

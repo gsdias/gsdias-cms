@@ -3,23 +3,25 @@
 /**
  * @author     Goncalo Silva Dias <mail@gsdias.pt>
  * @copyright  2014-2015 GSDias
+ *
  * @version    1.2
+ *
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
-
 namespace GSD;
 
-abstract class section implements isection {
-
+abstract class section implements isection
+{
     public $item = array();
 
-    public function __construct ($id = 0) {
-
+    public function __construct($id = 0)
+    {
         return 0;
     }
 
-    public function getlist ($options) {
+    public function getlist($options)
+    {
         global $tpl;
 
         $results = empty($options['results']) ? array() : $options['results'];
@@ -43,7 +45,7 @@ abstract class section implements isection {
             $list[] = $item;
         }
 
-        $tpl->setcondition(strtoupper($this->tablename($this)) . '_EXIST', !empty($list));
+        $tpl->setcondition(strtoupper($this->tablename($this)).'_EXIST', !empty($list));
 
         $tpl->setarray(strtoupper($this->tablename($this)), $list);
 
@@ -52,11 +54,12 @@ abstract class section implements isection {
         return array('list' => $list, 'results' => $results);
     }
 
-    public function getcurrent ($item = array()) {
+    public function getcurrent($item = array())
+    {
         global $site, $tpl;
 
         if (empty($item)) {
-            header("Location: /admin/" . $site->arg(1), true, 302);
+            header('Location: /admin/'.$site->arg(1), true, 302);
             exit;
         }
 
@@ -65,7 +68,7 @@ abstract class section implements isection {
         $fields = array();
 
         foreach ($item as $field => $value) {
-            $fields['CURRENT_' . strtoupper($this->tablename()) . '_'. strtoupper($field)] = $value;
+            $fields['CURRENT_'.strtoupper($this->tablename()).'_'.strtoupper($field)] = $value;
         }
 
         $tpl->setvars($fields);
@@ -73,10 +76,11 @@ abstract class section implements isection {
         return array('item' => $item, 'fields' => $fields);
     }
 
-    public function generatefields () {
+    public function generatefields()
+    {
         global $tpl, $mysql;
 
-        $func = $this->tablename() . 'fields';
+        $func = $this->tablename().'fields';
         $item = $this->item;
 
         $sectionextrafields = function_exists($func) ? $func() : array();
@@ -84,7 +88,6 @@ abstract class section implements isection {
             $extrafields = array();
 
             foreach ($sectionextrafields['list'] as $key => $extrafield) {
-
                 $extraclass = '';
 
                 switch ($sectionextrafields['types'][$key]) {
@@ -93,7 +96,7 @@ abstract class section implements isection {
                         'iid' => @$item->{$extrafield},
                         'height' => '100',
                         'width' => 'auto',
-                        'class' => sprintf('preview %s', @$item->{$extrafield} ? '' : 'is-hidden')
+                        'class' => sprintf('preview %s', @$item->{$extrafield} ? '' : 'is-hidden'),
                     ));
 
                     $partial = new tpl();
@@ -102,7 +105,7 @@ abstract class section implements isection {
                         'NAME' => $extrafield,
                         'IMAGE' => $image,
                         'VALUE' => @$item->{$extrafield} ? @$item->{$extrafield} : 0,
-                        'EMPTY' => @$item->{$extrafield} ? 'is-hidden' : ''
+                        'EMPTY' => @$item->{$extrafield} ? 'is-hidden' : '',
                     ));
                     $partial->setfile('_image');
 
@@ -115,15 +118,15 @@ abstract class section implements isection {
                         'name' => $extrafield,
                         'list' => $sectionextrafields['values'][$key],
                         'label' => $sectionextrafields['labels'][$key],
-                        'selected' => @$item->{$extrafield}
+                        'selected' => @$item->{$extrafield},
                     ));
                     break;
                     default:
-                    $field = (string)new input(array(
+                    $field = (string) new input(array(
                         'id' => $extrafield,
                         'name' => $extrafield,
                         'value' => @$item->{$extrafield},
-                        'label' => $sectionextrafields['labels'][$key]
+                        'label' => $sectionextrafields['labels'][$key],
                     ));
                     break;
                 }
@@ -136,12 +139,13 @@ abstract class section implements isection {
         }
     }
 
-    public function add ($defaultfields, $defaultsafter = array(), $defaultvalues = array()) {
+    public function add($defaultfields, $defaultsafter = array(), $defaultvalues = array())
+    {
         global $mysql;
-        
+
         $section = $this->tablename();
 
-        $extrafields = $this->extrafields ();
+        $extrafields = $this->extrafields();
 
         $fields = array_merge($defaultfields, $extrafields);
 
@@ -160,16 +164,17 @@ abstract class section implements isection {
             ->fields($fields)
             ->values($values)
             ->exec();
-        
+
         return array('total' => $mysql->total, 'errnum' => $mysql->errnum, 'errmsg' => $mysql->errmsg, 'id' => $mysql->lastinserted());
     }
-    
-    public function edit ($defaultfields, $defaultsafter = array(), $defaultvalues = array()) {
+
+    public function edit($defaultfields, $defaultsafter = array(), $defaultvalues = array())
+    {
         global $mysql, $site;
-        
+
         $section = $this->tablename();
-        
-        $extrafields = $this->extrafields ();
+
+        $extrafields = $this->extrafields();
 
         $values = array();
 
@@ -191,36 +196,38 @@ abstract class section implements isection {
             ->where(sprintf('%sid = ?', substr($section, 0, 1)))
             ->values($values)
             ->exec();
-        
+
         return array('total' => $mysql->total, 'errnum' => $mysql->errnum, 'id' => $site->arg(2));
     }
-    
-    public function remove () {
+
+    public function remove()
+    {
         global $mysql, $site;
-        
+
         $section = $this->tablename();
-        
+
         $mysql->reset()
             ->delete()
             ->from($section)
             ->where(sprintf('%sid = ?', substr($section, 0, 1)))
             ->values($site->arg(2))
             ->exec();
-        
+
         return array('total' => $mysql->total, 'errnum' => $mysql->errnum, 'id' => $site->arg(2));
     }
 
-    private function tablename () {
+    private function tablename()
+    {
         $class = str_replace('GSD\\', '', get_class($this));
 
         return substr($class, 0, 8) === 'Extended' ? substr($class, 17) : $class;
     }
 
-    protected function extrafields () {
-
+    protected function extrafields()
+    {
         $section = $this->tablename();
 
-        $_fields = $section . 'fields';
+        $_fields = $section.'fields';
 
         $fields = function_exists($_fields) ? $_fields() : array('list' => array());
 

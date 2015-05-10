@@ -3,11 +3,12 @@
 /**
  * @author     Goncalo Silva Dias <mail@gsdias.pt>
  * @copyright  2014-2015 GSDias
+ *
  * @version    1.2
+ *
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
-
 if (@$site->arg(2) == 'images') {
     $iid = is_numeric(@$site->arg(3)) ? $site->arg(3) : 0;
     $name = explode('.', @$site->arg(3));
@@ -32,19 +33,19 @@ if (@$site->arg(2) == 'images') {
 
         $image = $mysql->singleline();
 
-        $asset = sprintf(ASSETPATH . 'images/%d.%s', @$image->iid, @$image->extension);
+        $asset = sprintf(ASSETPATH.'images/%d.%s', @$image->iid, @$image->extension);
 
         if ($mysql->total) {
             $size = getimagesize($asset);
 
-            $fp = fopen($asset, "rb");
+            $fp = fopen($asset, 'rb');
             if ($size && $fp) {
                 header("Content-type: {$size['mime']}");
                 fpassthru($fp);
                 exit;
             }
         } else {
-            header("Location: /gsd-image.php", true, 302);
+            header('Location: /gsd-image.php', true, 302);
         }
     }
 }

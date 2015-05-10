@@ -3,11 +3,12 @@
 /**
  * @author     Goncalo Silva Dias <mail@gsdias.pt>
  * @copyright  2014-2015 GSDias
+ *
  * @version    1.2
+ *
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
-
 if (@$_REQUEST['save']) {
     $site->main = 'STEP2';
     $site->startpoint = 'index';
@@ -21,7 +22,6 @@ if (@$_REQUEST['save']) {
     if ($mysql->total) {
         $tpl->setvar('STEP2_MESSAGES', 'Admin user saved with success. You can login now. Don\'t forget to remove install files.');
     }
-
 } else {
     $site->main = 'STEP1';
     $site->startpoint = 'index';
@@ -33,7 +33,7 @@ if (@$_REQUEST['save']) {
     $database[@$_mysql['db']] = 1;
 
     if ($mysql->total) {
-        foreach($mysql->result() as $db) {
+        foreach ($mysql->result() as $db) {
             if ($db->Database == $_mysql['db']) {
                 $database[$_mysql['db']] = 0;
             }
@@ -53,7 +53,7 @@ if (@$_REQUEST['save']) {
     if ($mysql->total) {
         $found = serialize($mysql->result());
         $table_exists = array();
-        foreach($tables as $table => $value) {
+        foreach ($tables as $table => $value) {
             if (isset($tables[$table])) {
                 if (strpos($found, sprintf('"%s"', $table)) !== false) {
                     $status = '<span style="color: green;">Exists</span><br>';
@@ -64,7 +64,7 @@ if (@$_REQUEST['save']) {
 
                 $table_exists[] = array(
                     'NAME' => $table,
-                    'STATUS' => $status
+                    'STATUS' => $status,
                 );
             }
         }
@@ -74,16 +74,16 @@ if (@$_REQUEST['save']) {
     if (in_array(1, $tables)) {
         $tpl->setcondition('CREATETABLES');
         $table_exists = array();
-        foreach($tables as $table => $value) {
+        foreach ($tables as $table => $value) {
             $table_exists[] = array(
                 'NAME' => $table,
-                'STATUS' => createtable($table)
+                'STATUS' => createtable($table),
             );
         }
         $tpl->setarray('CREATETABLES', $table_exists);
 
-        if (is_file(CLIENTPATH . 'install' . PHPEXT)) {
-            include_once(CLIENTPATH . 'install' . PHPEXT);
+        if (is_file(CLIENTPATH.'install'.PHPEXT)) {
+            include_once CLIENTPATH.'install'.PHPEXT;
         }
     } else {
         $site->main = 'STEP2';
@@ -103,15 +103,16 @@ if (@$_REQUEST['save']) {
 
     if (!is_dir(ASSETPATH)) {
         mkdir(ASSETPATH, 0755);
-        mkdir(ASSETPATH . '/images', 0755);
-        mkdir(ASSETPATH . '/documents', 0755);
+        mkdir(ASSETPATH.'/images', 0755);
+        mkdir(ASSETPATH.'/documents', 0755);
     }
 }
 
-function createtable ($table) {
+function createtable($table)
+{
     global $mysql;
     $sentence = file_get_contents(sprintf('gsd-sql/table_%s.sql', $table));
-    $mysql->statement('SET foreign_key_checks = 0;' . $sentence . 'SET foreign_key_checks = 1;');
+    $mysql->statement('SET foreign_key_checks = 0;'.$sentence.'SET foreign_key_checks = 1;');
 
     if (!$mysql->errnum) {
         return sprintf('<span style="color: green;">Created</span><br>', $mysql->errmsg);

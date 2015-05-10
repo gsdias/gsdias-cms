@@ -3,15 +3,16 @@
 /**
  * @author     Goncalo Silva Dias <mail@gsdias.pt>
  * @copyright  2014-2015 GSDias
+ *
  * @version    1.2
+ *
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
-
 $width = is_numeric(@$_REQUEST['width']) ? $_REQUEST['width'] : 100;
 $height = is_numeric(@$_REQUEST['height']) ? $_REQUEST['height'] : 100;
 
-header("Content-type: image/png");
+header('Content-type: image/png');
 
 $out = imagecreatetruecolor($width, $height);
 $white = imagecolorallocate($out, 255, 255, 255);

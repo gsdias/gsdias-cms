@@ -3,37 +3,40 @@
 /**
  * @author     Goncalo Silva Dias <mail@gsdias.pt>
  * @copyright  2014-2015 GSDias
+ *
  * @version    1.2
+ *
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
-
 namespace GSD;
 
-class pages extends section implements isection {
-
-    public function __construct ($id = null) {
-        return 0; 
+class pages extends section implements isection
+{
+    public function __construct($id = null)
+    {
+        return 0;
     }
 
-    public function getlist ($options) {
+    public function getlist($options)
+    {
         global $mysql, $tpl;
 
         $search = @$_REQUEST['search'] ? sprintf(' WHERE p.title like "%%%s%%" ', $_REQUEST['search']) : '';
         $fromsql = sprintf('FROM pages AS p
         LEFT JOIN users AS u ON p.creator = u.uid
         LEFT JOIN pages AS pp ON p.parent = pp.pid %s ORDER BY p.`index`', $search);
-        $paginator = new paginator('FROM pages WHERE title like "%' . @$_REQUEST['search'] . '%" ORDER BY `index`;', @$options['numberPerPage'], @$_REQUEST['page']);
+        $paginator = new paginator('FROM pages WHERE title like "%'.@$_REQUEST['search'].'%" ORDER BY `index`;', @$options['numberPerPage'], @$_REQUEST['page']);
         $fields = empty($options['fields']) ? array() : $options['fields'];
 
         $tpl->setvar('SEARCH_VALUE', @$_REQUEST['search']);
 
-        $mysql->statement('SELECT p.*, concat(if(pp.url = "/" OR pp.url IS NULL, "", pp.url), p.url) AS url, p.creator AS creator_id, u.name AS creator_name ' . $fromsql . $paginator->pageLimit());
+        $mysql->statement('SELECT p.*, concat(if(pp.url = "/" OR pp.url IS NULL, "", pp.url), p.url) AS url, p.creator AS creator_id, u.name AS creator_name '.$fromsql.$paginator->pageLimit());
 
         $result = parent::getlist(array(
             'results' => $mysql->result(),
             'fields' => array_merge(array('pid', 'title', 'beautify', 'creator', 'creator_name', 'creator_id', 'index'), $fields),
-            'paginator' => $paginator
+            'paginator' => $paginator,
         ));
 
         if (!empty($result['list'])) {
@@ -47,7 +50,8 @@ class pages extends section implements isection {
         return $result;
     }
 
-    public function getcurrent ($id = 0) {
+    public function getcurrent($id = 0)
+    {
         global $mysql, $tpl;
 
         $mysql->statement('SELECT pages.*, pages.created, u.name AS creator FROM pages LEFT JOIN users AS u ON pages.creator = u.uid WHERE pages.pid = ?;', array($id));
@@ -55,12 +59,11 @@ class pages extends section implements isection {
         $result = parent::getcurrent($mysql->singleline());
 
         if (!empty($result['item'])) {
-
             $item = $result['item'];
             $created = explode(' ', $item->created);
             $fields = $result['fields'];
 
-            $fields['CURRENT_PAGES_CREATED'] = timeago(dateDif($created[0], date('Y-m-d',time())), $created[1]);
+            $fields['CURRENT_PAGES_CREATED'] = timeago(dateDif($created[0], date('Y-m-d', time())), $created[1]);
 
             $fields['MENU_CHECKED'] = @$item->show_menu ? 'checked="checked"' : '';
             $fields['AUTH_CHECKED'] = @$item->require_auth ? 'checked="checked"' : '';
@@ -71,7 +74,7 @@ class pages extends section implements isection {
                 'iid' => @$item->og_image,
                 'height' => '100',
                 'width' => 'auto',
-                'class' => sprintf('preview %s', $item->og_image ? '' : 'is-hidden')
+                'class' => sprintf('preview %s', $item->og_image ? '' : 'is-hidden'),
             ));
 
             $partial = new tpl();
@@ -80,7 +83,7 @@ class pages extends section implements isection {
                 'NAME' => 'og_image',
                 'VALUE' => $item->og_image,
                 'IMAGE' => $image,
-                'EMPTY' => $item->og_image ? 'is-hidden' : ''
+                'EMPTY' => $item->og_image ? 'is-hidden' : '',
             ));
             $partial->setfile('_image');
 
@@ -95,7 +98,7 @@ class pages extends section implements isection {
                 foreach ($mysql->result() as $field) {
                     $review[] = array(
                         'KEY' => $field->prid,
-                        'VALUE' => $field->modified
+                        'VALUE' => $field->modified,
                     );
                 }
                 $tpl->setarray('VERSION', $review);
@@ -107,11 +110,10 @@ class pages extends section implements isection {
 
             $parent = array();
             foreach ($mysql->result() as $field) {
-
                 $parent[] = array(
                     'KEY' => $field->pid,
                     'VALUE' => $field->title,
-                    'SELECTED' => $field->pid == $this->item->parent ? 'selected="selected"' : ''
+                    'SELECTED' => $field->pid == $this->item->parent ? 'selected="selected"' : '',
                 );
             }
             $tpl->setarray('PARENT', $parent);
@@ -120,15 +122,15 @@ class pages extends section implements isection {
         return $result['item'];
     }
 
-    public function generatefields () {
+    public function generatefields()
+    {
         global $tpl, $mysql;
 
-        parent::generatefields ();
+        parent::generatefields();
 
         $extrafields = array();
 
         if (!empty($this->item)) {
-
             $mysql->statement('SELECT *, mt.file, ls.label AS lsname, smt.file AS sfile
             FROM pagemodules AS pm
 LEFT JOIN layoutsections AS ls ON ls.lsid = pm.lsid
@@ -138,7 +140,6 @@ LEFT JOIN moduletypes AS smt ON smt.mtid = lsmt.smtid
 WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item->pid));
 
             foreach ($mysql->result() as $item) {
-
                 $item->data = unserialize($item->data);
 
                 $extra = array();
@@ -147,12 +148,12 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item->pid));
                         'iid' => @$item->data['list'][0][0]['value'],
                         'height' => '100',
                         'width' => 'auto',
-                        'class' => sprintf('preview %s', @$item->data['list'][0][0]['value'] ? '' : 'is-hidden')
+                        'class' => sprintf('preview %s', @$item->data['list'][0][0]['value'] ? '' : 'is-hidden'),
                     ));
 
                     $extra = array(
                         'IMAGE' => $image,
-                        'EMPTY' => @$item->data['list'][0][0]['value'] ? 'is-hidden' : ''
+                        'EMPTY' => @$item->data['list'][0][0]['value'] ? 'is-hidden' : '',
                     );
                 }
 
@@ -165,7 +166,6 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item->pid));
                 if ($item->sfile) {
                     $list = array();
                     foreach ($item->data['list'] as $index => $data1) {
-
                         $spartials = '';
                         if (gettype($data1) === 'array') {
                             foreach ($data1 as $data2) {
@@ -177,46 +177,45 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item->pid));
                                         'iid' => @$data['value'],
                                         'height' => '100',
                                         'width' => 'auto',
-                                        'class' => sprintf('preview %s', $data['value'] ? '' : 'is-hidden')
+                                        'class' => sprintf('preview %s', $data['value'] ? '' : 'is-hidden'),
                                     ));
 
                                     $extra = array(
                                         'IMAGE' => $image,
                                         'VALUE' => $data['value'] ? $data['value'] : 0,
-                                        'EMPTY' => $data['value'] ? 'is-hidden' : ''
+                                        'EMPTY' => $data['value'] ? 'is-hidden' : '',
                                     );
                                 }
                                 $spartial = new tpl();
 
                                 $spartial->setvars(array_merge(array(
-                                    'NAME' => 'value_pm_s_' . $index . '_' . $item->pmid . '[]',
+                                    'NAME' => 'value_pm_s_'.$index.'_'.$item->pmid.'[]',
                                     'VALUE' => $data['value'],
                                     'CLASS' => $data['class'],
                                     'STYLE' => $data['style'],
-                                    'LABEL' => 'Value'
+                                    'LABEL' => 'Value',
                                 ), $extra));
                                 $spartial->setfile($item->sfile);
 
                                 $spartials .= $spartial;
-
                             }
                         }
                         $list[] = array(
                             'ITEM' => $spartials,
-                            'EXTRACLASS' => $item->sfile == '_image' ? 'image' : ''
+                            'EXTRACLASS' => $item->sfile == '_image' ? 'image' : '',
                         );
                     }
-                        
+
                     $spartial = new tpl();
 
                     $spartial->setvars(array(
-                        'NAME' => 'value_pm_' . ($index + 1) . '_s' . $item->pmid . '[]',
+                        'NAME' => 'value_pm_'.($index + 1).'_s'.$item->pmid.'[]',
                         'EMPTY' => '',
-                        'IMAGE' => new image(array (
+                        'IMAGE' => new image(array(
                             'height' => '100',
                             'width' => '100',
-                            'class' => 'preview is-hidden'
-                        ))
+                            'class' => 'preview is-hidden',
+                        )),
                     ));
                     $spartial->setfile($item->sfile);
 
@@ -227,7 +226,7 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item->pid));
 
                 $extrafields[] = array(
                     'FIELD' => $partial,
-                    'EXTRACLASS' => 'image'
+                    'EXTRACLASS' => 'image',
                 );
             }
             $tpl->setarray('FIELD', $extrafields, true);
@@ -235,7 +234,8 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item->pid));
         $tpl->setcondition('EXTRAFIELDS', !empty($extrafields));
     }
 
-    public function add ($defaultfields = array(), $defaultsafter = array(), $defaultvalues = array()) {
+    public function add($defaultfields = array(), $defaultsafter = array(), $defaultvalues = array())
+    {
         global $mysql, $site;
 
         $result = parent::add($defaultfields, $defaultsafter, $defaultvalues);
@@ -245,7 +245,8 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item->pid));
         return $result;
     }
 
-    public function edit ($defaultfields = array(), $defaultsafter = array(), $defaultvalues = array()) {
+    public function edit($defaultfields = array(), $defaultsafter = array(), $defaultvalues = array())
+    {
         global $mysql, $site;
 
         $mysql->reset()
@@ -279,7 +280,8 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item->pid));
         return $result;
     }
 
-    private function update_beautify ($pid) {
+    private function update_beautify($pid)
+    {
         global $mysql;
 
         $mysql->statement('SELECT pp.beautify, p.url
@@ -294,23 +296,25 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item->pid));
         WHERE pid = ?;', array(sprintf('%s%s', $result->beautify, $result->url), $pid));
     }
 
-    private function page_review ($defaultfields = array(), $fields = array()) {
+    private function page_review($defaultfields = array(), $fields = array())
+    {
         global $mysql, $user, $site;
 
         array_push($fields, $user->id);
         array_push($fields, $site->arg(2));
-        $questions = str_repeat(", ? ", sizeof($fields));
+        $questions = str_repeat(', ? ', sizeof($fields));
         $mysql->statement(sprintf('INSERT INTO pages_review (%s, creator, pid) values (%s);', implode(',', $defaultfields), substr($questions, 2)), $fields);
     }
 
-    private function partialtpl ($item, $lsname, $pmid, $extra) {
+    private function partialtpl($item, $lsname, $pmid, $extra)
+    {
         $partial = new tpl();
         $partial->setvars(array_merge(array(
             'LABEL' => lang(sprintf('LANG_%s', $lsname)),
-            'NAME' => 'value_pm_' . $pmid,
+            'NAME' => 'value_pm_'.$pmid,
             'VALUE' => @$item['value'],
             'CLASS' => @$item['class'],
-            'STYLE' => @$item['style']
+            'STYLE' => @$item['style'],
         ), $extra));
 
         return $partial;

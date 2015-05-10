@@ -3,21 +3,23 @@
 /**
  * @author     Goncalo Silva Dias <mail@gsdias.pt>
  * @copyright  2014-2015 GSDias
+ *
  * @version    1.2
+ *
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
-
 namespace GSD;
 
-class site {
-
+class site
+{
     public $name, $email, $ga, $fb, $uri, $page, $main, $startpoint, $pagemodules, $layout, $protocol, $isFrontend;
     protected $path;
 
-    public function __construct () {
+    public function __construct()
+    {
         global $mysql, $tpl;
-        
+
         $this->protocol = (stripos($_SERVER['SERVER_PROTOCOL'], 'https') === true ? 'https://' : 'http://');
 
         $this->startpoint = 'index';
@@ -37,10 +39,10 @@ class site {
             if (strpos($name, '_image') !== false) {
                 $image = new GSD\image(array('iid' => $option->value, 'width' => 'auto', 'height' => 'auto'));
                 $name = str_replace(array('_image', '_select'), '', $name);
-                $tpl->setvar('SITE_' . strtoupper($name), $image);
+                $tpl->setvar('SITE_'.strtoupper($name), $image);
             } else {
                 $name = str_replace(array('_image', '_select'), '', $name);
-                $tpl->setvar('SITE_' . strtoupper($name), $option->value);
+                $tpl->setvar('SITE_'.strtoupper($name), $option->value);
             }
         }
 
@@ -56,7 +58,8 @@ class site {
         }
     }
 
-    public function path () {
+    public function path()
+    {
         $path = explode('/', $this->uri);
 
         array_shift($path);
@@ -64,7 +67,8 @@ class site {
         $this->path = $path;
     }
 
-    public function page () {
+    public function page()
+    {
         global $tpl, $mysql, $config;
 
         if (!IS_INSTALLED) {
@@ -79,7 +83,7 @@ class site {
             ->exec();
 
         if ($mysql->total) {
-            header('Location: ' . $mysql->singleresult(), true, 301);
+            header('Location: '.$mysql->singleresult(), true, 301);
             exit;
         }
 
@@ -94,7 +98,6 @@ class site {
             ->exec();
 
         if ($mysql->total) {
-
             $page = $mysql->singleline();
 
             $this->page = $page;
@@ -106,8 +109,8 @@ class site {
                 'PAGE_KEYWORDS' => $page->keywords,
                 'PAGE_OG_TITLE' => $page->og_title ? $page->og_title : $page->title,
                 'PAGE_OG_DESCRIPTION' => $page->og_description,
-                'PAGE_OG_IMAGE' => $this->protocol . $_SERVER['HTTP_HOST'] . ASSETPATHURL . 'images/' . $page->og_image,
-                'PAGE_CANONICAL' => $this->protocol . $_SERVER['HTTP_HOST'] . '/' . $this->uri
+                'PAGE_OG_IMAGE' => $this->protocol.$_SERVER['HTTP_HOST'].ASSETPATHURL.'images/'.$page->og_image,
+                'PAGE_CANONICAL' => $this->protocol.$_SERVER['HTTP_HOST'].'/'.$this->uri,
             ));
 
             $this->main = trim(str_replace('.html', '', $page->file));
@@ -128,25 +131,25 @@ class site {
                 }
                 $this->pagemodules = $pagemodules;
             }
-
         } else {
             $this->startpoint = '404';
             $tpl->setvar('PAGE_TITLE', $this->name);
         }
-        $tpl->setvar('PAGE_CANONICAL', $this->protocol . $_SERVER['HTTP_HOST'] . $this->uri);
+        $tpl->setvar('PAGE_CANONICAL', $this->protocol.$_SERVER['HTTP_HOST'].$this->uri);
     }
 
-    public function arg ($pos) {
-
+    public function arg($pos)
+    {
         return @$this->path[$pos];
     }
 
-    public function param ($name) {
-
+    public function param($name)
+    {
         return @$_REQUEST[$name];
     }
 
-    public function searchpage ($givenpath) {
+    public function searchpage($givenpath)
+    {
         $temp = $this->uri;
         $this->startpoint = 'index';
         $this->main = '';

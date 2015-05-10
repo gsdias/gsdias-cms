@@ -3,38 +3,41 @@
 /**
  * @author     Goncalo Silva Dias <mail@gsdias.pt>
  * @copyright  2014-2015 GSDias
+ *
  * @version    1.2
+ *
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
-
 namespace GSD;
 
-interface inotification {
-    public function reset ($uid);
-    public function mark ();
-    public function add ($message);
-    public function save ();
+interface inotification
+{
+    public function reset($uid);
+    public function mark();
+    public function add($message);
+    public function save();
 }
 
-class notification implements inotification {
+class notification implements inotification
+{
     public $total, $list, $read, $unread, $uid;
-    
-    public function __construct ($uid = null) {
-        
+
+    public function __construct($uid = null)
+    {
         $this->reset($uid);
-        
-        return $this; 
-        
+
+        return $this;
     }
-    public function reset($uid) {
+    public function reset($uid)
+    {
         global $mysql;
-        
+
         $mysql->statement('SELECT notifications FROM users WHERE uid = :uid;', array(':uid' => $uid));
-        
+
 //        $notifications = json_decode(array($mysql->singleresult()), true);
         $notifications = array();
-        
+
         $this->read = $this->unread = array();
         $this->list = is_array($notifications) ? $notifications : array();
         $this->uid = $uid;
@@ -48,14 +51,15 @@ class notification implements inotification {
                 }
             }
         }
-        
+
         $this->total = sizeof($this->unread);
     }
-        
-    public function mark () {
+
+    public function mark()
+    {
         $read = array();
-        
-        foreach($this->unread as $notification) {
+
+        foreach ($this->unread as $notification) {
             $notification['s'] = 1;
             $read[] = $notification;
             $read[sizeof($read) - 1]['s'] = 1;
@@ -67,37 +71,39 @@ class notification implements inotification {
         $this->list = $merged;
         $this->total = 0;
     }
-    
-    public function add ($message) {
+
+    public function add($message)
+    {
         $notification = array('m' => $message, 's' => 0);
-        
+
         array_push($this->unread, $notification);
         array_push($this->list, $notification);
         $this->total = sizeof($this->unread);
     }
-    
-    public function save () {
+
+    public function save()
+    {
         global $mysql;
-        
+
         $notifications = json_encode($this->list);
-        
-        $mysql->statement("UPDATE users SET notifications = :notifications WHERE uid = :uid", array(':notifications' => $notifications, ':uid' => $this->uid));
+
+        $mysql->statement('UPDATE users SET notifications = :notifications WHERE uid = :uid', array(':notifications' => $notifications, ':uid' => $this->uid));
     }
 }
 
 /*
-Array ( 
-    [0] => Array ( 
-        [m] => teste 
-        [s] => 0 
-    ) 
-    [1] => Array ( 
-        [m] => teste 1 
-        [s] => 1 
-    ) 
-    [2] => Array ( 
-        [m] => teste 2 
-        [s] => 0 
-    ) 
+Array (
+    [0] => Array (
+        [m] => teste
+        [s] => 0
+    )
+    [1] => Array (
+        [m] => teste 1
+        [s] => 1
+    )
+    [2] => Array (
+        [m] => teste 2
+        [s] => 0
+    )
 )
 */

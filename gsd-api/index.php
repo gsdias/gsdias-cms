@@ -3,18 +3,18 @@
 /**
  * @author     Goncalo Silva Dias <mail@gsdias.pt>
  * @copyright  2014-2015 GSDias
+ *
  * @version    1.2
+ *
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
+define('ROOTPATH', dirname(__FILE__).'/../');
 
-define('ROOTPATH', dirname(__FILE__) . '/../');
+include_once ROOTPATH.'gsd-include/gsd-config.php';
 
-include_once(ROOTPATH . 'gsd-include/gsd-config.php');
-
-require_once('service.php');
-require_once('calls.php');
-
+require_once 'service.php';
+require_once 'calls.php';
 
 $methods = get_defined_functions();
 $methods = $methods['user'];
@@ -23,19 +23,15 @@ $methods = $methods['user'];
 
 $_arr = array();
 if (!isset($_SERVER['REDIRECT_URL'])) {
-
     foreach ($methods as $method) {
-
         if (strpos($method, 'get') === 0) {
             array_push($_arr, array('method' => $method, 'description' => $method(null, null, true)));
         }
-
     }
 
     $api->output();
     exit;
 }
-
 
 $path = explode('/', $_SERVER['REDIRECT_URL']);
 
@@ -48,7 +44,6 @@ $cmdposition++;
 $extra = array();
 
 while (isset($path[$cmdposition])) {
-
     if ($path[$cmdposition]) {
         array_push($extra, $path[$cmdposition]);
     }
@@ -61,7 +56,7 @@ if ($doc) {
     array_pop($extra);
 }
 
-$input = file_get_contents("php://input");
+$input = file_get_contents('php://input');
 
 $json = $input !== null ? json_decode($input, true) : '';
 
