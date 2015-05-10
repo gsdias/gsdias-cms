@@ -213,7 +213,7 @@ class mySQL implements idatabase {
         return $this->conn->lastInsertId();
     }
 
-    public function use ($db = '') {
+    public function usedb ($db = '') {
         if ($this->conn) {
             $this->prepared = $this->conn->prepare('USE ' . $db . ';');
             $this->execute();
@@ -222,7 +222,7 @@ class mySQL implements idatabase {
         return $this;
     }
 
-    public function show ($table = '') {
+    public function showdb ($table = '') {
         if ($this->conn) {
             $this->prepared = $this->conn->prepare('SHOW ' . $table . ';');
             $this->execute();
@@ -368,7 +368,7 @@ class mySQL implements idatabase {
                 if ($i) {
                     $string .= ', ';
                 }
-                $string .=  sprintf('`%s` = ?', $field);
+                $string .=  sprintf('%s = ?', $field);
             }
         }
 

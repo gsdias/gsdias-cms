@@ -34,7 +34,7 @@
 
                 global.updateHistory('?page=' + page[1]);
                 $(document).trigger(GSD.globalevents.updateInternals);
-
+                $check = $('.hasPages input');
                 api.loading();
             }, function () {
                 api.loading();
@@ -49,7 +49,7 @@
             $(this).toggleClass('is-visible');
         },
 
-        action = function (e) {
+        action = function () {
             if ($(this).hasClass('clear')) {
                 $check.filter(':checked').trigger('click');
             }

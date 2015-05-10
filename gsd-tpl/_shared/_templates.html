@@ -12,6 +12,7 @@
     <td><em class="ago">((created))</em> <br>{LANG_BY} <a href="/admin/users/((creator_id))">((creator_name))</a></td>
     <td class="actions"><a href="/admin/pages/((pid))/settings">{LANG_SETTINGS}</a><a href="/admin/pages/((pid))/edit">{LANG_EDIT}</a></td>
     <td><i class="fa fa-arrows-v fa-1x order"></i></td>
+    <td><input value="((pid))" type="checkbox"></td>
 </tr>
 </script>
 <script type="text/template" id="imagesBlock">
@@ -23,6 +24,7 @@
     <td>((description))</td>
     <td>((created)) <br>{LANG_BY} <a href="/admin/users/((creator_id))">((creator_name))</a></td>
     <td class="actions"><a href="/admin/images/((iid))/edit">{LANG_EDIT}</a><a href="/admin/images/((iid))/remove">{LANG_REMOVE}</a></td>
+    <td><input value="((iid))" type="checkbox"></td>
 </tr>
 </script>
 <script type="text/template" id="documentsBlock">
@@ -34,6 +36,7 @@
     <td>((description))</td>
     <td>((created)) <br>{LANG_BY} <a href="/admin/users/((creator_id))">((creator_name))</a></td>
     <td class="actions"><a href="/admin/documents/((did))/edit">{LANG_EDIT}</a><a href="/admin/documents/((did))/remove">{LANG_REMOVE}</a></td>
+    <td><input value="((did))" type="checkbox"></td>
 </tr>
 </script>
 <script type="text/template" id="usersBlock">
@@ -47,6 +50,7 @@
         <!-- IF IS_ADMIN --><a href="/admin/users/((uid))/edit">{LANG_EDIT}</a>
         <a href="/admin/users/((uid))/remove">{LANG_REMOVE}</a><!-- ENDIF IS_ADMIN -->
     </td>
+    <td><input value="((uid))" type="checkbox"></td>
 </tr>
 </script>
 <script type="text/template" id="layoutsBlock">
@@ -58,6 +62,7 @@
     <td class="actions">
         <a href="/admin/layouts/((lid))/remove">{LANG_REMOVE}</a>
     </td>
+    <td><input value="((lid))" type="checkbox"></td>
 </tr>
 </script>
 [_CLIENTTEMPLATES]

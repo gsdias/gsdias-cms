@@ -18,8 +18,8 @@ if (@$_REQUEST['save']) {
                 ->update('options')
                 ->fields(array('value'))
                 ->where('name = ?')
-                ->values($name)
-                ->exec());
+                ->values(array($value, $name))
+                ->exec();
 
             $fields += !$mysql->errnum ? -1 : 0;
         }
