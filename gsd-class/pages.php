@@ -13,27 +13,39 @@ namespace GSD;
 
 class pages extends section implements isection
 {
-    public function __construct($id = null)
-    {
-        return 0;
-    }
-
     public function getlist($options)
     {
         global $mysql, $tpl;
 
-        $search = @$_REQUEST['search'] ? sprintf(' WHERE p.title like "%%%s%%" ', $_REQUEST['search']) : '';
-        $fromsql = sprintf('FROM pages AS p
-        LEFT JOIN users AS u ON p.creator = u.uid
-        LEFT JOIN pages AS pp ON p.parent = pp.pid %s ORDER BY p.`index`', $search);
-        $paginator = new paginator('FROM pages WHERE title like "%'.@$_REQUEST['search'].'%" ORDER BY `index`;', @$options['numberPerPage'], @$_REQUEST['page']);
+        $_fields = 'p.*, concat(if(pp.url = "/" OR pp.url IS NULL, "", pp.url), p.url) AS url, p.creator AS creator_id, u.name AS creator_name';
         $fields = empty($options['fields']) ? array() : $options['fields'];
 
-        $tpl->setvar('SEARCH_VALUE', @$_REQUEST['search']);
+        $mysql->reset()
+            ->from('pages AS p')
+            ->join('users AS u', 'LEFT')
+            ->on('p.creator = u.uid')
+            ->join('pages AS pp', 'LEFT')
+            ->on('p.parent = pp.pid');
 
-        $mysql->statement('SELECT p.*, concat(if(pp.url = "/" OR pp.url IS NULL, "", pp.url), p.url) AS url, p.creator AS creator_id, u.name AS creator_name '.$fromsql.$paginator->pageLimit());
+        if (@$_REQUEST['search']) {
+            $mysql->where(sprintf('p.title like "%%%s%%"', $_REQUEST['search']));
+        }
+
+        $mysql->order('p.index');
+        $paginator = new paginator(@$options['numberPerPage'], @$_REQUEST['page']);
+
+        if (!empty($fields)) {
+            foreach ($fields as $field) {
+                $_fields .= sprintf(', %s', $field);
+            }
+        }
+
+        $mysql->select($_fields)
+            ->limit($paginator->pageLimit(), $options['numberPerPage'])
+            ->exec();
 
         $result = parent::getlist(array(
+            'search' => $options['search'],
             'results' => $mysql->result(),
             'fields' => array_merge(array('pid', 'title', 'beautify', 'creator', 'creator_name', 'creator_id', 'index'), $fields),
             'paginator' => $paginator,
@@ -41,7 +53,7 @@ class pages extends section implements isection
 
         if (!empty($result['list'])) {
             foreach ($result['results'] as $index => $item) {
-                $result['list'][$index]['UNPUBLISHED'] = $item->published ? '' : '<br>({LANG_UNPUBLISHED})';
+                $result['list'][$index]['UNPUBLISHED'] = $item->published ? '' : sprintf('<br>(%s)', lang('LANG_UNPUBLISHED'));
             }
 
             $tpl->setarray('PAGES', $result['list']);

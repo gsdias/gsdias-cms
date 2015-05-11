@@ -13,28 +13,37 @@ namespace GSD;
 
 class images extends section implements isection
 {
-    public function __construct($id = null)
-    {
-        return 0;
-    }
-
     public function getlist($options)
     {
         global $mysql, $tpl;
 
-        $tags = @$_REQUEST['search'] ? sprintf(' WHERE tags like "%%%s%%" ', $_REQUEST['search']) : '';
-        $paginator = new paginator('FROM images '.$tags.'ORDER BY images.iid;', @$options['numberPerPage'], @$_REQUEST['page']);
+        $_fields = 'images.*, images.creator AS creator_id, u.name AS creator_name';
         $fields = empty($options['fields']) ? array() : $options['fields'];
 
-        $tpl->setvar('SEARCH_VALUE', @$_REQUEST['search']);
+        $mysql->reset()
+            ->from('images')
+            ->join('users AS u', 'LEFT')
+            ->on('images.creator = u.uid');
 
-        $mysql->statement('SELECT images.*, images.creator AS creator_id, u.name AS creator_name
-        FROM images
-        LEFT JOIN users AS u ON images.creator = u.uid '
-        .$tags.
-        'ORDER BY images.iid '.$paginator->pageLimit());
+        if ($options['search']) {
+            $mysql->where(sprintf('tags like "%%%s%%"', $options['search']));
+        }
+
+        $mysql->order('images.iid');
+        $paginator = new paginator($options['numberPerPage'], $options['page']);
+
+        if (!empty($fields)) {
+            foreach ($fields as $field) {
+                $_fields .= sprintf(', %s', $field);
+            }
+        }
+
+        $mysql->select($_fields)
+            ->limit($paginator->pageLimit(), $options['numberPerPage'])
+            ->exec();
 
         $result = parent::getlist(array(
+            'search' => $options['search'],
             'results' => $mysql->result(),
             'fields' => array_merge(array('iid', 'name', 'description', 'creator', 'creator_name', 'creator_id'), $fields),
             'paginator' => $paginator,

@@ -13,23 +13,24 @@ namespace GSD;
 
 class users extends section implements isection
 {
-    public function __construct($id = null)
-    {
-        return 0;
-    }
-
     public function getlist($options)
     {
         global $mysql, $tpl;
 
-        $search = @$_REQUEST['search'] ? sprintf(' WHERE users.name like "%%%s%%" ', $_REQUEST['search']) : '';
-        $fromsql = sprintf(' FROM users
-        LEFT JOIN users AS u ON users.creator = u.uid %s
-        ORDER BY users.uid ', $search);
-        $paginator = new paginator($fromsql, @$options['numberPerPage'], @$_REQUEST['page']);
+        $_fields = 'users.*, users.creator AS creator_id, u.name AS creator_name';
         $fields = empty($options['fields']) ? array() : $options['fields'];
 
-        $_fields = 'users.*, users.creator AS creator_id, u.name AS creator_name';
+        $mysql->reset()
+            ->from('users')
+            ->join('users AS u', 'LEFT')
+            ->on('users.creator = u.uid');
+
+        if ($options['search']) {
+            $mysql->where(sprintf('users.name like "%%%s%%"', $options['search']));
+        }
+
+        $mysql->order('users.uid');
+        $paginator = new paginator($options['numberPerPage'], $options['page']);
 
         if (!empty($fields)) {
             foreach ($fields as $field) {
@@ -37,9 +38,12 @@ class users extends section implements isection
             }
         }
 
-        $mysql->statement('SELECT '.$_fields.$fromsql.$paginator->pageLimit());
+        $mysql->select($_fields)
+            ->limit($paginator->pageLimit(), $options['numberPerPage'])
+            ->exec();
 
         $result = parent::getlist(array(
+            'search' => $options['search'],
             'results' => $mysql->result(),
             'fields' => array_merge(array('uid', 'name', 'creator_name', 'creator_id'), $fields),
             'paginator' => $paginator,

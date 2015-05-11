@@ -78,6 +78,6 @@ if ($action) {
 
         $csection = \GSD\sectionFactory::create($classsection);
 
-        $csection->getlist(array('numberPerPage' => $numberPerPage));
+        $csection->getlist(array('numberPerPage' => $numberPerPage, 'page' => @$_REQUEST['page'], 'search' => @$_REQUEST['search']));
     }
 }

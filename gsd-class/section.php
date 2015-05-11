@@ -28,6 +28,8 @@ abstract class section implements isection
         $fields = empty($options['fields']) ? array() : $options['fields'];
         $paginator = $options['paginator'];
 
+        $tpl->setvar('SEARCH_VALUE', $options['search']);
+
         $list = array();
 
         foreach ($results as $line) {

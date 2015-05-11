@@ -15,14 +15,13 @@ class paginator
 {
     public $total, $page, $numberPerPage;
 
-    private $sql, $tpl;
+    private $tpl;
 
-    public function __construct($sql, $numberPerPage = 30, $page = 1)
+    public function __construct($numberPerPage = 30, $page = 1)
     {
         $this->tpl = new tpl();
 
         $this->numberPerPage = $numberPerPage;
-        $this->sql = $sql;
         $this->page = is_numeric($page) ? $page : 1;
 
         $this->pageTotal();
@@ -40,8 +39,8 @@ class paginator
     {
         global $mysql;
 
-        $select = sprintf('SELECT floor(count(*) / %d) AS p, mod(count(*), %d) AS r %s', $this->numberPerPage, $this->numberPerPage, $this->sql);
-        $mysql->statement($select);
+        $mysql->select(sprintf('floor(count(*) / %d) AS p, mod(count(*), %d) AS r', $this->numberPerPage, $this->numberPerPage))
+            ->exec();
 
         $result = $mysql->singleline();
         $pages = @$result->p ? $result->p : 0;
@@ -56,7 +55,7 @@ class paginator
         $limit = ($this->page - 1) * $this->numberPerPage;
         $limit = $limit < 0 ? 0 : $limit;
 
-        return ' LIMIT '.$limit.', '.$this->numberPerPage;
+        return $limit;
     }
 
     private function pageGenerator()

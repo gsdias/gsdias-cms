@@ -43,14 +43,23 @@ class apiOther
         $output = $options['output'];
 
         $returnFields = array('lid', 'name', 'created', 'creator_id', 'creator_name');
-        $search = @$_REQUEST['search'] ? sprintf(' WHERE p.title like "%%%s%%" ', $_REQUEST['search']) : '';
-        $fromsql = sprintf(' FROM layouts
-        LEFT JOIN users AS u ON layouts.creator = u.uid
-        ORDER BY lid ', $search);
 
-        $paginator = new GSD\paginator($fromsql, $numberPerPage, $page);
+        $mysql->reset()
+            ->from('layouts AS l')
+            ->join('users AS u', 'LEFT')
+            ->on('l.creator = u.uid');
 
-        $mysql->statement('SELECT layouts.*, u.name AS creator_name, u.uid AS creator_id '.$fromsql.$paginator->pageLimit());
+        if (@$_REQUEST['search']) {
+            $mysql->where(sprintf('l.title like "%%%s%%"', $_REQUEST['search']));
+        }
+
+        $mysql->order('lid');
+
+        $paginator = new GSD\paginator($numberPerPage, $page);
+
+        $mysql->select('l.*, u.name AS creator_name, u.uid AS creator_id')
+            ->limit($paginator->pageLimit(), $numberPerPage)
+            ->exec();
 
         if ($mysql->total) {
             $output['message'] = '';
@@ -64,6 +73,8 @@ class apiOther
             }
 
             $output['data']['paginator'] = (string) $paginator;
+        } else {
+            $output = array('error' => 0, 'message' => lang('LANG_NO_LAYOUTS'));
         }
 
         return $output;
@@ -79,17 +90,24 @@ class apiOther
 
         $returnFields = array('pid', 'title', 'beautify', 'created', 'creator_id', 'creator_name', 'index');
 
-        $search = @$_REQUEST['search'] ? sprintf(' WHERE p.title like "%%%s%%" ', $_REQUEST['search']) : '';
+        $mysql->reset()
+            ->from('pages AS p')
+            ->join('users AS u', 'LEFT')
+            ->on('p.creator = u.uid')
+            ->join('pages AS pp', 'LEFT')
+            ->on('p.parent = pp.pid');
 
-        $sql = ' FROM pages AS p
-            LEFT JOIN users AS u ON p.creator = u.uid
-            LEFT JOIN pages AS pp ON p.parent = pp.pid '
-            .$search.
-            'ORDER BY p.`index` ';
+        if (@$_REQUEST['search']) {
+            $mysql->where(sprintf('p.title like "%%%s%%"', $_REQUEST['search']));
+        }
 
-        $paginator = new GSD\paginator($sql, $numberPerPage, $page);
+        $mysql->order('p.index');
 
-        $mysql->statement('SELECT p.*, concat(if(pp.url = "/" OR pp.url IS NULL, "", pp.url), p.url) AS url, p.creator AS creator_id, u.name AS creator_name'.$sql.$paginator->pageLimit());
+        $paginator = new GSD\paginator($numberPerPage, $page);
+
+        $mysql->select('p.*, concat(if(pp.url = "/" OR pp.url IS NULL, "", pp.url), p.url) AS url, p.creator AS creator_id, u.name AS creator_name')
+            ->limit($paginator->pageLimit(), $numberPerPage)
+            ->exec();
 
         if ($mysql->total) {
             $output['message'] = '';
@@ -118,12 +136,9 @@ class apiOther
         $output = $options['output'];
 
         $returnFields = array('name', 'uid', 'created');
-        $search = @$_REQUEST['search'] ? sprintf(' WHERE p.title like "%%%s%%" ', $_REQUEST['search']) : '';
-        $fromsql = sprintf(' FROM users
-        ORDER BY users.uid ', $search);
         $fields = empty($options['fields']) ? array() : $options['fields'];
 
-        $_fields = 'users.*, users.creator';
+        $_fields = 'u.*';
 
         if (!empty($fields)) {
             foreach ($fields as $field) {
@@ -132,9 +147,22 @@ class apiOther
             }
         }
 
-        $paginator = new GSD\paginator($fromsql, $numberPerPage, $page);
+        $paginator = new GSD\paginator($numberPerPage, $page);
 
-        $mysql->statement('SELECT '.$_fields.$fromsql.$paginator->pageLimit());
+        $mysql->reset()
+            ->from('users AS u');
+
+        if (@$_REQUEST['search']) {
+            $mysql->where(sprintf('u.name like "%%%s%%"', $_REQUEST['search']));
+        }
+
+        $mysql->order('u.uid');
+
+        $paginator = new GSD\paginator($numberPerPage, $page);
+
+        $mysql->select($_fields)
+            ->limit($paginator->pageLimit(), $numberPerPage)
+            ->exec();
 
         if ($mysql->total) {
             $output['message'] = '';
@@ -166,16 +194,22 @@ class apiOther
 
         $returnFields = array('iid', 'description', 'creator_id', 'creator_name');
 
-        $search = @$_REQUEST['search'] ? sprintf(' WHERE tags like "%%%s%%" ', $_REQUEST['search']) : '';
+        $mysql->reset()
+            ->from('images AS i')
+            ->join('users AS u', 'LEFT')
+            ->on('i.creator = u.uid');
 
-        $sql = ' FROM images
-            LEFT JOIN users AS u ON images.creator = u.uid '
-            .$search.
-            'ORDER BY images.iid ';
+        if (@$_REQUEST['search']) {
+            $mysql->where(sprintf('tags like "%%%s%%"', $_REQUEST['search']));
+        }
 
-        $paginator = new GSD\paginator($sql, $numberPerPage, $page);
+        $mysql->order('i.iid');
 
-        $mysql->statement('SELECT images.*, images.creator AS creator_id, u.name AS creator_name'.$sql.$paginator->pageLimit());
+        $paginator = new GSD\paginator($numberPerPage, $page);
+
+        $mysql->select('i.*, i.creator AS creator_id, u.name AS creator_name')
+            ->limit($paginator->pageLimit(), $numberPerPage)
+            ->exec();
 
         if ($mysql->total) {
             $output['message'] = '';
@@ -206,16 +240,22 @@ class apiOther
 
         $returnFields = array('did', 'description', 'creator_id', 'creator_name');
 
-        $search = @$_REQUEST['search'] ? sprintf(' WHERE tags like "%%%s%%" ', $_REQUEST['search']) : '';
+        $mysql->reset()
+            ->from('documents AS d')
+            ->join('users AS u', 'LEFT')
+            ->on('d.creator = u.uid');
 
-        $sql = ' FROM documents
-            LEFT JOIN users AS u ON documents.creator = u.uid '
-            .$search.
-            'ORDER BY documents.did ';
+        if (@$_REQUEST['search']) {
+            $mysql->where(sprintf('tags like "%%%s%%"', $_REQUEST['search']));
+        }
 
-        $paginator = new GSD\paginator($sql, $numberPerPage, $page);
+        $mysql->order('d.did');
 
-        $mysql->statement('SELECT documents.*, documents.creator AS creator_id, u.name AS creator_name'.$sql.$paginator->pageLimit());
+        $paginator = new GSD\paginator($numberPerPage, $page);
+
+        $mysql->select('d.*, d.creator AS creator_id, u.name AS creator_name')
+            ->limit($paginator->pageLimit(), $numberPerPage)
+            ->exec();
 
         if ($mysql->total) {
             $output['message'] = '';

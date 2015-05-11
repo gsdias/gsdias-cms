@@ -288,7 +288,9 @@ class mySQL implements idatabase
 
     public function order($value, $ord = 'ASC')
     {
-        array_push($this->_order, '`'.$value.'` '.$ord);
+        $value = explode('.', $value);
+        $value = sprintf('`%s`', $value[0]).(@$value[1] ? sprintf('.`%s`', $value[1]) : '');
+        array_push($this->_order, $value.' '.$ord);
 
         return $this;
     }

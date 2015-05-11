@@ -13,24 +13,37 @@ namespace GSD;
 
 class layouts extends section implements isection
 {
-    public function __construct($id = null)
-    {
-        return 0;
-    }
-
     public function getlist($options)
     {
         global $mysql, $tpl;
 
-        $paginator = new paginator('FROM layouts ORDER BY lid;', @$options['numberPerPage'], @$_REQUEST['page']);
+        $_fields = 'layouts.*, u.name AS creator_name, u.uid AS creator_id';
         $fields = empty($options['fields']) ? array() : $options['fields'];
 
-        $mysql->statement('SELECT layouts.*, u.name AS creator_name, u.uid AS creator_id
-        FROM layouts
-        LEFT JOIN users AS u ON layouts.creator = u.uid
-        ORDER BY lid '.$paginator->pageLimit());
+        $mysql->reset()
+            ->from('layouts')
+            ->join('users AS u', 'LEFT')
+            ->on('layouts.creator = u.uid');
+
+        if ($options['search']) {
+            $mysql->where(sprintf('layouts.name like "%%%s%%"', $options['search']));
+        }
+
+        $mysql->order('lid');
+        $paginator = new paginator(@$options['numberPerPage'], @$_REQUEST['page']);
+
+        if (!empty($fields)) {
+            foreach ($fields as $field) {
+                $_fields .= sprintf(', %s', $field);
+            }
+        }
+
+        $mysql->select($_fields)
+            ->limit($paginator->pageLimit(), $options['numberPerPage'])
+            ->exec();
 
         $result = parent::getlist(array(
+            'search' => $options['search'],
             'results' => $mysql->result(),
             'fields' => array_merge(array('lid', 'name', 'creator', 'creator_name', 'creator_id'), $fields),
             'paginator' => $paginator,

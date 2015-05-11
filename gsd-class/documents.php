@@ -13,24 +13,37 @@ namespace GSD;
 
 class documents extends section implements isection
 {
-    public function __construct($id = null)
-    {
-        return 0;
-    }
-
     public function getlist($options)
     {
         global $mysql, $tpl;
 
-        $paginator = new paginator('FROM documents ORDER BY documents.did;', @$options['numberPerPage'], @$_REQUEST['page']);
+        $_fields = 'documents.*, documents.creator AS creator_id, u.name AS creator_name';
         $fields = empty($options['fields']) ? array() : $options['fields'];
 
-        $mysql->statement('SELECT documents.*, documents.creator AS creator_id, u.name AS creator_name
-        FROM documents
-        LEFT JOIN users AS u ON documents.creator = u.uid
-        ORDER BY documents.did '.$paginator->pageLimit());
+        $mysql->reset()
+            ->from('documents')
+            ->join('users AS u', 'LEFT')
+            ->on('documents.creator = u.uid');
+
+        if ($options['search']) {
+            $mysql->where(sprintf('tags like "%%%s%%"', $options['search']));
+        }
+
+        $mysql->order('documents.did');
+        $paginator = new paginator($options['numberPerPage'], $options['page']);
+
+        if (!empty($fields)) {
+            foreach ($fields as $field) {
+                $_fields .= sprintf(', %s', $field);
+            }
+        }
+
+        $mysql->select($_fields)
+            ->limit($paginator->pageLimit(), $options['numberPerPage'])
+            ->exec();
 
         $result = parent::getlist(array(
+            'search' => $options['search'],
             'results' => $mysql->result(),
             'fields' => array_merge(array('did', 'name', 'description', 'creator', 'creator_name', 'creator_id'), $fields),
             'paginator' => $paginator,
@@ -41,6 +54,7 @@ class documents extends section implements isection
                 $result['list'][$index]['ASSET'] = $item->name;
                 $result['list'][$index]['SIZE'] = sprintf('%s', $item->size);
             }
+
             $tpl->setarray('DOCUMENTS', $result['list']);
         }
 
