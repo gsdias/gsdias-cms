@@ -37,7 +37,7 @@ class site
             $this->{str_replace(array('_image', '_select'), '', $name)} = $option->value;
 
             if (strpos($name, '_image') !== false) {
-                $image = new GSD\image(array('iid' => $option->value, 'width' => 'auto', 'height' => 'auto'));
+                $image = new image(array('iid' => $option->value, 'width' => 'auto', 'height' => 'auto'));
                 $name = str_replace(array('_image', '_select'), '', $name);
                 $tpl->setvar('SITE_'.strtoupper($name), $image);
             } else {

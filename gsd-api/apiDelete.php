@@ -21,7 +21,7 @@ class apiDelete
     {
         global $mysql, $api;
         $output = array('error' => 0, 'message' => lang('LANG_ERROR'));
-        $requiredFields = array('list');
+        $requiredFields = array('list', 'type');
         $returnFields = array();
 
         if ($doc) {
@@ -32,23 +32,7 @@ class apiDelete
             return array('error' => -3, 'message' => 'Missing required fields');
         }
 
-        $list = explode(',', $fields['list']);
-        $deleted = array();
-
-        foreach ($list as $id) {
-            $mysql->reset()
-                ->delete()
-                ->from('layouts')
-                ->where('lid = ?')
-                ->values($id)
-                ->exec();
-
-            if ($mysql->total) {
-                $deleted[] = $id;
-            }
-        }
-
-        return $deleted;
+        return $api->extended->removeElements($fields['type'], $fields['list']);
     }
 
     public function pages($fields, $extra, $doc = false)

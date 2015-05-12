@@ -288,4 +288,28 @@ class apiOther
 
         return $array;
     }
+
+    public function removeElements($table, $list)
+    {
+        global $mysql, $api;
+
+        $list = explode(',', $list);
+        $deleted = array();
+        $field = substr($table, 0, 1).'id';
+
+        foreach ($list as $id) {
+            $mysql->reset()
+                ->delete()
+                ->from($table)
+                ->where($field.' = ?')
+                ->values($id)
+                ->exec();
+
+            if ($mysql->total) {
+                $deleted[] = $id;
+            }
+        }
+
+        return $deleted;
+    }
 }
