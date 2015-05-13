@@ -310,6 +310,6 @@ class apiOther
             }
         }
 
-        return $deleted;
+        return array('list' => $deleted);
     }
 }

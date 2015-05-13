@@ -10,8 +10,8 @@
  * @since      File available since Release 1.0
  */
 
-$classname = 'GSD\\Api\\api'.ucwords($_SERVER['REQUEST_METHOD']);
-$classnameextended = 'GSD\\Api\\Extended\\apiExtended'.ucwords($_SERVER['REQUEST_METHOD']);
+$classname = 'GSD\\Api\\api'.ucwords(strtolower($_SERVER['REQUEST_METHOD']));
+$classnameextended = 'GSD\\Api\\Extended\\apiExtended'.ucwords(strtolower($_SERVER['REQUEST_METHOD']));
 
 $_extra = array(
     'method' => class_exists($classnameextended) ? new $classnameextended() : new $classname(),

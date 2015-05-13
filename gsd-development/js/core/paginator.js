@@ -63,10 +63,10 @@
                 $check.filter(':checked').each(function(index, elem) {
                     list.push(elem.value);
                 });
-                api.call($(this), 'DELETE', tbody.type, { list: list.join(',') }, function (response) {
+                api.call($(this), 'DELETE', tbody.type, { type: tbody.type, list: list.join(',') }, function (response) {
                     api.loading();
-                    _.each(response, function(id) {
-                        tbody.el.find('tr[data-pid="' + id + '"]').slideUp(function() {
+                    _.each(response.list, function(id) {
+                        tbody.el.find('tr[data-' + tbody.type.substr(0, 1) + 'id="' + id + '"]').slideUp(function() {
                             $(this).remove();
                         });
                     });

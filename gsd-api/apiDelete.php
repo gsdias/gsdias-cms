@@ -50,23 +50,7 @@ class apiDelete
             return array('error' => -3, 'message' => 'Missing required fields');
         }
 
-        $list = explode(',', $fields['list']);
-        $deleted = array();
-
-        foreach ($list as $id) {
-            $mysql->reset()
-                ->delete()
-                ->from('pages')
-                ->where('pid = ?')
-                ->values($id)
-                ->exec();
-
-            if ($mysql->total) {
-                $deleted[] = $id;
-            }
-        }
-
-        return $deleted;
+        return $api->extended->removeElements($fields['type'], $fields['list']);
     }
 
     public function users($fields, $extra, $doc = false)
@@ -84,23 +68,7 @@ class apiDelete
             return array('error' => -3, 'message' => 'Missing required fields');
         }
 
-        $list = explode(',', $fields['list']);
-        $deleted = array();
-
-        foreach ($list as $id) {
-            $mysql->reset()
-                ->delete()
-                ->from('users')
-                ->where('uid = ?')
-                ->values($id)
-                ->exec();
-
-            if ($mysql->total) {
-                $deleted[] = $id;
-            }
-        }
-
-        return $deleted;
+        return $api->extended->removeElements($fields['type'], $fields['list']);
     }
 
     public function images($fields, $extra, $doc = false)
@@ -118,23 +86,7 @@ class apiDelete
             return array('error' => -3, 'message' => 'Missing required fields');
         }
 
-        $list = explode(',', $fields['list']);
-        $deleted = array();
-
-        foreach ($list as $id) {
-            $mysql->reset()
-                ->delete()
-                ->from('images')
-                ->where('iid = ?')
-                ->values($id)
-                ->exec();
-
-            if ($mysql->total) {
-                $deleted[] = $id;
-            }
-        }
-
-        return $deleted;
+        return $api->extended->removeElements($fields['type'], $fields['list']);
     }
 
     public function documents($fields, $extra, $doc = false)
@@ -152,22 +104,6 @@ class apiDelete
             return array('error' => -3, 'message' => 'Missing required fields');
         }
 
-        $list = explode(',', $fields['list']);
-        $deleted = array();
-
-        foreach ($list as $id) {
-            $mysql->reset()
-                ->delete()
-                ->from('documents')
-                ->where('did = ?')
-                ->values($id)
-                ->exec();
-
-            if ($mysql->total) {
-                $deleted[] = $id;
-            }
-        }
-
-        return $deleted;
+        return $api->extended->removeElements($fields['type'], $fields['list']);
     }
 }
