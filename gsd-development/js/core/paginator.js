@@ -43,7 +43,11 @@
 
         showOption = function () {
             if ($(this).hasClass('selection')) {
-                $check.filter(':not(:checked)').trigger('click');
+                if ($check.filter(':not(:checked)').length) {
+                    $check.filter(':not(:checked)').trigger('click');
+                } else {
+                    $check.trigger('click');
+                }
             }
             $options.toggleClass('is-visible', $check.filter(':checked').length > 0);
             $(this).toggleClass('is-visible');
