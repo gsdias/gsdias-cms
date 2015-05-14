@@ -3,7 +3,7 @@
 $pattern = '/(\?)(.*)/';
 $uri = preg_replace($pattern, '', $_SERVER['REQUEST_URI']);
 
-$path = explode("/", $uri);
+$path = explode('/', $uri);
 array_shift($path);
 
 $config['resources'] = '/gsd-resources';
@@ -16,28 +16,28 @@ $_mysql['db'] = '';
 define('DEBUG', 0);
 define('TPLEXT', '.html');
 define('PHPEXT', '.php');
-define('TPLPATH', dirname(__FILE__) . '/gsd-tpl/');
-define('CLASSPATH', dirname(__FILE__) . '/gsd-class/');
-define('INCLUDEPATH', dirname(__FILE__) . '/gsd-include/');
-define('ASSETPATH', dirname(__FILE__) . '/gsd-assets/');
-define('CLIENTPATH', dirname(__FILE__) . '/gsd-frontend/');
+define('TPLPATH', dirname(__FILE__).'/gsd-tpl/');
+define('CLASSPATH', dirname(__FILE__).'/gsd-class/');
+define('INCLUDEPATH', dirname(__FILE__).'/gsd-include/');
+define('ASSETPATH', dirname(__FILE__).'/gsd-frontend/assets/');
+define('CLIENTPATH', dirname(__FILE__).'/gsd-frontend/');
 define('ASSETPATHURL', '/gsd-frontend/assets/');
-define('CLIENTINCLUDEPATH', CLIENTPATH . 'include/');
-define('CLIENTTPLPATH', CLIENTPATH . 'tpl/');
-define('CLIENTCLASSPATH', CLIENTPATH . 'class/');
+define('CLIENTINCLUDEPATH', CLIENTPATH.'include/');
+define('CLIENTTPLPATH', CLIENTPATH.'tpl/');
+define('CLIENTCLASSPATH', CLIENTPATH.'class/');
 define('MAINTENANCE', 0);
 
 error_reporting(E_ALL);
 
 $config['tplpath'] = array(
-    CLIENTTPLPATH . 'admin/%s' . TPLEXT,
-    CLIENTTPLPATH . 'admin/%s/%s' . TPLEXT,
-    TPLPATH . '%s' . TPLEXT,
-    TPLPATH . '%s/%s' . TPLEXT,
-    TPLPATH . '_shared/%s' . TPLEXT,
-    TPLPATH . '_modules/%s' . TPLEXT,
-    TPLPATH . '_editable/%s' . TPLEXT,
-    TPLPATH . '_editable/%s/%s' . TPLEXT
+    CLIENTTPLPATH.'admin/%s'.TPLEXT,
+    CLIENTTPLPATH.'admin/%s/%s'.TPLEXT,
+    TPLPATH.'%s'.TPLEXT,
+    TPLPATH.'%s/%s'.TPLEXT,
+    TPLPATH.'_shared/%s'.TPLEXT,
+    TPLPATH.'_modules/%s'.TPLEXT,
+    TPLPATH.'_editable/%s'.TPLEXT,
+    TPLPATH.'_editable/%s/%s'.TPLEXT,
 );
 
 $tables = array(
@@ -54,15 +54,15 @@ $tables = array(
     'redirect' => 1,
     'images' => 1,
     'documents' => 1,
-    'emails' => 1
+    'emails' => 1,
 );
 
 $languages = array(
     'pt_PT' => 'Português',
     'en_GB' => 'English',
-    'fr_FR' => 'Français'
+    'fr_FR' => 'Français',
 );
 
-if ($path[0] != 'admin' && is_file (CLIENTPATH . 'settings' . PHPEXT) && IS_INSTALLED) {
-    include_once(CLIENTPATH . 'settings' . PHPEXT);
+if ($path[0] != 'admin' && is_file(CLIENTPATH.'settings'.PHPEXT)) {
+    include_once CLIENTPATH.'settings'.PHPEXT;
 }
