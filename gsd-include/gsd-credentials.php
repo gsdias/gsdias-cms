@@ -9,6 +9,11 @@
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
+
+if ($site->arg(0) == 'logout') {
+    $user->logout();
+}
+
 if (@$_REQUEST['login'] && !$user->isLogged()) {
     if (filter_var($_REQUEST['email'], FILTER_VALIDATE_EMAIL)) {
         $logged = $user->login($_REQUEST['email'], $_REQUEST['password']);

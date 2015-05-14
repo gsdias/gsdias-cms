@@ -29,9 +29,6 @@ if (!IS_INSTALLED) {
     if ($site->arg(0) == 'admin') {
         require_once 'gsd-admin/index.php';
     }
-    if ($site->arg(0) == 'logout') {
-        $user->logout();
-    }
 
     if (is_file(ROOTPATH.'gsd-frontend/index.php') && $site->arg(0) != 'admin') {
         if (!IS_LOGGED && @$site->page->require_auth) {
@@ -39,18 +36,6 @@ if (!IS_INSTALLED) {
             exit;
         }
         require_once ROOTPATH.'gsd-frontend/index.php';
-    }
-
-    if (@$_SESSION['error']) {
-        $tpl->setvar('ERRORS', $_SESSION['error']);
-        $tpl->setcondition('ERRORS');
-        unset($_SESSION['error']);
-    }
-
-    if (@$_SESSION['message']) {
-        $tpl->setvar('MESSAGES', $_SESSION['message']);
-        $tpl->setcondition('MESSAGES');
-        unset($_SESSION['message']);
     }
 
     $tpl->includeFiles('MAIN', $site->main);

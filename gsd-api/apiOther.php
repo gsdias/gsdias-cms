@@ -41,8 +41,10 @@ class apiOther
         $page = $options['page'];
         $numberPerPage = $options['numberPerPage'];
         $output = $options['output'];
+        $fields = empty($options['fields']) ? array() : $options['fields'];
+        $returnFields = array_merge(array('lid', 'name', 'created', 'creator_id', 'creator_name'), $fields);
 
-        $returnFields = array('lid', 'name', 'created', 'creator_id', 'creator_name');
+        $select = $this->extendFields($fields, 'l.*, u.name AS creator_name, u.uid AS creator_id');
 
         $mysql->reset()
             ->from('layouts AS l')
@@ -57,7 +59,7 @@ class apiOther
 
         $paginator = new GSD\paginator($numberPerPage, $page);
 
-        $mysql->select('l.*, u.name AS creator_name, u.uid AS creator_id')
+        $mysql->select($select)
             ->limit($paginator->pageLimit(), $numberPerPage)
             ->exec();
 
@@ -87,8 +89,10 @@ class apiOther
         $page = $options['page'];
         $numberPerPage = $options['numberPerPage'];
         $output = $options['output'];
+        $fields = empty($options['fields']) ? array() : $options['fields'];
+        $returnFields = array_merge(array('pid', 'title', 'beautify', 'created', 'creator_id', 'creator_name', 'index'), $fields);
 
-        $returnFields = array('pid', 'title', 'beautify', 'created', 'creator_id', 'creator_name', 'index');
+        $select = $this->extendFields($fields, 'p.*, concat(if(pp.url = "/" OR pp.url IS NULL, "", pp.url), p.url) AS url, p.creator AS creator_id, u.name AS creator_name');
 
         $mysql->reset()
             ->from('pages AS p')
@@ -105,7 +109,7 @@ class apiOther
 
         $paginator = new GSD\paginator($numberPerPage, $page);
 
-        $mysql->select('p.*, concat(if(pp.url = "/" OR pp.url IS NULL, "", pp.url), p.url) AS url, p.creator AS creator_id, u.name AS creator_name')
+        $mysql->select($select)
             ->limit($paginator->pageLimit(), $numberPerPage)
             ->exec();
 
@@ -134,20 +138,10 @@ class apiOther
         $page = $options['page'];
         $numberPerPage = $options['numberPerPage'];
         $output = $options['output'];
-
-        $returnFields = array('name', 'uid', 'created');
         $fields = empty($options['fields']) ? array() : $options['fields'];
+        $returnFields = array_merge(array('name', 'uid', 'created'), $fields);
 
-        $_fields = 'u.*';
-
-        if (!empty($fields)) {
-            foreach ($fields as $field) {
-                $_fields .= sprintf(', %s', $field);
-                array_push($returnFields, $field);
-            }
-        }
-
-        $paginator = new GSD\paginator($numberPerPage, $page);
+        $select = $this->extendFields($fields, 'u.*');
 
         $mysql->reset()
             ->from('users AS u');
@@ -160,7 +154,7 @@ class apiOther
 
         $paginator = new GSD\paginator($numberPerPage, $page);
 
-        $mysql->select($_fields)
+        $mysql->select($select)
             ->limit($paginator->pageLimit(), $numberPerPage)
             ->exec();
 
@@ -191,8 +185,10 @@ class apiOther
         $page = $options['page'];
         $numberPerPage = $options['numberPerPage'];
         $output = $options['output'];
+        $fields = empty($options['fields']) ? array() : $options['fields'];
+        $returnFields = array_merge(array('iid', 'description', 'creator_id', 'creator_name'), $fields);
 
-        $returnFields = array('iid', 'description', 'creator_id', 'creator_name');
+        $select = $this->extendFields($fields, 'i.*, i.creator AS creator_id, u.name AS creator_name');
 
         $mysql->reset()
             ->from('images AS i')
@@ -207,7 +203,7 @@ class apiOther
 
         $paginator = new GSD\paginator($numberPerPage, $page);
 
-        $mysql->select('i.*, i.creator AS creator_id, u.name AS creator_name')
+        $mysql->select($select)
             ->limit($paginator->pageLimit(), $numberPerPage)
             ->exec();
 
@@ -237,8 +233,10 @@ class apiOther
         $page = $options['page'];
         $numberPerPage = $options['numberPerPage'];
         $output = $options['output'];
+        $fields = empty($options['fields']) ? array() : $options['fields'];
+        $returnFields = array_merge(array('did', 'description', 'extension', 'creator_id', 'creator_name'), $fields);
 
-        $returnFields = array('did', 'description', 'creator_id', 'creator_name');
+        $select = $this->extendFields($fields, 'd.*, d.creator AS creator_id, u.name AS creator_name');
 
         $mysql->reset()
             ->from('documents AS d')
@@ -253,7 +251,7 @@ class apiOther
 
         $paginator = new GSD\paginator($numberPerPage, $page);
 
-        $mysql->select('d.*, d.creator AS creator_id, u.name AS creator_name')
+        $mysql->select($select)
             ->limit($paginator->pageLimit(), $numberPerPage)
             ->exec();
 
@@ -274,6 +272,17 @@ class apiOther
         }
 
         return $output;
+    }
+
+    public function extendFields($fields, $select)
+    {
+        if (!empty($fields)) {
+            foreach ($fields as $field) {
+                $select .= sprintf(', %s', $field);
+            }
+        }
+
+        return $select;
     }
 
     public function defaultValues($row, $returnFields)

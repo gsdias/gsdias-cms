@@ -61,6 +61,18 @@ $tpl->setVar('CLIENT_PATH', @$config['client_path']);
 $tpl->setVar('ASSETPATH', ASSETPATHURL);
 $tpl->setVar('REDIRECT', @$_REQUEST['redirect'] ? sprintf('?redirect=%s', $_REQUEST['redirect']) : '');
 
+if (@$_SESSION['error']) {
+    $tpl->setvar('ERRORS', $_SESSION['error']);
+    $tpl->setcondition('ERRORS');
+    unset($_SESSION['error']);
+}
+
+if (@$_SESSION['message']) {
+    $tpl->setvar('MESSAGES', $_SESSION['message']);
+    $tpl->setcondition('MESSAGES');
+    unset($_SESSION['message']);
+}
+
 if (!$site->isFrontend) {
     $section = lang('LANG_'.strtoupper(@$site->arg(1)));
     $tpl->setvars(array(
