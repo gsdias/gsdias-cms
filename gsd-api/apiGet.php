@@ -13,8 +13,6 @@
 #### GET
 namespace GSD\Api;
 
-use GSD;
-
 class apiGet
 {
     public function images($fields, $extra, $doc = false)

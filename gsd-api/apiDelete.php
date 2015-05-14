@@ -13,8 +13,6 @@
 #### DELETE
 namespace GSD\Api;
 
-use GSD;
-
 class apiDelete
 {
     public function layouts($fields, $extra, $doc = false)

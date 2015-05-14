@@ -13,8 +13,6 @@
 #### PUT
 namespace GSD\Api;
 
-use GSD;
-
 class apiPut
 {
     public function pageorder($fields, $extra, $doc = false)

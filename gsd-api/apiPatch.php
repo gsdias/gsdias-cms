@@ -13,8 +13,6 @@
 #### PATCH
 namespace GSD\Api;
 
-use GSD;
-
 class apiPatch
 {
 }

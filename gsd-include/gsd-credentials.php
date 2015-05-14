@@ -9,7 +9,6 @@
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
-
 if ($site->arg(0) == 'logout') {
     $user->logout();
 }

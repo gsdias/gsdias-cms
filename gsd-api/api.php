@@ -40,7 +40,6 @@ class api
         $this->extended = $extended;
         $this->loginRequired = array();
         $this->adminRequired = array();
-
     }
 
     public function method($type, $cmd, $extra = null, $fields = null, $doc = false)
