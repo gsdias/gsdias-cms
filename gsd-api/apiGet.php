@@ -18,6 +18,11 @@ class apiGet
     public function images($fields, $extra, $doc = false)
     {
         global $mysql, $api;
+
+        if ($api->user->level == 'user') {
+            return lang('LANG_NOPERMISSION');
+        }
+
         $output = array('error' => 0, 'message' => lang('LANG_NO_IMAGES'));
         $requiredFields = array();
         $returnFields = array('iid', 'name', 'width', 'height', 'extension');
@@ -62,13 +67,17 @@ class apiGet
     {
         global $mysql, $api;
 
+        if ($api->user->level == 'user') {
+            return lang('LANG_NOPERMISSION');
+        }
+
         $output = array('error' => 0, 'message' => lang('LANG_NO_IMAGES'));
         $requiredFields = array('page', 'type');
         $returnFields = array();
         $numberPerPage = 10;
 
         if ($doc) {
-            return outputDoc('pages', array('pages' => 'Page number', 'type' => 'Type list'), $returnFields);
+            return $api->extended->outputDoc('pages', array('pages' => 'Page number', 'type' => 'Type list'), $returnFields);
         }
 
         if (!$api->requiredFields($fields, $requiredFields)) {

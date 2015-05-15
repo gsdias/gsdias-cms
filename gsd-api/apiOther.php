@@ -135,6 +135,10 @@ class apiOther
     {
         global $mysql, $api;
 
+        if ($api->user->level != 'admin') {
+            return lang('LANG_NOPERMISSION');
+        }
+
         $page = $options['page'];
         $numberPerPage = $options['numberPerPage'];
         $output = $options['output'];

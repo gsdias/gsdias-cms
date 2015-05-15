@@ -19,12 +19,16 @@ class apiPut
     {
         global $mysql, $api;
 
+        if ($api->user->level == 'user') {
+            return lang('LANG_NOPERMISSION');
+        }
+
         $output = array('error' => 0, 'message' => 'Salva lista');
         $requiredFields = array('list');
         $returnFields = array();
 
         if ($doc) {
-            return outputDoc('images', array('iid' => 'Identification of the image'), $returnFields);
+            return $api->extended->outputDoc('images', array('iid' => 'Identification of the image'), $returnFields);
         }
 
         if (!$api->requiredFields($fields, $requiredFields)) {

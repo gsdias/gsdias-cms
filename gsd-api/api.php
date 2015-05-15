@@ -39,7 +39,6 @@ class api
         $this->method = $method;
         $this->extended = $extended;
         $this->loginRequired = array();
-        $this->adminRequired = array();
     }
 
     public function method($type, $cmd, $extra = null, $fields = null, $doc = false)
@@ -48,14 +47,10 @@ class api
 
         $method = $type.$cmd;
 
-        if (($this->checkCredentials($cmd) && $this->checkPermission($method, $cmd)) || $doc) {
-            if (method_exists($this->method, $cmd)) {
-                $this->output = $this->method->{$cmd}($fields, $extra, $doc);
-            } else {
-                $this->output = array('error' => -1, 'message' => "I don't recognize that command");
-            }
+        if (method_exists($this->method, $cmd)) {
+            $this->output = $this->method->{$cmd}($fields, $extra, $doc);
         } else {
-            $this->output = array('error' => -2, 'message' => "You don't have the right permission");
+            $this->output = array('error' => -1, 'message' => "I don't recognize that command");
         }
     }
 
@@ -91,19 +86,6 @@ class api
     {
         if (in_array($cmd, $this->loginRequired)) {
             if ($this->user != null) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    private function checkPermission($method, $cmd)
-    {
-        if (in_array($method.$cmd, $this->adminRequired)) {
-            if ($this->user != null && $this->level >= 90) {
                 return true;
             } else {
                 return false;

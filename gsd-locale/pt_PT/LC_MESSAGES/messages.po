@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2014-11-12 17:19-0000\n"
-"PO-Revision-Date: 2015-05-02 19:00-0000\n"
+"PO-Revision-Date: 2015-05-15 08:36-0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -336,6 +336,9 @@ msgstr "Definições"
 
 msgid "LANG_DASHBOARD"
 msgstr "Painél"
+
+msgid "LANG_NOPERMISSION"
+msgstr "Não tem permissão para aceder"
 
 msgid "LANG_LAYOUT_ALREADY_EXISTS"
 msgstr "Já existe um layout associado a esse ficheiro"

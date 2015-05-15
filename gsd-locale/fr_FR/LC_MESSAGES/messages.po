@@ -13,6 +13,15 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Language: fr_FR\n"
 
+msgid "LANG_ERROR"
+msgstr "Il y avait un problème. S'il vous plaît réessayer plus tard"
+
+msgid "LANG_AUTH"
+msgstr "Login"
+
+msgid "LANG_LANGUAGE"
+msgstr "Langue"
+
 msgid "LANG_AT"
 msgstr "à"
 
@@ -46,46 +55,6 @@ msgstr "Ajouter"
 msgid "LANG_EDIT"
 msgstr "Éditer"
 
-msgid "LANG_SETTINGS"
-msgstr "Paramètres"
-
-msgid "LANG_SETTINGS_SAVED"
-msgstr "Paramètres sauvée"
-
-msgid "LANG_DASHBOARD"
-msgstr "Painel"
-
-msgid "LANG_LAYOUTS"
-msgstr "Layouts"
-
-msgid "LANG_NO_LAYOUTS"
-msgstr "Pas de layouts"
-
-msgid "LANG_LAYOUT_ALREADY_EXISTS"
-msgstr "Il existe déjà un layout associé à ce fichier"
-
-msgid "LANG_LAYOUT_REMOVED"
-msgstr "Layout '%s' supprimé"
-
-msgid "LANG_LAYOUT_CREATED"
-msgstr "Layout '%s' générée"
-
-msgid "LANG_LAYOUT_NOPERMISSION"
-msgstr "Vous n'êtes pas autorisé à supprimer layouts"
-
-msgid "LANG_LAYOUT_RELATED"
-msgstr ""
-"Il ya des pages d'utiliser ce layout. Vous devez d'abord supprimer des pages"
-
-msgid "LANG_PAGES"
-msgstr "Pages"
-
-msgid "LANG_PAGE"
-msgstr "Page"
-
-msgid "LANG_PAGE_REMOVE"
-msgstr "Retirer la page"
-
 msgid "LANG_FROM"
 msgstr "à partir de"
 
@@ -93,103 +62,10 @@ msgid "LANG_STATE"
 msgstr "État"
 
 msgid "LANG_SEARCH"
-msgstr "Procurar"
+msgstr "Recherche"
 
 msgid "LANG_DIMENSION"
-msgstr "Dimensão"
-
-msgid "LANG_NO_PAGES"
-msgstr "Il n'y a pas de pages"
-
-msgid "LANG_PAGE_CREATED"
-msgstr "Page '%s' générée"
-
-msgid "LANG_PAGE_SAVED"
-msgstr "Page '%s' sauvée"
-
-msgid "LANG_PAGE_ALREADY_EXISTS"
-msgstr "Il existe déjà une page avec cette adresse"
-
-msgid "LANG_PAGE_REMOVED"
-msgstr "Page '%s' supprimée"
-
-msgid "LANG_PAGE_ERROR"
-msgstr "Il y avait un problème. Vérifiez les données et essayez à nouveau"
-
-msgid "LANG_PAGE_NOPERMISSION"
-msgstr "Non autorisé à supprimer des pages"
-
-msgid "LANG_USERS"
-msgstr "Utilisateurs"
-
-msgid "LANG_USER"
-msgstr "Utilisateur"
-
-msgid "LANG_USER_ADD"
-msgstr "Ajouter un utilisateur"
-
-msgid "LANG_USER_CREATED"
-msgstr "Utilisateur '%s' générée"
-
-msgid "LANG_USER_SAVED"
-msgstr "Utilisateur '%s' sauvée"
-
-msgid "LANG_USER_ALREADY_EXISTS"
-msgstr "Il existe déjà un utilisateur avec cet e-mail"
-
-msgid "LANG_USER_REMOVED"
-msgstr "Utilisateur '%s' supprimée"
-
-msgid "LANG_USER_NOPERMISSION"
-msgstr "Vous n'êtes pas autorisé à supprimer des utilisateurs"
-
-msgid "LANG_USER_DEFAULT"
-msgstr "Vous ne pouvez pas supprimer l'utilisateur par défaut"
-
-msgid "LANG_USER_ERROR"
-msgstr "Il y avait une erreur. Réessayez plus tard"
-
-msgid "LANG_SETTINGS_ERROR"
-msgstr "Il y avait une erreur. Réessayez plus tard"
-
-msgid "LANG_IMAGES"
-msgstr "Images"
-
-msgid "LANG_IMAGE"
-msgstr "Image"
-
-msgid "LANG_UPLOAD_IMAGE"
-msgstr "Envoyer une image"
-
-msgid "LANG_NO_IMAGES"
-msgstr "Aucune image"
-
-msgid "LANG_IMAGE_UPLOADED"
-msgstr "Image '%s' expédié"
-
-msgid "LANG_IMAGE_ERROR"
-msgstr "Il y avait une erreur. Réessayez plus tard"
-
-msgid "LANG_IMAGE_SAVED"
-msgstr "Image '%s' sauvée"
-
-msgid "LANG_IMAGE_REMOVED"
-msgstr "Imagem '%s' apagada"
-
-msgid "LANG_DOCUMENTS"
-msgstr "Documents"
-
-msgid "LANG_DOCUMENT"
-msgstr "Document"
-
-msgid "LANG_UPLOAD_DOCUMENT"
-msgstr "Envoyer un documento"
-
-msgid "LANG_NO_DOCUMENTS"
-msgstr "Pas de documents"
-
-msgid "LANG_DOCUMENT_UPLOADED"
-msgstr "Document '%s' expédié"
+msgstr "Dimension"
 
 msgid "LANG_DOCUMENT_EMPTY"
 msgstr "Aucun document"
@@ -205,6 +81,9 @@ msgstr "Il ya"
 
 msgid "LANG_NAME"
 msgstr "Nom"
+
+msgid "LANG_CREATE"
+msgstr "Serviteur"
 
 msgid "LANG_CREATED"
 msgstr "Serviteur"
@@ -257,12 +136,6 @@ msgstr "Enregistrer"
 msgid "LANG_BY"
 msgstr "par"
 
-msgid "LANG_DELETE_LAYOUT"
-msgstr "Vous voulez supprimer le layout"
-
-msgid "LANG_DELETE_PAGE"
-msgstr "Vous voulez supprimer le page"
-
 msgid "LANG_DESCRIPTION"
 msgstr "Description"
 
@@ -274,9 +147,6 @@ msgstr "Effacer l'image"
 
 msgid "LANG_IMAGE_EMPTY"
 msgstr "Pas d'image"
-
-msgid "LANG_DELETE_IMAGE"
-msgstr "Vous voulez supprimer le image"
 
 msgid "LANG_ADVANCED"
 msgstr "Avancé"
@@ -292,6 +162,9 @@ msgstr "Informations complémentaires"
 
 msgid "LANG_PUBLISHED"
 msgstr "Publié"
+
+msgid "LANG_UNPUBLISHED"
+msgstr "En publiant"
 
 msgid "LANG_SIZE"
 msgstr "Taille"
@@ -340,3 +213,165 @@ msgstr "Autorisation"
 
 msgid "LANG_REGISTER_SUBJECT"
 msgstr "Inscrivez-vous sur le site"
+
+msgid "LANG_REQUIRED"
+msgstr "Champ requis"
+
+msgid "LANG_INVALID_EMAIL"
+msgstr "Format email invalide"
+
+msgid "LANG_PASSWORD"
+msgstr "Mot de passe"
+
+msgid "WRONG_LOGIN"
+msgstr "Mauvais login"
+
+msgid "CHECK_DATA"
+msgstr "Vérifiez les données."
+
+msgid "LANG_LAYOUT_REMOVED"
+msgstr "Layout '%s' supprimé"
+
+msgid "LANG_PAGE_REMOVED"
+msgstr "Page '%s' supprimée"
+
+msgid "LANG_USER_REMOVED"
+msgstr "Utilisateur '%s' supprimée"
+
+msgid "LANG_IMAGE_REMOVED"
+msgstr "Image '%s' supprimée"
+
+msgid "LANG_DOCUMENT_REMOVED"
+msgstr "Document '%s' supprimée"
+
+msgid "LANG_LAYOUT_CREATED"
+msgstr "Layout '%s' générée"
+
+msgid "LANG_PAGE_CREATED"
+msgstr "Page '%s' générée"
+
+msgid "LANG_USER_CREATED"
+msgstr "Utilisateur '%s' générée"
+
+msgid "LANG_IMAGE_UPLOADED"
+msgstr "Image '%s' expédié"
+
+msgid "LANG_DOCUMENT_UPLOADED"
+msgstr "Document '%s' expédié"
+
+msgid "LANG_SETTINGS_SAVED"
+msgstr "Paramètres sauvée"
+
+msgid "LANG_PAGE_SAVED"
+msgstr "Page '%s' sauvée"
+
+msgid "LANG_USER_SAVED"
+msgstr "Utilisateur '%s' sauvée"
+
+msgid "LANG_IMAGE_SAVED"
+msgstr "Image '%s' sauvée"
+
+msgid "LANG_DOCUMENT_SAVED"
+msgstr "Image '%s' sauvée"
+
+msgid "LANG_NO_LAYOUTS"
+msgstr "Pas de layouts"
+
+msgid "LANG_NO_PAGES"
+msgstr "Il n'y a pas de pages"
+
+msgid "LANG_NO_IMAGES"
+msgstr "Aucune image"
+
+msgid "LANG_NO_DOCUMENTS"
+msgstr "Pas de documents"
+
+msgid "LANG_REMOVE_LAYOUT"
+msgstr "Vous voulez supprimer le layout"
+
+msgid "LANG_REMOVE_PAGE"
+msgstr "Vous voulez supprimer la page"
+
+msgid "LANG_REMOVE_USER"
+msgstr "Vous voulez supprimer l'utilisateur"
+
+msgid "LANG_REMOVE_IMAGE"
+msgstr "Vous voulez effacer l'image"
+
+msgid "LANG_REMOVE_DOCUMENT"
+msgstr "Vous voulez supprimer le document"
+
+msgid "LANG_LAYOUTS"
+msgstr "Layouts"
+
+msgid "LANG_PAGES"
+msgstr "Pages"
+
+msgid "LANG_USERS"
+msgstr "Utilisateurs"
+
+msgid "LANG_IMAGES"
+msgstr "Images"
+
+msgid "LANG_DOCUMENTS"
+msgstr "Documents"
+
+msgid "LANG_LAYOUT"
+msgstr "Layout"
+
+msgid "LANG_PAGE"
+msgstr "Page"
+
+msgid "LANG_USER"
+msgstr "Utilisateur"
+
+msgid "LANG_IMAGE"
+msgstr "Image"
+
+msgid "LANG_DOCUMENT"
+msgstr "Document"
+
+msgid "LANG_SETTINGS"
+msgstr "Paramètres"
+
+msgid "LANG_DASHBOARD"
+msgstr "Painel"
+
+msgid "LANG_NOPERMISSION"
+msgstr "Vous n'êtes pas autorisé à l'accès"
+
+msgid "LANG_LAYOUT_ALREADY_EXISTS"
+msgstr "Il existe déjà un layout associé à ce fichier"
+
+msgid "LANG_PAGE_ALREADY_EXISTS"
+msgstr "Il existe déjà une page avec cette adresse"
+
+msgid "LANG_USER_ALREADY_EXISTS"
+msgstr "Il existe déjà un utilisateur avec cet e-mail"
+
+msgid "LANG_PAGE_ERROR"
+msgstr "Il y avait un problème. Vérifiez les données et essayez à nouveau"
+
+msgid "LANG_USER_ERROR"
+msgstr "Il y avait une erreur. Réessayez plus tard"
+
+msgid "LANG_IMAGE_ERROR"
+msgstr "Il y avait une erreur. Réessayez plus tard"
+
+msgid "LANG_SETTINGS_ERROR"
+msgstr "Il y avait une erreur. Réessayez plus tard"
+
+msgid "LANG_LAYOUT_NOPERMISSION"
+msgstr "Vous n'êtes pas autorisé à supprimer layouts"
+
+msgid "LANG_PAGE_NOPERMISSION"
+msgstr "Non autorisé à supprimer des pages"
+
+msgid "LANG_USER_NOPERMISSION"
+msgstr "Vous n'êtes pas autorisé à supprimer des utilisateurs"
+
+msgid "LANG_LAYOUT_RELATED"
+msgstr "Il ya des pages d'utiliser ce layout. Vous devez d'abord supprimer des pages"
+
+msgid "LANG_USER_DEFAULT"
+msgstr "Vous ne pouvez pas supprimer l'utilisateur par défaut"

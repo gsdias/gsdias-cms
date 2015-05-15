@@ -46,6 +46,7 @@
             </li>
         </ul>
     </li>
+    <!-- IF IS_ADMIN -->
     <li class="{USERS_ACTIVE}">
         <a href="/admin/users" title="{LANG_USERS}"><i class="fa fa-users fa-2x"></i><!--{LANG_USERS}--></a>
         <ul>
@@ -57,13 +58,16 @@
             </li>
         </ul>
     </li>
+    <!-- ENDIF IS_ADMIN -->
     <!-- IF HASCLIENTASIDE --><li class="{EXTRA_ACTIVE}">
         <i class="fa fa-code fa-2x"></i><!--Extra-->
         <ul>
             [_CLIENTASIDE]
         </ul>
     </li><!-- ENDIF HASCLIENTASIDE -->
+    <!-- IF IS_ADMIN -->
     <li class="{SETTINGS_ACTIVE}">
         <a href="/admin/settings" title="{LANG_SETTINGS}"><i class="fa fa-cogs fa-2x"></i><!--{LANG_SETTINGS}--></a>
     </li>
+    <!-- ENDIF IS_ADMIN -->
 </ul>

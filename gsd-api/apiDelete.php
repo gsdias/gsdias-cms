@@ -18,6 +18,11 @@ class apiDelete
     public function layouts($fields, $extra, $doc = false)
     {
         global $mysql, $api;
+
+        if ($api->user->level == 'user') {
+            return lang('LANG_NOPERMISSION');
+        }
+
         $output = array('error' => 0, 'message' => lang('LANG_ERROR'));
         $requiredFields = array('list', 'type');
         $returnFields = array();
@@ -36,6 +41,11 @@ class apiDelete
     public function pages($fields, $extra, $doc = false)
     {
         global $mysql, $api;
+
+        if ($api->user->level == 'user') {
+            return lang('LANG_NOPERMISSION');
+        }
+
         $output = array('error' => 0, 'message' => lang('LANG_ERROR'));
         $requiredFields = array('list');
         $returnFields = array();
@@ -54,6 +64,11 @@ class apiDelete
     public function users($fields, $extra, $doc = false)
     {
         global $mysql, $api;
+
+        if ($api->user->level != 'admin') {
+            return lang('LANG_NOPERMISSION');
+        }
+
         $output = array('error' => 0, 'message' => lang('LANG_ERROR'));
         $requiredFields = array('list');
         $returnFields = array();
@@ -72,6 +87,11 @@ class apiDelete
     public function images($fields, $extra, $doc = false)
     {
         global $mysql, $api;
+
+        if ($api->user->level == 'user') {
+            return lang('LANG_NOPERMISSION');
+        }
+
         $output = array('error' => 0, 'message' => lang('LANG_ERROR'));
         $requiredFields = array('list');
         $returnFields = array();
@@ -90,6 +110,11 @@ class apiDelete
     public function documents($fields, $extra, $doc = false)
     {
         global $mysql, $api;
+
+        if ($api->user->level == 'user') {
+            return lang('LANG_NOPERMISSION');
+        }
+
         $output = array('error' => 0, 'message' => lang('LANG_ERROR'));
         $requiredFields = array('list');
         $returnFields = array();

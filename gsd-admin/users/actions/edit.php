@@ -9,6 +9,12 @@
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
+if (!IS_ADMIN) {
+    $_SESSION['error'] = lang('LANG_USER_NOPERMISSION');
+    header('Location: /admin/users', true, 302);
+    exit;
+}
+
 if (@$_REQUEST['save']) {
     $defaultfields = array('email', 'level', 'name', 'locale', 'disabled', 'password');
 
