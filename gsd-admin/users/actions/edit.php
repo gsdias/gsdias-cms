@@ -30,6 +30,10 @@ if (@$_REQUEST['save']) {
         $tpl->setvar('ERRORS', lang('LANG_USER_ALREADY_EXISTS'));
         $tpl->setcondition('ERRORS');
     } else {
+        if ($result['id'] == $user->id) {
+            $user->locale = $_REQUEST['locale'];
+        }
+
         $_SESSION['message'] = sprintf(lang('LANG_USER_SAVED'), $_REQUEST['name']);
 
         header('Location: /admin/users', true, 302);

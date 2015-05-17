@@ -365,6 +365,8 @@ class mySQL implements idatabase
 
     public function exec()
     {
+        global $tpl;
+
         $string = '';
 
         $string .= $this->_select ? 'SELECT '.$this->_select : '';
@@ -406,6 +408,12 @@ class mySQL implements idatabase
         if ($this->conn) {
             $this->prepared = $this->conn->prepare($this->query);
             $this->execute($this->_values);
+        }
+
+        if (!empty($this->_values)) {
+            $tpl->adderror(vsprintf(str_replace('?', '"%s"', $this->query), $this->_values));
+        } else {
+            $tpl->adderror($this->query);
         }
 
         return $this;

@@ -25,7 +25,7 @@ if (!IS_LOGGED) {
     $site->main = $site->arg(1) ? $site->arg(1) : 'dashboard';
     $site->startpoint = 'index';
 
-    if (!IS_ADMIN && ($site->arg(1) === 'users') || $site->arg(1) === 'settings') {
+    if (!IS_ADMIN && ($site->arg(1) === 'users' || $site->arg(1) === 'settings')) {
         $_SESSION['error'] = lang('LANG_NOPERMISSION');
         header('Location: /admin', true, 302);
         exit;
@@ -46,6 +46,8 @@ if (!IS_LOGGED) {
         $tpl->setvar(strtoupper($site->arg(1)).'_ACTIVE', 'active');
         if ($site->arg(1) == 'settings') {
             $file = 'gsd-admin/settings'.PHPEXT;
+        } elseif ($site->arg(1) == 'language') {
+            $file = 'gsd-admin/language'.PHPEXT;
         } else {
             if (class_exists('\\GSD\\'.$site->arg(1)) || class_exists('\\GSD\\Extended\extended'.$site->arg(1))) {
                 $file = 'gsd-admin/list'.PHPEXT;
