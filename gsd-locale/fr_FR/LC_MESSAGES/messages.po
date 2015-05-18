@@ -375,3 +375,15 @@ msgstr "Il ya des pages d'utiliser ce layout. Vous devez d'abord supprimer des p
 
 msgid "LANG_USER_DEFAULT"
 msgstr "Vous ne pouvez pas supprimer l'utilisateur par défaut"
+
+msgid "LANG_LANGUAGE_CONVERTED"
+msgstr "Lingua nao convertida"
+
+msgid "LANG_LANGUAGE_SAVED"
+msgstr "Ficheiro de edicao salvo"
+
+msgid "LANG_LANGUAGE_NOT_CONVERTED"
+msgstr "Lingua nao convertida"
+
+msgid "LANG_LANGUAGE_NOT_SAVED"
+msgstr "Nao foi possivel salvar ficheiro de edicao"

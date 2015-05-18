@@ -1,11 +1,13 @@
 <main>
     <h1>{LANG_LANGUAGE}</h1>
+    <!-- IF ERRORS --><div class="errors">{ERRORS}</div><!-- ENDIF ERRORS -->
+    <!-- IF MESSAGES --><div class="errors messages">{MESSAGES}</div><!-- ENDIF MESSAGES -->
     <form method="post">
         <!-- LOOP FIELD -->
-            <div class="colA">
+        <div class="colA">
             {FIELD_FIELD_ID}
             {FIELD_FIELD_STR}
-            </div>
+        </div>
         <!-- ENDLOOP FIELD -->
         <div class="btns">
             <input type="submit" class="btn blue" value="{LANG_SAVE}" name="save">

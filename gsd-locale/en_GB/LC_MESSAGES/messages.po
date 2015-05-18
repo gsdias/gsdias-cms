@@ -375,3 +375,15 @@ msgstr "There are pages using that layout. First you have to remove the pages"
 
 msgid "LANG_USER_DEFAULT"
 msgstr "You can't remove default user"
+
+msgid "LANG_LANGUAGE_CONVERTED"
+msgstr "Language converted"
+
+msgid "LANG_LANGUAGE_SAVED"
+msgstr "Language saved"
+
+msgid "LANG_LANGUAGE_NOT_CONVERTED"
+msgstr "Language not converted"
+
+msgid "LANG_LANGUAGE_NOT_SAVED"
+msgstr "Language not saved"
