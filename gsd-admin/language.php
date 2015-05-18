@@ -10,6 +10,11 @@
  * @since      File available since Release 1.0
  */
 if (@$_REQUEST['save']) {
+    if ($site->arg(2) === 'extended') {
+        $file = CLIENTPATH.'locale/'.$language.'/LC_MESSAGES/extended.mo';
+    } else {
+        $file = ROOTPATH.'gsd-locale/'.$language.'/LC_MESSAGES/messages.mo';
+    }
     $string = "";
     foreach($_REQUEST['msgid'] as $i => $value) {
         $id = $value;
@@ -29,31 +34,43 @@ if (@$_REQUEST['save']) {
     $converted = curl_exec($ch);
     $message = ob_get_contents();
     ob_end_clean();
-    file_put_contents(ROOTPATH.'gsd-locale/'.$language.'/LC_MESSAGES/messages.mo', $message);
+    file_put_contents($file, $message);
     curl_close($ch);
 
     $newfile = "msgid \"\"\nmsgstr \"\"\n\"Project-Id-Version: \\n\"\n\"POT-Creation-Date: 2014-11-12 17:19-0000\\n\"\n\"PO-Revision-Date: 2015-05-15 08:36-0000\\n\"\n\"Last-Translator: \\n\"\n\"Language-Team: \\n\"\n\"MIME-Version: 1.0\\n\"\n\"Content-Type: text/plain; charset=UTF-8\\n\"\n\"Content-Transfer-Encoding: 8bit\\n\"\n\"X-Generator: Poedit 1.6.10\\n\"\n\"X-Poedit-Basepath: .\\n\"\n\"Plural-Forms: nplurals=2; plural=(n != 1);\\n\"\n\"Language: $language\\n\"\n".$string;
 
-    $content = file_put_contents(ROOTPATH.'gsd-locale/'.$language.'/LC_MESSAGES/messages.po', $newfile);
+    if ($site->arg(2) === 'extended') {
+        $file = CLIENTPATH.'locale/'.$language.'/LC_MESSAGES/extended.po';
+    } else {
+        $file = ROOTPATH.'gsd-locale/'.$language.'/LC_MESSAGES/messages.po';
+    }
+
+    $content = file_put_contents($file, $newfile);
 
     if ($content) {
         $tpl->setcondition('MESSAGES');
-        $tpl->setvar('MESSAGES', '<p>Ficheiro de edicao salvo</p>');
+        $tpl->setvar('MESSAGES', sprintf('<p>%s</p>', lang('LANG_LANGUAGE_SAVED')));
     } else {
         $tpl->setcondition('ERRORS');
-        $tpl->setvar('ERRORS', '<p>Nao foi possivel salvar ficheiro de edicao</p>');
+        $tpl->setvar('ERRORS', sprintf('<p>%s</p>', lang('LANG_LANGUAGE_NOT_SAVED')));
     }
 
     if ($converted) {
         $tpl->setcondition('MESSAGES');
-        $tpl->setvar('MESSAGES', '<p>Lingua convertida</p>');
+        $tpl->setvar('MESSAGES', sprintf('<p>%s</p>', lang('LANG_LANGUAGE_CONVERTED')));
     } else {
         $tpl->setcondition('ERRORS');
-        $tpl->setvar('ERRORS', '<p>Lingua nao convertida</p>');
+        $tpl->setvar('ERRORS', sprintf('<p>%s</p>', lang('LANG_LANGUAGE_NOT_CONVERTED')));
     }
 }
 
-$content = file_get_contents(ROOTPATH.'gsd-locale/'.$language.'/LC_MESSAGES/messages.po');
+if ($site->arg(2) === 'extended') {
+    $file = CLIENTPATH.'locale/'.$language.'/LC_MESSAGES/extended.po';
+} else {
+    $file = ROOTPATH.'gsd-locale/'.$language.'/LC_MESSAGES/messages.po';
+}
+
+$content = file_get_contents($file);
 
 preg_match_all('#msgid "(.*)"\nmsgstr "(.*)"#m', $content, $matches, PREG_SET_ORDER);
 

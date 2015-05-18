@@ -53,6 +53,7 @@ if (!IS_LOGGED) {
                 $file = 'gsd-admin/list'.PHPEXT;
             } else {
                 $site->main = '404';
+                http_response_code(404);
             }
         }
         if ($file && is_file($file)) {

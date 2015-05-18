@@ -132,6 +132,7 @@ class site
                 $this->pagemodules = $pagemodules;
             }
         } else {
+            http_response_code(404);
             $this->startpoint = '404';
             $tpl->setvar('PAGE_TITLE', $this->name);
         }

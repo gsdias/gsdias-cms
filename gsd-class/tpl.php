@@ -139,7 +139,7 @@ class tpl
         $item = $site->pagemodules[$placeholder[0]];
         $item = unserialize($item);
 
-        $item = new GSD\image(array(
+        $item = new image(array(
             'iid' => @$item['list'][0][0]['value'],
             'width' => 'auto',
             'class' => @$item['list'][0][0]['class'],
