@@ -377,13 +377,13 @@ msgid "LANG_USER_DEFAULT"
 msgstr "Não pode remover o utilizador padrão"
 
 msgid "LANG_LANGUAGE_CONVERTED"
-msgstr "Lingua nao convertida"
+msgstr "Língua convertida"
 
 msgid "LANG_LANGUAGE_SAVED"
-msgstr "Ficheiro de edicao salvo"
+msgstr "Ficheiro de edição salvo"
 
 msgid "LANG_LANGUAGE_NOT_CONVERTED"
-msgstr "Lingua nao convertida"
+msgstr "Língua não convertida"
 
 msgid "LANG_LANGUAGE_NOT_SAVED"
-msgstr "Nao foi possivel salvar ficheiro de edicao"
+msgstr "Não foi possível salvar ficheiro de edição"

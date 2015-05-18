@@ -62,7 +62,7 @@ foreach ($matches as $match) {
     if ($match[1]) {
         $lang[] = array(
             'FIELD_ID' => new GSD\input(array('label' => 'ID', 'name' => 'msgid[]', 'value' => $match[1])),
-            'FIELD_STR' => new GSD\input(array('label' => 'Text', 'name' => 'msgstr[]', 'value' => $match[2]))
+            'FIELD_STR' => new GSD\input(array('label' => 'Text', 'name' => 'msgstr[]', 'value' => $match[2], 'labelClass' => 'string'))
         );
     }
 }
