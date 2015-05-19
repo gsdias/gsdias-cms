@@ -49,8 +49,8 @@ class mySQL implements idatabase
             ));
                 $this->conn->exec("SET time_zone = '+00:00';");
             } catch (\PDOException $error) {
-                echo $error->getMessage();
-                echo $error->getCode();
+//                echo $error->getMessage();
+//                echo $error->getCode();
                 switch ($error->getCode()) {
                 case '2002':
                 printf('<span style="color: red;">Could not connect to database. Check host</span><br>');
@@ -145,7 +145,7 @@ class mySQL implements idatabase
             try {
                 $this->executed = $this->prepared->execute($values);
             } catch (PDOException $e) {
-                echo $e;
+//                echo $e;
             }
 
             $this->total = $this->prepared->rowCount();

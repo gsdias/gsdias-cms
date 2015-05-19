@@ -16,6 +16,11 @@ include_once 'gsd-include/gsd-config.php';
 $tpl->setvar('HTML_CLASS', 'gsd');
 
 if (!IS_INSTALLED) {
+    if ($site->uri != '/admin') {
+        header('location: /admin');
+        exit;
+    }
+
     $site->main = 'STEP1';
     require_once 'gsd-install'.PHPEXT;
 
