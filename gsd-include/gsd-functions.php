@@ -326,7 +326,7 @@ function getLanguage()
     $list = array($site->arg(0), @$redirect[1]);
 
     if (!$site->isFrontend) {
-        array_unshift($list, $user->locale, $site->locale);
+        array_unshift($list, $user->locale, @$site->locale);
     }
 
     $list = array_merge($list, $browserlang);

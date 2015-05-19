@@ -40,12 +40,12 @@ if (@$_REQUEST['save']) {
         }
     } else {
         $mysql->statement(sprintf('CREATE DATABASE IF NOT EXISTS %s;', $_mysql['db']));
-        $mysql->use($_mysql['db']);
+        $mysql->usedb($_mysql['db']);
     }
 
     if ($database[$_mysql['db']]) {
         $mysql->statement(sprintf('CREATE DATABASE IF NOT EXISTS %s', $_mysql['db']));
-        $mysql->use($_mysql['db']);
+        $mysql->usedb($_mysql['db']);
     }
 
     $mysql->show('TABLES');

@@ -101,7 +101,7 @@ class users extends section implements isection
 
     public function add($defaultfields, $defaultsafter = array(), $defaultvalues = array(), $emailparams = array())
     {
-        global $site;
+        global $site, $config;
 
         $password = $_REQUEST['password'];
         $_REQUEST['password'] = md5($_REQUEST['password']);
@@ -113,6 +113,8 @@ class users extends section implements isection
         $email->setfrom($site->email);
         $email->setreplyto($site->email);
         $email->setsubject(lang('LANG_REGISTER_SUBJECT'));
+        $email->setvar('sitename', $site->name);
+        $email->setvar('siteurl', $config['url']);
         $email->setvar('password', $password);
 
         if (sizeof(@$emailparams['fields'])) {
