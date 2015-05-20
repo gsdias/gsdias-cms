@@ -112,7 +112,7 @@ class mySQL implements idatabase
             global $tpl;
             $this->query = $query ? $query : $this->query;
 
-            $values = $values ? $this->formatDates($values) : $values;
+            $values = !empty($values) ? $this->formatDates($values) : $values;
 
             if (!$this->conn) {
                 $this->connect();
@@ -350,6 +350,8 @@ class mySQL implements idatabase
             }
             $this->_fields = array_merge($this->_fields, $values);
         } else {
+            $value = explode('.', $values);
+            $values = sprintf('`%s`', $value[0]).(@$value[1] ? sprintf('.`%s`', $value[1]) : '');
             array_push($this->_fields, $values);
         }
 

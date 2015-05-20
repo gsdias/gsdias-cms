@@ -48,6 +48,7 @@ class api
         $method = $type.$cmd;
 
         if (method_exists($this->method, $cmd)) {
+            http_response_code(200);
             $this->output = $this->method->{$cmd}($fields, $extra, $doc);
         } else {
             $this->output = array('error' => -1, 'message' => "I don't recognize that command");

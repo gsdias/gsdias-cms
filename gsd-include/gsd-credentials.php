@@ -64,3 +64,8 @@ if ($uri == '/admin/auth' || $uri == '/admin/auth/') {
     }
     $site->startpoint = 'admin/login';
 }
+
+if ($uri == '/login' || $uri == '/login/') {
+    $site->startpoint = 'index';
+    $site->startmain = 'login';
+}

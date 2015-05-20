@@ -83,7 +83,7 @@ class site
             ->exec();
 
         if ($mysql->total) {
-            header('Location: '.$mysql->singleresult(), true, 301);
+            header('Location: '.$mysql->singleresult()->destination, true, 301);
             exit;
         }
 

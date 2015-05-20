@@ -85,7 +85,7 @@ if (@$_REQUEST['save']) {
             ->values($site->arg(2))
             ->exec();
 
-        $currenturl = $mysql->singleresult();
+        $currenturl = $mysql->singleresult()->url;
 
         $mysql->reset()
             ->delete()
@@ -95,7 +95,7 @@ if (@$_REQUEST['save']) {
             ->exec();
 
         $mysql->reset()
-            ->select('`from`, destination')
+            ->select('destination')
             ->from('redirect')
             ->where('destination = ?')
             ->order('created')

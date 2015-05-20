@@ -46,6 +46,12 @@ msgstr "Admin"
 msgid "LANG_REMOVE"
 msgstr "Remove"
 
+msgid "LANG_CLEAR"
+msgstr "Clear"
+
+msgid "LANG_REVERT"
+msgstr "Revert"
+
 msgid "LANG_EMAIL"
 msgstr "Email"
 
@@ -222,6 +228,9 @@ msgstr "Invalid email"
 
 msgid "LANG_PASSWORD"
 msgstr "Password"
+
+msgid "LANG_CONF_PASSWORD"
+msgstr "Confirm password"
 
 msgid "WRONG_LOGIN"
 msgstr "Wrong login"
