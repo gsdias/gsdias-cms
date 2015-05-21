@@ -65,7 +65,7 @@ if (@$_REQUEST['confirm'] == $afirmative) {
     $title = $result->title;
     $currenturl = $result->url;
 
-    if (!empty(@$_REQUEST['parent'])) {
+    if (!empty($_REQUEST['parent'])) {
         foreach ($_REQUEST['parent'] as $pid => $parent) {
             $parent = $parent == $site->arg(2) ? 0 : $parent;
 

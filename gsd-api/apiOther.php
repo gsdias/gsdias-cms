@@ -306,7 +306,7 @@ class apiOther
     {
         global $mysql, $api;
 
-        $list = explode(',', $list);
+        $list = is_array($list) ? $list : explode(',', $list);
         $deleted = array();
         $field = substr($table, 0, 1).'id';
 
