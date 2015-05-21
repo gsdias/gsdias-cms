@@ -148,8 +148,7 @@ module.exports = function (grunt) {
             }
         },
         compass: {
-            config: './config.rb',
-            clean: true
+            config: './config.rb'
         },
         modernizr: {
 

@@ -329,9 +329,8 @@ function getLanguage()
         array_unshift($list, $user->locale, @$site->locale);
     }
 
-    $list = array_merge($list, $browserlang);
+    $list = array_merge($list, array($user->locale), $browserlang);
 
-    $list[] = $user->locale;
     $list[] = @$site->locale;
 
     foreach ($list as $prefered) {

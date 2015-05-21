@@ -110,7 +110,6 @@ class site
                 'PAGE_OG_TITLE' => $page->og_title ? $page->og_title : $page->title,
                 'PAGE_OG_DESCRIPTION' => $page->og_description,
                 'PAGE_OG_IMAGE' => $this->protocol.$_SERVER['HTTP_HOST'].ASSETPATHURL.'images/'.$page->og_image,
-                'PAGE_CANONICAL' => $this->protocol.$_SERVER['HTTP_HOST'].'/'.$this->uri,
             ));
 
             $this->main = trim(str_replace('.html', '', $page->file));
