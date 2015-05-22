@@ -15,11 +15,28 @@ if (!IS_ADMIN && !IS_EDITOR) {
 }
 
 if (@$_REQUEST['save']) {
+    $allowed = array(
+        'application/msword',
+        'application/msexcel',
+        'application/pdf',
+        'application/vnd.oasis.opendocument.text',
+        'application/xml',
+        'application/x-gzip',
+        'application/zip',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    );
+
     $defaultfields = array('name', 'description', 'extension', 'size');
 
     $fields = array('creator');
 
     $values = array($user->id);
+
+    $finfo = new finfo(FILEINFO_MIME);
+
+    $type = $finfo->file($_FILES['asset']['tmp_name']);
+
+    $valid = in_array(explode(';', $type)[0], $allowed);
 
     $name = explode('.', $_FILES['asset']['name']);
     $extension = end($name);
@@ -27,14 +44,19 @@ if (@$_REQUEST['save']) {
     $_REQUEST['extension'] = $extension;
     $_REQUEST['size'] = round(filesize($_FILES['asset']['tmp_name']) / 1000, 0).'KB';
 
-    $result = $csection->add($defaultfields, $fields, $values);
+    if ($valid) {
+        $result = $csection->add($defaultfields, $fields, $values);
 
-    if ($mysql->total) {
-        $id = $mysql->lastInserted();
+        if ($mysql->total) {
+            $id = $mysql->lastInserted();
 
-        $file = savefile($_FILES['asset'], ASSETPATH.'documents/', null, null, $id);
+            $file = savefile($_FILES['asset'], ASSETPATH.'documents/', null, null, $id);
 
-        header('Location: /admin/'.$site->arg(1), true, 302);
-        exit;
+            header('Location: /admin/'.$site->arg(1), true, 302);
+            exit;
+        }
+    } else {
+        $tpl->setvar('ERRORS', lang('LANG_DOCUMENT_FORMAT'));
+        $tpl->setcondition('ERRORS');
     }
 }

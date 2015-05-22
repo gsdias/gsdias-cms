@@ -16,6 +16,15 @@ msgstr ""
 msgid "LANG_ERROR"
 msgstr "Il y avait un problème. S'il vous plaît réessayer plus tard"
 
+msgid "LANG_TEXT"
+msgstr "Texto"
+
+msgid "LANG_DEFAULT"
+msgstr "Defeito"
+
+msgid "LANG_EXTENDED"
+msgstr "Extendido"
+
 msgid "LANG_AUTH"
 msgstr "Login"
 
@@ -81,6 +90,9 @@ msgstr "Sélection du document"
 
 msgid "LANG_DOCUMENT_CLEAN"
 msgstr "Effacer le document"
+
+msgid "LANG_DOCUMENT_FORMAT"
+msgstr "Invalid document format"
 
 msgid "LANG_AGO"
 msgstr "Il ya"
@@ -153,6 +165,9 @@ msgstr "Effacer l'image"
 
 msgid "LANG_IMAGE_EMPTY"
 msgstr "Pas d'image"
+
+msgid "LANG_IMAGE_FORMAT"
+msgstr "Formato de image invalido"
 
 msgid "LANG_ADVANCED"
 msgstr "Avancé"

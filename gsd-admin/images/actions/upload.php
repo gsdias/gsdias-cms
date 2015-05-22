@@ -21,27 +21,34 @@ if (@$_REQUEST['save']) {
 
     $values = array($user->id);
 
+    $size = getimagesize($_FILES['asset']['tmp_name']);
+
+    $valid = is_array($size);
+
     $name = explode('.', $_FILES['asset']['name']);
     $extension = end($name);
-
-    $size = getimagesize($_FILES['asset']['tmp_name']);
 
     $_REQUEST['extension'] = $extension;
     $_REQUEST['width'] = $size[0];
     $_REQUEST['height'] = $size[1];
     $_REQUEST['size'] = round(filesize($_FILES['asset']['tmp_name']) / 1000, 0).'KB';
 
-    $result = $csection->add($defaultfields, $fields, $values);
+    if ($valid) {
+        $result = $csection->add($defaultfields, $fields, $values);
 
-    if ($result['errnum']) {
-        $tpl->setvar('ERRORS', lang('LANG_IMAGE_ERROR'));
-        $tpl->setcondition('ERRORS');
+        if ($result['errnum']) {
+            $tpl->setvar('ERRORS', lang('LANG_IMAGE_ERROR'));
+            $tpl->setcondition('ERRORS');
+        } else {
+            $id = $mysql->lastInserted();
+
+            $file = savefile($_FILES['asset'], ASSETPATH.'images/', null, null, $id);
+
+            header('Location: /admin/'.$site->arg(1), true, 302);
+            exit;
+        }
     } else {
-        $id = $mysql->lastInserted();
-
-        $file = savefile($_FILES['asset'], ASSETPATH.'images/', null, null, $id);
-
-        header('Location: /admin/'.$site->arg(1), true, 302);
-        exit;
+        $tpl->setvar('ERRORS', lang('LANG_IMAGE_FORMAT'));
+        $tpl->setcondition('ERRORS');
     }
 }
