@@ -15,14 +15,14 @@ if (@$_REQUEST['save']) {
     } else {
         $file = ROOTPATH.'gsd-locale/'.$language.'/LC_MESSAGES/messages.mo';
     }
-    $string = "";
-    foreach($_REQUEST['msgid'] as $i => $value) {
+    $string = '';
+    foreach ($_REQUEST['msgid'] as $i => $value) {
         $id = $value;
         $str = $_REQUEST['msgstr'][$i];
         $string .= "\nmsgid \"$id\"\nmsgstr \"$str\"\n";
     }
 
-    $params=array('src' => $string);
+    $params = array('src' => $string);
     $defaults = array(
     CURLOPT_URL => 'https://localise.biz/api/convert/po/messages.mo?format=gettext&locale='.$language,
     CURLOPT_POST => true,
@@ -79,7 +79,7 @@ foreach ($matches as $match) {
     if ($match[1]) {
         $lang[] = array(
             'FIELD_ID' => new GSD\input(array('label' => 'ID', 'name' => 'msgid[]', 'value' => $match[1])),
-            'FIELD_STR' => new GSD\input(array('label' => lang('LANG_TEXT'), 'name' => 'msgstr[]', 'value' => $match[2], 'labelClass' => 'string'))
+            'FIELD_STR' => new GSD\input(array('label' => lang('LANG_TEXT'), 'name' => 'msgstr[]', 'value' => $match[2], 'labelClass' => 'string')),
         );
     }
 }
