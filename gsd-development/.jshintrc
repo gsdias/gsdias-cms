@@ -15,7 +15,7 @@
     "noarg": true,
     "node": true,
     "nonew": true,
-    "predef": [ "GSD", "areas", "jQuery", "Backbone", "_", "Modernizr", "classie" ],
+    "predef": [ "GSD", "tinymce", "jQuery", "Backbone", "_", "Modernizr" ],
     "quotmark": "single",
     "strict": true,
     "undef": true,

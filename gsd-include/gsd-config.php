@@ -30,6 +30,8 @@ $user = @$_SESSION['user'] ? $_SESSION['user'] : (class_exists('\\GSD\\Extended\
 
 $language = getLanguage();
 
+$tpl->setvar('LANG', explode('_', $language)[0]);
+
 $folder = 'gsd-locale';
 $domain = 'messages';
 $encoding = 'UTF-8';
