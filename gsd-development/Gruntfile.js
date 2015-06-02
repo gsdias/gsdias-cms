@@ -23,9 +23,14 @@ module.exports = function (grunt) {
             }
         },
         clean: {
-            options: { force: true },
-            js: [pkg.gsdresources + 'js/*.js', pkg.gsdresources + 'js/*.map'],
-            css: [pkg.gsdresources + 'css/*.css', pkg.gsdresources + 'css/*.map']
+            start: {
+                options: { force: true },
+                src: [pkg.gsdresources + 'js/*.js', pkg.gsdresources + 'js/*.map', pkg.gsdresources + 'css/*.css', pkg.gsdresources + 'css/*.map']
+            },
+            finish: {
+                options: { force: true },
+                src: ['.tmp', '.sass-cache']
+            }
         },
         jshint: {
             files: [
@@ -145,6 +150,10 @@ module.exports = function (grunt) {
             css: {
                 files: ['./sass/*.scss', './sass/*/*.scss', pkg.gsdfrontend + 'development/sass/*.scss', pkg.gsdfrontend + 'development/sass/*/*.scss'],
                 tasks: ['compass']
+            },
+            html: {
+                files: ['./tpl/*'],
+                tasks: ['copy', 'jshint', 'jscs', 'useminPrepare', 'concat:generated','uglify:generated', 'usemin', 'string-replace']
             }
         },
         compass: {
@@ -221,7 +230,7 @@ module.exports = function (grunt) {
                 dir: '../gsd-class' // or ['src/models', 'src/lib']
             },
             options: {
-                bin: '/Users/goncalo.silvadias/.composer/vendor/bin/php-cs-fixer',
+                bin: '~/.composer/vendor/bin/php-cs-fixer',
                 ignoreExitCode: true,
                 level: 'all',
                 quiet: true
@@ -236,7 +245,7 @@ module.exports = function (grunt) {
         'watch'
     ]);
     grunt.registerTask('build', [
-        'clean',
+        'clean:start',
         'copy',
         'jshint',
         'jscs',
@@ -247,6 +256,7 @@ module.exports = function (grunt) {
         //'filerev',
         'usemin',
         'string-replace',
-        'modernizr'
+        'modernizr',
+        'clean:finish'
     ]);
 };
