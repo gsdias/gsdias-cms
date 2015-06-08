@@ -24,6 +24,7 @@ if (@$_REQUEST['save']) {
         'application/x-gzip',
         'application/zip',
         'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'video/mp4',
     );
 
     $defaultfields = array('name', 'description', 'extension', 'size');
