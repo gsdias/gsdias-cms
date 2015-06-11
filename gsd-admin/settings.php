@@ -10,22 +10,32 @@
  * @since      File available since Release 1.0
  */
 if (@$_REQUEST['save']) {
-    $fields = 0;
-    foreach ($_REQUEST as $name => $value) {
-        if (strpos($name, 'gsd-') !== false) {
-            $fields++;
-            $mysql->reset()
-                ->update('options')
-                ->fields(array('value'))
-                ->where('name = ?')
-                ->values(array($value, $name))
-                ->exec();
+    $fields = 1;
 
-            $fields += !$mysql->errnum ? -1 : 0;
+    $mysql->reset()
+        ->select()
+        ->from('options')
+        ->order('index')
+        ->exec();
+
+    $options = array();
+    foreach ($mysql->result() as $item) {
+        $value = @$_REQUEST[$item->name];
+        $name = $item->name;
+        if (strpos($item->name, '_checkbox') !== false) {
+            $value = @$_REQUEST[$item->name] ? @$_REQUEST[$item->name] : null;
         }
+
+        $mysql->reset()
+            ->update('options')
+            ->fields(array('value'))
+            ->where('name = ?')
+            ->values(array($value, $name))
+            ->exec();
+        $fields = $mysql->errnum ? 0 : $fields;
     }
 
-    if ($fields == 0) {
+    if ($fields == 1) {
         $_SESSION['message'] = lang('LANG_SETTINGS_SAVED');
         header('Location: /admin', true, 302);
         exit;
@@ -71,6 +81,15 @@ foreach ($mysql->result() as $item) {
             'list' => $languages,
             'label' => $item->label,
             'selected' => @$item->value,
+        ));
+    } elseif (strpos($item->name, '_checkbox') !== false) {
+        $field = new GSD\input(array(
+            'id' => $item->name,
+            'name' => $item->name,
+            'label' => $item->label,
+            'selected' => @$item->value,
+            'value' => 1,
+            'type' => 'checkbox',
         ));
     } else {
         $field = (string) new GSD\input(array('name' => $item->name, 'value' => @$item->value, 'label' => $item->label));

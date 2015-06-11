@@ -24,6 +24,7 @@ class input
             'value' => '',
             'type' => 'text',
             'labelClass' => '',
+            'selected' => '',
         );
 
         $this->args = array_merge($defaults, $args);
@@ -33,6 +34,6 @@ class input
     {
         $output = $this->args['label'] ? sprintf('<label%s>%s</label>', $this->args['labelClass'] ? ' class="'.$this->args['labelClass'].'"' : '', $this->args['label']) : '';
 
-        return sprintf('%s<input type="%s" id="%s" name="%s" value="%s">', $output, $this->args['type'], $this->args['id'], $this->args['name'], $this->args['value']);
+        return sprintf('%s<input type="%s" id="%s" name="%s" value="%s"%s>', $output, $this->args['type'], $this->args['id'], $this->args['name'], $this->args['value'], $this->args['selected'] ? ' checked="checked"': '');
     }
 }

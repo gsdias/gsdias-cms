@@ -13,7 +13,7 @@ namespace GSD;
 
 class site
 {
-    public $name, $email, $ga, $fb, $uri, $page, $main, $startpoint, $pagemodules, $layout, $protocol, $isFrontend;
+    public $name, $email, $ga, $fb, $uri, $page, $main, $startpoint, $pagemodules, $layout, $protocol, $isFrontend, $options;
     protected $path;
 
     public function __construct()
@@ -24,6 +24,7 @@ class site
 
         $this->startpoint = 'index';
         $this->main = '';
+        $this->options = array();
 
         $mysql->reset()
             ->select()
@@ -44,6 +45,7 @@ class site
                 $name = str_replace(array('_image', '_select'), '', $name);
                 $tpl->setvar('SITE_'.strtoupper($name), $option->value);
             }
+            $this->options[$name] = $option->value;
         }
 
         $pattern = '/(\?)(.*)/';
