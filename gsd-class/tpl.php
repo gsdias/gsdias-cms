@@ -190,6 +190,7 @@ class tpl
 
     public function populateLists($placeholder, $items)
     {
+        $li = '';
         foreach ($items as $item) {
             if ($placeholder[2] == 'IMAGE' && $item['value']) {
                 $image = new GSD\image(array(
