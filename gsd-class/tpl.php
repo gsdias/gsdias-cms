@@ -162,7 +162,7 @@ class tpl
                 if (gettype($items) == 'array' && sizeof($items)) {
                     $content = $this->populateLists($placeholder, $items);
                     if ($content) {
-                        $ul .= sprintf('<li>%s</li>', $content);
+                        $ul .= $content;
                     }
                 }
             }
@@ -193,14 +193,15 @@ class tpl
         $li = '';
         foreach ($items as $item) {
             if ($placeholder[2] == 'IMAGE' && $item['value']) {
-                $li .= new GSD\image(array(
+                $image = new GSD\image(array(
                     'iid' => $item['value'],
                     'width' => 'auto',
                     'class' => $item['class'],
                     'style' => $item['style'],
                 ));
+                $li = sprintf('<li>%s</li>', $image);
             } elseif ($item['value']) {
-                $li = $item['value'];
+                $li = sprintf('<li%s%s>%s</li>', $item['class'] ? sprintf(' class="%s"', $item['class']) : '', $item['style'] ? sprintf(' style="%s"', $item['style']) : '', $item['value']);
             }
         }
 
