@@ -13,8 +13,11 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Language: en_GB\n"
 
-msgid "LANG_MAINTENANCE"
-msgstr "O site encontra-se em manutencao. Volte mais tarde"
+msgid "LANG_MAINTENANCE_LABEL"
+msgstr "Maintenance"
+
+msgid "LANG_MAINTENANCE_TEXT"
+msgstr "Website is under maintenance. Check later"
 
 msgid "LANG_ERROR"
 msgstr "There was an error. Try again later"
