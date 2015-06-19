@@ -310,9 +310,9 @@ class tpl
             $detected = 0;
             foreach ($list as $blk) {
                 if (substr($blk, 0, 1) == '!') {
-                    $detected = $this->config['conditions'][substr($blk, 1)] == 0 || $detected ? 1 : 0;
+                    $detected = @$this->config['conditions'][substr($blk, 1)] == 0 || $detected ? 1 : 0;
                 } else {
-                    $detected = $this->config['conditions'][$blk] == 1 || $detected ? 1 : 0;
+                    $detected = @$this->config['conditions'][$blk] == 1 || $detected ? 1 : 0;
                 }
             }
 

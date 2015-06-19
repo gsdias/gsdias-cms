@@ -35,10 +35,10 @@ function lang($text, $option = 'NONE')
             $translated = ucwords($translated);
         break;
         case 'UPPER':
-            $translated = strtoupper($translated);
+            $translated = mb_strtoupper($translated, 'UTF-8');
         break;
         case 'LOWER':
-            $translated = strtolower($translated);
+            $translated = mb_strtolower($translated, 'UTF-8');
         break;
         case 'FIRST':
             $translated = ucfirst($translated);

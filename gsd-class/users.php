@@ -65,7 +65,7 @@ class users extends section implements isection
 
     public function getcurrent($id = 0)
     {
-        global $tpl, $mysql, $languages;
+        global $tpl, $mysql, $languages, $permissions;
 
         $mysql->statement('SELECT users.*, users.created, users.creator AS creator_id, u.name AS creator_name FROM users LEFT JOIN users AS u ON users.creator = u.uid WHERE users.uid = ?;', array($id));
 
@@ -78,9 +78,8 @@ class users extends section implements isection
 
             $fields['CURRENT_USERS_DISABLED'] = $item->disabled ? 'checked="checked"' : '';
             $fields['CURRENT_USERS_STATUS'] = !$item->disabled ? lang('LANG_ENABLED') : lang('LANG_DISABLED');
-
             $fields['PERMISSION'] = new select(array(
-                'list' => array(
+                'list' => @$permissions ? $permissions : array(
                     'admin' => 'admin',
                     'editor' => 'editor',
                     'user' => 'user',

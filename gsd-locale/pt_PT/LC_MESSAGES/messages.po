@@ -365,7 +365,7 @@ msgid "LANG_SETTINGS"
 msgstr "Definições"
 
 msgid "LANG_DASHBOARD"
-msgstr "Painél"
+msgstr "Painel"
 
 msgid "LANG_NOPERMISSION"
 msgstr "Não tem permissão para aceder"
