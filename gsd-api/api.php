@@ -62,6 +62,7 @@ class api
         $output = json_encode($output, true);
         header('Content-length: '.strlen($output)); // tells file size
         header('Content-type: application/json; charset=utf-8');
+        header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
         echo isset($_GET['jsoncallback']) ? "{$_GET['jsoncallback']}($output)" : $output;
 
         $mysql->close();

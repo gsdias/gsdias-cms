@@ -233,6 +233,6 @@ abstract class section implements isection
 
         $fields = function_exists($_fields) ? $_fields() : array('list' => array());
 
-        return $fields['list'];
+        return is_array($fields['list']) ? $fields['list'] : array();
     }
 }

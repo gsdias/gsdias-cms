@@ -2,6 +2,7 @@
     <li class="{DASHBOARD_ACTIVE}">
         <a href="/admin" title="{LANG_DASHBOARD}"><i class="fa fa-dashboard fa-2x"></i><!--{LANG_DASHBOARD}--></a>
     </li>
+    <!-- IF IS_ADMIN OR IS_EDITOR -->
     <li class="{LAYOUTS_ACTIVE}">
         <a href="/admin/layouts" title="{LANG_LAYOUTS}"><i class="fa fa-tasks fa-2x"></i><!--{LANG_LAYOUTS}--></a>
         <ul>
@@ -46,7 +47,7 @@
             </li>
         </ul>
     </li>
-    <!-- IF IS_ADMIN -->
+    <!-- ENDIF IS_ADMIN OR IS_EDITOR -->
     <li class="{USERS_ACTIVE}">
         <a href="/admin/users" title="{LANG_USERS}"><i class="fa fa-users fa-2x"></i><!--{LANG_USERS}--></a>
         <ul>
@@ -58,13 +59,13 @@
             </li>
         </ul>
     </li>
-    <!-- ENDIF IS_ADMIN -->
     <!-- IF HASCLIENTASIDE --><li class="{EXTRA_ACTIVE}">
         <i class="fa fa-code fa-2x"></i><!--Extra-->
         <ul>
             [_CLIENTASIDE]
         </ul>
     </li><!-- ENDIF HASCLIENTASIDE -->
+    <!-- IF IS_ADMIN OR IS_EDITOR -->
     <li class="{LANGUAGE_ACTIVE}">
         <a href="/admin/language" title="{LANG_LANGUAGE}"><i class="fa fa-language fa-2x"></i><!--{LANG_LANGUAGE}--></a>
         <ul>
@@ -76,6 +77,7 @@
             </li>
         </ul>
     </li>
+    <!-- ENDIF IS_ADMIN OR IS_EDITOR -->
     <!-- IF IS_ADMIN -->
     <li class="{SETTINGS_ACTIVE}">
         <a href="/admin/settings" title="{LANG_SETTINGS}"><i class="fa fa-cogs fa-2x"></i><!--{LANG_SETTINGS}--></a>

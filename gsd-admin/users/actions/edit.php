@@ -11,7 +11,7 @@
  */
 if (!IS_ADMIN) {
     $_SESSION['error'] = lang('LANG_USER_NOPERMISSION');
-    header('Location: /admin/users', true, 302);
+    header('Location: /admin/'.$site->arg(1), true, 302);
     exit;
 }
 
@@ -36,7 +36,7 @@ if (@$_REQUEST['save']) {
 
         $_SESSION['message'] = sprintf(lang('LANG_USER_SAVED'), $_REQUEST['name']);
 
-        header('Location: /admin/users', true, 302);
+        header('Location: /admin/'.$site->arg(1), true, 302);
         exit;
     }
 }

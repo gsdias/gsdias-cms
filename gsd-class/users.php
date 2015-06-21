@@ -79,11 +79,7 @@ class users extends section implements isection
             $fields['CURRENT_USERS_DISABLED'] = $item->disabled ? 'checked="checked"' : '';
             $fields['CURRENT_USERS_STATUS'] = !$item->disabled ? lang('LANG_ENABLED') : lang('LANG_DISABLED');
             $fields['PERMISSION'] = new select(array(
-                'list' => @$permissions ? $permissions : array(
-                    'admin' => 'admin',
-                    'editor' => 'editor',
-                    'user' => 'user',
-                ),
+                'list' => $permissions,
                 'label' => lang('LANG_PERMISSION'),
                 'selected' => $item->level,
                 'name' => 'level',

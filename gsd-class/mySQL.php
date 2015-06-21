@@ -161,11 +161,6 @@ class mySQL implements idatabase
                     $this->result[$key] = $this->formatOutputDates($values);
                 }
             }
-
-            if ($this->errnum && defined('IS_ADMIN')) {
-                $tpl->repvar('SHOW_COOKIE', 'is-visible');
-                $tpl->setvar('ALERT_MSG', sprintf('%s: %s', $this->errnum, $this->errmsg));
-            }
         }
 
     // -- Function Name : result

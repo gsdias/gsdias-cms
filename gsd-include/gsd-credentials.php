@@ -32,8 +32,6 @@ if (@$_REQUEST['login'] && !$user->isLogged()) {
 }
 
 define('IS_LOGGED', $user->isLogged());
-define('IS_ADMIN', $user->level == 'admin');
-define('IS_EDITOR', $user->level == 'editor');
 
 if (IS_LOGGED) {
     $tpl->setcondition('IS_LOGGED');
@@ -44,8 +42,9 @@ if (IS_LOGGED) {
         exit;
     }
 
-    if (IS_ADMIN) {
-        $tpl->setcondition('IS_ADMIN');
+    foreach($permissions as $permission) {
+        $tpl->setcondition('IS_'.strtoupper($permission), $permission == $user->level);
+        define('IS_'.strtoupper($permission), $permission == $user->level);
     }
 
     if ($site->arg(0) == 'admin') {
