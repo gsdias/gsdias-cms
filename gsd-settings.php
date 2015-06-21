@@ -63,6 +63,12 @@ $languages = array(
     'fr_FR' => 'Français',
 );
 
+$permissions = array(
+    'admin' => 'admin',
+    'editor' => 'editor',
+    'user' => 'user',
+);
+
 if ($path[0] != 'admin' && is_file(CLIENTPATH.'settings'.PHPEXT)) {
     include_once CLIENTPATH.'settings'.PHPEXT;
 }
