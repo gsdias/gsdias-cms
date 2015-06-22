@@ -19,36 +19,6 @@
     @include retina-sprite(logo_small);
 }
 
-.icon-dashboard {
-    @extend .icon;
-    @include retina-sprite(Dashboard);
-}
-
-.icon-documents {
-    @extend .icon;
-    @include retina-sprite(Briefcase);
-}
-
-.icon-media {
-    @extend .icon;
-    @include retina-sprite(Camera);
-}
-
-.icon-pages {
-    @extend .icon;
-    @include retina-sprite(Copy);
-}
-
-.icon-layouts {
-    @extend .icon;
-    @include retina-sprite(Database);
-}
-
-.icon-settings {
-    @extend .icon;
-    @include retina-sprite(Gears);
-}
-
 .icon-gear {
     @extend .icon;
     @include retina-sprite(Gear);
@@ -56,11 +26,6 @@
     top: 2px;
     left: 185px;
     cursor: pointer;
-}
-
-.icon-users {
-    @extend .icon;
-    @include retina-sprite(Users);
 }
 
 .icon-email {
@@ -71,14 +36,4 @@
 .icon-lock {
     @extend .icon;
     @include retina-sprite(Lock);
-}
-
-.icon-client {
-    @extend .icon;
-    @include retina-sprite(Application);
-}
-
-.icon-power {
-    @extend .icon;
-    @include retina-sprite(Power);
 }
