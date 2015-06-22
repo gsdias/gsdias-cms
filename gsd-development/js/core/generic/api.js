@@ -6,12 +6,11 @@
  * @since      File available since Release 1.0
  */
 
-(function (api, app, $, _, Backbone, undefined) {
+(function (api, $, undefined) {
 
     'use strict';
 
     var url = '/gsd-api/',
-        messageBlock = {},
 
         serverError = function () {
 
@@ -45,33 +44,6 @@
             left: parseInt((elem.offset() || {}).left + (size[0] / 2) - 62, 10),
             top: parseInt((elem.offset() || {}).top + (size[1] / 2) - 62, 10),
             zIndex: 10
-        });
-    };
-
-    api.displayMessage = function (message) {
-
-        if ('undefined' === typeof message || !message.length) {
-            return;
-        }
-
-        alert(message);
-
-        var timing = null,
-            hide = function () {
-                messageBlock.slideUp(1000);
-            };
-
-        messageBlock.html('').append('<span>' + message + '</span>');
-
-        if (messageBlock.children().length) {
-            messageBlock.slideDown(1000, function () {
-                timing = setTimeout(hide, 5000);
-            });
-        }
-        messageBlock.hover(function () {
-            clearTimeout(timing);
-        }, function () {
-            messageBlock.slideUp(1000);
         });
     };
 
@@ -133,8 +105,4 @@
         }
     };
 
-    if (messageBlock.children().length) {
-        displayMessage(messageBlock.html());
-    }
-
-}(GSD.Api = GSD.Api || {}, GSD.App, GSD.$, _, Backbone));
+}(GSD.Api = GSD.Api || {}, GSD.$));
