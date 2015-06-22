@@ -9,7 +9,7 @@
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
-if (!IS_ADMIN) {
+if (!$csection->permission) {
     header('Location: /admin/'.$site->arg(1), true, 302);
     exit;
 }

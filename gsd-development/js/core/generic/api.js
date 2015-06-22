@@ -11,7 +11,7 @@
     'use strict';
 
     var url = '/gsd-api/',
-        messageBlock = $('.favicons'),
+        messageBlock = {},
 
         serverError = function () {
 
@@ -132,11 +132,6 @@
             });
         }
     };
-
-    if (!messageBlock.length) {
-        $('<div class="favicons">').appendTo('body');
-        messageBlock = $('.favicons');
-    }
 
     if (messageBlock.children().length) {
         displayMessage(messageBlock.html());

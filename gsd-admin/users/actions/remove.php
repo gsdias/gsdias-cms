@@ -9,7 +9,7 @@
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
-if (!IS_ADMIN) {
+if (!$csection->permission) {
     $_SESSION['error'] = lang('LANG_USER_NOPERMISSION');
     header('Location: /admin/'.$site->arg(1), true, 302);
     exit;

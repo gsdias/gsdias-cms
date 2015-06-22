@@ -14,9 +14,11 @@ namespace GSD;
 abstract class section implements isection
 {
     public $item = array();
+    public $permission = '';
 
-    public function __construct($id = 0)
+    public function __construct($permission)
     {
+        $this->permission = $permission;
         return 0;
     }
 
