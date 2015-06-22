@@ -25,7 +25,6 @@ define('ASSETPATHURL', '/gsd-frontend/assets/');
 define('CLIENTINCLUDEPATH', CLIENTPATH.'include/');
 define('CLIENTTPLPATH', CLIENTPATH.'tpl/');
 define('CLIENTCLASSPATH', CLIENTPATH.'class/');
-define('MAINTENANCE', 0);
 
 error_reporting(E_ALL);
 
