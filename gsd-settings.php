@@ -6,7 +6,6 @@ $uri = preg_replace($pattern, '', $_SERVER['REQUEST_URI']);
 $path = explode('/', $uri);
 array_shift($path);
 
-$config['resources'] = '/gsd-resources';
 $config['url'] = 'localhost';
 $_mysql['host'] = '127.0.0.1';
 $_mysql['user'] = '';
@@ -20,6 +19,7 @@ define('CLASSPATH', dirname(__FILE__).'/gsd-class/');
 define('INCLUDEPATH', dirname(__FILE__).'/gsd-include/');
 define('ASSETPATH', dirname(__FILE__).'/gsd-frontend/assets/');
 define('CLIENTPATH', dirname(__FILE__).'/gsd-frontend/');
+define('RESOURCESURL', '/gsd-resources');
 define('ASSETPATHURL', '/gsd-frontend/assets/');
 define('CLIENTINCLUDEPATH', CLIENTPATH.'include/');
 define('CLIENTTPLPATH', CLIENTPATH.'tpl/');
