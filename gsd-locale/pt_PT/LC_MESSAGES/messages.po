@@ -13,6 +13,9 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Language: pt_PT\n"
 
+msgid "LANG_DEBUG_LABEL"
+msgstr "Modo debug"
+
 msgid "LANG_MAINTENANCE_LABEL"
 msgstr "Manutencao"
 

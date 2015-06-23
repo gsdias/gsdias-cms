@@ -22,7 +22,7 @@ spl_autoload_register('GSDClassLoading');
 
 $mysql = GSD\mysqlFactory::create($_mysql['db'], $_mysql['host'], $_mysql['user'], $_mysql['pass']);
 
-$tpl = new GSD\tpl(DEBUG);
+$tpl = new GSD\tpl();
 
 $site = new GSD\site();
 
