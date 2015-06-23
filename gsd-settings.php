@@ -13,7 +13,6 @@ $_mysql['user'] = '';
 $_mysql['pass'] = '';
 $_mysql['db'] = '';
 
-define('DEBUG', 0);
 define('TPLEXT', '.html');
 define('PHPEXT', '.php');
 define('TPLPATH', dirname(__FILE__).'/gsd-tpl/');
