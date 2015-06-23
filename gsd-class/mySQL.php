@@ -122,7 +122,7 @@ class mySQL implements idatabase
                 $this->execute($values);
             }
 
-            if (defined('DEBUG') && DEBUG) {
+            if (DEBUG) {
                 if (!empty($values)) {
                     $tpl->adderror(vsprintf(str_replace('?', '"%s"', $query), $values));
                 } else {

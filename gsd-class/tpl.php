@@ -24,9 +24,8 @@ class tpl
         'path' => '',
     );
 
-    public function __construct($debug = 0)
+    public function __construct()
     {
-        $this->setcondition('DEBUG', $debug);
         $this->config['paths'] = array(ROOTPATH.'gsd-tpl/_shared/%s'.TPLEXT, ROOTPATH.'gsd-tpl/_modules/%s'.TPLEXT);
     }
 
@@ -238,7 +237,7 @@ class tpl
                 } else {
                     $item = @$site->pagemodules[@$placeholder[0]];
                     $item = unserialize($item);
-                    if (defined('DEBUG') && DEBUG) {
+                    if (DEBUG) {
                         $extra = sprintf('<!-- DEBUG %s %s -->', $type, $key);
                     }
                     $this->config['file'] = preg_replace(sprintf('#<!-- %s %s -->#s', $type, $key), @$extra.$item['list'][0][0]['value'], $this->config['file'], 1);
@@ -246,7 +245,7 @@ class tpl
             } else {
                 preg_match_all(sprintf('#<!-- %s %s -->(.*?)<!-- END%s %s -->#s', $type, $key, $type, $key), $this->config['file'], $matches, PREG_SET_ORDER);
                 for ($i = 0; $i < count($matches); $i++) {
-                    if (defined('DEBUG') && DEBUG) {
+                    if (DEBUG) {
                         $extra = sprintf('<!-- DEBUG %s %s -->', $type, $key);
                     }
                     if ($type === 'LOOP') {
@@ -428,7 +427,7 @@ class tpl
     {
         global $mysql;
 
-        if (!defined('DEBUG') || !DEBUG) {
+        if (!DEBUG) {
             $this->config['file'] = str_replace(array("\r\n", "\r", "\n"), array('', '', ''), $this->config['file']);
         }
 
@@ -442,7 +441,7 @@ class tpl
 
         return $output;
 
-        if (defined('DEBUG') && DEBUG) {
+        if (DEBUG) {
             $this->setarray('DEBUGLIST', $this->config['error']);
             $constants = get_defined_constants(true);
             foreach ($constants['user'] as $constant => $value) {
@@ -454,7 +453,7 @@ class tpl
     public function sendError()
     {
         $this->config['error'] = $this->config['error'];
-        if (constant('DEBUG') == '1') {
+        if (DEBUG) {
             $this->setarray('DEBUGLIST', $this->config['error']);
         }
     }
@@ -466,6 +465,8 @@ class tpl
 
     public function returnFile($file)
     {
+
+        $this->setcondition('DEBUG', DEBUG);
         $lines = file_get_contents($this->config['path'].TPLPATH.$file.TPLEXT);
         $output .= $this->replaceVar($lines);
 
