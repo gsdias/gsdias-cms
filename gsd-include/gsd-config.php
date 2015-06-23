@@ -54,10 +54,8 @@ if (function_exists('bindtextdomain')) {
 
 $tpl->setpaths($config['tplpath']);
 
-$resources = $config['resources'];
-
 $tpl->setVar('SCRIPT', sprintf('GSD.ga = "%s";GSD.fb = "%s";GSD.App = { isCMS: %s };', $site->ga, $site->fb, !$site->isFrontend ? 1 : 0));
-$tpl->setVar('CDN', $resources);
+$tpl->setVar('CDN', RESOURCESURL);
 $tpl->setVar('CLIENT_RESOURCES', @$config['client_resources']);
 $tpl->setVar('CLIENT_PATH', @$config['client_path']);
 $tpl->setVar('ASSETPATH', ASSETPATHURL);
