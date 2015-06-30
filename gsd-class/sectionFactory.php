@@ -36,12 +36,12 @@ class sectionFactory
         }
     }
 
-    public static function extended($type, $permission = IS_ADMIN)
+    public static function extended($type)
     {
         if (class_exists('GSD\\Extended\\'.$type)) {
             $classname = 'GSD\\Extended\\'.$type;
 
-            return new $classname($permission);
+            return new $classname();
         }
     }
 }

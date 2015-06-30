@@ -25,12 +25,6 @@ if (!IS_LOGGED) {
     $site->main = $site->arg(1) ? $site->arg(1) : 'dashboard';
     $site->startpoint = 'index';
 
-    if (!IS_ADMIN && ($site->arg(1) === 'users' || $site->arg(1) === 'settings')) {
-        $_SESSION['error'] = lang('LANG_NOPERMISSION');
-        header('Location: /admin', true, 302);
-        exit;
-    }
-
     $clientfields = CLIENTPATH.'include/admin/fields'.PHPEXT;
     if (is_file($clientfields)) {
         include_once $clientfields;
@@ -59,5 +53,11 @@ if (!IS_LOGGED) {
         if ($file && is_file($file)) {
             include_once $file;
         }
+    }
+
+    if (isset($csection) && !$csection->permission) {
+        $_SESSION['error'] = lang('LANG_NOPERMISSION');
+        header('Location: /admin', true, 302);
+        exit;
     }
 }
