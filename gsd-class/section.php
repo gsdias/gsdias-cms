@@ -146,6 +146,8 @@ abstract class section implements isection
     public function add($defaultfields, $defaultsafter = array(), $defaultvalues = array())
     {
         global $mysql;
+        
+        $return = array('total' => 0, 'errnum' => 0, 'errmsg' => 0, 'id' => 0);
 
         $section = $this->tablename();
 
@@ -155,21 +157,42 @@ abstract class section implements isection
 
         $values = array();
 
-        foreach ($fields as $field) {
-            $values[] = $_REQUEST[$field];
+        foreach ($fields as $index => $field) {
+            $list = array();
+            
+            if (is_array($field) && function_exists($field[1][0])) { 
+                $result = $field[1][0]($_REQUEST[$field[0]], $field);
+                $val = '';
+                if ($result['result']) {
+                    $val = $result['value'];
+                    $fields[$index] = $fields[$index][0];
+                } else {
+                    array_push($list, $result['message']);
+                }
+            } else {
+                $val = $_REQUEST[$field];
+            }
+            
+            $values[] = $val;
         }
 
         $fields = array_merge($fields, $defaultsafter);
 
         $values = array_merge($values, $defaultvalues);
 
-        $mysql->reset()
-            ->insert($section)
-            ->fields($fields)
-            ->values($values)
-            ->exec();
+        if (empty($list)) {
+            $mysql->reset()
+                ->insert($section)
+                ->fields($fields)
+                ->values($values)
+                ->exec();
+            
+            $return = array('total' => $mysql->total, 'errnum' => $mysql->errnum, 'errmsg' => $mysql->errmsg, 'id' => $mysql->lastinserted());
+        } else {
+            $return['errmsg'] = $list;
+        }
 
-        return array('total' => $mysql->total, 'errnum' => $mysql->errnum, 'errmsg' => $mysql->errmsg, 'id' => $mysql->lastinserted());
+        return $return;
     }
 
     public function edit($defaultfields, $defaultsafter = array(), $defaultvalues = array())

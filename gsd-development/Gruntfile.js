@@ -193,7 +193,7 @@ module.exports = function (grunt) {
                 uglify : true,
 
                 // Define any tests you want to implicitly include.
-                tests : [],
+                tests: ['dataview-api'],
 
                 // By default, this task will crawl your project for references to Modernizr tests.
                 // Set to false to disable.
@@ -207,7 +207,7 @@ module.exports = function (grunt) {
 
                 // When parseFiles = true, matchCommunityTests = true will attempt to
                 // match user-contributed tests.
-                matchCommunityTests : false,
+//                matchCommunityTests : false,
 
                 // Have custom Modernizr tests? Add paths to their location here.
                 customTests : []

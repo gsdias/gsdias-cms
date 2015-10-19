@@ -15,16 +15,26 @@ if (!$csection->permission) {
 }
 
 if (@$_REQUEST['save']) {
-    $defaultfields = array('title', 'url', 'lid', 'description', 'keywords', 'tags', 'og_title', 'og_image', 'og_description', 'parent');
+    $defaultfields = array(
+        array('title', array('isString')),
+        array('url', array('isString')),
+        array('lid', array('isNumber')),
+        array('description', array('isString')),
+        array('keywords', array('isString')),
+        array('tags', array('isString')),
+        array('og_title', array('isString')),
+        array('og_image', array('isNumber')),
+        array('og_description', array('isString')),
+        array('parent', array('isNumber'))
+    );
 
-    $fields = array('creator', 'index', 'show_menu', 'require_auth', 'created');
-
-    $mysql->reset()
-        ->delete()
-        ->from('redirect')
-        ->where('`from` = ?')
-        ->values(array($_REQUEST['url']))
-        ->exec();
+    $fields = array(
+        'creator',
+        'index',
+        'show_menu',
+        'require_auth',
+        'created'
+    );
 
     $mysql->reset()
         ->select('max(`index`) AS max')
@@ -36,14 +46,26 @@ if (@$_REQUEST['save']) {
     $values = array(
         $user->id,
         ($index != null ? $index + 1 : 0),
-        @$_REQUEST['menu'] ? @$_REQUEST['menu'] : null,
-        @$_REQUEST['auth'] ? @$_REQUEST['auth'] : null,
+        @$_REQUEST['menu'] ? 'on' : null,
+        @$_REQUEST['auth'] ? 'on' : null,
         date('Y-m-d H:i:s', time()),
     );
 
     $result = $csection->add($defaultfields, $fields, $values);
 
     if ($result['total']) {
+        
+        $mysql->reset()
+            ->delete()
+            ->from('redirect')
+            ->where('`from` = ?')
+            ->values(
+                array(
+                    escapeText($_REQUEST['url'])
+                )
+            )
+            ->exec();
+        
         $pid = $result['id'];
 
         $mysql->reset()
@@ -69,7 +91,10 @@ if (@$_REQUEST['save']) {
         header("Location: /admin/pages/$pid/edit", true, 302);
         exit;
     } else {
-        $tpl->setvar('ERRORS', lang('LANG_PAGE_ALREADY_EXISTS'));
+//        $tpl->setvar('ERRORS', lang('LANG_PAGE_ALREADY_EXISTS'));
+        while (!empty($result['errmsg'])) {
+            $tpl->setvar('ERRORS', array_pop($result['errmsg']));
+        }
         $tpl->setcondition('ERRORS');
     }
 }

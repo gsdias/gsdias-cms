@@ -48,7 +48,7 @@ class site
             $this->options[$name] = $option->value;
         }
 
-        define('DEBUG', $this->options['debug_checkbox']);
+        define('DEBUG', @$this->options['debug_checkbox']);
 
         $pattern = '/(\?)(.*)/';
         $this->uri = preg_replace($pattern, '', $_SERVER['REQUEST_URI']);

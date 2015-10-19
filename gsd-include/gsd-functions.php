@@ -18,16 +18,47 @@ function GSDClassLoading($className)
     }
 }
 
+function escapeText($value = '', $encoding = 'UTF-8')
+{
+    return htmlspecialchars($value,ENT_QUOTES | ENT_HTML401, $encoding);
+}
+
+function isString($value = '', $field = '')
+{
+    $result = array(
+        'result' => is_string($value),
+        'value' => escapeText($value),
+        'message' => 'Invalid type. Needs to be a string'
+    );
+    
+    return $result;
+}
+
+function isNumber($value = 0, $field = '')
+{
+    $result = array(
+        'result' => is_numeric($value),
+        'value' => $value,
+        'message' => 'Invalid type. Needs to be a number'
+    );
+    
+    return $result;
+}
+
 function lang($text, $option = 'NONE')
 {
     global $site;
 
-    if (@$site->isFrontend) {
-        $translated = dcgettext('extended', $text, LC_MESSAGES);
-        $translated = $translated != $text ? $translated : _($text);
+    if (function_exists('_')) {
+        if (@$site->isFrontend) {
+            $translated = dcgettext('extended', $text, LC_MESSAGES);
+            $translated = $translated != $text ? $translated : _($text);
+        } else {
+            $translated = _($text);
+            $translated = $translated != $text ? $translated : dcgettext('extended', $text, LC_MESSAGES);
+        }
     } else {
-        $translated = _($text);
-        $translated = $translated != $text ? $translated : dcgettext('extended', $text, LC_MESSAGES);
+        $translated = $text;
     }
 
     switch ($option) {

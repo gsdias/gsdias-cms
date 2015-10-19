@@ -30,7 +30,7 @@ if (@$_REQUEST['save']) {
             ->update('options')
             ->fields(array('value'))
             ->where('name = ?')
-            ->values(array($value, $name))
+            ->values(array(escapeText($value), $name))
             ->exec();
         $fields = $mysql->errnum ? 0 : $fields;
     }

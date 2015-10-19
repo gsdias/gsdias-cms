@@ -251,8 +251,10 @@ WHERE pid = ? ORDER BY pm.pmid DESC', array($this->item->pid));
         global $mysql, $site;
 
         $result = parent::add($defaultfields, $defaultsafter, $defaultvalues);
-
-        $this->update_beautify($result['id']);
+        
+        if (empty($result['errmsg'])) {
+            $this->update_beautify($result['id']);
+        }
 
         return $result;
     }
