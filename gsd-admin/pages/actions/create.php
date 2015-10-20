@@ -91,7 +91,10 @@ if (@$_REQUEST['save']) {
         header("Location: /admin/pages/$pid/edit", true, 302);
         exit;
     } else {
-//        $tpl->setvar('ERRORS', lang('LANG_PAGE_ALREADY_EXISTS'));
+        if ($result['errnum'] === 1000) {
+            array_unshift($result['errmsg'], lang('LANG_PAGE_ALREADY_EXISTS'));
+        }
+        
         while (!empty($result['errmsg'])) {
             $tpl->setvar('ERRORS', array_pop($result['errmsg']));
         }
