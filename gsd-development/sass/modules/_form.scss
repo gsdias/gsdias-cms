@@ -52,6 +52,21 @@ input {
         min-width: 150px;
     }
 }
+.checkbox {
+    input, label {
+        display: inline-block;
+        height: auto;
+        margin-right: 10px;
+    }
+}
+textarea {
+    border: solid 1px $border-color;
+    border-radius: 3px;
+    display: block;
+    min-height: 100px;
+    padding: 1%;
+    width: 91%;
+}
 
 select {
     &.error {
@@ -113,6 +128,13 @@ select {
         max-width: 500px;
         min-width: 200px;
         padding: 0 20px;
+        width: 50%;
+    }
+
+    textarea {
+        max-width: 520px;
+        min-width: 200px;
+        padding: 10px;
         width: 50%;
     }
 }

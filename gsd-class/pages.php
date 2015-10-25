@@ -138,7 +138,7 @@ class pages extends section implements isection
     {
         global $tpl, $mysql;
 
-        parent::generatefields();
+        $hasextra = parent::generatefields();
 
         $extrafields = array();
 
@@ -242,8 +242,8 @@ class pages extends section implements isection
                 );
             }
             $tpl->setarray('FIELD', $extrafields, true);
+            $tpl->setcondition('EXTRAFIELDS', $hasextra || !empty($extrafields));
         }
-        $tpl->setcondition('EXTRAFIELDS', !empty($extrafields));
     }
 
     public function add($defaultfields = array(), $defaultsafter = array(), $defaultvalues = array())

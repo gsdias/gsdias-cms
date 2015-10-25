@@ -73,7 +73,7 @@ foreach ($mysql->result() as $item) {
         $partial->setfile('_image');
 
         $field = $partial;
-        $extraclass = 'image';
+        $extraclass = ' image';
     } elseif ($item->name === 'gsd-locale_select') {
         $field = new GSD\select(array(
             'id' => $item->name,
@@ -83,6 +83,7 @@ foreach ($mysql->result() as $item) {
             'selected' => @$item->value,
         ));
     } elseif (strpos($item->name, '_checkbox') !== false) {
+        $extraclass = ' checkbox';
         $field = new GSD\input(array(
             'id' => $item->name,
             'name' => $item->name,

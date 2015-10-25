@@ -36,7 +36,7 @@ if (!IS_INSTALLED) {
     }
 
     if (is_file(ROOTPATH.'gsd-frontend/index.php') && $site->arg(0) != 'admin') {
-        if ($site->options['maintenance_checkbox']) {
+        if (@$site->options['maintenance_checkbox']) {
             $site->startpoint = 'maintenance';
         }
         if (!IS_LOGGED && @$site->page->require_auth) {

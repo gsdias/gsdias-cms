@@ -32,8 +32,11 @@ class input
 
     public function __toString()
     {
-        $output = $this->args['label'] ? sprintf('<label%s>%s</label>', $this->args['labelClass'] ? ' class="'.$this->args['labelClass'].'"' : '', $this->args['label']) : '';
+        $output = $this->args['label'] ? sprintf('<label for="%s"%s>%s</label>', $this->args['id'], $this->args['labelClass'] ? ' class="'.$this->args['labelClass'].'"' : '', $this->args['label']) : '';
 
-        return sprintf('%s<input type="%s" id="%s" name="%s" value="%s"%s>', $output, $this->args['type'], $this->args['id'], $this->args['name'], $this->args['value'], $this->args['selected'] ? ' checked="checked"': '');
+        $outputLeft = $this->args['type'] === 'checkbox' ? '' : $output;
+        $outputRight = $this->args['type'] === 'checkbox' ? $output : '';
+
+        return sprintf('%s<input type="%s" id="%s" name="%s" value="%s"%s>%s', $outputLeft, $this->args['type'], $this->args['id'], $this->args['name'], $this->args['value'], $this->args['selected'] ? ' checked="checked"': '', $outputRight);
     }
 }

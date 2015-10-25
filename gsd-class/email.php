@@ -32,11 +32,26 @@ class email
         $output,
         $eol,
         $vars,
-        $debug;
+        $debug,
+        $swift,
+        $message;
 
     public function __construct()
     {
         global $GLOBALS;
+
+        require_once CLASSPATH.'swift/swift_required'.PHPEXT;
+
+        // Create the Transport
+        $this->swift = \Swift_SmtpTransport::newInstance('mail.gsdias.pt', 25)
+          ->setUsername('mail@gsdias.pt')
+          ->setPassword('12348876');
+
+        // Create the Mailer using your created Transport
+        $this->swift = \Swift_Mailer::newInstance($this->swift);
+
+        // Create a message
+        $this->message = \Swift_Message::newInstance();
 
         $this->reset();
 
@@ -238,6 +253,7 @@ class email
                 $to_name = array_pop($this->to_name);
 
                 $temp .= $to_name ? sprintf('%s <%s>, ', $to_name, $to) : sprintf('%s, ', $to);
+                $this->message->setTo(array($to => $to_name));
             }
             $to = substr($temp, 0, -2);
             unset($temp);
@@ -313,6 +329,15 @@ class email
 
         $body .= sprintf('--%s--', $uid);
 
-        return strlen($to) > 0 ? mail($to, $subject, $body, $header) : 0;
+//        return strlen($to) > 0 ? mail($to, $subject, $body, $header) : 0;
+
+          $this->message->setFrom(array($this->from => $this->from_name))
+          ->setSubject($this->subject)
+          ->setBody($message, 'text/html');
+
+        // Send the message
+        $result = $this->swift->send($this->message);
+
+        return $result;
     }
 }

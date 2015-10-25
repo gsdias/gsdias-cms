@@ -125,6 +125,23 @@ abstract class section implements isection
                         'selected' => @$item->{$extrafield},
                     ));
                     break;
+                    case 'checkbox':
+                    $field = (string) new input(array(
+                        'id' => $extrafield,
+                        'name' => $extrafield,
+                        'value' => @$item->{$extrafield},
+                        'label' => $sectionextrafields['labels'][$key],
+                        'type' => 'checkbox'
+                    ));
+                    break;
+                    case 'textarea':
+                    $field = (string) new textarea(array(
+                        'id' => $extrafield,
+                        'name' => $extrafield,
+                        'value' => @$item->{$extrafield},
+                        'label' => $sectionextrafields['labels'][$key]
+                    ));
+                    break;
                     default:
                     $field = (string) new input(array(
                         'id' => $extrafield,
@@ -139,8 +156,11 @@ abstract class section implements isection
             }
 
             $tpl->setarray('FIELD', $extrafields);
-            $tpl->setcondition('EXTRAFIELDS');
+            $tpl->setcondition('EXTRAFIELDS', 1);
+            return 1;
         }
+
+        return 0;
     }
 
     public function add($defaultfields, $defaultsafter = array(), $defaultvalues = array())
@@ -170,7 +190,7 @@ abstract class section implements isection
                     array_push($list, $result['message']);
                 }
             } else {
-                $val = $_REQUEST[$field];
+                $val = @$_REQUEST[$field];
             }
             
             $values[] = $val;

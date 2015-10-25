@@ -165,6 +165,8 @@ module.exports = function (grunt) {
                 // [REQUIRED] Path to the build you're using for development.
                 devFile: './js/libs/modernizr.js',
 
+                cache: true,
+
                 // [REQUIRED] Path to save out the built file.
                 outputFile: pkg.gsdresources + 'js/libs/modernizr.min.js',
 
@@ -193,7 +195,9 @@ module.exports = function (grunt) {
                 uglify : true,
 
                 // Define any tests you want to implicitly include.
-                tests: ['dataview-api'],
+                tests: [],
+
+                crawl: true,
 
                 // By default, this task will crawl your project for references to Modernizr tests.
                 // Set to false to disable.
@@ -207,7 +211,7 @@ module.exports = function (grunt) {
 
                 // When parseFiles = true, matchCommunityTests = true will attempt to
                 // match user-contributed tests.
-//                matchCommunityTests : false,
+                matchCommunityTests : false,
 
                 // Have custom Modernizr tests? Add paths to their location here.
                 customTests : []
