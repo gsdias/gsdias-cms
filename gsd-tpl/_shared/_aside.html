@@ -2,7 +2,7 @@
     <li class="{DASHBOARD_ACTIVE}">
         <a href="/admin" title="{LANG_DASHBOARD}"><i class="fa fa-dashboard fa-2x"></i><!--{LANG_DASHBOARD}--></a>
     </li>
-    <!-- IF IS_ADMIN OR IS_EDITOR -->
+    <!-- IF IS_ADMIN -->
     <li class="{LAYOUTS_ACTIVE}">
         <a href="/admin/layouts" title="{LANG_LAYOUTS}"><i class="fa fa-tasks fa-2x"></i><!--{LANG_LAYOUTS}--></a>
         <ul>
@@ -14,6 +14,8 @@
             </li>
         </ul>
     </li>
+    <!-- ENDIF IS_ADMIN -->
+    <!-- IF IS_ADMIN OR IS_EDITOR -->
     <li class="{PAGES_ACTIVE}">
         <a href="/admin/pages" title="{LANG_PAGES}"><i class="fa fa-files-o fa-2x"></i><!--{LANG_PAGES}--></a>
         <ul>

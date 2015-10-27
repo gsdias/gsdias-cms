@@ -207,7 +207,7 @@ abstract class section implements isection
                 ->values($values)
                 ->exec();
             
-            $return = array('total' => $mysql->total, 'errnum' => $mysql->errnum, 'errmsg' => $mysql->errmsg, 'id' => $mysql->lastinserted());
+            $return = array('total' => $mysql->total, 'errnum' => $mysql->errnum, 'errmsg' => array($mysql->errmsg), 'id' => $mysql->lastinserted());
         } else {
             $return['errmsg'] = $list;
         }

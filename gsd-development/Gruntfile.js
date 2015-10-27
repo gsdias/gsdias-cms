@@ -231,7 +231,7 @@ module.exports = function (grunt) {
         },
         phpcsfixer: {
             app: {
-                dir: '../gsd-class' // or ['src/models', 'src/lib']
+                dir: ['../gsd-class', '../gsd-admin']
             },
             options: {
                 bin: '~/.composer/vendor/bin/php-cs-fixer',

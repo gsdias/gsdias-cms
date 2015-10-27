@@ -8,9 +8,13 @@ array_shift($path);
 
 $config['url'] = 'localhost';
 $_mysql['host'] = '127.0.0.1';
-$_mysql['user'] = '';
-$_mysql['pass'] = '';
-$_mysql['db'] = '';
+$_mysql['user'] = 'username';
+$_mysql['pass'] = 'password';
+$_mysql['db'] = 'db';
+$_email['host'] = 'host';
+$_email['port'] = 25;
+$_email['user'] = 'username';
+$_email['pass'] = 'password';
 
 define('TPLEXT', '.html');
 define('PHPEXT', '.php');
