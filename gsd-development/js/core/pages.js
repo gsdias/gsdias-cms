@@ -6,29 +6,25 @@
  * @since      File available since Release 1.0
  */
 
-(function (pages, app, api, global, $, _, Backbone, document, undefined) {
+(function (pages, api, $, _, document, undefined) {
 
     'use strict';
 
     var tbody = {},
         generateurl = function () {
             var value = this.value.toLowerCase(),
-                url = $('[name="url"]').get(0);
+                url = $(this).closest('div').next().find('[name="url"]').get(0);
 
-            if ($(url).length && !url.value.length && value.length) {
+            if (!_.isUndefined(url.value) && !url.value.length && value.length) {
                 value = value
-                    .replace(/!/g, '').replace(/@/g, '').replace(/£/g, '').replace(/\$/g, '').replace(/%/g, '')
-                    .replace(/\^/g, '').replace(/&/g, '').replace(/\*/g, '').replace(/\(/g, '').replace(/\)/g, '')
-                    .replace(/\=/g, '').replace(/\?/g, '').replace(/\€/g, '').replace(/\#/g, '').replace(/\~/g, '')
-                    .replace(/\//g, '').replace(/\,/g, '').replace(/\\/g, '')
-                    .replace(/ç/g, 'c')
                     .replace(/ç/g, 'c')
                     .replace(/á/g, 'a').replace(/à/g, 'a').replace(/ã/g, 'a').replace(/â/g, 'a')
                     .replace(/é/g, 'e').replace(/è/g, 'e').replace(/ê/g, 'e')
                     .replace(/í/g, 'i').replace(/ì/g, 'i').replace(/î/g, 'i')
                     .replace(/ó/g, 'o').replace(/ò/g, 'o').replace(/õ/g, 'o').replace(/ô/g, 'o')
                     .replace(/ú/g, 'u').replace(/ù/g, 'u').replace(/û/g, 'u')
-                    .replace(/\b\ \b/g, '-');
+                    .replace(/[^A-Za-z0-9\- ]+/g, '')
+                    .replace(/\ /g, '-');
                 url.value = '/' + value.trim();
             }
         },
@@ -64,7 +60,12 @@
 
         startDrag = function (e) {
             var $tr = $(e.currentTarget).closest('tr'),
-                $clone = document.createElement('tr');
+                $clone = document.createElement('tr'),
+                stopDrag = function () {
+                    $clone.off('mousemove');
+                    $clone.remove();
+                    $tr.removeClass('cloned');
+                };
 
             e.preventDefault();
 
@@ -79,16 +80,8 @@
             $tr.addClass('cloned');
 
             $clone.on('mousemove', { diff: e.pageY - $tr.position().top }, drag);
-            $clone.on('mouseup', function () {
-                $clone.off('mousemove');
-                $clone.remove();
-                $tr.removeClass('cloned');
-            });
-            $(document).on('mouseup', function () {
-                $clone.off('mousemove');
-                $clone.remove();
-                $tr.removeClass('cloned');
-            });
+            $clone.on('mouseup', stopDrag);
+            $(document).on('mouseup', stopDrag);
         },
 
         drag = function (e) {
@@ -126,7 +119,10 @@
             var list = [];
 
             tbody.tr.each(function (i, item) {
-                list.push({ i: $(item).attr('data-index'), pid: $(item).data('pid') });
+                list.push({
+                    i: $(item).attr('data-index'),
+                    pid: $(item).data('pid')
+                });
             });
 
             api.call($(e.currentTarget), 'PUT', 'pageorder', { list: JSON.stringify(list) }, function () {
@@ -164,4 +160,4 @@
         $('body').on('click', '.icon-gear', togglesettings);
     });
 
-}(GSD.Pages = GSD.Pages || {}, GSD.App, GSD.Api, GSD.Global, GSD.$, _, Backbone, document));
+}(GSD.Pages = GSD.Pages || {}, GSD.Api, GSD.$, _, document));

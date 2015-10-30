@@ -35,7 +35,7 @@ class paginator
         return;
     }
 
-    private function pageTotal()
+    public function pageTotal()
     {
         global $mysql;
 

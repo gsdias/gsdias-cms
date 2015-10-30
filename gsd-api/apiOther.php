@@ -59,18 +59,22 @@ class apiOther
 
         $paginator = new GSD\paginator($numberPerPage, $page);
 
+        $limit = $paginator->pageLimit() ? $paginator->pageLimit() - 1 : 0;
+        $numberPerPage = $numberPerPage + 1;
+
         $mysql->select($select)
-            ->limit($paginator->pageLimit(), $numberPerPage)
+            ->limit($limit, $numberPerPage)
             ->exec();
 
         if ($mysql->total) {
             $output['message'] = '';
             $output['data']['list'] = array();
-            foreach ($mysql->result() as $row) {
-                $array = $array = $this->defaultValues($row, $returnFields);
+            foreach ($mysql->result() as $index => $row) {
+                $array = $this->defaultValues($row, $returnFields);
 
                 $created = explode(' ', @$row->created);
                 $array['created'] = '('.timeago(dateDif(@$created[0], date('Y-m-d', time())), @$created[1]).')';
+                $array['isHidden'] = $page > 1 && $index === 0 ? 'is-hidden' : ($index === 10 && $mysql->total === 11 ? 'is-hidden' : '');
                 array_push($output['data']['list'], $array);
             }
 
@@ -109,19 +113,23 @@ class apiOther
 
         $paginator = new GSD\paginator($numberPerPage, $page);
 
+        $limit = $paginator->pageLimit() ? $paginator->pageLimit() - 1 : 0;
+        $numberPerPage = $numberPerPage + 1;
+
         $mysql->select($select)
-            ->limit($paginator->pageLimit(), $numberPerPage)
+            ->limit($limit, $numberPerPage)
             ->exec();
 
         if ($mysql->total) {
             $output['message'] = '';
             $output['data']['list'] = array();
-            foreach ($mysql->result() as $row) {
-                $array = $array = $this->defaultValues($row, $returnFields);
+            foreach ($mysql->result() as $index => $row) {
+                $array = $this->defaultValues($row, $returnFields);
 
                 $created = explode(' ', @$row->created);
                 $array['created'] = '('.timeago(dateDif(@$created[0], date('Y-m-d', time())), @$created[1]).')';
                 $array['unpublished'] = $row->published ? '' : '<br>('.lang('LANG_UNPUBLISHED').')';
+                $array['isHidden'] = $page > 1 && $index === 0 ? 'is-hidden' : ($index === 10 && $mysql->total === 11 ? 'is-hidden' : '');
                 array_push($output['data']['list'], $array);
             }
 
@@ -158,21 +166,25 @@ class apiOther
 
         $paginator = new GSD\paginator($numberPerPage, $page);
 
+        $limit = $paginator->pageLimit() ? $paginator->pageLimit() - 1 : 0;
+        $numberPerPage = $numberPerPage + 1;
+
         $mysql->select($select)
-            ->limit($paginator->pageLimit(), $numberPerPage)
+            ->limit($limit, $numberPerPage)
             ->exec();
 
         if ($mysql->total) {
             $output['message'] = '';
             $output['data']['list'] = array();
-            foreach ($mysql->result() as $row) {
-                $array = $array = $this->defaultValues($row, $returnFields);
+            foreach ($mysql->result() as $index => $row) {
+                $array = $this->defaultValues($row, $returnFields);
 
                 $created = explode(' ', @$row->created);
                 $last_login = explode(' ', @$row->last_login);
                 $array['created'] = timeago(dateDif(@$created[0], date('Y-m-d', time())), @$created[1]);
                 $array['last_login'] = @$last_login[1] ? timeago(dateDif($last_login[0], date('Y-m-d', time())), @$last_login[1]) : lang('LANG_NEVER');
                 $array['disabled'] = $row->disabled ? '<br>('.lang('LANG_DISABLED').')' : '';
+                $array['isHidden'] = $page > 1 && $index === 0 ? 'is-hidden' : ($index === 10 && $mysql->total === 11 ? 'is-hidden' : '');
                 array_push($output['data']['list'], $array);
             }
 
@@ -207,20 +219,24 @@ class apiOther
 
         $paginator = new GSD\paginator($numberPerPage, $page);
 
+        $limit = $paginator->pageLimit() ? $paginator->pageLimit() - 1 : 0;
+        $numberPerPage = $numberPerPage + 1;
+
         $mysql->select($select)
-            ->limit($paginator->pageLimit(), $numberPerPage)
+            ->limit($limit, $numberPerPage)
             ->exec();
 
         if ($mysql->total) {
             $output['message'] = '';
             $output['data']['list'] = array();
-            foreach ($mysql->result() as $row) {
+            foreach ($mysql->result() as $index => $row) {
                 $array = $this->defaultValues($row, $returnFields);
 
                 $created = explode(' ', @$row->created);
                 $array['created'] = timeago(dateDif(@$created[0], date('Y-m-d', time())), @$created[1]);
                 $array['asset'] = @$row->width ? (string) new GSD\image(array('iid' => $row->iid, 'max-height' => '100', 'height' => 'auto', 'width' => 'auto')) : '';
                 $array['size'] = sprintf('<strong>%s x %s</strong><br>%s', $row->width, $row->height, $row->size);
+                $array['isHidden'] = $page > 1 && $index === 0 ? 'is-hidden' : ($index === 10 && $mysql->total === 11 ? 'is-hidden' : '');
                 array_push($output['data']['list'], $array);
             }
 
@@ -255,20 +271,24 @@ class apiOther
 
         $paginator = new GSD\paginator($numberPerPage, $page);
 
+        $limit = $paginator->pageLimit() ? $paginator->pageLimit() - 1 : 0;
+        $numberPerPage = $numberPerPage + 1;
+
         $mysql->select($select)
-            ->limit($paginator->pageLimit(), $numberPerPage)
+            ->limit($limit, $numberPerPage)
             ->exec();
 
         if ($mysql->total) {
             $output['message'] = '';
             $output['data']['list'] = array();
-            foreach ($mysql->result() as $row) {
+            foreach ($mysql->result() as $index => $row) {
                 $array = $this->defaultValues($row, $returnFields);
 
                 $created = explode(' ', @$row->created);
                 $array['created'] = timeago(dateDif(@$created[0], date('Y-m-d', time())), @$created[1]);
                 $array['asset'] = $row->name;
                 $array['size'] = $row->size;
+                $array['isHidden'] = $page > 1 && $index === 0 ? 'is-hidden' : ($index === 10 && $mysql->total === 11 ? 'is-hidden' : '');
                 array_push($output['data']['list'], $array);
             }
 

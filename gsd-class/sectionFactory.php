@@ -15,33 +15,33 @@ class sectionFactory
 {
     public static function create($type)
     {
-        switch ($type) {
-            case 'layouts':
-                return new layouts(IS_ADMIN);
-            break;
-            case 'pages':
-                return new pages(IS_ADMIN || IS_EDITOR);
-            break;
-            case 'users':
-                return new users(IS_ADMIN);
-            break;
-            case 'images':
-                return new images(IS_ADMIN || IS_EDITOR);
-            break;
-            case 'documents':
-                return new documents(IS_ADMIN || IS_EDITOR);
-            break;
-            default:
-                return self::extended($type);
-        }
-    }
-
-    public static function extended($type)
-    {
         if (class_exists('GSD\\Extended\\'.$type)) {
             $classname = 'GSD\\Extended\\'.$type;
+            $newtype = substr($type, 8);
+        } else {
+            $classname = 'GSD\\'.$type;
+            $newtype = $type;
+        }
 
-            return new $classname();
+        switch ($newtype) {
+            case 'layouts':
+                return new $classname(IS_ADMIN);
+            break;
+            case 'pages':
+                return new $classname(IS_ADMIN || IS_EDITOR);
+            break;
+            case 'users':
+                return new $classname(IS_ADMIN);
+            break;
+            case 'images':
+                return new $classname(IS_ADMIN || IS_EDITOR);
+            break;
+            case 'documents':
+                return new $classname(IS_ADMIN || IS_EDITOR);
+            break;
+            default:
+                return new $classname();
+            break;
         }
     }
 }

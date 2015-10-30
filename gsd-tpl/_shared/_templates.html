@@ -4,7 +4,7 @@
 <td><a href="#((iid))" data-image="{ASSETPATH}images/((iid)).((extension))" class="use">Usar</a></td>
 </script>
 <script type="text/template" id="pagesBlock">
-<tr data-pid="((pid))" data-index="((index))">
+<tr data-pid="((pid))" data-index="((index))" class="((isHidden))">
     <td>
         ((title))<br>
         <a href="/admin/pages/((pid))">((beautify))</a>((unpublished))
@@ -16,7 +16,7 @@
 </tr>
 </script>
 <script type="text/template" id="imagesBlock">
-<tr>
+<tr class="((isHidden))">
     <td>
         ((asset))
     </td>
@@ -28,7 +28,7 @@
 </tr>
 </script>
 <script type="text/template" id="documentsBlock">
-<tr>
+<tr class="((isHidden))">
     <td>
         ((asset))
     </td>
@@ -40,7 +40,7 @@
 </tr>
 </script>
 <script type="text/template" id="usersBlock">
-<tr>
+<tr class="((isHidden))">
     <td>
         <a href="/admin/users/((uid))">((name))</a>((disabled))
     </td>
@@ -54,7 +54,7 @@
 </tr>
 </script>
 <script type="text/template" id="layoutsBlock">
-<tr>
+<tr class="((isHidden))">
     <td>
         ((name))
     </td>

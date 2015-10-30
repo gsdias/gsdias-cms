@@ -13,7 +13,7 @@ namespace GSD;
 
 class site
 {
-    public $name, $email, $ga, $fb, $uri, $page, $main, $startpoint, $pagemodules, $layout, $protocol, $isFrontend, $options;
+    public $name, $email, $ga, $gtm, $fb, $uri, $page, $main, $startpoint, $pagemodules, $layout, $protocol, $isFrontend, $options;
     protected $path;
 
     public function __construct()
@@ -113,7 +113,7 @@ class site
                 'PAGE_KEYWORDS' => $page->keywords,
                 'PAGE_OG_TITLE' => $page->og_title ? $page->og_title : $page->title,
                 'PAGE_OG_DESCRIPTION' => $page->og_description,
-                'PAGE_OG_IMAGE' => $this->protocol.$_SERVER['HTTP_HOST'].ASSETPATHURL.'images/'.$page->og_image,
+                'PAGE_OG_IMAGE' => $page->og_image ? $this->protocol.$_SERVER['HTTP_HOST'].ASSETPATHURL.'images/'.$page->og_image : '',
             ));
 
             $this->main = trim(str_replace('.html', '', $page->file));

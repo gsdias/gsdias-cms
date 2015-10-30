@@ -196,6 +196,9 @@ msgstr "Published"
 msgid "LANG_UNPUBLISHED"
 msgstr "Unpublished"
 
+msgid "LANG_PARENT"
+msgstr "Parent"
+
 msgid "LANG_SIZE"
 msgstr "Size"
 

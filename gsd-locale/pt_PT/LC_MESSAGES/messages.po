@@ -196,6 +196,9 @@ msgstr "Publicada"
 msgid "LANG_UNPUBLISHED"
 msgstr "Por publicar"
 
+msgid "LANG_PARENT"
+msgstr "Pagina ascendente"
+
 msgid "LANG_SIZE"
 msgstr "Tamanho"
 

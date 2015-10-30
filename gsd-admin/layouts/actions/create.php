@@ -30,14 +30,21 @@ if (@$_REQUEST['save']) {
     $lid = $result['id'];
 
     if ($lid) {
-        preg_match_all(sprintf('#<!-- %s (.*?) -->#s', 'PLACEHOLDER'), $content, $matches, PREG_SET_ORDER);
+        preg_match_all('#<!-- PLACEHOLDER (.*?) -->#s', $content, $matches, PREG_SET_ORDER);
         $list = array();
         foreach ($matches as $match) {
             array_push($list, $match[1]);
         }
-
+        $addedmodules = array();
         while ($key = array_pop($list)) {
             $sectionname = explode(' ', $key);
+
+            if (in_array($sectionname[0], $addedmodules)) {
+                continue;
+            }
+
+            array_push($addedmodules, $sectionname[0]);
+
             $mysql->reset()
                 ->insert('layoutsections')
                 ->fields(array('lid', 'label', 'creator'))

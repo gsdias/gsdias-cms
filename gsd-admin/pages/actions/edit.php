@@ -20,8 +20,8 @@ if (@$_REQUEST['save']) {
     $fields = array('show_menu', 'require_auth', 'published');
 
     $values = array(
-        @$_REQUEST['menu'] ? @$_REQUEST['menu'] : null,
-        @$_REQUEST['auth'] ? @$_REQUEST['auth'] : null,
+        @$_REQUEST['menu'] ? 1 : null,
+        @$_REQUEST['auth'] ? 1 : null,
         @$_REQUEST['published'] ? @$_REQUEST['published'] : null,
     );
 

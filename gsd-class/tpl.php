@@ -39,7 +39,20 @@ class tpl
      */
     public function setVar($id, $value = '')
     {
-        $this->config['vars'][$id] = sprintf('%s%s', @$this->config['vars'][$id], $value);
+        $this->config['vars'][$id] = @$this->config['vars'][$id].$value;
+    }
+
+    /**
+     * @desc Returns the value of a template's variable
+     *
+     * @param string $id    - given id
+     * @param string $value - given value
+     *
+     * @return nothing
+     */
+    public function getVar($id)
+    {
+        return @$this->config['vars'][$id];
     }
 
     /**

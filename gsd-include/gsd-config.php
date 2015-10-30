@@ -54,7 +54,11 @@ if (function_exists('bindtextdomain')) {
 
 $tpl->setpaths($config['tplpath']);
 
-$tpl->setVar('SCRIPT', sprintf('GSD.ga = "%s";GSD.fb = "%s";GSD.App = { isCMS: %s };', $site->ga, $site->fb, !$site->isFrontend ? 1 : 0));
+$tpl->setVar('SCRIPT', sprintf('GSD.locale = "%s";GSD.ga = "%s";GSD.fb = "%s";GSD.gtm = "%s";GSD.App = { isCMS: %s };', $language, $site->ga, $site->fb, $site->gtm, !$site->isFrontend ? 1 : 0));
+$tpl->setVar('GTM', $site->gtm);
+$tpl->setcondition('GTM', !!$site->gtm);
+$tpl->setcondition('FB', !!$site->fb);
+$tpl->setcondition('GA', !!$site->ga);
 $tpl->setVar('CDN', RESOURCESURL);
 $tpl->setVar('CLIENT_RESOURCES', @$config['client_resources']);
 $tpl->setVar('CLIENT_PATH', @$config['client_path']);
@@ -77,7 +81,7 @@ if (!$site->isFrontend) {
     $section = lang('LANG_'.strtoupper(@$site->arg(1)));
     $tpl->setvars(array(
         'PAGE_TITLE' => sprintf('%s - %s', $site->name, ucwords($section == 'LANG_' ? lang('LANG_DASHBOARD') : $section)),
-        'PAGE_CANONICAL' => $site->protocol.$_SERVER['HTTP_HOST'].'/'.$site->uri,
+        'PAGE_CANONICAL' => $site->protocol.$_SERVER['HTTP_HOST'].$site->uri,
     ));
 }
 

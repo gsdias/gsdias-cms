@@ -40,8 +40,11 @@ class pages extends section implements isection
             }
         }
 
+        $limit = $paginator->pageLimit() ? $paginator->pageLimit() - 1 : 0;
+        $numberPerPage = $options['numberPerPage'] + 1;
+
         $mysql->select($_fields)
-            ->limit($paginator->pageLimit(), $options['numberPerPage'])
+            ->limit($limit, $numberPerPage)
             ->exec();
 
         $result = parent::getlist(array(
@@ -252,7 +255,7 @@ class pages extends section implements isection
 
         $result = parent::add($defaultfields, $defaultsafter, $defaultvalues);
         
-        if (empty($result['errmsg'])) {
+        if (empty($result['errmsg'][0])) {
             $this->update_beautify($result['id']);
         }
 

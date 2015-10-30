@@ -34,7 +34,7 @@ abstract class section implements isection
 
         $list = array();
 
-        foreach ($results as $line) {
+        foreach ($results as $index => $line) {
             $item = array();
 
             foreach ($fields as $field) {
@@ -45,6 +45,7 @@ abstract class section implements isection
 
             $created = explode(' ', @$line->created);
             $item['CREATED'] = timeago(dateDif(@$created[0], date('Y-m-d', time())), @$created[1]);
+            $item['ISHIDDEN'] = @$_REQUEST['page'] > 1 && $index === 0 ? ' class="is-hidden"' : ($index === 10 && sizeof($results) === ($index + 1) ? ' class="is-hidden"' : '');
 
             $list[] = $item;
         }
@@ -133,6 +134,7 @@ abstract class section implements isection
                         'label' => $sectionextrafields['labels'][$key],
                         'type' => 'checkbox'
                     ));
+                    $extraclass = 'checkbox';
                     break;
                     case 'textarea':
                     $field = (string) new textarea(array(

@@ -52,6 +52,9 @@
 
 .pages {
 
+    .is-hidden {
+        display: none;
+    }
     input {
         visibility: hidden;
 

@@ -46,8 +46,8 @@ if (@$_REQUEST['save']) {
     $values = array(
         $user->id,
         ($index != null ? $index + 1 : 0),
-        @$_REQUEST['menu'] ? 'on' : null,
-        @$_REQUEST['auth'] ? 'on' : null,
+        @$_REQUEST['menu'] ? 1 : null,
+        @$_REQUEST['auth'] ? 1 : null,
         date('Y-m-d H:i:s', time()),
     );
 
@@ -86,44 +86,50 @@ if (@$_REQUEST['save']) {
                 ->values(array($section->lsid, $section->mtid, $pid, serialize($data), $user->id))
                 ->exec();
         }
-
-        $_SESSION['message'] = sprintf(lang('LANG_PAGE_CREATED'), $_REQUEST['title']);
-        header("Location: /admin/pages/$pid/edit", true, 302);
-        exit;
-    } else {
-        if ($result['errnum'] === 1000) {
-            array_unshift($result['errmsg'], lang('LANG_PAGE_ALREADY_EXISTS'));
-        }
         
-        while (!empty($result['errmsg'])) {
-            $tpl->setvar('ERRORS', array_pop($result['errmsg']));
+        if (!isset($api)) {
+            $_SESSION['message'] = sprintf(lang('LANG_PAGE_CREATED'), $_REQUEST['title']);
+            header("Location: /admin/pages/$pid/edit", true, 302);
+            exit;
         }
-        $tpl->setcondition('ERRORS');
+    } else {
+        if (!isset($api)) {
+            if ($result['errnum'] === 1000) {
+                array_unshift($result['errmsg'], lang('LANG_PAGE_ALREADY_EXISTS'));
+            }
+
+            while (!empty($result['errmsg'])) {
+                $tpl->setvar('ERRORS', array_pop($result['errmsg']));
+            }
+            $tpl->setcondition('ERRORS');
+        }
     }
 }
 
-$mysql->reset()
-    ->select('lid, name')
-    ->from('layouts')
-    ->exec();
+if (!isset($api)) {
+    $mysql->reset()
+        ->select('lid, name')
+        ->from('layouts')
+        ->exec();
 
-$types = array();
-foreach ($mysql->result() as $item) {
-    $types[$item->lid] = $item->name;
+    $types = array();
+    foreach ($mysql->result() as $item) {
+        $types[$item->lid] = $item->name;
+    }
+
+    $types = new GSD\select(array('list' => $types, 'id' => 'LAYOUT'));
+    $types->object();
+
+    $mysql->reset()
+        ->select('pid, title')
+        ->from('pages')
+        ->exec();
+
+    $types = array();
+    foreach ($mysql->result() as $item) {
+        $types[$item->pid] = $item->title;
+    }
+
+    $types = new GSD\select(array('list' => $types, 'id' => 'PARENT'));
+    $types->object();
 }
-
-$types = new GSD\select(array('list' => $types, 'id' => 'LAYOUT'));
-$types->object();
-
-$mysql->reset()
-    ->select('pid, title')
-    ->from('pages')
-    ->exec();
-
-$types = array();
-foreach ($mysql->result() as $item) {
-    $types[$item->pid] = $item->title;
-}
-
-$types = new GSD\select(array('list' => $types, 'id' => 'PARENT'));
-$types->object();
