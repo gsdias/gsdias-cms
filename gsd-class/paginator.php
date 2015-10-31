@@ -35,7 +35,7 @@ class paginator
         return;
     }
 
-    public function pageTotal()
+    private function pageTotal()
     {
         global $mysql;
 
@@ -48,6 +48,11 @@ class paginator
         $pages = $remain > 0 ? ++$pages : $pages;
 
         $this->total = $pages;
+    }
+
+    public function getPageTotal()
+    {
+        return $this->total;
     }
 
     public function pageLimit()

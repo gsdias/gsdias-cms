@@ -34,6 +34,9 @@ abstract class section implements isection
 
         $list = array();
 
+        $first = !@$_REQUEST['page'] || @$_REQUEST['page'] == 1 ? -1 : 0;
+        $last = @$_REQUEST['page'] == $options['totalPages'] ? -1 : sizeof($results) - 1;
+
         foreach ($results as $index => $line) {
             $item = array();
 
@@ -45,7 +48,7 @@ abstract class section implements isection
 
             $created = explode(' ', @$line->created);
             $item['CREATED'] = timeago(dateDif(@$created[0], date('Y-m-d', time())), @$created[1]);
-            $item['ISHIDDEN'] = @$_REQUEST['page'] > 1 && $index === 0 ? ' class="is-hidden"' : ($index === 10 && sizeof($results) === ($index + 1) ? ' class="is-hidden"' : '');
+            $item['ISHIDDEN'] = $index === $first || $index === $last ? ' class="is-hidden"' : '';
 
             $list[] = $item;
         }

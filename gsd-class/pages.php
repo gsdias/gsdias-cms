@@ -32,7 +32,8 @@ class pages extends section implements isection
         }
 
         $mysql->order('p.index');
-        $paginator = new paginator(@$options['numberPerPage'], @$_REQUEST['page']);
+        $page = @$_REQUEST['page'] ? $_REQUEST['page'] : 1;
+        $paginator = new paginator(@$options['numberPerPage'], $page);
 
         if (!empty($fields)) {
             foreach ($fields as $field) {
@@ -41,7 +42,8 @@ class pages extends section implements isection
         }
 
         $limit = $paginator->pageLimit() ? $paginator->pageLimit() - 1 : 0;
-        $numberPerPage = $options['numberPerPage'] + 1;
+        $totalPages = $paginator->getPageTotal();
+        $numberPerPage = $totalPages == $page || $page == 1 ? $options['numberPerPage'] + 1 : $options['numberPerPage'] + 2;
 
         $mysql->select($_fields)
             ->limit($limit, $numberPerPage)
@@ -52,6 +54,7 @@ class pages extends section implements isection
             'results' => $mysql->result(),
             'fields' => array_merge(array('pid', 'title', 'beautify', 'creator', 'creator_name', 'creator_id', 'index'), $fields),
             'paginator' => $paginator,
+            'totalPages' => $totalPages
         ));
 
         if (!empty($result['list'])) {
