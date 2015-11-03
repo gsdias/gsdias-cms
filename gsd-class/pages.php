@@ -267,13 +267,14 @@ class pages extends section implements isection
 
     public function edit($defaultfields = array(), $defaultsafter = array(), $defaultvalues = array())
     {
-        global $mysql, $site;
+        global $mysql, $site, $api;
 
+        $pid = isset($api) ? $api->pid : $site->arg(2);
         $mysql->reset()
             ->select()
             ->from('pages')
             ->where('pid = ?')
-            ->values($site->arg(2))
+            ->values($pid)
             ->exec();
 
         $currentpage = $mysql->singleline();
@@ -289,7 +290,7 @@ class pages extends section implements isection
 
         $result = parent::edit($defaultfields, $defaultsafter, $defaultvalues);
 
-        $this->update_beautify($site->arg(2));
+        $this->update_beautify($pid);
 
         if ($hasChanged) {
             array_push($fields, $currentpage->modified);

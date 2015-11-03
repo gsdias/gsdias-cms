@@ -35,7 +35,7 @@ abstract class section implements isection
         $list = array();
 
         $first = !@$_REQUEST['page'] || @$_REQUEST['page'] == 1 ? -1 : 0;
-        $last = @$_REQUEST['page'] == $options['totalPages'] ? -1 : sizeof($results) - 1;
+        $last = sizeof($results) < 11 || @$_REQUEST['page'] == $options['totalPages'] ? -1 : sizeof($results) - 1;
 
         foreach ($results as $index => $line) {
             $item = array();
@@ -222,7 +222,9 @@ abstract class section implements isection
 
     public function edit($defaultfields, $defaultsafter = array(), $defaultvalues = array())
     {
-        global $mysql, $site;
+        global $mysql, $site, $api;
+
+        $pid = isset($api) ? $api->pid : $site->arg(2);
 
         $section = $this->tablename();
 
@@ -240,7 +242,7 @@ abstract class section implements isection
             $values[] = $field == 'password' ? md5($_REQUEST[$defaultvalues[$index]]) : $defaultvalues[$index];
         }
 
-        $values[] = $site->arg(2);
+        $values[] = $pid;
 
         $mysql->reset()
             ->update($section)
@@ -249,7 +251,7 @@ abstract class section implements isection
             ->values($values)
             ->exec();
 
-        return array('total' => $mysql->total, 'errnum' => $mysql->errnum, 'id' => $site->arg(2));
+        return array('total' => $mysql->total, 'errnum' => $mysql->errnum, 'id' => $pid);
     }
 
     public function remove()

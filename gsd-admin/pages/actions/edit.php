@@ -22,7 +22,7 @@ if (@$_REQUEST['save']) {
     $values = array(
         @$_REQUEST['menu'] ? 1 : null,
         @$_REQUEST['auth'] ? 1 : null,
-        @$_REQUEST['published'] ? @$_REQUEST['published'] : null,
+        @$_REQUEST['published'] ? 1 : null,
     );
 
     $result = $csection->edit($defaultfields, $fields, $values);
@@ -87,10 +87,11 @@ if (@$_REQUEST['save']) {
                     ->exec();
             }
         }
+        if (!isset($api)) {
+            $_SESSION['message'] = sprintf(lang('LANG_PAGE_SAVED'), $_REQUEST['title']);
 
-        $_SESSION['message'] = sprintf(lang('LANG_PAGE_SAVED'), $_REQUEST['title']);
-
-        header('Location: /admin/pages', true, 302);
-        exit;
+            header('Location: /admin/'.$site->arg(1), true, 302);
+            exit;
+        }
     }
 }

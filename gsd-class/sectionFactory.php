@@ -23,24 +23,31 @@ class sectionFactory
             $newtype = $type;
         }
 
+        $permission = extendedpermission($newtype);
+
         switch ($newtype) {
             case 'layouts':
-                return new $classname(IS_ADMIN);
+                $permission = gettype($permission) === 'boolean' ? $permission : IS_ADMIN;
+                return new $classname($permission);
             break;
             case 'pages':
-                return new $classname(IS_ADMIN || IS_EDITOR);
+                $permission = gettype($permission) === 'boolean' ? $permission : IS_ADMIN || IS_EDITOR;
+                return new $classname($permission);
             break;
             case 'users':
-                return new $classname(IS_ADMIN);
+                $permission = gettype($permission) === 'boolean' ? $permission : IS_ADMIN;
+                return new $classname($permission);
             break;
             case 'images':
-                return new $classname(IS_ADMIN || IS_EDITOR);
+                $permission = gettype($permission) === 'boolean' ? $permission : IS_ADMIN || IS_EDITOR;
+                return new $classname($permission);
             break;
             case 'documents':
-                return new $classname(IS_ADMIN || IS_EDITOR);
+                $permission = gettype($permission) === 'boolean' ? $permission : IS_ADMIN || IS_EDITOR;
+                return new $classname($permission);
             break;
             default:
-                return new $classname();
+                return new $classname($permission);
             break;
         }
     }
