@@ -1,0 +1,12 @@
+Added permissions to dashboard
+Refactor permission to sections
+Added list of allowed documents
+Added language edition
+Added 404 code
+Added field type check
+Now actions can be used within api
+Added new type field for options
+Changed pagination to work better with reordering
+Better extending objects
+Refactoring email class to use swift
+Added by default GTM option
