@@ -23,7 +23,7 @@ class sectionFactory
             $newtype = $type;
         }
 
-        $permission = extendedpermission($newtype);
+        $permission = sectionFactory::getPermission($newtype);
 
         switch ($newtype) {
             case 'layouts':
@@ -50,5 +50,39 @@ class sectionFactory
                 return new $classname($permission);
             break;
         }
+    }
+
+    public static function getPermission($type)
+    {
+        if (class_exists('GSD\\Extended\\'.$type)) {
+            $type = substr($type, 8);
+        } else {
+            $type = $type;
+        }
+
+        $permission = function_exists('extendedpermission') ? \extendedpermission($type) : '';
+
+        switch ($type) {
+            case 'layouts':
+                $permission = gettype($permission) === 'boolean' ? $permission : IS_ADMIN;
+            break;
+            case 'pages':
+                $permission = gettype($permission) === 'boolean' ? $permission : IS_ADMIN || IS_EDITOR;
+            break;
+            case 'users':
+                $permission = gettype($permission) === 'boolean' ? $permission : IS_ADMIN;
+            break;
+            case 'images':
+                $permission = gettype($permission) === 'boolean' ? $permission : IS_ADMIN || IS_EDITOR;
+            break;
+            case 'documents':
+                $permission = gettype($permission) === 'boolean' ? $permission : IS_ADMIN || IS_EDITOR;
+            break;
+            default:
+                $permission = 1;
+            break;
+        }
+
+        return $permission;
     }
 }
