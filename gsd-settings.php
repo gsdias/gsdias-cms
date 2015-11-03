@@ -18,6 +18,7 @@ $_email['pass'] = 'password';
 
 define('TPLEXT', '.html');
 define('PHPEXT', '.php');
+define('ADMINPATH', dirname(__FILE__).'/gsd-admin/');
 define('TPLPATH', dirname(__FILE__).'/gsd-tpl/');
 define('CLASSPATH', dirname(__FILE__).'/gsd-class/');
 define('INCLUDEPATH', dirname(__FILE__).'/gsd-include/');
