@@ -35,7 +35,7 @@ class api
     public function __construct($method, $extended)
     {
         $this->output = array('error' => 0, 'message' => '');
-        $this->user = @$_SESSION['user'] ? $_SESSION['user'] : (class_exists('\\GSD\\Extended\\extendeduser') ? new GSD\Extended\extendeduser() : new GSD\user());
+
         $this->method = $method;
         $this->extended = $extended;
         $this->loginRequired = array();
@@ -84,17 +84,17 @@ class api
         return $output;
     }
 
-    private function checkCredentials($cmd)
+    public function checkCredentials($uid = 0)
     {
-        if (in_array($cmd, $this->loginRequired)) {
-            if ($this->user != null) {
-                return true;
-            } else {
-                return false;
-            }
+        global $permissions;
+
+        $this->user = @$_SESSION['user'] ? $_SESSION['user'] : (class_exists('\\GSD\\Extended\\extendeduser') ? new GSD\Extended\extendeduser($uid) : new GSD\user($uid));
+
+        foreach($permissions as $permission) {
+            define('IS_'.strtoupper($permission), $permission == $this->user->level);
         }
 
-        return true;
+        return $this->user;
     }
 
     public function requiredFields($fields, $required)

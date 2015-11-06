@@ -27,7 +27,16 @@
                 'selector': '.html_module',
                 'plugins': 'link code',
                 'toolbar': 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
-                'convert_urls': false
+                'convert_urls': false,
+                'setup': function(editor) {
+                    editor.on('change', function() {
+                        var text = tinyMCE.get(this.id).getContent({format : 'text'}),
+                            strip = document.createElement('span');
+
+                        $(strip).html(text);
+                        $('[name="description"]').val(text);
+                    });
+                }
             });
         }
     });

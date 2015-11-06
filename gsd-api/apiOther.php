@@ -109,6 +109,29 @@ class apiOther
             $mysql->where(sprintf('p.title like "%%%s%%"', $_REQUEST['search']));
         }
 
+        if (@$_REQUEST['filter']) {
+            switch ($_REQUEST['filter']) {
+                case 'published':
+                    $mysql->where('p.published IS NOT NULL');
+                break;
+                case 'unpublished':
+                    $mysql->where('p.published IS NULL');
+                break;
+                case 'visiblemenu':
+                    $mysql->where('p.show_menu IS NOT NULL');
+                break;
+                case 'invisiblemenu':
+                    $mysql->where('p.show_menu IS NULL');
+                break;
+                case 'secure':
+                    $mysql->where('p.require_auth IS NOT NULL');
+                break;
+                case 'nonsecure':
+                    $mysql->where('p.require_auth IS NULL');
+                break;
+            }
+        }
+
         $mysql->order('p.index');
 
         $paginator = new GSD\paginator($numberPerPage, $page);
@@ -143,7 +166,9 @@ class apiOther
     {
         global $mysql, $api;
 
-        if ($api->user->level != 'admin') {
+        $api->checkCredentials();
+
+        if (!(IS_ADMIN || IS_EDITOR)) {
             return lang('LANG_NOPERMISSION');
         }
 

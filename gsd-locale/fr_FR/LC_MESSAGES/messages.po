@@ -88,6 +88,9 @@ msgstr "État"
 msgid "LANG_SEARCH"
 msgstr "Recherche"
 
+msgid "LANG_FILTER"
+msgstr "Filtrar"
+
 msgid "LANG_DIMENSION"
 msgstr "Dimension"
 

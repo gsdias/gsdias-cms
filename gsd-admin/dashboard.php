@@ -14,7 +14,7 @@ if (IS_ADMIN) {
         ->select()
         ->from('users')
         ->where('disabled IS NULL')
-        ->order('created')
+        ->order('created', 'DESC')
         ->limit(0, 5)
         ->exec();
 
@@ -30,11 +30,14 @@ if (IS_ADMIN) {
     }
     $tpl->setarray('USERS', $users);
 
+}
+
+if (IS_ADMIN || IS_EDITOR) {
     $mysql->reset()
         ->select()
         ->from('pages')
         ->where('published IS NOT NULL')
-        ->order('created')
+        ->order('created', 'DESC')
         ->limit(0, 5)
         ->exec();
 
@@ -46,7 +49,7 @@ if (IS_ADMIN) {
             $created = explode(' ', $pagelist->created);
             $pages[] = array(
                 'ID' => $pagelist->pid,
-                'NAME' => $pagelist->url,
+                'NAME' => $pagelist->beautify,
                 'CREATED' => timeago(dateDif($created[0], date('Y-m-d', time())), $created[1]),
             );
         }
@@ -56,6 +59,7 @@ if (IS_ADMIN) {
     $mysql->reset()
         ->select()
         ->from('images')
+        ->order('created', 'DESC')
         ->limit(0, 5)
         ->exec();
 
@@ -77,6 +81,7 @@ if (IS_ADMIN) {
     $mysql->reset()
         ->select()
         ->from('documents')
+        ->order('created', 'DESC')
         ->limit(0, 5)
         ->exec();
 

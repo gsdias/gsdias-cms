@@ -28,23 +28,14 @@
 
     api.loading = function (elem) {
         if ('object' !== typeof elem) {
-            $('.loadingimg').hide();
+            $('#loading').hide();
             return;
         }
-        var size = [elem.innerWidth(), elem.innerHeight()];
-        if (!$('.loadingimg').length) {
-            $('body').append('<img src="/gsd-resources/images/ajax-loader.gif" class="loadingimg"/>');
-        }
 
-        $('.loadingimg').css({
-            position: 'absolute',
-            display: 'block',
-            width: 'auto',
-            height: '50',
-            left: parseInt((elem.offset() || {}).left + (size[0] / 2) - 62, 10),
-            top: parseInt((elem.offset() || {}).top + (size[1] / 2) - 62, 10),
-            zIndex: 10
-        });
+        if (!$('#loading').length) {
+            $('body').append('<div id="loading">');
+        }
+        $('#loading').show();
     };
 
     api.displayError = function (json) {

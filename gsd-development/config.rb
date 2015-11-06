@@ -18,7 +18,7 @@ additional_import_paths  = ["../gsd-frontend/development/sass"]
 
 output_style = :compressed
 
-sourcemap = true
+#sourcemap = true
 
 # To enable relative paths to assets via compass helper functions. Uncomment:
 # relative_assets = true

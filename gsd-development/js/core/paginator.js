@@ -20,9 +20,10 @@
             e.preventDefault();
 
             var page = this.href.split('='),
-                search = $('[name="search"]').val();
+                search = $('[name="search"]').val(),
+                filter = $('[name="filter"]').val();
 
-            api.call($(e.currentTarget), 'GET', 'pages', { page: page[1], type: tbody.type, search: search }, function (response) {
+            api.call($(e.currentTarget), 'GET', 'pages', { page: page[1], type: tbody.type, search: search, filter: filter }, function (response) {
                 var template = $('#' + tbody.type + 'ExtendedBlock').length ? $('#' + tbody.type + 'ExtendedBlock') : $('#' + tbody.type + 'Block');
                 tbody.el.empty();
 
@@ -39,6 +40,10 @@
             }, function () {
                 api.loading();
             });
+        },
+
+        requestPageFilter = function () {
+            window.location = window.location.pathname + '?filter=' + this.value;
         },
 
         showOption = function () {
@@ -74,6 +79,7 @@
                             $(this).remove();
                         });
                     });
+                    $options.removeClass('is-visible');
                 }, function () {
                     api.loading();
                 });
@@ -94,6 +100,7 @@
         $('body').on('click', classPaginator + ' a', requestPage);
         $('body').on('click', list + ' input, ' + list + ' .selection', showOption);
         $('.multi-options').on('click', 'button', action);
+        $('.search').on('change', 'select', requestPageFilter);
     });
 
 }(GSD.Pages = GSD.Pages || {}, GSD.App, GSD.Api, GSD.Global, GSD.$, _, Backbone, document));

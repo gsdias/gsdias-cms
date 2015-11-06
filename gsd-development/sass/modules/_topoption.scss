@@ -8,17 +8,19 @@
 
 .multi-options {
     background: $gsd-color;
-    display: none;
     height: 55px;
     max-width: 100%;
     position: fixed;
     text-align: center;
-    top: 0;
+    top: -55px;
     width: 100%;
     z-index: 10;
+    -webkit-transition: top .15s ease;
 
     &.is-visible {
         display: block;
+        top: 0;
+        -webkit-transition: top .3s ease;
     }
 
     button {
@@ -35,3 +37,13 @@
     }
 }
 
+#loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url(/gsd-resources/images/ajax-loader.gif) no-repeat 50% 50% rgba(0, 0, 0, 0.3);
+    z-index: 20;
+    background-size: 50px auto;
+}

@@ -21,7 +21,8 @@ class email
         $vars,
         $debug,
         $swift,
-        $message;
+        $message,
+        $isPlain;
 
     public function __construct()
     {
@@ -100,8 +101,9 @@ class email
         $this->vars[$name] = $value;
     }
 
-    public function setbody($text)
+    public function setbody($text, $isPlain = false)
     {
+        $this->isPlain = $isPlain;
         $this->text .= $text;
     }
 
@@ -212,7 +214,7 @@ class email
             ob_end_clean();
         }
 
-          $this->message->setBody($message, 'text/html');
+          $this->message->setBody($message ? $message : $this->text, $this->isPlain ? 'text/plain' : 'text/html');
 
         // Send the message
         $result = $this->swift->send($this->message);

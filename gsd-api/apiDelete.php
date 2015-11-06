@@ -19,7 +19,9 @@ class apiDelete
     {
         global $mysql, $api;
 
-        if ($api->user->level == 'user') {
+        $api->checkCredentials();
+
+        if (!IS_ADMIN) {
             return lang('LANG_NOPERMISSION');
         }
 
@@ -42,7 +44,9 @@ class apiDelete
     {
         global $mysql, $api;
 
-        if ($api->user->level == 'user') {
+        $api->checkCredentials();
+
+        if (!(IS_ADMIN || IS_EDITOR)) {
             return lang('LANG_NOPERMISSION');
         }
 
@@ -65,7 +69,9 @@ class apiDelete
     {
         global $mysql, $api;
 
-        if ($api->user->level != 'admin') {
+        $api->checkCredentials();
+
+        if (!IS_ADMIN) {
             return lang('LANG_NOPERMISSION');
         }
 
@@ -88,7 +94,9 @@ class apiDelete
     {
         global $mysql, $api;
 
-        if ($api->user->level == 'user') {
+        $api->checkCredentials();
+
+        if (!(IS_ADMIN || IS_EDITOR)) {
             return lang('LANG_NOPERMISSION');
         }
 
@@ -111,7 +119,9 @@ class apiDelete
     {
         global $mysql, $api;
 
-        if ($api->user->level == 'user') {
+        $api->checkCredentials();
+
+        if (!(IS_ADMIN || IS_EDITOR)) {
             return lang('LANG_NOPERMISSION');
         }
 

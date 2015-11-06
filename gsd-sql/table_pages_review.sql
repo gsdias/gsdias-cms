@@ -5,6 +5,7 @@
 CREATE TABLE IF NOT EXISTS `pages_review` (
   `prid` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `pid` int(11) NOT NULL,
+  `parent` int(11) DEFAULT NULL,
   `title` varchar(120) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
   `keywords` varchar(255) DEFAULT NULL,

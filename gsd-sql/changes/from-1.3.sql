@@ -3,6 +3,8 @@
 --
 
 ALTER TABLE `options` CHANGE `name` `name` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+ALTER TABLE `pages_review` ADD `parent` INT(12) DEFAULT NULL;
+
 --
 -- Indexes for table `options`
 --

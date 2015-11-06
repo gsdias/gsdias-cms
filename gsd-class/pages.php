@@ -28,7 +28,30 @@ class pages extends section implements isection
             ->on('p.parent = pp.pid');
 
         if (@$_REQUEST['search']) {
-            $mysql->where(sprintf('p.title like "%%%s%%"', $_REQUEST['search']));
+            $mysql->where(sprintf('MATCH (p.title, p.description) AGAINST ("%s" WITH QUERY EXPANSION)', $_REQUEST['search']));
+        }
+        if (@$_REQUEST['filter']) {
+            $tpl->setvar('FILTER_'.strtoupper($_REQUEST['filter']), 'selected="selected"');
+            switch ($_REQUEST['filter']) {
+                case 'published':
+                    $mysql->where(sprintf('%s p.published IS NOT NULL', @$_REQUEST['search'] ? 'AND' : ''));
+                break;
+                case 'unpublished':
+                    $mysql->where(sprintf('%s p.published IS NULL', @$_REQUEST['search'] ? 'AND' : ''));
+                break;
+                case 'visiblemenu':
+                    $mysql->where(sprintf('%s p.show_menu IS NOT NULL', @$_REQUEST['search'] ? 'AND' : ''));
+                break;
+                case 'invisiblemenu':
+                    $mysql->where(sprintf('%s p.show_menu IS NULL', @$_REQUEST['search'] ? 'AND' : ''));
+                break;
+                case 'secure':
+                    $mysql->where(sprintf('%s p.require_auth IS NOT NULL', @$_REQUEST['search'] ? 'AND' : ''));
+                break;
+                case 'nonsecure':
+                    $mysql->where(sprintf('%s p.require_auth IS NULL', @$_REQUEST['search'] ? 'AND' : ''));
+                break;
+            }
         }
 
         $mysql->order('p.index');

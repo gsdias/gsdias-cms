@@ -19,7 +19,9 @@ class apiGet
     {
         global $mysql, $api;
 
-        if ($api->user->level == 'user' || $api->user->level == '-1') {
+        $api->checkCredentials();
+
+        if (!(IS_ADMIN || IS_EDITOR)) {
             return lang('LANG_NOPERMISSION');
         }
 
@@ -67,7 +69,9 @@ class apiGet
     {
         global $mysql, $api;
 
-        if ($api->user->level == 'user' || $api->user->level == '-1') {
+        $api->checkCredentials();
+
+        if (!(IS_ADMIN || IS_EDITOR)) {
             return lang('LANG_NOPERMISSION');
         }
 

@@ -7,5 +7,6 @@
  */
 
 #overlay.is-visible {
-    display: block;
+    -webkit-transition: top 2s ease;
+    top: 0;
 }

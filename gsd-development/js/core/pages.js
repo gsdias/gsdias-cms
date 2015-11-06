@@ -10,7 +10,8 @@
 
     'use strict';
 
-    var tbody = {},
+    var beforedrag = 0,
+        tbody = {},
         generateurl = function () {
             var value = this.value.toLowerCase(),
                 url = $(this).closest('div').next().find('[name="url"]').get(0);
@@ -85,16 +86,16 @@
         },
 
         drag = function (e) {
-            var top = e.pageY - e.data.diff,
+            var beforetop = e.pageY - e.data.diff,
                 $drag = $(e.currentTarget),
                 dragheight = $drag.outerHeight(true),
                 $original = tbody.el.find('tr[data-pid="' + $drag.data('pid') + '"]'),
-                $before = $original.prev(':not(.drag)'),
-                $after = $original.next(':not(.drag)'),
-                index = 0;
+                $before = $original.prev(':not(.drag, .is-hidden)'),
+                $after = $original.next(':not(.drag, .is-hidden)'),
+                index = 0,
+                top;
 
-            top = top < tbody.top - dragheight ? tbody.top - dragheight : top;
-            top = top > tbody.bottom + dragheight ? tbody.bottom + dragheight : top;
+            top = beforetop < tbody.top - dragheight ? tbody.top - dragheight : (beforetop > tbody.bottom ? tbody.bottom : beforetop);
 
             $drag.css({ top: top });
 
@@ -113,6 +114,13 @@
                 $after.attr('data-index', $original.attr('data-index'));
                 $original.attr('data-index', index);
             }
+
+            if (((tbody.top - dragheight === top) || tbody.bottom === top) && beforedrag === top) {
+                $('.cloned').next().removeClass('is-hidden');
+                $('.cloned').prev().removeClass('is-hidden');
+            }
+
+            beforedrag = top;
         },
 
         updateOrder = function (e) {

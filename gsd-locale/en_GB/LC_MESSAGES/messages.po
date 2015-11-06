@@ -88,8 +88,11 @@ msgstr "State"
 msgid "LANG_SEARCH"
 msgstr "Search"
 
+msgid "LANG_FILTER"
+msgstr "Filter"
+
 msgid "LANG_DIMENSION"
-msgstr "Dimensão"
+msgstr "Dimension"
 
 msgid "LANG_DOCUMENT_EMPTY"
 msgstr "No document"

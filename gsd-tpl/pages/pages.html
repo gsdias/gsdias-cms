@@ -3,9 +3,18 @@
         <!-- IF IS_ADMIN --><a href="/admin/pages/create" class="btn">{LANG_ADD} {LANG_NEW_FEMALE LOWER}</a><!-- ENDIF IS_ADMIN -->
     </h1>
     <div class="search">
-        <form method="post">
+        <form method="get">
+            <select name="filter">
+                <option value="">Filter</option>
+                <option value="published" {FILTER_PUBLISHED}>Published</option>
+                <option value="unpublished" {FILTER_UNPUBLISHED}>Unpublished</option>
+                <option value="secure" {FILTER_SECURE}>Secure</option>
+                <option value="nonsecure" {FILTER_NONSECURE}>Non-Secure</option>
+                <option value="visiblemenu" {FILTER_VISIBLEMENU}>Visible in menu</option>
+                <option value="invisiblemenu" {FILTER_INVISIBLEMENU}>Not visible in menu</option>
+            </select>
             <input type="text" value="{SEARCH_VALUE}" name="search">
-            <input type="submit" value="{LANG_SEARCH}" name="search_submit">
+            <input type="submit" value="{LANG_FILTER}" name="search_submit">
         </form>
     </div>
     <!-- IF ERRORS --><div class="errors">{ERRORS}</div><!-- ENDIF ERRORS -->
