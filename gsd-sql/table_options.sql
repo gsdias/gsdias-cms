@@ -17,6 +17,7 @@ INSERT INTO options (`name`, `label`, `value`, `index`) VALUES
 ('gsd-email', '{LANG_EMAIL}', NULL, 2),
 ('gsd-ga', 'Google Analytics', NULL, 3),
 ('gsd-fb', 'Facebook', NULL, 4),
+('gsd-gtm', 'Google Tag Manager', NULL, 4),
 ('gsd-locale_select', '{LANG_LANGUAGE}', 'pt_PT', 5),
 ('gsd-maintenance_checkbox', '{LANG_MAINTENANCE_LABEL}', NULL, 6),
 ('gsd-debug_checkbox', '{LANG_DEBUG_LABEL}', NULL, 7);

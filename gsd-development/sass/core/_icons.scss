@@ -19,13 +19,12 @@
     @include retina-sprite(logo_small);
 }
 
-.icon-gear {
-    @extend .icon;
-    @include retina-sprite(Gear);
+.fa-gear {
     position: absolute;
     top: 2px;
     left: 185px;
     cursor: pointer;
+    color: $gsd-color;
 }
 
 .icon-email {

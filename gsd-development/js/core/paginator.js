@@ -15,6 +15,8 @@
         $check = {},
         classPaginator = '.paginator',
         list = '.pages',
+        lastChecked = -1,
+        lastType = 0,
 
         requestPage = function (e) {
             e.preventDefault();
@@ -46,8 +48,11 @@
             window.location = window.location.pathname + '?filter=' + this.value;
         },
 
-        showOption = function () {
-            if ($(this).hasClass('selection')) {
+        showOption = function (e) {
+            var $input = $(this),
+                index = $('.table input').index($input);
+
+            if ($input.hasClass('selection')) {
                 if ($check.filter(':not(:checked)').length) {
                     $check.filter(':not(:checked)').trigger('click');
                 } else {
@@ -55,7 +60,27 @@
                 }
             }
             $options.toggleClass('is-visible', $check.filter(':checked').length > 0);
-            $(this).toggleClass('is-visible');
+            $input.toggleClass('is-visible');
+
+            if (e.shiftKey) {
+                multipleSelection(index);
+            } else {
+                lastChecked = index;
+                lastType = $input.is(':checked');
+            }
+        },
+
+        multipleSelection = function (index) {
+            var list = $('.table input').slice(++index, lastChecked);
+            if (index > lastChecked) {
+                list = $('.table input').slice(++lastChecked, index);
+            }
+
+            if (lastType) {
+                list.filter(':not(:checked)').trigger('click');
+            } else {
+                list.filter(':checked').trigger('click');
+            }
         },
 
         action = function () {
