@@ -16,7 +16,9 @@
 
 .icon-cms-logo {
     @extend .icon;
-    @include retina-sprite(logo_small);
+    background: url(/gsd-resources/css/img/icons/normal/logo_small.png);
+    width: 51px;
+    height: 30px;
 }
 
 .fa-gear {
@@ -25,14 +27,4 @@
     left: 185px;
     cursor: pointer;
     color: $gsd-color;
-}
-
-.icon-email {
-    @extend .icon;
-    @include retina-sprite(Message);
-}
-
-.icon-lock {
-    @extend .icon;
-    @include retina-sprite(Lock);
 }
