@@ -165,7 +165,7 @@
         }
         $('[name="title"]').on('blur', generateurl);
         $('body').on('change', '.item_value', newsubmodule);
-        $('body').on('click', '.icon-gear', togglesettings);
+        $('body').on('click', '.fa-gear', togglesettings);
     });
 
 }(GSD.Pages = GSD.Pages || {}, GSD.Api, GSD.$, _, document));

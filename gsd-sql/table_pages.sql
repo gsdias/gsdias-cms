@@ -28,6 +28,6 @@ CREATE TABLE IF NOT EXISTS `pages` (
   FOREIGN KEY (lid)
     REFERENCES layouts(lid)
     ON UPDATE CASCADE ON DELETE CASCADE,
-    UNIQUE KEY `unique_url` (`parent`, `url`),
-    UNIQUE KEY `unique_beautify` (`beautify`)
+    UNIQUE KEY `unique_url` (`parent`, url(255)),
+    UNIQUE KEY `unique_beautify` (beautify(255))
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
