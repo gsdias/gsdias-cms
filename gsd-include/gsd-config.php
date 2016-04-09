@@ -64,6 +64,7 @@ $tpl->setVar('CLIENT_RESOURCES', @$config['client_resources']);
 $tpl->setVar('CLIENT_PATH', @$config['client_path']);
 $tpl->setVar('ASSETPATH', ASSETPATHURL);
 $tpl->setVar('REDIRECT', @$_REQUEST['redirect'] ? sprintf('?redirect=%s', $_REQUEST['redirect']) : '');
+$tpl->setVar('SITE_URL', $site->protocol.@$config['url']);
 
 if (@$_SESSION['error']) {
     $tpl->setvar('ERRORS', $_SESSION['error']);
