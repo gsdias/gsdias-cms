@@ -94,9 +94,6 @@ module.exports = function (grunt) {
                             createConfig: function (context) {
                                 var generated = context.options.generated,
                                     clientfiles = grunt.file.readJSON(pkg.gsdfrontend + 'development/jsclient.json');
-//                                generated.options = {
-//                                    sourceMap: true
-//                                };
                                 generated.files[0].src = generated.files[0].src.concat(clientfiles.files);
                                 context.inFiles = context.inFiles.concat(clientfiles.files);
 
@@ -110,8 +107,6 @@ module.exports = function (grunt) {
                                     compress: {
                                         //'drop_console': true
                                     },
-//                                    sourceMap: true,
-//                                    sourceMapIn: '.tmp/concat/gsd-resources/js/built.js.map',
                                     files: {
                                         '../gsd-resources/js/*': '.tmp/concat/gsd-resources/js/*'
                                     }

@@ -6,7 +6,7 @@
  * @since      File available since Release 1.0
  */
 
-(function (global, app, $, _, Backbone, undefined) {
+(function (global, app, $, _, undefined) {
 
     'use strict';
 
@@ -41,4 +41,4 @@
         }
     });
 
-}(GSD.Global = GSD.Global || {}, GSD.App, GSD.$, _, Backbone));
+}(GSD.Global = GSD.Global || {}, GSD.App, GSD.$, _));

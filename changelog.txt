@@ -1,3 +1,12 @@
+version 1.5
+
+Permissions can be extended now
+API uses permission to test access
+Added more filters to list pages
+Fix issue with reorder pages
+
+version 1.4
+
 Added permissions to dashboard
 Refactor permission to sections
 Added list of allowed documents

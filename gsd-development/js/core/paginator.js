@@ -6,7 +6,7 @@
  * @since      File available since Release 1.2
  */
 
-(function (pages, app, api, global, $, _, Backbone, document, undefined) {
+(function (pages, app, api, global, $, _, document, undefined) {
 
     'use strict';
 
@@ -128,4 +128,4 @@
         $('.search').on('change', 'select', requestPageFilter);
     });
 
-}(GSD.Pages = GSD.Pages || {}, GSD.App, GSD.Api, GSD.Global, GSD.$, _, Backbone, document));
+}(GSD.Pages = GSD.Pages || {}, GSD.App, GSD.Api, GSD.Global, GSD.$, _, document));

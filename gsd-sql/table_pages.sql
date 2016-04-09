@@ -4,8 +4,8 @@
 
 CREATE TABLE IF NOT EXISTS `pages` (
   `pid` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `url` TEXT NOT NULL,
-  `beautify` TEXT DEFAULT NULL,
+  `url` varchar(255) NOT NULL,
+  `beautify` varchar(255) DEFAULT NULL,
   `lid` int DEFAULT NULL,
   `index` int DEFAULT 0,
   `parent` int(11) DEFAULT NULL,
