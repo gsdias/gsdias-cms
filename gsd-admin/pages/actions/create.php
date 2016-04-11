@@ -10,8 +10,7 @@
  * @since      File available since Release 1.0
  */
 if (!$csection->permission) {
-    header('Location: /admin/'.$site->arg(1), true, 302);
-    exit;
+    redirect('/admin/'.$site->arg(1));
 }
 
 if (@$_REQUEST['save']) {
@@ -41,7 +40,7 @@ if (@$_REQUEST['save']) {
         ->from('pages')
         ->exec();
 
-    $index = @$mysql->singleresult()->max;
+    $index = @$mysql->singleresult();
 
     $values = array(
         $user->id,

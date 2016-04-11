@@ -26,12 +26,10 @@ if (@$_REQUEST['confirm'] == $afirmative) {
     if (!$result['errnum']) {
         $_SESSION['message'] = sprintf(lang('LANG_DOCUMENT_REMOVED'), $document->name);
 
-        header('Location: /admin/documents', true, 302);
-        exit;
+        redirect('/admin/'.$site->arg(1));
     }
 }
 
 if (@$_REQUEST['confirm'] == $negative) {
-    header('Location: /admin/documents', true, 302);
-    exit;
+    redirect('/admin/'.$site->arg(1));
 }

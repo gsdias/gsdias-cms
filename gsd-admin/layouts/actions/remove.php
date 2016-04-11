@@ -11,8 +11,7 @@
  */
 if (!$csection->permission) {
     $_SESSION['error'] = lang('LANG_LAYOUT_NOPERMISSION');
-    header('Location: /admin/layouts', true, 302);
-    exit;
+    redirect('/admin/'.$site->arg(1));
 }
 
 if (@$_REQUEST['confirm'] == $afirmative) {
@@ -35,12 +34,10 @@ if (@$_REQUEST['confirm'] == $afirmative) {
     } else {
         $_SESSION['message'] = sprintf(lang('LANG_LAYOUT_REMOVED'), $name);
 
-        header('Location: /admin/layouts', true, 302);
-        exit;
+        redirect('/admin/'.$site->arg(1));
     }
 }
 
 if (@$_REQUEST['confirm'] == $negative) {
-    header('Location: /admin/layouts', true, 302);
-    exit;
+    redirect('/admin/'.$site->arg(1));
 }

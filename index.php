@@ -17,8 +17,7 @@ $tpl->setvar('HTML_CLASS', 'gsd');
 
 if (!IS_INSTALLED) {
     if ($site->uri != '/admin') {
-        header('location: /admin');
-        exit;
+        redirect('/admin');
     }
 
     $site->main = 'STEP1';
@@ -40,8 +39,7 @@ if (!IS_INSTALLED) {
             $site->startpoint = 'maintenance';
         }
         if (!IS_LOGGED && @$site->page->require_auth) {
-            header('location: /login?redirect='.urlencode($site->uri));
-            exit;
+            redirect('/login?redirect='.urlencode($site->uri));
         }
         require_once ROOTPATH.'gsd-frontend/index.php';
     }

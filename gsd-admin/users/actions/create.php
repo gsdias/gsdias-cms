@@ -10,8 +10,7 @@
  * @since      File available since Release 1.0
  */
 if (!$csection->permission) {
-    header('Location: /admin/'.$site->arg(1), true, 302);
-    exit;
+    redirect('/admin/'.$site->arg(1));
 }
 
 if (@$_REQUEST['save']) {
@@ -33,10 +32,16 @@ if (@$_REQUEST['save']) {
     } else {
         $_SESSION['message'] = sprintf(lang('LANG_USER_CREATED'), $_REQUEST['name']);
 
-        header('Location: /admin/'.$site->arg(1), true, 302);
-        exit;
+        redirect('/admin/'.$site->arg(1));
     }
 }
 
 $types = new GSD\select(array('list' => $languages, 'id' => 'LANGUAGE'));
 $types->object();
+
+$permissionsfield = new GSD\select(array(
+    'list' => $permissions,
+    'label' => lang('LANG_PERMISSION'),
+    'name' => 'level',
+));
+$tpl->setvar('PERMISSION', $permissionsfield);

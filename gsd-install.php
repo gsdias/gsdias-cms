@@ -48,7 +48,8 @@ if (@$_REQUEST['save']) {
         $mysql->usedb($_mysql['db']);
     }
 
-    $mysql->show('TABLES');
+    $mysql->show('TABLES')
+        ->exec();
 
     if ($mysql->total) {
         $found = serialize($mysql->result());

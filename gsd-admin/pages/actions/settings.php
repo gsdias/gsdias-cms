@@ -85,7 +85,7 @@ if (@$_REQUEST['save']) {
             ->values($site->arg(2))
             ->exec();
 
-        $currenturl = $mysql->singleresult()->url;
+        $currenturl = $mysql->singleresult();
 
         $mysql->reset()
             ->delete()
@@ -158,7 +158,6 @@ if (@$_REQUEST['save']) {
         SET p.beautify = concat(if(pp.beautify IS NULL, "", pp.beautify), p.url)
         WHERE p.parent = ?;', array($site->arg(2)));
 
-        header('Location: /admin/pages', true, 302);
-        exit;
+        redirect('/admin/'.$site->arg(1));
     }
 }

@@ -18,6 +18,12 @@ function GSDClassLoading($className)
     }
 }
 
+function redirect($path = '/', $code = 302)
+{
+    header('Location: '.$path, true, $code);
+    exit;
+}
+
 function escapeText($value = '', $encoding = 'UTF-8')
 {
     return htmlspecialchars($value,ENT_QUOTES | ENT_HTML401, $encoding);
@@ -26,9 +32,10 @@ function escapeText($value = '', $encoding = 'UTF-8')
 function isString($value = '', $field = '')
 {
     $result = array(
-        'result' => is_string($value),
+        'result' => is_string($value) && !is_numeric($value),
         'value' => escapeText($value),
-        'message' => 'Invalid type. Needs to be a string'
+        'field' => $field[0],
+        'message' => sprintf('(%s) Invalid type. Needs to be a string', $field[0])
     );
     
     return $result;
@@ -39,7 +46,8 @@ function isNumber($value = 0, $field = '')
     $result = array(
         'result' => is_numeric($value),
         'value' => $value,
-        'message' => 'Invalid type. Needs to be a number'
+        'field' => $field[0],
+        'message' => sprintf('(%s) Invalid type. Needs to be a number', $field[0])
     );
     
     return $result;

@@ -10,12 +10,13 @@
  * @since      File available since Release 1.0
  */
 if (!$csection->permission) {
-    header('Location: /admin/'.$site->arg(1), true, 302);
-    exit;
+    redirect('/admin/'.$site->arg(1));
 }
 
 if (@$_REQUEST['save']) {
-    $defaultfields = array('title', 'description', 'tags', 'keywords', 'og_title', 'og_description', 'og_image', 'parent');
+    $defaultfields = array(
+        array('title', array('isString')),
+        'description', 'tags', 'keywords', 'og_title', 'og_description', 'og_image', 'parent');
 
     $fields = array('show_menu', 'require_auth', 'published');
 
@@ -27,10 +28,7 @@ if (@$_REQUEST['save']) {
 
     $result = $csection->edit($defaultfields, $fields, $values);
 
-    if ($result['errnum']) {
-        $tpl->setvar('ERRORS', lang('LANG_PAGE_ERROR'));
-        $tpl->setcondition('ERRORS');
-    } else {
+    if ($result['total']) {
         $modules = array();
 
         foreach ($_REQUEST as $module => $value) {
@@ -90,8 +88,16 @@ if (@$_REQUEST['save']) {
         if (!isset($api)) {
             $_SESSION['message'] = sprintf(lang('LANG_PAGE_SAVED'), $_REQUEST['title']);
 
-            header('Location: /admin/'.$site->arg(1), true, 302);
-            exit;
+            redirect('/admin/'.$site->arg(1));
         }
+    } else {
+        if (is_array($result['errmsg'])) {
+            foreach($result['errmsg'] as $msg) {
+                $tpl->setvar('ERRORS', $msg.'<br>');
+            }
+        } else {
+            $tpl->setvar('ERRORS', '{LANG_PAGE_ERROR}');
+        }
+        $tpl->setcondition('ERRORS');
     }
 }

@@ -26,12 +26,10 @@ if (@$_REQUEST['confirm'] == $afirmative) {
     if (!$result['errnum']) {
         $_SESSION['message'] = sprintf(lang('LANG_IMAGE_REMOVED'), $image->name);
 
-        header('Location: /admin/images', true, 302);
-        exit;
+        redirect('/admin/'.$site->arg(1));
     }
 }
 
 if (@$_REQUEST['confirm'] == $negative) {
-    header('Location: /admin/images', true, 302);
-    exit;
+    redirect('/admin/'.$site->arg(1));
 }

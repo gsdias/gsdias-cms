@@ -299,7 +299,12 @@ class tpl
             $start = sizeof($param) > 2 ? $param[1] : 1;
             $end = sizeof($param) > 1 ? $param[sizeof($param) - 1] : sizeof($info);
 
-            $end = $end == 'END' ? sizeof($info) : $end;
+            $end = $end === 'END' ? sizeof($info) : $end;
+
+            if ($start === 'END') {
+                $start = sizeof($info) - $end + 1;
+                $end = sizeof($info);
+            }
 
             foreach ($info as $_array) {
                 if ($c >= $start && $c <= $end) {

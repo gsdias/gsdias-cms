@@ -48,6 +48,5 @@ if (@$_REQUEST['save']) {
         ->values($fields)
         ->exec();
     }
-    header('Location: /admin/documents', true, 302);
-    exit;
+    redirect('/admin/'.$site->arg(1));
 }

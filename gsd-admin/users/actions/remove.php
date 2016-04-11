@@ -11,14 +11,12 @@
  */
 if (!$csection->permission) {
     $_SESSION['error'] = lang('LANG_USER_NOPERMISSION');
-    header('Location: /admin/'.$site->arg(1), true, 302);
-    exit;
+    redirect('/admin/'.$site->arg(1));
 }
 
 if ($site->arg(2) == 1) {
     $_SESSION['error'] = lang('LANG_USER_DEFAULT');
-    header('Location: /admin/'.$site->arg(1), true, 302);
-    exit;
+    redirect('/admin/'.$site->arg(1));
 }
 
 if (@$_REQUEST['confirm'] == $afirmative) {
@@ -41,12 +39,10 @@ if (@$_REQUEST['confirm'] == $afirmative) {
     } else {
         $_SESSION['message'] = sprintf(lang('LANG_USER_REMOVED'), $name);
 
-        header('Location: /admin/'.$site->arg(1), true, 302);
-        exit;
+        redirect('/admin/'.$site->arg(1));
     }
 }
 
 if (@$_REQUEST['confirm'] == $negative) {
-    header('Location: /admin/'.$site->arg(1), true, 302);
-    exit;
+    redirect('/admin/'.$site->arg(1));
 }

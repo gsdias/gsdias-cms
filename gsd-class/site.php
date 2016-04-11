@@ -31,7 +31,7 @@ class site
             ->from('options')
             ->exec();
 
-        define('IS_INSTALLED', $mysql->errnum !== 1146 && $mysql->errnum !== 1049 && $mysql->errnum !== 1046);
+        define('IS_INSTALLED', !file_exists('gsd-install'.PHPEXT));
 
         foreach ($mysql->result() as $option) {
             $name = str_replace('gsd-', '', $option->name);
@@ -87,7 +87,7 @@ class site
             ->exec();
 
         if ($mysql->total) {
-            header('Location: '.$mysql->singleresult()->destination, true, 301);
+            header('Location: '.$mysql->singleresult(), true, 301);
             exit;
         }
 

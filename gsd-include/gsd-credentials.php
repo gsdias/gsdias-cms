@@ -34,6 +34,11 @@ if (@$_REQUEST['login'] && !$user->isLogged()) {
 define('IS_LOGGED', $user->isLogged());
 
 if (IS_LOGGED) {
+    $clientfields = CLIENTPATH.'include/admin/fields'.PHPEXT;
+    if (is_file($clientfields)) {
+        include_once $clientfields;
+    }
+
     $tpl->setcondition('IS_LOGGED');
     $tpl->setvar('USER_ID', $user->id);
 

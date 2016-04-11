@@ -176,7 +176,14 @@ class mySQL implements idatabase
         // -- Purpose : returns database query single result
         public function singleresult()
         {
-            return sizeof($this->result) ? $this->result[0] : array();
+            if (sizeof($this->result))
+            {
+                foreach($this->result[0] as $key => $value)
+                {
+                    return $value;
+                }
+            }
+            return null;
         }
 
     // -- Function Name : singleline

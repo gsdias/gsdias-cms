@@ -67,8 +67,7 @@ abstract class section implements isection
         global $site, $tpl;
 
         if (empty($item)) {
-            header('Location: /admin/'.$site->arg(1), true, 302);
-            exit;
+            redirect('/admin/'.$site->arg(1));
         }
 
         $this->item = $item;
@@ -182,20 +181,17 @@ abstract class section implements isection
 
         $values = array();
 
-        foreach ($fields as $index => $field) {
-            $list = array();
+        $list = array();
+        foreach ($fields as $index => $field)
+        {
+            $result = $this->filterField($field);
+
+            $fields[$index] = $result['field'];
             
-            if (is_array($field) && function_exists($field[1][0])) { 
-                $result = $field[1][0]($_REQUEST[$field[0]], $field);
-                $val = '';
-                if ($result['result']) {
-                    $val = $result['value'];
-                    $fields[$index] = $fields[$index][0];
-                } else {
-                    array_push($list, $result['message']);
-                }
-            } else {
-                $val = @$_REQUEST[$field];
+            $val = $result['value'];
+
+            if (!$result['result']) {
+                $list[] = $result['message'];
             }
             
             $values[] = $val;
@@ -224,6 +220,8 @@ abstract class section implements isection
     {
         global $mysql, $site, $api;
 
+        $return = array('total' => 0, 'errnum' => 0, 'errmsg' => 0, 'id' => 0);
+
         $pid = isset($api) ? $api->pid : $site->arg(2);
 
         $section = $this->tablename();
@@ -232,10 +230,22 @@ abstract class section implements isection
 
         $values = array();
 
+        $list = array();
+
         $allfields = array_merge($defaultfields, $extrafields);
 
-        foreach ($allfields as $field) {
-            $values[] = $field == 'password' ? md5(@$_REQUEST[$field]) : @$_REQUEST[$field];
+        foreach ($allfields as $index => $field) {
+            $result = $this->filterField($field);
+
+            $allfields[$index] = $result['field'];
+
+            $val = $result['value'];
+
+            if (!$result['result']) {
+                $list[] = $result['message'];
+            }
+
+            $values[] = $val;
         }
 
         foreach ($defaultsafter as $index => $field) {
@@ -244,14 +254,20 @@ abstract class section implements isection
 
         $values[] = $pid;
 
-        $mysql->reset()
-            ->update($section)
-            ->fields(array_merge($allfields, $defaultsafter))
-            ->where(sprintf('%sid = ?', substr($section, 0, 1)))
-            ->values($values)
-            ->exec();
+        if (empty($list)) {
+            $mysql->reset()
+                ->update($section)
+                ->fields(array_merge($allfields, $defaultsafter))
+                ->where(sprintf('%sid = ?', substr($section, 0, 1)))
+                ->values($values)
+                ->exec();
 
-        return array('total' => $mysql->total, 'errnum' => $mysql->errnum, 'id' => $pid);
+            $return = array('total' => $mysql->total, 'errnum' => $mysql->errnum, 'id' => $pid);
+        } else {
+            $return['errmsg'] = $list;
+        }
+
+        return $return;
     }
 
     public function remove()
@@ -275,6 +291,22 @@ abstract class section implements isection
         $class = str_replace('GSD\\', '', get_class($this));
 
         return substr($class, 0, 8) === 'Extended' ? substr($class, 17) : $class;
+    }
+
+    private function filterField($field)
+    {
+        $response = array('value' => null, 'result' => 1, 'field' => '');
+
+        if (is_array($field) && function_exists($field[1][0])) {
+            $value = $field == 'password' ? md5(@$_REQUEST[$field[0]]) : @$_REQUEST[$field[0]];
+            $response = $field[1][0]($value, $field);
+        } else {
+            $value = $field == 'password' ? md5(@$_REQUEST[$field]) : @$_REQUEST[$field];
+            $response['value'] = $value;
+            $response['field'] = $field;
+        }
+
+        return $response;
     }
 
     protected function extrafields()

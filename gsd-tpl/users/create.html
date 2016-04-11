@@ -4,13 +4,8 @@
     <form method="post">
         <div class="colA"><label>{LANG_NAME}</label> <input name="name" type="text" required /></div>
         <div class="colA"><label>{LANG_EMAIL}</label> <input name="email" data-rule-email="true" required /></div>
-        <div class="colA"><label>{LANG_PERMISSION}</label>
-            <select name="level" required>
-                <option disabled="disabled">{LANG_CHOOSE}</option>
-                <option value="admin">{LANG_ADMIN}</option>
-                <option value="editor">{LANG_EDITOR}</option>
-                <option value="user">{LANG_USER}</option>
-            </select>
+        <div class="colA">
+            {PERMISSION}
         </div>
         <div class="colA"><label>{LANG_LANGUAGE}</label>
             <select name="locale">

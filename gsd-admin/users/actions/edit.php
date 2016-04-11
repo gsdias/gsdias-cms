@@ -11,8 +11,7 @@
  */
 if (!$csection->permission) {
     $_SESSION['error'] = lang('LANG_USER_NOPERMISSION');
-    header('Location: /admin/'.$site->arg(1), true, 302);
-    exit;
+    redirect('/admin/'.$site->arg(1));
 }
 
 if (@$_REQUEST['save']) {
@@ -36,7 +35,6 @@ if (@$_REQUEST['save']) {
 
         $_SESSION['message'] = sprintf(lang('LANG_USER_SAVED'), $_REQUEST['name']);
 
-        header('Location: /admin/'.$site->arg(1), true, 302);
-        exit;
+        redirect('/admin/'.$site->arg(1));
     }
 }

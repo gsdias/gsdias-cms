@@ -37,6 +37,6 @@ interface isection
     public function getcurrent($id);
     public function generatefields();
     public function add($defaultfields, $defaultsafter, $defaultvalues);
-    public function edit($defaultfields);
+    public function edit($defaultfields, $defaultsafter, $defaultvalues);
     public function remove();
 }

@@ -14,7 +14,7 @@
         tbody = {},
         generateurl = function () {
             var value = this.value.toLowerCase(),
-                url = $(this).closest('div').next().find('[name="url"]').get(0);
+                url = $(this).closest('div').next().find('[name="url"]').get(0) || {};
 
             if (!_.isUndefined(url.value) && !url.value.length && value.length) {
                 value = value

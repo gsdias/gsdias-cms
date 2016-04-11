@@ -10,8 +10,7 @@
  * @since      File available since Release 1.0
  */
 if (!$csection->permission) {
-    header('Location: /admin/'.$site->arg(1), true, 302);
-    exit;
+    redirect('/admin/'.$site->arg(1));
 }
 
 if (@$_REQUEST['save']) {
@@ -57,7 +56,7 @@ if (@$_REQUEST['save']) {
                 ->where('name like ?')
                 ->values(strtolower($sectionname[1]))
                 ->exec();
-            $mtid = $mysql->singleresult()->mtid;
+            $mtid = $mysql->singleresult();
 
             $mysql->reset()
                 ->select('mtid')
@@ -65,7 +64,7 @@ if (@$_REQUEST['save']) {
                 ->where('name like ?')
                 ->values(strtolower(@$sectionname[2]))
                 ->exec();
-            $smtid = @$mysql->singleresult()->mtid ? $mysql->singleresult()->mtid : null;
+            $smtid = @$mysql->singleresult() ? $mysql->singleresult() : null;
 
             $mysql->reset()
                 ->insert('layoutsectionmoduletypes')
@@ -74,8 +73,8 @@ if (@$_REQUEST['save']) {
                 ->exec();
         }
         $_SESSION['message'] = sprintf(lang('LANG_LAYOUT_CREATED'), $_REQUEST['name']);
-        header('Location: /admin/'.$site->arg(1), true, 302);
-        exit;
+
+        redirect('/admin/'.$site->arg(1));
     } else {
         $tpl->setvar('ERRORS', lang('LANG_LAYOUT_ALREADY_EXISTS'));
         $tpl->setcondition('ERRORS');

@@ -43,6 +43,5 @@ if (@$_REQUEST['save']) {
 
     $_SESSION['message'] = lang('LANG_IMAGE_SAVED');
 
-    header('Location: /admin/images', true, 302);
-    exit;
+    redirect('/admin/'.$site->arg(1));
 }

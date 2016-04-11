@@ -10,8 +10,7 @@
  * @since      File available since Release 1.0
  */
 if (!$csection->permission) {
-    header('Location: /admin/'.$site->arg(1), true, 302);
-    exit;
+    redirect('/admin/'.$site->arg(1));
 }
 
 if (@$_REQUEST['save']) {
@@ -44,8 +43,7 @@ if (@$_REQUEST['save']) {
 
             $file = savefile($_FILES['asset'], ASSETPATH.'images/', null, null, $id);
 
-            header('Location: /admin/'.$site->arg(1), true, 302);
-            exit;
+            redirect('/admin/'.$site->arg(1));
         }
     } else {
         $tpl->setvar('ERRORS', lang('LANG_IMAGE_FORMAT'));

@@ -305,10 +305,11 @@ class pages extends section implements isection
         $fields = array();
 
         foreach ($defaultfields as $field) {
-            if ($currentpage->{$field} != $_REQUEST[$field]) {
+            $fieldname = is_array($field) ? $field[0] : $field;
+            if ($currentpage->{$fieldname} != $_REQUEST[$fieldname]) {
                 $hasChanged = 1;
             }
-            array_push($fields, $currentpage->{$field});
+            array_push($fields, $currentpage->{$fieldname});
         }
 
         $result = parent::edit($defaultfields, $defaultsafter, $defaultvalues);
@@ -335,9 +336,12 @@ class pages extends section implements isection
 
         $result = $mysql->singleline();
 
-        $mysql->statement('UPDATE pages
-        SET beautify = ?
-        WHERE pid = ?;', array(sprintf('%s%s', $result->beautify, $result->url), $pid));
+        $mysql->reset()
+            ->update('pages')
+            ->fields(array('beautify'))
+            ->where('pid = ?')
+            ->values(array(sprintf('%s%s', $result->beautify, $result->url), $pid))
+            ->exec();
     }
 
     private function page_review($defaultfields = array(), $fields = array())
@@ -347,7 +351,17 @@ class pages extends section implements isection
         array_push($fields, $user->id);
         array_push($fields, $site->arg(2));
         $questions = str_repeat(', ? ', sizeof($fields));
-        $mysql->statement(sprintf('INSERT INTO pages_review (%s, creator, pid) values (%s);', implode(',', $defaultfields), substr($questions, 2)), $fields);
+        $mysql->statement(sprintf('INSERT INTO pages_review (%s, creator, pid) values (%s);', implode(',', $this->getfieldlist($defaultfields)), substr($questions, 2)), $fields);
+    }
+
+    private function getfieldlist($defaultfields)
+    {
+        $list = array();
+        foreach($defaultfields as $field) {
+            $list[] = is_array($field) ? $field[0] : $field;
+        }
+
+        return $list;
     }
 
     private function partialtpl($item, $lsname, $pmid, $extra)
