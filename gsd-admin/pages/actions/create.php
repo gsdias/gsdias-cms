@@ -24,14 +24,14 @@ if (@$_REQUEST['save']) {
         array('og_title', array('isString')),
         array('og_image', array('isNumber')),
         array('og_description', array('isString')),
-        array('parent', array('isNumber'))
+        array('parent', array('isNumber')),
+        array('show_menu', array('isCheckbox')),
+        array('require_auth', array('isCheckbox'))
     );
 
     $fields = array(
         'creator',
         'index',
-        'show_menu',
-        'require_auth',
         'created'
     );
 
@@ -45,8 +45,6 @@ if (@$_REQUEST['save']) {
     $values = array(
         $user->id,
         ($index != null ? $index + 1 : 0),
-        @$_REQUEST['menu'] ? 1 : null,
-        @$_REQUEST['auth'] ? 1 : null,
         date('Y-m-d H:i:s', time()),
     );
 

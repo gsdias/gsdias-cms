@@ -41,6 +41,30 @@ function isString($value = '', $field = '')
     return $result;
 }
 
+function isEmail($value = '', $field = '')
+{
+    $result = array(
+        'result' => filter_var($value, FILTER_VALIDATE_EMAIL),
+        'value' => $value,
+        'field' => $field[0],
+        'message' => sprintf('(%s) Needs to be a valid email', $field[0])
+    );
+
+    return $result;
+}
+
+function isCheckbox($value = '', $field = '')
+{
+    $result = array(
+        'result' => 1,
+        'value' => $value ? 1 : null,
+        'field' => $field[0],
+        'message' => ''
+    );
+
+    return $result;
+}
+
 function isNumber($value = 0, $field = '')
 {
     $result = array(

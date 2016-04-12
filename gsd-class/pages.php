@@ -306,7 +306,7 @@ class pages extends section implements isection
 
         foreach ($defaultfields as $field) {
             $fieldname = is_array($field) ? $field[0] : $field;
-            if ($currentpage->{$fieldname} != $_REQUEST[$fieldname]) {
+            if ($currentpage->{$fieldname} != @$_REQUEST[$fieldname]) {
                 $hasChanged = 1;
             }
             array_push($fields, $currentpage->{$fieldname});

@@ -7,6 +7,8 @@
  */
 
 #overlay.is-visible {
-    -webkit-transition: top 2s ease;
+    -webkit-transition: top 2s ease, opacity .3s ease;
     top: 0;
+    opacity: 1;
+    z-index: 20;
 }

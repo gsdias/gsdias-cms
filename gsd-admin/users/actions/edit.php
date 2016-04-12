@@ -15,13 +15,17 @@ if (!$csection->permission) {
 }
 
 if (@$_REQUEST['save']) {
-    $defaultfields = array('email', 'level', 'name', 'locale', 'disabled', 'password');
+    $defaultfields = array(
+        'email',
+        'level',
+        array('name', array('isString')),
+        'locale',
+        array('disabled', array('isCheckbox')),
+        'password');
 
     if (!@$_REQUEST['password']) {
         array_pop($defaultfields);
     }
-
-    $_REQUEST['disabled'] = @$_REQUEST['disabled'] ? @$_REQUEST['disabled'] : null;
 
     $result = $csection->edit($defaultfields);
 
