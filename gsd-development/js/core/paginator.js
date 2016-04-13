@@ -26,11 +26,11 @@
                 filter = $('[name="filter"]').val();
 
             api.call($(e.currentTarget), 'GET', 'pages', { page: page[1], type: tbody.type, search: search, filter: filter }, function (response) {
-                var template = $('#' + tbody.type + 'ExtendedBlock').length ? $('#' + tbody.type + 'ExtendedBlock') : $('#' + tbody.type + 'Block');
+                var template = _.template($('#' + tbody.type + 'ExtendedBlock').length ? $('#' + tbody.type + 'ExtendedBlock') : $('#' + tbody.type + 'Block').html());
                 tbody.el.empty();
 
                 _.each(response.data.list, function (item) {
-                    tbody.el.append(_.template(template.html(), item));
+                    tbody.el.append(template(item));
                 });
 
                 $(classPaginator).replaceWith(response.data.paginator);
