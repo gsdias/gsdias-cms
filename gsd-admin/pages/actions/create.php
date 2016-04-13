@@ -15,9 +15,9 @@ if (!$csection->permission) {
 
 if (@$_REQUEST['save']) {
     $defaultfields = array(
-        array('title', array('isString')),
-        array('url', array('isString')),
-        array('lid', array('isNumber')),
+        array('title', array('isRequired', 'isString')),
+        array('url', array('isRequired', 'isString')),
+        array('lid', array('isRequired', 'isNumber')),
         array('description', array('isString')),
         array('keywords', array('isString')),
         array('tags', array('isString')),

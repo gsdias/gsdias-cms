@@ -21,7 +21,8 @@ if (@$_REQUEST['save']) {
         array('name', array('isString')),
         'locale',
         array('disabled', array('isCheckbox')),
-        'password');
+        array('password', array('isPassword')),
+    );
 
     if (!@$_REQUEST['password']) {
         array_pop($defaultfields);

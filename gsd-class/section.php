@@ -297,11 +297,19 @@ abstract class section implements isection
     {
         $response = array('value' => null, 'result' => 1, 'field' => '');
 
-        if (is_array($field) && function_exists($field[1][0])) {
-            $value = $field == 'password' ? md5(@$_REQUEST[$field[0]]) : @$_REQUEST[$field[0]];
-            $response = $field[1][0]($value, $field);
+        if (is_array($field)) {
+            $value = @$_REQUEST[$field[0]];
+            foreach($field[1] as $filter) {
+                if (function_exists($filter)) {
+                    $response = $filter($value, $field);
+                    $value = $response['value'];
+                    if (!$response['result']) {
+                        break;
+                    }
+                }
+            }
         } else {
-            $value = $field == 'password' ? md5(@$_REQUEST[$field]) : @$_REQUEST[$field];
+            $value = @$_REQUEST[$field];
             $response['value'] = $value;
             $response['field'] = $field;
         }

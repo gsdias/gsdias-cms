@@ -41,6 +41,18 @@ function isString($value = '', $field = '')
     return $result;
 }
 
+function isRequired($value = '', $field = '')
+{
+    $result = array(
+        'result' => trim($value) !== '',
+        'value' => $value,
+        'field' => $field[0],
+        'message' => sprintf('(%s) Is required', $field[0])
+    );
+    
+    return $result;
+}
+
 function isEmail($value = '', $field = '')
 {
     $result = array(
@@ -48,6 +60,18 @@ function isEmail($value = '', $field = '')
         'value' => $value,
         'field' => $field[0],
         'message' => sprintf('(%s) Needs to be a valid email', $field[0])
+    );
+
+    return $result;
+}
+
+function isPassword($value = '', $field = '')
+{
+    $result = array(
+        'result' => 1,
+        'value' => md5($value),
+        'field' => $field[0],
+        'message' => ''
     );
 
     return $result;
