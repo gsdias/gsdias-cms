@@ -47,6 +47,11 @@ class image
         $this->args['height'] = $this->args['height'] ? sprintf(' height="%s"', $this->args['height']) : '';
     }
 
+    public function getsrc()
+    {
+        return $this->args['src'];
+    }
+
     public function __toString()
     {
         $class = $this->args['class'] ? sprintf(' class="%s"', $this->args['class']) : '';

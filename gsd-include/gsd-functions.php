@@ -29,37 +29,66 @@ function escapeText($value = '', $encoding = 'UTF-8')
     return htmlspecialchars($value,ENT_QUOTES | ENT_HTML401, $encoding);
 }
 
-function isString($value = '', $field = '')
+function isString($value = '', $field = '', $label = '')
 {
+    $label = $label ? $label : lang('LANG_'.strtoupper($field[0]));
     $result = array(
         'result' => is_string($value) && !is_numeric($value),
         'value' => escapeText($value),
         'field' => $field[0],
-        'message' => sprintf('(%s) Invalid type. Needs to be a string', $field[0])
+        'message' => sprintf('(%s) Invalid type. Needs to be a string', $label)
     );
     
     return $result;
 }
 
-function isRequired($value = '', $field = '')
+function isRequired($value = '', $field = '', $label = '')
 {
+    $label = $label ? $label : lang('LANG_'.strtoupper($field[0]));
     $result = array(
         'result' => trim($value) !== '',
         'value' => $value,
         'field' => $field[0],
-        'message' => sprintf('(%s) Is required', $field[0])
+        'message' => sprintf('(%s) Is required', $label)
     );
     
     return $result;
 }
 
-function isEmail($value = '', $field = '')
+function isEmail($value = '', $field = '', $label = '')
 {
+    $label = $label ? $label : lang('LANG_'.strtoupper($field[0]));
     $result = array(
-        'result' => filter_var($value, FILTER_VALIDATE_EMAIL),
+        'result' => !$value || filter_var($value, FILTER_VALIDATE_EMAIL),
         'value' => $value,
         'field' => $field[0],
-        'message' => sprintf('(%s) Needs to be a valid email', $field[0])
+        'message' => sprintf('(%s) Needs to be a valid email', $label)
+    );
+
+    return $result;
+}
+
+function isUrl($value = '', $field = '', $label = '')
+{
+    $label = $label ? $label : lang('LANG_'.strtoupper($field[0]));
+    $result = array(
+        'result' => !$value || filter_var($value, FILTER_VALIDATE_URL),
+        'value' => $value,
+        'field' => $field[0],
+        'message' => sprintf('(%s) Needs to be a valid url', $label)
+    );
+
+    return $result;
+}
+
+function isNumber($value = 0, $field = '', $label = '')
+{
+    $label = $label ? $label : lang('LANG_'.strtoupper($field[0]));
+    $result = array(
+        'result' => is_numeric($value),
+        'value' => $value,
+        'field' => $field[0],
+        'message' => sprintf('(%s) Invalid type. Needs to be a number', $label)
     );
 
     return $result;
@@ -86,18 +115,6 @@ function isCheckbox($value = '', $field = '')
         'message' => ''
     );
 
-    return $result;
-}
-
-function isNumber($value = 0, $field = '')
-{
-    $result = array(
-        'result' => is_numeric($value),
-        'value' => $value,
-        'field' => $field[0],
-        'message' => sprintf('(%s) Invalid type. Needs to be a number', $field[0])
-    );
-    
     return $result;
 }
 

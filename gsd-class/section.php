@@ -96,6 +96,12 @@ abstract class section implements isection
 
             foreach ($sectionextrafields['list'] as $key => $extrafield) {
                 $extraclass = '';
+                $label = @$extrafield[2];
+
+                if (is_array($extrafield)) {
+                    $label = $extrafield[2];
+                    $extrafield = $extrafield[0];
+                }
 
                 switch ($sectionextrafields['types'][$key]) {
                     case 'image':
@@ -108,7 +114,7 @@ abstract class section implements isection
 
                     $partial = new tpl();
                     $partial->setvars(array(
-                        'LABEL' => $sectionextrafields['labels'][$key],
+                        'LABEL' => $label,
                         'NAME' => $extrafield,
                         'IMAGE' => $image,
                         'VALUE' => @$item->{$extrafield} ? @$item->{$extrafield} : 0,
@@ -124,7 +130,7 @@ abstract class section implements isection
                         'id' => $extrafield,
                         'name' => $extrafield,
                         'list' => $sectionextrafields['values'][$key],
-                        'label' => $sectionextrafields['labels'][$key],
+                        'label' => $label,
                         'selected' => @$item->{$extrafield},
                     ));
                     break;
@@ -133,7 +139,7 @@ abstract class section implements isection
                         'id' => $extrafield,
                         'name' => $extrafield,
                         'value' => @$item->{$extrafield},
-                        'label' => $sectionextrafields['labels'][$key],
+                        'label' => $label,
                         'type' => 'checkbox'
                     ));
                     $extraclass = 'checkbox';
@@ -143,7 +149,7 @@ abstract class section implements isection
                         'id' => $extrafield,
                         'name' => $extrafield,
                         'value' => @$item->{$extrafield},
-                        'label' => $sectionextrafields['labels'][$key]
+                        'label' => $label
                     ));
                     break;
                     default:
@@ -151,7 +157,7 @@ abstract class section implements isection
                         'id' => $extrafield,
                         'name' => $extrafield,
                         'value' => @$item->{$extrafield},
-                        'label' => $sectionextrafields['labels'][$key],
+                        'label' => $label,
                     ));
                     break;
                 }
@@ -301,7 +307,7 @@ abstract class section implements isection
             $value = @$_REQUEST[$field[0]];
             foreach($field[1] as $filter) {
                 if (function_exists($filter)) {
-                    $response = $filter($value, $field);
+                    $response = $filter($value, $field, @$field[2]);
                     $value = $response['value'];
                     if (!$response['result']) {
                         break;
