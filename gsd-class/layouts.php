@@ -17,16 +17,16 @@ class layouts extends section implements isection
     {
         global $mysql, $tpl;
 
-        $_fields = 'layouts.*, u.name AS creator_name, u.uid AS creator_id';
+        $_fields = 'l.name, l.created, u.name AS creator_name, u.uid AS creator_id';
         $fields = empty($options['fields']) ? array() : $options['fields'];
 
         $mysql->reset()
-            ->from('layouts')
+            ->from('layouts AS l')
             ->join('users AS u', 'LEFT')
-            ->on('layouts.creator = u.uid');
+            ->on('l.creator = u.uid');
 
         if ($options['search']) {
-            $mysql->where(sprintf('layouts.name like "%%%s%%"', $options['search']));
+            $mysql->where(sprintf('l.name like "%%%s%%"', $options['search']));
         }
 
         $mysql->order('lid');
@@ -66,5 +66,14 @@ class layouts extends section implements isection
         $result = parent::getcurrent($mysql->singleline());
 
         return $result['item'];
+    }
+
+    public function add($fields = array())
+    {
+        global $user;
+
+        $_REQUEST['creator'] = $user->id;
+
+        return parent::add($fields);
     }
 }

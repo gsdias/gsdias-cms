@@ -15,6 +15,7 @@ abstract class section implements isection
 {
     public $item = array();
     public $permission = '';
+    public $result = array();
 
     public function __construct($permission)
     {
@@ -47,6 +48,7 @@ abstract class section implements isection
             }
 
             $created = explode(' ', @$line->created);
+
             $item['CREATED'] = timeago(dateDif(@$created[0], date('Y-m-d', time())), @$created[1]);
             $item['ISHIDDEN'] = $index === $first || $index === $last ? ' class="is-hidden"' : '';
 
@@ -173,7 +175,7 @@ abstract class section implements isection
         return 0;
     }
 
-    public function add($defaultfields, $defaultsafter = array(), $defaultvalues = array())
+    public function add($defaultfields)
     {
         global $mysql;
         
@@ -203,10 +205,6 @@ abstract class section implements isection
             $values[] = $val;
         }
 
-        $fields = array_merge($fields, $defaultsafter);
-
-        $values = array_merge($values, $defaultvalues);
-
         if (empty($list)) {
             $mysql->reset()
                 ->insert($section)
@@ -219,10 +217,12 @@ abstract class section implements isection
             $return['errmsg'] = $list;
         }
 
+        $this->result = $return;
+
         return $return;
     }
 
-    public function edit($defaultfields, $defaultsafter = array(), $defaultvalues = array())
+    public function edit($defaultfields)
     {
         global $mysql, $site, $api;
 
@@ -254,24 +254,22 @@ abstract class section implements isection
             $values[] = $val;
         }
 
-        foreach ($defaultsafter as $index => $field) {
-            $values[] = $field == 'password' ? md5($_REQUEST[$defaultvalues[$index]]) : $defaultvalues[$index];
-        }
-
         $values[] = $pid;
 
         if (empty($list)) {
             $mysql->reset()
                 ->update($section)
-                ->fields(array_merge($allfields, $defaultsafter))
+                ->fields($allfields)
                 ->where(sprintf('%sid = ?', substr($section, 0, 1)))
                 ->values($values)
                 ->exec();
 
-            $return = array('total' => $mysql->total, 'errnum' => $mysql->errnum, 'id' => $pid);
+            $return = array('total' => $mysql->total, 'errnum' => $mysql->errnum, 'errmsg' => array($mysql->errmsg), 'id' => $pid);
         } else {
             $return['errmsg'] = $list;
         }
+
+        $this->result = $return;
 
         return $return;
     }
@@ -332,5 +330,28 @@ abstract class section implements isection
         $fields = function_exists($_fields) ? $_fields() : array('list' => array());
 
         return is_array($fields['list']) ? $fields['list'] : array();
+    }
+
+    public function showErrors($msg)
+    {
+        global $tpl;
+
+        $hasErrors = 0;
+
+        if (is_array($this->result['errmsg'])) {
+            foreach($this->result['errmsg'] as $msg) {
+                if (!empty($msg)) {
+                    $tpl->setvar('ERRORS', $msg.'<br>');
+                    $hasErrors = 1;
+                }
+            }
+        } else if (!empty($this->result['errmsg'])) {
+            $tpl->setvar('ERRORS', $msg);
+            $hasErrors = 1;
+        }
+
+        $tpl->setcondition('ERRORS', $hasErrors);
+
+        return $hasErrors;
     }
 }

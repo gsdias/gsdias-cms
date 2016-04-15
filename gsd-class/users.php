@@ -93,36 +93,52 @@ class users extends section implements isection
 
         return $result['item'];
     }
-
-    public function add($defaultfields, $defaultsafter = array(), $defaultvalues = array(), $emailparams = array())
+    public function edit($fields)
     {
-        global $site, $config;
-
-        $password = $_REQUEST['password'];
-        $_REQUEST['password'] = md5($_REQUEST['password']);
-        $result = parent::add($defaultfields, $defaultsafter, $defaultvalues);
-
-        $email = new email();
-
-        $email->setto(@$emailparams['email'] ? $emailparams['email'] : $_REQUEST['email']);
-        $email->setfrom($site->email);
-        $email->setreplyto($site->email);
-        $email->setsubject(lang('LANG_REGISTER_SUBJECT'));
-        $email->setvar('sitename', $site->name);
-        $email->setvar('siteurl', $config['url']);
-        $email->setvar('password', $password);
-
-        if (sizeof(@$emailparams['fields'])) {
-            foreach ($emailparams['fields'] as $key => $value) {
-                $email->setvar(strtolower($key), $value);
+        foreach($fields as $index => $field) {
+            if (is_array($field)) {
+                if(in_array('isPassword', $field[1]) && $_REQUEST[$field[0]] === '') {
+                    unset($fields[$index]);
+                }
             }
         }
+        return parent::edit($fields);
+    }
 
-        $template = is_file(CLIENTTPLPATH.'_emails/register'.TPLEXT) ? CLIENTTPLPATH.'_emails/register'.TPLEXT : TPLPATH.'_emails/register'.TPLEXT;
+    public function add($fields, $emailparams = array())
+    {
+        global $site, $config, $user;
 
-        $email->settemplate($template);
-        $email->sendmail();
+        $password = substr(str_shuffle(sha1(rand().time().'gsdias-cms')), 2, 10);
 
+        $_REQUEST['password'] = $password;
+
+        $_REQUEST['creator'] = $user->id;
+
+        $result = parent::add($fields);
+
+        if (empty($result['errmsg'])) {
+            $email = new email();
+
+            $email->setto(@$emailparams['email'] ? $emailparams['email'] : $_REQUEST['email']);
+            $email->setfrom($site->email);
+            $email->setreplyto($site->email);
+            $email->setsubject(lang('LANG_REGISTER_SUBJECT'));
+            $email->setvar('sitename', $site->name);
+            $email->setvar('siteurl', $config['url']);
+            $email->setvar('password', $password);
+
+            if (sizeof(@$emailparams['fields'])) {
+                foreach ($emailparams['fields'] as $key => $value) {
+                    $email->setvar(strtolower($key), $value);
+                }
+            }
+
+            $template = is_file(CLIENTTPLPATH.'_emails/register'.TPLEXT) ? CLIENTTPLPATH.'_emails/register'.TPLEXT : TPLPATH.'_emails/register'.TPLEXT;
+
+            $email->settemplate($template);
+            $email->sendmail();
+        }
         return $result;
     }
 }

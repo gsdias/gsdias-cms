@@ -36,7 +36,7 @@ interface isection
     public function getlist($options);
     public function getcurrent($id);
     public function generatefields();
-    public function add($defaultfields, $defaultsafter, $defaultvalues);
-    public function edit($defaultfields, $defaultsafter, $defaultvalues);
+    public function add($fields);
+    public function edit($fields);
     public function remove();
 }

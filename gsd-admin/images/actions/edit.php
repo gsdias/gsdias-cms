@@ -44,4 +44,10 @@ if (@$_REQUEST['save']) {
     $_SESSION['message'] = lang('LANG_IMAGE_SAVED');
 
     redirect('/admin/'.$site->arg(1));
+
+    if (!$csection->showErrors(lang('LANG_IMAGE_ERROR'))) {
+        $_SESSION['message'] = sprintf(lang('LANG_IMAGE_SAVED'), $_REQUEST['name']);
+
+        redirect('/admin/'.$site->arg(1));
+    }
 }

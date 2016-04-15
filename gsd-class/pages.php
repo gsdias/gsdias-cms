@@ -275,11 +275,22 @@ class pages extends section implements isection
         }
     }
 
-    public function add($defaultfields = array(), $defaultsafter = array(), $defaultvalues = array())
+    public function add($fields = array())
     {
-        global $mysql, $site;
+        global $mysql, $site, $user;
 
-        $result = parent::add($defaultfields, $defaultsafter, $defaultvalues);
+        $mysql->reset()
+            ->select('max(`index`) AS max')
+            ->from('pages')
+            ->exec();
+
+        $index = @$mysql->singleresult();
+
+        $_REQUEST['creator'] = $user->id;
+        $_REQUEST['index'] = ($index != null ? $index + 1 : 0);
+        $_REQUEST['created'] = date('Y-m-d H:i:s', time());
+
+        $result = parent::add($fields);
         
         if (empty($result['errmsg'][0])) {
             $this->update_beautify($result['id']);
@@ -288,7 +299,7 @@ class pages extends section implements isection
         return $result;
     }
 
-    public function edit($defaultfields = array(), $defaultsafter = array(), $defaultvalues = array())
+    public function edit($defaultfields = array())
     {
         global $mysql, $site, $api;
 
@@ -312,7 +323,7 @@ class pages extends section implements isection
             array_push($fields, $currentpage->{$fieldname});
         }
 
-        $result = parent::edit($defaultfields, $defaultsafter, $defaultvalues);
+        $result = parent::edit($defaultfields);
 
         $this->update_beautify($pid);
 

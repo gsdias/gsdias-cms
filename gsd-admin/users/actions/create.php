@@ -10,26 +10,23 @@
  * @since      File available since Release 1.0
  */
 if (!$csection->permission) {
+    $_SESSION['error'] = lang('LANG_USER_NOPERMISSION');
     redirect('/admin/'.$site->arg(1));
 }
 
 if (@$_REQUEST['save']) {
-    $defaultfields = array('email', 'password', 'level', 'name', 'locale');
+    $fields = array(
+        array('name', array('isRequired', 'isString')),
+        array('email', array('isRequired', 'isEmail')),
+        array('password', array('isPassword')),
+        array('level', array('isRequired', 'isString')),
+        array('locale', array('isString')),
+        array('creator', array('isNumber')),
+    );
 
-    $fields = array('creator');
+    $result = $csection->add($fields);
 
-    $values = array($user->id);
-
-    $password = substr(str_shuffle(sha1(rand().time().'gsdias-cms')), 2, 10);
-
-    $_REQUEST['password'] = $password;
-
-    $result = $csection->add($defaultfields, $fields, $values);
-
-    if ($result['errnum']) {
-        $tpl->setvar('ERRORS', lang('LANG_USER_ALREADY_EXISTS'));
-        $tpl->setcondition('ERRORS');
-    } else {
+    if (!$csection->showErrors(lang('LANG_USER_ALREADY_EXISTS'))) {
         $_SESSION['message'] = sprintf(lang('LANG_USER_CREATED'), $_REQUEST['name']);
 
         redirect('/admin/'.$site->arg(1));

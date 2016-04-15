@@ -15,30 +15,23 @@ if (!$csection->permission) {
 }
 
 if (@$_REQUEST['save']) {
-    $defaultfields = array(
-        'email',
-        'level',
-        array('name', array('isString')),
-        'locale',
-        array('disabled', array('isCheckbox')),
+    $fields = array(
+        array('name', array('isRequired', 'isString')),
+        array('email', array('isRequired', 'isEmail')),
         array('password', array('isPassword')),
+        array('level', array('isRequired', 'isString')),
+        array('locale', array('isString')),
+        array('disabled', array('isCheckbox')),
     );
 
-    if (!@$_REQUEST['password']) {
-        array_pop($defaultfields);
-    }
+    $result = $csection->edit($fields);
 
-    $result = $csection->edit($defaultfields);
+    if (!$csection->showErrors(lang('LANG_USER_ALREADY_EXISTS'))) {
+        $_SESSION['message'] = sprintf(lang('LANG_USER_SAVED'), $_REQUEST['name']);
 
-    if ($result['errnum'] == 1062) {
-        $tpl->setvar('ERRORS', lang('LANG_USER_ALREADY_EXISTS'));
-        $tpl->setcondition('ERRORS');
-    } else {
         if ($result['id'] == $user->id) {
             $user->locale = $_REQUEST['locale'];
         }
-
-        $_SESSION['message'] = sprintf(lang('LANG_USER_SAVED'), $_REQUEST['name']);
 
         redirect('/admin/'.$site->arg(1));
     }

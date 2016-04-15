@@ -47,7 +47,7 @@ class mySQL implements idatabase
 //                \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
 //                \PDO::ATTR_PERSISTENT => true
             ));
-                $this->conn->exec("SET time_zone = '+00:00';");
+//                $this->conn->exec("SET time_zone = '+00:00';");
             } catch (\PDOException $error) {
 //                                echo $error->getMessage();
 //                echo $error->getCode();

@@ -14,17 +14,18 @@ if (!$csection->permission) {
 }
 
 if (@$_REQUEST['save']) {
-    $defaultfields = array('name', 'ltid', 'file');
-
-    $fields = array('creator');
-
-    $values = array($user->id);
+    $fields = array(
+        array('name', array('isString')),
+        array('ltid', array('isNumber')),
+        'file',
+        array('creator', array('isNumber')),
+    );
 
     $content = file_get_contents(sprintf(CLIENTTPLPATH.'_layouts/%s', $_REQUEST['layout']));
 
     $_REQUEST['file'] = str_replace('.html', '', $_REQUEST['layout']);
 
-    $result = $csection->add($defaultfields, $fields, $values);
+    $result = $csection->add($fields);
 
     $lid = $result['id'];
 
@@ -72,12 +73,12 @@ if (@$_REQUEST['save']) {
                 ->values(array($lsid, $mtid, $smtid, @$sectionname[3] ? $sectionname[3] : 1))
                 ->exec();
         }
+    }
+
+    if (!$csection->showErrors(lang('LANG_LAYOUT_ALREADY_EXISTS'))) {
         $_SESSION['message'] = sprintf(lang('LANG_LAYOUT_CREATED'), $_REQUEST['name']);
 
         redirect('/admin/'.$site->arg(1));
-    } else {
-        $tpl->setvar('ERRORS', lang('LANG_LAYOUT_ALREADY_EXISTS'));
-        $tpl->setcondition('ERRORS');
     }
 }
 

@@ -14,7 +14,7 @@ if (!$csection->permission) {
 }
 
 if (@$_REQUEST['save']) {
-    $defaultfields = array(
+    $fields = array(
         array('title', array('isRequired', 'isString')),
         array('description', array('isString')),
         array('keywords', array('isString')),
@@ -28,7 +28,7 @@ if (@$_REQUEST['save']) {
         array('published', array('isCheckbox'))
     );
 
-    $result = $csection->edit($defaultfields);
+    $result = $csection->edit($fields);
 
     if ($result['total']) {
         $modules = array();

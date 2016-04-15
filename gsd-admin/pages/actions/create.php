@@ -14,41 +14,25 @@ if (!$csection->permission) {
 }
 
 if (@$_REQUEST['save']) {
-    $defaultfields = array(
-        array('title', array('isRequired', 'isString')),
-        array('url', array('isRequired', 'isString')),
-        array('lid', array('isRequired', 'isNumber')),
-        array('description', array('isString')),
-        array('keywords', array('isString')),
-        array('tags', array('isString')),
-        array('og_title', array('isString')),
-        array('og_image', array('isNumber')),
-        array('og_description', array('isString')),
-        array('parent', array('isNumber')),
-        array('show_menu', array('isCheckbox')),
-        array('require_auth', array('isCheckbox'))
-    );
-
     $fields = array(
-        'creator',
-        'index',
-        'created'
+        array('title', array('isRequired', 'isString'), lang('LANG_TITLE')),
+        array('url', array('isRequired', 'isString'), lang('LANG_URL')),
+        array('lid', array('isRequired', 'isNumber'), lang('LANG_LAYOUT')),
+        array('description', array('isString'), lang('LANG_DESCRIPTION')),
+        array('keywords', array('isString'), lang('LANG_KEYWORDS')),
+        array('tags', array('isString'), lang('LANG_TAGS')),
+        array('og_title', array('isString'), lang('LANG_OG_TITLE')),
+        array('og_image', array('isNumber'), lang('LANG_OG_IMAGE')),
+        array('og_description', array('isString'), lang('LANG_OG_DESCRIPTION')),
+        array('parent', array('isNumber'), lang('LANG_PARENT')),
+        array('show_menu', array('isCheckbox'), lang('LANG_SHOW_MENU')),
+        array('require_auth', array('isCheckbox'), lang('LANG_REQUIRE_AUTH')),
+        array('creator', array('isNumber')),
+        array('index', array('isNumber')),
+        array('created', array('isRequired')),
     );
 
-    $mysql->reset()
-        ->select('max(`index`) AS max')
-        ->from('pages')
-        ->exec();
-
-    $index = @$mysql->singleresult();
-
-    $values = array(
-        $user->id,
-        ($index != null ? $index + 1 : 0),
-        date('Y-m-d H:i:s', time()),
-    );
-
-    $result = $csection->add($defaultfields, $fields, $values);
+    $result = $csection->add($fields);
 
     if ($result['total']) {
         
@@ -101,9 +85,10 @@ if (@$_REQUEST['save']) {
                 array_unshift($result['errmsg'], lang('LANG_PAGE_ALREADY_EXISTS'));
             }
 
-            while (!empty($result['errmsg'])) {
-                $tpl->setvar('ERRORS', array_pop($result['errmsg']));
+            foreach($result['errmsg'] as $msg) {
+                $tpl->setvar('ERRORS', $msg.'<br>');
             }
+
             $tpl->setcondition('ERRORS');
         }
     }
