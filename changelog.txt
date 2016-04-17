@@ -4,6 +4,7 @@ Permissions can be extended now
 API uses permission to test access
 Added more filters to list pages
 Fix issue with reorder pages
+Added field type check to better control data insert
 
 version 1.4
 
