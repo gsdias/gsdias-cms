@@ -2,7 +2,7 @@
 commonDomain = document.domain;
 window.GSD = {{}};
 {SCRIPT}
-<!-- IF GA -->
+<!-- IF GA AND !GTM -->
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', GSD.ga]);
     _gaq.push(['_trackPageview']);
@@ -14,7 +14,7 @@ window.GSD = {{}};
         var s = document.getElementsByTagName('script')[0];
         s.parentNode.insertBefore(ga, s);
     })();
-<!-- ENDIF GA -->
+<!-- ENDIF GA AND !GTM -->
 <!-- IF FB -->
     window.fbAsyncInit = function() {
         FB.init({

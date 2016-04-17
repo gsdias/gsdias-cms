@@ -24,7 +24,21 @@ if (@$_REQUEST['save']) {
         $tpl->setcondition('ERRORS');
     } else {
         if ($_REQUEST['prid']) {
-            $defaultfields = array('pid', 'title', 'description', 'tags', 'keywords', 'og_title', 'og_description', 'og_image', 'show_menu', 'require_auth', 'published', 'creator', 'modified');
+            $defaultfields = array(
+                'pid',
+                'title',
+                'description',
+                'tags',
+                'keywords',
+                'og_title',
+                'og_description',
+                'og_image',
+                'show_menu',
+                'require_auth',
+                'published',
+                'creator',
+                'modified'
+            );
 
             $mysql->reset()
                 ->select()

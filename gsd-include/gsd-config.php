@@ -58,7 +58,7 @@ $tpl->setVar('SCRIPT', sprintf('GSD.locale = "%s";GSD.ga = "%s";GSD.fb = "%s";GS
 $tpl->setVar('GTM', $site->gtm);
 $tpl->setcondition('GTM', !!$site->gtm);
 $tpl->setcondition('FB', !!$site->fb);
-$tpl->setcondition('GA', !!$site->ga);
+$tpl->setcondition('GA', !!$site->ga && !$site->gtm);
 $tpl->setVar('CDN', RESOURCESURL);
 $tpl->setVar('CLIENT_RESOURCES', @$config['client_resources']);
 $tpl->setVar('CLIENT_PATH', @$config['client_path']);
@@ -88,6 +88,6 @@ if (!$site->isFrontend) {
 
 $frontendindex = is_file(ROOTPATH.'gsd-frontend/index.php') ? ROOTPATH.'gsd-frontend/index.php' : '';
 
-if ($site->arg(0) != 'admin' && is_file(CLIENTPATH.'config'.PHPEXT) && IS_INSTALLED) {
+if (IS_INSTALLED && $site->arg(0) != 'admin' && is_file(CLIENTPATH.'config'.PHPEXT)) {
     include_once CLIENTPATH.'config'.PHPEXT;
 }
