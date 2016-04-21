@@ -30,6 +30,14 @@ if (@$_REQUEST['login'] && !$user->isLogged()) {
         $tpl->setvar('FORM_MESSAGES', lang('CHECK_DATA'));
     }
 }
+if (@$_REQUEST['reset'] && !$user->isLogged()) {
+    if (filter_var($_REQUEST['email'], FILTER_VALIDATE_EMAIL)) {
+        $logged = $user->resetpassword($_REQUEST['email']);
+        $tpl->setvar('FORM_MESSAGES', 'Password was sent to the email');
+    } else {
+        $tpl->setvar('FORM_MESSAGES', lang('CHECK_DATA'));
+    }
+}
 
 define('IS_LOGGED', $user->isLogged());
 
@@ -62,6 +70,14 @@ if (IS_LOGGED) {
 }
 
 if ($uri == '/admin/auth' || $uri == '/admin/auth/') {
+    if (IS_LOGGED) {
+        header('location: /admin');
+        exit;
+    }
+    $site->startpoint = 'admin/login';
+}
+
+if ($uri == '/admin/reset') {
     if (IS_LOGGED) {
         header('location: /admin');
         exit;

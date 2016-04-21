@@ -105,6 +105,39 @@ class user implements iuser
         header('location: /');
         exit;
     }
+    
+    public function resetpassword($field)
+    {
+        global $mysql, $site, $config;
+
+        $newpassword = substr(str_shuffle(sha1(rand().time().'gsdias-cms')), 2, 10);
+        
+        $mysql->reset()
+                ->update('users')
+                ->fields('password')
+                ->where('email = ?')
+                ->values(array(md5($newpassword), $field))
+                ->exec();
+
+        $result = $mysql->total === 1;
+
+        if ($result) {
+            $email = new email();
+
+            $email->setto($field);
+            $email->setfrom($site->email);
+            $email->setreplyto($site->email);
+            $email->setsubject(lang('LANG_RECOVER_SUBJECT'));
+            $email->setvar('sitename', $site->name);
+            $email->setvar('siteurl', $config['url']);
+            $email->setvar('password', $newpassword);
+
+            $template = is_file(CLIENTTPLPATH.'_emails/recover'.TPLEXT) ? CLIENTTPLPATH.'_emails/recover'.TPLEXT : TPLPATH.'_emails/recover'.TPLEXT;
+
+            $email->settemplate($template);
+            $email->sendmail();
+        }
+    }
 
     public function getuser($uid)
     {

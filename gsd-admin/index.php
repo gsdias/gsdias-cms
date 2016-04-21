@@ -10,7 +10,7 @@
  * @since      File available since Release 1.0
  */
 if (!IS_LOGGED) {
-    if ($site->uri != '/admin/auth' && $site->uri != '/admin/auth/') {
+    if ($site->uri != '/admin/auth' && $site->uri != '/admin/auth/' && $site->uri != '/admin/reset') {
         header('location: /admin/auth?redirect='.urlencode($site->uri));
         exit;
     } else {
