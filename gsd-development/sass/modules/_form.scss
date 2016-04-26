@@ -160,3 +160,11 @@ select {
         margin-top: 5px;
     }
 }
+
+.gsd-password {
+    cursor: pointer;
+    color: $gsd-color;
+    position: absolute;
+    left: 5px;
+    top: 35px;
+}

@@ -19,6 +19,9 @@ abstract class section implements isection
 
     public function __construct($permission)
     {
+        global $tpl;
+
+//        $tpl->setvar('SECTION_TYPE', lang('LANG_LAYOUT', 'LOWER'));
         $this->permission = $permission;
         return 0;
     }
@@ -85,42 +88,46 @@ abstract class section implements isection
         return array('item' => $item, 'fields' => $fields);
     }
 
-    public function generatefields()
+    public function generatefields($update = false)
     {
         global $tpl, $mysql;
 
         $func = $this->tablename().'fields';
         $item = $this->item;
 
-        $sectionextrafields = function_exists($func) ? $func() : array();
+        $sectionextrafields = $this->fields($update);
         if (sizeof($sectionextrafields)) {
             $extrafields = array();
 
-            foreach ($sectionextrafields['list'] as $key => $extrafield) {
-                $extraclass = '';
-                $label = @$extrafield[2];
-
-                if (is_array($extrafield)) {
-                    $label = $extrafield[2];
-                    $extrafield = $extrafield[0];
+            foreach ($sectionextrafields as $key => $extrafield) {
+                if ($extrafield->getNotRender()) {
+                    continue;
                 }
+                $extraclass = '';
+                $label = $extrafield->getLabel();
+                $name = $extrafield->getName();
+                $value = $extrafield->getValue();
+                $values = $extrafield->getValues();
+                $isRequired = $extrafield->getRequired();
+                $noValue = $extrafield->getNoValue();
+                $type = $extrafield->getType();
 
-                switch ($sectionextrafields['types'][$key]) {
+                switch ($type) {
                     case 'image':
                     $image = new image(array(
-                        'iid' => @$item->{$extrafield},
+                        'iid' => @$item->{$name},
                         'height' => '100',
                         'width' => 'auto',
-                        'class' => sprintf('preview %s', @$item->{$extrafield} ? '' : 'is-hidden'),
+                        'class' => sprintf('preview %s', @$item->{$name} ? '' : 'is-hidden'),
                     ));
 
                     $partial = new tpl();
                     $partial->setvars(array(
                         'LABEL' => $label,
-                        'NAME' => $extrafield,
+                        'NAME' => $name,
                         'IMAGE' => $image,
-                        'VALUE' => @$item->{$extrafield} ? @$item->{$extrafield} : 0,
-                        'EMPTY' => @$item->{$extrafield} ? 'is-hidden' : '',
+                        'VALUE' => @$item->{$name} ? @$item->{$name} : 0,
+                        'EMPTY' => @$item->{$name} ? 'is-hidden' : '',
                     ));
                     $partial->setfile('_image');
 
@@ -129,37 +136,42 @@ abstract class section implements isection
                     break;
                     case 'select':
                     $field = new select(array(
-                        'id' => $extrafield,
-                        'name' => $extrafield,
-                        'list' => $sectionextrafields['values'][$key],
+                        'id' => $name,
+                        'name' => $name,
+                        'list' => $values,
                         'label' => $label,
-                        'selected' => @$item->{$extrafield},
+                        'required' => $isRequired,
+                        'selected' => @$item->{$name},
                     ));
                     break;
                     case 'checkbox':
                     $field = (string) new input(array(
-                        'id' => $extrafield,
-                        'name' => $extrafield,
-                        'value' => @$item->{$extrafield},
+                        'id' => $name,
+                        'name' => $name,
+                        'value' => @$item->{$name},
                         'label' => $label,
+                        'selected' => !!@$item->{$name},
                         'type' => 'checkbox'
                     ));
                     $extraclass = 'checkbox';
                     break;
                     case 'textarea':
                     $field = (string) new textarea(array(
-                        'id' => $extrafield,
-                        'name' => $extrafield,
-                        'value' => @$item->{$extrafield},
+                        'id' => $name,
+                        'name' => $name,
+                        'value' => @$item->{$name},
                         'label' => $label
                     ));
                     break;
                     default:
+                    
                     $field = (string) new input(array(
-                        'id' => $extrafield,
-                        'name' => $extrafield,
-                        'value' => @$item->{$extrafield},
+                        'id' => $name,
+                        'name' => $name,
+                        'required' => $isRequired,
+                        'value' => $update ? ($noValue ? '' : @$item->{$name}) : $value,
                         'label' => $label,
+                        'type' => $type,
                     ));
                     break;
                 }
@@ -175,25 +187,31 @@ abstract class section implements isection
         return 0;
     }
 
-    public function add($defaultfields)
+    public function add()
     {
-        global $mysql;
+        global $mysql, $user;
         
         $return = array('total' => 0, 'errnum' => 0, 'errmsg' => 0, 'id' => 0);
 
         $section = $this->tablename();
 
-        $extrafields = $this->extrafields();
-
-        $fields = array_merge($defaultfields, $extrafields);
+        $fields = $this->fields();
 
         $values = array();
+        
+        $_REQUEST['creator'] = $user->id;
+        $_REQUEST['created'] = date('Y-m-d H:i:s', time());
 
         $list = array();
         foreach ($fields as $index => $field)
         {
             $result = $this->filterField($field);
 
+            if ($result['field'] === null) {
+                unset($fields[$index]);
+                continue;
+            }
+            
             $fields[$index] = $result['field'];
             
             $val = $result['value'];
@@ -222,7 +240,7 @@ abstract class section implements isection
         return $return;
     }
 
-    public function edit($defaultfields)
+    public function edit()
     {
         global $mysql, $site, $api;
 
@@ -232,17 +250,22 @@ abstract class section implements isection
 
         $section = $this->tablename();
 
-        $extrafields = $this->extrafields();
+        $fields = $this->fields(true);
 
         $values = array();
 
         $list = array();
 
-        $allfields = array_merge($defaultfields, $extrafields);
+        $allfields = $fields;
 
         foreach ($allfields as $index => $field) {
             $result = $this->filterField($field);
 
+            if ($result['field'] === null) {
+                unset($allfields[$index]);
+                continue;
+            }
+            
             $allfields[$index] = $result['field'];
 
             $val = $result['value'];
@@ -301,11 +324,11 @@ abstract class section implements isection
     {
         $response = array('value' => null, 'result' => 1, 'field' => '');
 
-        if (is_array($field)) {
-            $value = @$_REQUEST[$field[0]];
-            foreach($field[1] as $filter) {
+        if ($field instanceof field) {
+            $value = @$_REQUEST[$field->getName()];
+            foreach($field->getValidator() as $filter) {
                 if (function_exists($filter)) {
-                    $response = $filter($value, $field, @$field[2]);
+                    $response = $filter($value, $field, $field->getLabel());
                     $value = $response['value'];
                     if (!$response['result']) {
                         break;
@@ -319,17 +342,6 @@ abstract class section implements isection
         }
 
         return $response;
-    }
-
-    protected function extrafields()
-    {
-        $section = $this->tablename();
-
-        $_fields = $section.'fields';
-
-        $fields = function_exists($_fields) ? $_fields() : array('list' => array());
-
-        return is_array($fields['list']) ? $fields['list'] : array();
     }
 
     public function showErrors($msg)
@@ -353,5 +365,10 @@ abstract class section implements isection
         $tpl->setcondition('ERRORS', $hasErrors);
 
         return $hasErrors;
+    }
+    
+    protected function fields($update = false)
+    {
+        return array();
     }
 }

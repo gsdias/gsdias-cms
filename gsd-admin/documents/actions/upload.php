@@ -26,12 +26,6 @@ if (@$_REQUEST['save']) {
         'video/mp4',
     );
 
-    $defaultfields = array('name', 'description', 'extension', 'size');
-
-    $fields = array('creator');
-
-    $values = array($user->id);
-
     $finfo = new finfo(FILEINFO_MIME);
 
     $type = $finfo->file($_FILES['asset']['tmp_name']);
@@ -45,12 +39,13 @@ if (@$_REQUEST['save']) {
     $_REQUEST['size'] = round(filesize($_FILES['asset']['tmp_name']) / 1000, 0).'KB';
 
     if ($valid) {
-        $result = $csection->add($defaultfields, $fields, $values);
+        $result = $csection->add();
 
-        if ($mysql->total) {
+        if (!$csection->showErrors(lang('LANG_DOCUMENT_ERROR'))) {
             $id = $mysql->lastInserted();
 
             $file = savefile($_FILES['asset'], ASSETPATH.'documents/', null, null, $id);
+            $_SESSION['message'] = sprintf(lang('LANG_DOCUMENT_UPLOADED'), $_REQUEST['name']);
 
             redirect('/admin/'.$site->arg(1));
         }

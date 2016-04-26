@@ -10,26 +10,28 @@
  * @since      File available since Release 1.0
  */
 if (@$_REQUEST['save']) {
-    $defaultfields = array('name', 'description', 'tags');
 
+    $mysql->reset()
+        ->select('extension, width, height, size')
+        ->from('images')
+        ->where('iid = ?')
+        ->values($site->arg(2))
+        ->exec();
+
+    $image = $mysql->singleline();
+
+    $_REQUEST['extension'] = $image->extension;
+    $_REQUEST['width'] = $image->width;
+    $_REQUEST['height'] = $image->height;
+    $_REQUEST['size'] = $image->size;
+    
     if ($_FILES['asset']['error'] == 0) {
-        $mysql->reset()
-            ->select('extension')
-            ->from('images')
-            ->where('iid = ?')
-            ->values($site->arg(2))
-            ->exec();
-
-        $image = $mysql->singleline();
-
         removefile(ASSETPATH.'images/'.$site->arg(2).'.'.$image->extension);
 
         $name = explode('.', $_FILES['asset']['name']);
         $extension = end($name);
 
         $size = getimagesize($_FILES['asset']['tmp_name']);
-
-        array_push($defaultfields, 'extension', 'width', 'height', 'size');
 
         $_REQUEST['extension'] = $extension;
         $_REQUEST['width'] = $size[0];
@@ -39,9 +41,9 @@ if (@$_REQUEST['save']) {
         $file = savefile($_FILES['asset'], sprintf('%simages/', ASSETPATH), null, null, $site->arg(2));
     }
 
-    $result = $csection->edit($defaultfields);
+    $result = $csection->edit();
 
-    $_SESSION['message'] = lang('LANG_IMAGE_SAVED');
+    $_SESSION['message'] = sprintf(lang('LANG_IMAGE_SAVED'), $_REQUEST['name']);
 
     redirect('/admin/'.$site->arg(1));
 

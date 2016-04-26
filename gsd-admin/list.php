@@ -33,6 +33,10 @@ if ($action) {
 
         $site->main = sprintf('%s/%s', $section, $action);
 
+        if ($action === 'edit') {
+            $site->main = '_fields';
+        }
+        
         $file = sprintf('gsd-admin/%s/actions/%s%s', $section, $action, PHPEXT);
         if (is_file($file)) {
             include_once $file;
@@ -47,7 +51,7 @@ if ($action) {
         $csection->getcurrent($id);
 
         if ($action === 'edit') {
-            $csection->generatefields();
+            $csection->generatefields(true);
         }
     }
 } else {
@@ -59,7 +63,11 @@ if ($action) {
         $csection->generatefields();
 
         $site->main = sprintf('%s/%s', $section, $id);
-
+        
+        if ($id === 'create' || $id === 'upload') {
+            $site->main = '_fields';
+        }
+        
         $file = sprintf('gsd-admin/%s/actions/%s%s', $section, $id, PHPEXT);
 
         if (is_file($file)) {

@@ -35,8 +35,8 @@ interface isection
 {
     public function getlist($options);
     public function getcurrent($id);
-    public function generatefields();
-    public function add($fields);
-    public function edit($fields);
+    public function generatefields($initial);
+    public function add();
+    public function edit();
     public function remove();
 }

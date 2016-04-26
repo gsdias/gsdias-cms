@@ -36,7 +36,7 @@ if (!IS_LOGGED) {
     } else {
         $afirmative = lang('LANG_YES');
         $negative = lang('LANG_NO');
-        $file = '';
+        
         $tpl->setvar(strtoupper($site->arg(1)).'_ACTIVE', 'active');
         if ($site->arg(1) == 'settings') {
             $file = 'gsd-admin/settings'.PHPEXT;
@@ -50,7 +50,7 @@ if (!IS_LOGGED) {
                 http_response_code(404);
             }
         }
-        if ($file && is_file($file)) {
+        if (is_file(@$file)) {
             include_once $file;
         }
     }

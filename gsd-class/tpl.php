@@ -471,6 +471,7 @@ class tpl
     public function sendError()
     {
         $this->config['error'] = $this->config['error'];
+        
         if (DEBUG) {
             $this->setarray('DEBUGLIST', $this->config['error']);
         }

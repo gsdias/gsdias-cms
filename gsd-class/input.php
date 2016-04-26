@@ -22,12 +22,17 @@ class input
             'id' => '',
             'label' => '',
             'value' => '',
+            'required' => false,
             'type' => 'text',
             'labelClass' => '',
-            'selected' => '',
+            'selected' => false,
         );
 
         $this->args = array_merge($defaults, $args);
+        
+        if ($this->args['type'] === 'checkbox') {
+            $this->args['value'] = 'on';
+        }
     }
 
     public function __toString()
@@ -36,7 +41,15 @@ class input
 
         $outputLeft = $this->args['type'] === 'checkbox' ? '' : $output;
         $outputRight = $this->args['type'] === 'checkbox' ? $output : '';
+        
+        
+        $name = $this->args['name'] ? sprintf(' name="%s"', $this->args['name']) : '';
+        $type = $this->args['type'];
+        $required = $this->args['required'] ? ' required' : '';
+        $checked = $this->args['selected'] ? ' checked="checked"': '';
+        $isEmail = $this->args['type'] === 'email' ? ' data-rule-email="true"' : '';
+        $isPassword = $this->args['type'] === 'password' ? ' <i class="fa fa-eye gsd-password"></i>' : '';
 
-        return sprintf('%s<input type="%s" id="%s" name="%s" value="%s"%s>%s', $outputLeft, $this->args['type'], $this->args['id'], $this->args['name'], $this->args['value'], $this->args['selected'] ? ' checked="checked"': '', $outputRight);
+        return sprintf('%s<input type="%s" id="%s"%s value="%s"%s%s%s>%s%s', $outputLeft, $type, $this->args['id'], $name, $this->args['value'], $checked, $required, $isEmail, $outputRight, $isPassword);
     }
 }

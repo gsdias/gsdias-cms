@@ -14,18 +14,11 @@ if (!$csection->permission) {
 }
 
 if (@$_REQUEST['save']) {
-    $fields = array(
-        array('name', array('isString')),
-        array('ltid', array('isNumber')),
-        'file',
-        array('creator', array('isNumber')),
-    );
+    $content = file_get_contents(sprintf(CLIENTTPLPATH.'_layouts/%s', $_REQUEST['file']));
 
-    $content = file_get_contents(sprintf(CLIENTTPLPATH.'_layouts/%s', $_REQUEST['layout']));
+    $_REQUEST['file'] = str_replace('.html', '', $_REQUEST['file']);
 
-    $_REQUEST['file'] = str_replace('.html', '', $_REQUEST['layout']);
-
-    $result = $csection->add($fields);
+    $result = $csection->add();
 
     $lid = $result['id'];
 
@@ -81,29 +74,3 @@ if (@$_REQUEST['save']) {
         redirect('/admin/'.$site->arg(1));
     }
 }
-
-$mysql->reset()
-    ->select()
-    ->from('layouttypes')
-    ->exec();
-
-$types = array();
-foreach ($mysql->result() as $item) {
-    $types[$item->ltid] = $item->name;
-}
-
-$types = new GSD\select(array('list' => $types, 'id' => 'LAYOUTTYPE'));
-$types->object();
-
-$templatefiles = scandir(CLIENTTPLPATH.'_layouts');
-
-$templates = array();
-
-foreach ($templatefiles as $file) {
-    if ($file != '.' && $file != '..') {
-        $templates[$file] = $file;
-    }
-}
-
-$templates = new GSD\select(array('list' => $templates, 'id' => 'LAYOUT'));
-$templates->object();

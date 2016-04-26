@@ -13,6 +13,20 @@ namespace GSD;
 
 class pages extends section implements isection
 {
+    public function __construct($permission)
+    {
+        global $tpl, $site;
+        
+        $tpl->setvar('SECTION_TYPE', lang('LANG_PAGE', 'LOWER'));
+        if ($site->arg(3) === 'edit') {
+            $tpl->setvar('SECTION_ACTION', lang('LANG_EDIT'));
+        } else {
+            $tpl->setvar('SECTION_ACTION', lang('LANG_NEW_FEMALE'));
+        }
+        
+        return parent::__construct($permission);
+    }
+    
     public function getlist($options)
     {
         global $mysql, $tpl;
@@ -163,11 +177,11 @@ class pages extends section implements isection
         return $result['item'];
     }
 
-    public function generatefields()
+    public function generatefields($initial = false)
     {
         global $tpl, $mysql;
 
-        $hasextra = parent::generatefields();
+        $hasextra = parent::generatefields($initial);
 
         $extrafields = array();
 
@@ -275,9 +289,19 @@ class pages extends section implements isection
         }
     }
 
-    public function add($fields = array())
+    public function add()
     {
         global $mysql, $site, $user;
+        
+        $path = explode('/', $_REQUEST['url']);
+        
+        if ($path[1] === 'p') {
+            return array(
+                'errnum' => 0,
+                'errmsg' => array('Reserved path for native url'),
+                'total' => 0
+            );
+        }
 
         $mysql->reset()
             ->select('max(`index`) AS max')
@@ -286,11 +310,9 @@ class pages extends section implements isection
 
         $index = @$mysql->singleresult();
 
-        $_REQUEST['creator'] = $user->id;
         $_REQUEST['index'] = ($index != null ? $index + 1 : 0);
-        $_REQUEST['created'] = date('Y-m-d H:i:s', time());
 
-        $result = parent::add($fields);
+        $result = parent::add();
         
         if (empty($result['errmsg'][0])) {
             $this->update_beautify($result['id']);
@@ -298,11 +320,45 @@ class pages extends section implements isection
 
         return $result;
     }
+    
+    private function getLayouts()
+    {
+        global $mysql;
+        
+        $mysql->reset()
+            ->select('lid, name')
+            ->from('layouts')
+            ->exec();
 
-    public function edit($defaultfields = array())
+        $types = array(0 => '{LANG_CHOOSE}');
+        foreach ($mysql->result() as $item) {
+            $types[$item->lid] = $item->name;
+        }
+
+        return $types;
+    }
+    
+    private function getParents()
+    {
+        global $mysql;
+        
+        $mysql->reset()
+            ->select('pid, title')
+            ->from('pages')
+            ->exec();
+
+        $types = array(0 => '{LANG_CHOOSE}');
+        foreach ($mysql->result() as $item) {
+            $types[$item->pid] = $item->title;
+        }
+
+        return $types;
+    }
+
+    public function edit()
     {
         global $mysql, $site, $api;
-
+        
         $pid = isset($api) ? $api->pid : $site->arg(2);
         $mysql->reset()
             ->select()
@@ -315,22 +371,22 @@ class pages extends section implements isection
         $hasChanged = 0;
         $fields = array();
 
-        foreach ($defaultfields as $field) {
-            $fieldname = is_array($field) ? $field[0] : $field;
-            if ($currentpage->{$fieldname} != @$_REQUEST[$fieldname]) {
-                $hasChanged = 1;
-            }
-            array_push($fields, $currentpage->{$fieldname});
-        }
+//        foreach ($defaultfields as $field) {
+//            $fieldname = $field->getName();
+//            if ($currentpage->{$fieldname} != @$_REQUEST[$fieldname]) {
+//                $hasChanged = 1;
+//            }
+//            array_push($fields, $currentpage->{$fieldname});
+//        }
 
-        $result = parent::edit($defaultfields);
+        $result = parent::edit();
 
         $this->update_beautify($pid);
 
         if ($hasChanged) {
-            array_push($fields, $currentpage->modified);
-            array_push($defaultfields, 'modified');
-            $this->page_review($defaultfields, $fields);
+//            array_push($fields, $currentpage->modified);
+//            array_push($defaultfields, 'modified');
+//            $this->page_review($defaultfields, $fields);
         }
 
         return $result;
@@ -387,5 +443,36 @@ class pages extends section implements isection
         ), $extra));
 
         return $partial;
+    }
+    
+    protected function fields($update = false)
+    {
+        $fields = array();
+        
+        $fields[] = new field(array('name' => 'title', 'validator' => array('isRequired', 'isString'), 'label' => lang('LANG_TITLE')));
+        if (!$update) {
+            $fields[] = new field(array('name' => 'url', 'validator' => array('isRequired', 'isString'), 'label' => lang('LANG_URL')));
+            $fields[] = new field(array('name' => 'lid', 'type' => 'select', 'validator' => array('isRequired', 'isNumber'), 'label' => lang('LANG_LAYOUT'), 'values' => $this->getLayouts()));
+        }
+        $fields[] = new field(array('name' => 'description', 'type' => 'textarea', 'validator' => array('isString'), 'label' => lang('LANG_DESCRIPTION')));
+        $fields[] = new field(array('name' => 'keywords', 'validator' => array('isString'), 'label' => lang('LANG_KEYWORDS')));
+        $fields[] = new field(array('name' => 'tags', 'validator' => array('isString'), 'label' => lang('LANG_TAGS')));
+        $fields[] = new field(array('name' => 'og_title', 'validator' => array('isString'), 'label' => lang('LANG_OG_TITLE')));
+        $fields[] = new field(array('name' => 'og_image', 'type' => 'image', 'validator' => array('isNumber'), 'label' => lang('LANG_OG_IMAGE')));
+        $fields[] = new field(array('name' => 'og_description', 'type' => 'textarea', 'validator' => array('isString'), 'label' => lang('LANG_OG_DESCRIPTION')));
+        $fields[] = new field(array('name' => 'parent', 'type' => 'select', 'validator' => array('isNumber'), 'label' => lang('LANG_PARENT'), 'values' => $this->getParents()));
+        $fields[] = new field(array('name' => 'show_menu', 'validator' => array('isCheckbox'), 'label' => lang('LANG_SHOW_MENU'), 'type' => 'checkbox'));
+        $fields[] = new field(array('name' => 'require_auth', 'validator' => array('isCheckbox'), 'label' => lang('LANG_REQUIRE_AUTH'), 'type' => 'checkbox'));
+        
+        if (!$update) {
+            $fields[] = new field(array('name' => 'creator', 'validator' => array('isNumber'), 'notRender' => true));
+            $fields[] = new field(array('name' => 'index', 'validator' => array('isNumber'), 'notRender' => true));
+            $fields[] = new field(array('name' => 'created', 'validator' => array('isRequired'), 'notRender' => true));
+        }
+        if ($update) {
+            $fields[] = new field(array('name' => 'published', 'validator' => array('isCheckbox'), 'label' => lang('LANG_PUBLISHED'), 'type' => 'checkbox'));
+        }
+        
+        return array_merge(parent::fields($update), $fields);
     }
 }

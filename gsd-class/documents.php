@@ -74,4 +74,19 @@ class documents extends section implements isection
 
         return $result['item'];
     }
+    
+    protected function fields($update = false)
+    {
+        $fields = array();
+        
+        $fields[] = new field(array('name' => 'asset', 'label' => lang('LANG_DOCUMENT'), 'type' => 'file', 'validator' => array('isFile')));
+        $fields[] = new field(array('name' => 'name', 'label' => lang('LANG_NAME'), 'validator' => array('isRequired', 'isString')));
+        $fields[] = new field(array('name' => 'description', 'label' => lang('LANG_DESCRIPTION'), 'validator' => array('isString')));
+        $fields[] = new field(array('name' => 'tags', 'label' => lang('LANG_TAGS'), 'validator' => array('isString')));
+        $fields[] = new field(array('name' => 'extension', 'validator' => array('isRequired', 'isString'), 'notRender' => true));
+        $fields[] = new field(array('name' => 'size', 'validator' => array('isRequired', 'isString'), 'notRender' => true));
+        $fields[] = new field(array('name' => 'creator', 'validator' => array('isNumber'), 'notRender' => true));
+        
+        return array_merge(parent::fields($update), $fields);
+    }
 }

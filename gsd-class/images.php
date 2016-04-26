@@ -13,6 +13,20 @@ namespace GSD;
 
 class images extends section implements isection
 {
+    public function __construct($permission)
+    {
+        global $tpl, $site;
+        
+        $tpl->setvar('SECTION_TYPE', lang('LANG_IMAGE', 'LOWER'));
+        if ($site->arg(3) === 'edit') {
+            $tpl->setvar('SECTION_ACTION', lang('LANG_EDIT'));
+        } else {
+            $tpl->setvar('SECTION_ACTION', lang('LANG_NEW_FEMALE'));
+        }
+        
+        return parent::__construct($permission);
+    }
+    
     public function getlist($options)
     {
         global $mysql, $tpl;
@@ -73,5 +87,26 @@ class images extends section implements isection
         $result = parent::getcurrent($mysql->singleline());
 
         return $result['item'];
+    }
+    
+    protected function fields($update = false)
+    {
+        $fields = array();
+        
+        if ($update) {
+            $fields[] = new field(array('name' => 'asset', 'label' => lang('LANG_IMAGE'), 'type' => 'file', 'validator' => array('isFile')));
+        } else {
+            $fields[] = new field(array('name' => 'asset', 'label' => lang('LANG_IMAGE'), 'type' => 'file', 'validator' => array('isFile', 'isRequired')));
+            $fields[] = new field(array('name' => 'creator', 'validator' => array('isNumber'), 'notRender' => true));
+        }
+        $fields[] = new field(array('name' => 'name', 'label' => lang('LANG_NAME'), 'validator' => array('isRequired', 'isString')));
+        $fields[] = new field(array('name' => 'description', 'label' => lang('LANG_DESCRIPTION'), 'validator' => array('isString')));
+        $fields[] = new field(array('name' => 'tags', 'label' => lang('LANG_TAGS'), 'validator' => array('isString')));
+        $fields[] = new field(array('name' => 'extension', 'validator' => array('isRequired', 'isString'), 'notRender' => true));
+        $fields[] = new field(array('name' => 'width', 'validator' => array('isRequired', 'isNumber'), 'notRender' => true));
+        $fields[] = new field(array('name' => 'height', 'validator' => array('isRequired', 'isNumber'), 'notRender' => true));
+        $fields[] = new field(array('name' => 'size', 'validator' => array('isRequired', 'isString'), 'notRender' => true));
+        
+        return array_merge(parent::fields($update), $fields);
     }
 }

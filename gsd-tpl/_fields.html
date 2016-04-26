@@ -1,0 +1,13 @@
+<main>
+    <h1>{SECTION_ACTION} {SECTION_TYPE}</h1>
+    <!-- IF ERRORS --><div class="errors">{ERRORS}</div><!-- ENDIF ERRORS -->
+    <!-- IF MESSAGES --><div class="errors messages">{MESSAGES}</div><!-- ENDIF MESSAGES -->
+    <form method="post" enctype="multipart/form-data">
+        <!-- IF EXTRAFIELDS -->
+        <!-- LOOP FIELD --><div class="colA {FIELD_EXTRACLASS}">{FIELD_FIELD}</div><!-- ENDLOOP FIELD -->
+        <!-- ENDIF EXTRAFIELDS -->
+        <div class="btns">
+            <input type="submit" class="btn blue" value="{LANG_SAVE}" name="save"/>
+        </div>
+    </form>
+</main>

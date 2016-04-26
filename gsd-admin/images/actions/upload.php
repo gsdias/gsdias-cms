@@ -14,12 +14,6 @@ if (!$csection->permission) {
 }
 
 if (@$_REQUEST['save']) {
-    $defaultfields = array('name', 'description', 'tags', 'extension', 'width', 'height', 'size');
-
-    $fields = array('creator');
-
-    $values = array($user->id);
-
     $size = getimagesize($_FILES['asset']['tmp_name']);
 
     $valid = is_array($size);
@@ -33,17 +27,20 @@ if (@$_REQUEST['save']) {
     $_REQUEST['size'] = round(filesize($_FILES['asset']['tmp_name']) / 1000, 0).'KB';
 
     if ($valid) {
-        $result = $csection->add($defaultfields, $fields, $values);
+        $result = $csection->add();
 
-        if ($result['errnum']) {
-            $tpl->setvar('ERRORS', lang('LANG_IMAGE_ERROR'));
-            $tpl->setcondition('ERRORS');
-        } else {
+        if (!$csection->showErrors(lang('LANG_IMAGE_ERROR'))) {
             $id = $mysql->lastInserted();
 
             $file = savefile($_FILES['asset'], ASSETPATH.'images/', null, null, $id);
-
+            $_SESSION['message'] = sprintf(lang('LANG_IMAGE_UPLOADED'), $_REQUEST['name']);
+            
             redirect('/admin/'.$site->arg(1));
+        }
+        
+        if ($result['errnum']) {
+            $tpl->setvar('ERRORS', lang('LANG_IMAGE_ERROR'));
+            $tpl->setcondition('ERRORS');
         }
     } else {
         $tpl->setvar('ERRORS', lang('LANG_IMAGE_FORMAT'));

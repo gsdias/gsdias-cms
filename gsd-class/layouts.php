@@ -13,11 +13,25 @@ namespace GSD;
 
 class layouts extends section implements isection
 {
+    public function __construct($permission)
+    {
+        global $tpl, $site;
+        
+        $tpl->setvar('SECTION_TYPE', lang('LANG_LAYOUT', 'LOWER'));
+        if ($site->arg(3) === 'edit') {
+            $tpl->setvar('SECTION_ACTION', lang('LANG_EDIT'));
+        } else {
+            $tpl->setvar('SECTION_ACTION', lang('LANG_NEW_MALE'));
+        }
+        
+        return parent::__construct($permission);
+    }
+    
     public function getlist($options)
     {
         global $mysql, $tpl;
 
-        $_fields = 'l.name, l.created, u.name AS creator_name, u.uid AS creator_id';
+        $_fields = 'l.lid, l.name, l.created, u.name AS creator_name, u.uid AS creator_id';
         $fields = empty($options['fields']) ? array() : $options['fields'];
 
         $mysql->reset()
@@ -68,12 +82,53 @@ class layouts extends section implements isection
         return $result['item'];
     }
 
-    public function add($fields = array())
+    public function add()
     {
-        global $user;
+        return parent::add();
+    }
+    
+    private function getTypes()
+    {
+        global $mysql;
+        
+        $mysql->reset()
+            ->select()
+            ->from('layouttypes')
+            ->exec();
 
-        $_REQUEST['creator'] = $user->id;
+        $types = array(0 => lang('LANG_CHOOSE'));
+        foreach ($mysql->result() as $item) {
+            $types[$item->ltid] = $item->name;
+        }
 
-        return parent::add($fields);
+        return $types;
+    }
+    
+    private function getFiles()
+    {        
+        $templatefiles = scandir(CLIENTTPLPATH.'_layouts');
+
+        $templates = array(0 => lang('LANG_CHOOSE'));
+
+        foreach ($templatefiles as $file) {
+            if ($file != '.' && $file != '..') {
+                $templates[$file] = $file;
+            }
+        }
+
+        return $templates;
+    }
+    
+    protected function fields($update = false)
+    {
+        
+        $fields = array();
+        
+        $fields[] = new field(array('name' => 'name', 'label' => lang('LANG_NAME'), 'validator' => array('isRequired', 'isString')));
+        $fields[] = new field(array('name' => 'file', 'label' => lang('LANG_TEMPLATE'), 'validator' => array('isRequired', 'isString'), 'type' => 'select', 'values' => $this->getFiles()));
+        $fields[] = new field(array('name' => 'ltid', 'label' => lang('LANG_TYPE'), 'validator' => array('isRequired', 'isNumber'), 'type' => 'select', 'values' => $this->getTypes()));
+        $fields[] = new field(array('name' => 'creator', 'validator' => array('isNumber'), 'notRender' => true));
+        
+        return array_merge(parent::fields($update), $fields);
     }
 }

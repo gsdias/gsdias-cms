@@ -13,6 +13,16 @@ namespace GSD;
 
 class users extends section implements isection
 {
+    public function __construct($permission)
+    {
+        global $tpl;
+        
+        $tpl->setvar('SECTION_TYPE', lang('LANG_USER', 'LOWER'));
+        $tpl->setvar('SECTION_GENDER_NEW', lang('LANG_NEW_MALE'));
+        
+        return parent::__construct($permission);
+    }
+    
     public function getlist($options)
     {
         global $mysql, $tpl;
@@ -93,7 +103,7 @@ class users extends section implements isection
 
         return $result['item'];
     }
-    public function edit($fields)
+    public function edit()
     {
         foreach($fields as $index => $field) {
             if (is_array($field)) {
@@ -102,20 +112,18 @@ class users extends section implements isection
                 }
             }
         }
-        return parent::edit($fields);
+        return parent::edit();
     }
 
-    public function add($fields, $emailparams = array())
+    public function add($emailparams = array())
     {
-        global $site, $config, $user;
+        global $site, $config;
 
         $password = substr(str_shuffle(sha1(rand().time().'gsdias-cms')), 2, 10);
 
         $_REQUEST['password'] = $password;
 
-        $_REQUEST['creator'] = $user->id;
-
-        $result = parent::add($fields);
+        $result = parent::add();
 
         if (empty($result['errmsg'])) {
             $email = new email();
@@ -140,5 +148,29 @@ class users extends section implements isection
             $email->sendmail();
         }
         return $result;
+    }
+    
+    protected function fields($update = false)
+    {
+        global $permissions, $languages;
+        
+        $fields = array();
+        
+        $fields[] = new field(array('name' => 'name', 'label' => lang('LANG_NAME'), 'validator' => array('isRequired', 'isString')));
+        $fields[] = new field(array('name' => 'email', 'label' => lang('LANG_EMAIL'), 'validator' => array('isRequired', 'isEmail'), 'type' => 'email'));
+        $fields[] = new field(array('name' => 'password', 'label' => lang('LANG_PASSWORD'), 'validator' => array('isPassword'), 'noValue' => true, 'type' => 'password'));
+        $fields[] = new field(array('name' => 'level', 'label' => lang('LANG_PERMISSION'), 'validator' => array('isRequired', 'isString'), 'type' => 'select', 'values' => array_merge(array('' => lang('LANG_CHOOSE')), $permissions)));
+        $fields[] = new field(array('name' => 'locale', 'label' => lang('LANG_LANGUAGE'), 'validator' => array('isString'), 'type' => 'select', 'values' => array_merge(array('' => lang('LANG_CHOOSE')), $languages)));
+        if (!$update) {
+            $fields[] = new field(array('name' => 'creator', 'validator' => array('isNumber'), 'notRender' => true));
+        } else {
+            $fields[] = new field(array('name' => 'disabled', 'label' => lang('LANG_DISABLED'), 'validator' => array('isCheckbox'), 'type' => 'checkbox'));
+        }
+        
+        if (!$update || ($update && $_REQUEST['password'] === '')) {
+            unset($fields[2]);
+        }
+        
+        return array_merge(parent::fields($update), $fields);
     }
 }

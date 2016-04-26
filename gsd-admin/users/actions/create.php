@@ -15,16 +15,8 @@ if (!$csection->permission) {
 }
 
 if (@$_REQUEST['save']) {
-    $fields = array(
-        array('name', array('isRequired', 'isString')),
-        array('email', array('isRequired', 'isEmail')),
-        array('password', array('isPassword')),
-        array('level', array('isRequired', 'isString')),
-        array('locale', array('isString')),
-        array('creator', array('isNumber')),
-    );
 
-    $result = $csection->add($fields);
+    $result = $csection->add();
 
     if (!$csection->showErrors(lang('LANG_USER_ALREADY_EXISTS'))) {
         $_SESSION['message'] = sprintf(lang('LANG_USER_CREATED'), $_REQUEST['name']);
@@ -32,13 +24,3 @@ if (@$_REQUEST['save']) {
         redirect('/admin/'.$site->arg(1));
     }
 }
-
-$types = new GSD\select(array('list' => $languages, 'id' => 'LANGUAGE'));
-$types->object();
-
-$permissionsfield = new GSD\select(array(
-    'list' => $permissions,
-    'label' => lang('LANG_PERMISSION'),
-    'name' => 'level',
-));
-$tpl->setvar('PERMISSION', $permissionsfield);

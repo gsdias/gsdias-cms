@@ -14,25 +14,7 @@ if (!$csection->permission) {
 }
 
 if (@$_REQUEST['save']) {
-    $fields = array(
-        array('title', array('isRequired', 'isString'), lang('LANG_TITLE')),
-        array('url', array('isRequired', 'isString'), lang('LANG_URL')),
-        array('lid', array('isRequired', 'isNumber'), lang('LANG_LAYOUT')),
-        array('description', array('isString'), lang('LANG_DESCRIPTION')),
-        array('keywords', array('isString'), lang('LANG_KEYWORDS')),
-        array('tags', array('isString'), lang('LANG_TAGS')),
-        array('og_title', array('isString'), lang('LANG_OG_TITLE')),
-        array('og_image', array('isNumber'), lang('LANG_OG_IMAGE')),
-        array('og_description', array('isString'), lang('LANG_OG_DESCRIPTION')),
-        array('parent', array('isNumber'), lang('LANG_PARENT')),
-        array('show_menu', array('isCheckbox'), lang('LANG_SHOW_MENU')),
-        array('require_auth', array('isCheckbox'), lang('LANG_REQUIRE_AUTH')),
-        array('creator', array('isNumber')),
-        array('index', array('isNumber')),
-        array('created', array('isRequired')),
-    );
-
-    $result = $csection->add($fields);
+    $result = $csection->add();
 
     if ($result['total']) {
         
@@ -92,32 +74,4 @@ if (@$_REQUEST['save']) {
             $tpl->setcondition('ERRORS');
         }
     }
-}
-
-if (!isset($api)) {
-    $mysql->reset()
-        ->select('lid, name')
-        ->from('layouts')
-        ->exec();
-
-    $types = array();
-    foreach ($mysql->result() as $item) {
-        $types[$item->lid] = $item->name;
-    }
-
-    $types = new GSD\select(array('list' => $types, 'id' => 'LAYOUT'));
-    $types->object();
-
-    $mysql->reset()
-        ->select('pid, title')
-        ->from('pages')
-        ->exec();
-
-    $types = array();
-    foreach ($mysql->result() as $item) {
-        $types[$item->pid] = $item->title;
-    }
-
-    $types = new GSD\select(array('list' => $types, 'id' => 'PARENT'));
-    $types->object();
 }

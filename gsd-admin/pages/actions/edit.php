@@ -14,21 +14,7 @@ if (!$csection->permission) {
 }
 
 if (@$_REQUEST['save']) {
-    $fields = array(
-        array('title', array('isRequired', 'isString')),
-        array('description', array('isString')),
-        array('keywords', array('isString')),
-        array('tags', array('isString')),
-        array('og_title', array('isString')),
-        array('og_image', array('isNumber')),
-        array('og_description', array('isString')),
-        array('parent', array('isNumber')),
-        array('show_menu', array('isCheckbox')),
-        array('require_auth', array('isCheckbox')),
-        array('published', array('isCheckbox'))
-    );
-
-    $result = $csection->edit($fields);
+    $result = $csection->edit();
 
     if ($result['total']) {
         $modules = array();

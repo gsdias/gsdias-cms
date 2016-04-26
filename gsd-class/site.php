@@ -95,10 +95,17 @@ class site
             ->select()
             ->from('pages')
             ->join('layouts', 'LEFT')
-            ->on('layouts.lid = pages.lid')
-            ->where('published IS NOT NULL AND BINARY beautify = ?')
-            ->limit(0, 1)
-            ->values($this->uri)
+            ->on('layouts.lid = pages.lid');
+        
+        if (@$this->path[0] === 'p' && is_numeric(@$this->path[1])) {
+            $mysql->where('published IS NOT NULL AND pid = ?')
+                    ->values($this->path[1]);
+        } else {
+            $mysql->where('published IS NOT NULL AND BINARY beautify = ?')
+                ->values($this->uri);
+        }
+        
+        $mysql->limit(0, 1)
             ->exec();
 
         if ($mysql->total) {

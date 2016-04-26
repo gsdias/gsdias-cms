@@ -10,6 +10,8 @@
  * @since      File available since Release 1.0
  */
 if (IS_ADMIN) {
+    $tpl->setpaths(array(TPLPATH.'dashboard/%s'.TPLEXT));
+    
     $mysql->reset()
         ->select()
         ->from('users')

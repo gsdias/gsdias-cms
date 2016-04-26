@@ -14,11 +14,24 @@
         $recoverForm = $('.recover-form'),
         showForm = function (e) {
             var showRecover = $(this).hasClass('gsd-recover');
-            
+
             e.preventDefault();
             $loginForm.toggleClass(hiddenClass, showRecover);
             $recoverForm.toggleClass(hiddenClass, !showRecover);
+        },
+        togglePassword = function () {
+            var $field = $(this),
+                isHidden = $field.hasClass('fa-eye');
+            
+            if (isHidden) {
+                $field.siblings('input').attr('type', 'text');
+            } else {
+                $field.siblings('input').attr('type', 'password');
+            }
+            $field.toggleClass('fa-eye', !isHidden);
+            $field.toggleClass('fa-eye-slash', isHidden);
         };
 
     $('.gsd-recover, .gsd-login').on('click', showForm);
+    $('.gsd-password').on('click', togglePassword);
 }(GSD.App, GSD.Api, GSD.$, _));

@@ -29,13 +29,28 @@ function escapeText($value = '', $encoding = 'UTF-8')
     return htmlspecialchars($value,ENT_QUOTES | ENT_HTML401, $encoding);
 }
 
+function isFile($value = '', $field = '', $label = '')
+{
+    $label = $label ? $label : lang('LANG_'.strtoupper($field->getName()));
+    $result = array(
+        'result' => isset($_FILES[$field->getName()]),
+        'value' => 1,
+        'field' => null,
+        'message' => sprintf('(%s) Invalid type. Needs to be a file', $label)
+    );
+    
+    $field->setName(null);
+
+    return $result;
+}
+
 function isString($value = '', $field = '', $label = '')
 {
-    $label = $label ? $label : lang('LANG_'.strtoupper($field[0]));
+    $label = $label ? $label : lang('LANG_'.strtoupper($field->getName()));
     $result = array(
         'result' => is_string($value) && !is_numeric($value),
         'value' => escapeText($value),
-        'field' => $field[0],
+        'field' => $field->getName(),
         'message' => sprintf('(%s) Invalid type. Needs to be a string', $label)
     );
     
@@ -44,11 +59,11 @@ function isString($value = '', $field = '', $label = '')
 
 function isRequired($value = '', $field = '', $label = '')
 {
-    $label = $label ? $label : lang('LANG_'.strtoupper($field[0]));
+    $label = $label ? $label : lang('LANG_'.strtoupper($field->getName()));
     $result = array(
         'result' => trim($value) !== '',
         'value' => $value,
-        'field' => $field[0],
+        'field' => $field->getName(),
         'message' => sprintf('(%s) Is required', $label)
     );
     
@@ -57,11 +72,11 @@ function isRequired($value = '', $field = '', $label = '')
 
 function isEmail($value = '', $field = '', $label = '')
 {
-    $label = $label ? $label : lang('LANG_'.strtoupper($field[0]));
+    $label = $label ? $label : lang('LANG_'.strtoupper($field->getName()));
     $result = array(
         'result' => !$value || filter_var($value, FILTER_VALIDATE_EMAIL),
         'value' => $value,
-        'field' => $field[0],
+        'field' => $field->getName(),
         'message' => sprintf('(%s) Needs to be a valid email', $label)
     );
 
@@ -74,7 +89,7 @@ function isUrl($value = '', $field = '', $label = '')
     $result = array(
         'result' => !$value || filter_var($value, FILTER_VALIDATE_URL),
         'value' => $value,
-        'field' => $field[0],
+        'field' => $field->getName(),
         'message' => sprintf('(%s) Needs to be a valid url', $label)
     );
 
@@ -83,11 +98,11 @@ function isUrl($value = '', $field = '', $label = '')
 
 function isNumber($value = 0, $field = '', $label = '')
 {
-    $label = $label ? $label : lang('LANG_'.strtoupper($field[0]));
+    $label = $label ? $label : lang('LANG_'.strtoupper($field->getName()));
     $result = array(
         'result' => is_numeric($value),
         'value' => $value,
-        'field' => $field[0],
+        'field' => $field->getName(),
         'message' => sprintf('(%s) Invalid type. Needs to be a number', $label)
     );
 
@@ -99,7 +114,7 @@ function isPassword($value = '', $field = '')
     $result = array(
         'result' => 1,
         'value' => md5($value),
-        'field' => $field[0],
+        'field' => $field->getName(),
         'message' => ''
     );
 
@@ -111,7 +126,7 @@ function isCheckbox($value = '', $field = '')
     $result = array(
         'result' => 1,
         'value' => $value ? 1 : null,
-        'field' => $field[0],
+        'field' => $field->getName(),
         'message' => ''
     );
 
@@ -377,7 +392,7 @@ function savefile($file, $path, $type = null, $nottype = null, $rename = null)
             if (!is_dir($path)) {
                 mkdir($path, 0777);
             }
-
+            
             move_uploaded_file($file['tmp_name'], $path.$newfilename);
 
             return $newfilename;
