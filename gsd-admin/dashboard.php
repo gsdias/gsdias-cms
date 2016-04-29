@@ -9,8 +9,10 @@
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
+
+$tpl->setpaths(array(TPLPATH.'dashboard/%s'.TPLEXT));
+
 if (IS_ADMIN) {
-    $tpl->setpaths(array(TPLPATH.'dashboard/%s'.TPLEXT));
     
     $mysql->reset()
         ->select()

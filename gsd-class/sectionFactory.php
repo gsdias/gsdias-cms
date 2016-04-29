@@ -23,66 +23,7 @@ class sectionFactory
             $newtype = $type;
         }
 
-        $permission = sectionFactory::getPermission($newtype);
+        return new $classname();
 
-        switch ($newtype) {
-            case 'layouts':
-                $permission = gettype($permission) === 'boolean' ? $permission : IS_ADMIN;
-                return new $classname($permission);
-            break;
-            case 'pages':
-                $permission = gettype($permission) === 'boolean' ? $permission : IS_ADMIN || IS_EDITOR;
-                return new $classname($permission);
-            break;
-            case 'users':
-                $permission = gettype($permission) === 'boolean' ? $permission : IS_ADMIN;
-                return new $classname($permission);
-            break;
-            case 'images':
-                $permission = gettype($permission) === 'boolean' ? $permission : IS_ADMIN || IS_EDITOR;
-                return new $classname($permission);
-            break;
-            case 'documents':
-                $permission = gettype($permission) === 'boolean' ? $permission : IS_ADMIN || IS_EDITOR;
-                return new $classname($permission);
-            break;
-            default:
-                return new $classname($permission);
-            break;
-        }
-    }
-
-    public static function getPermission($type)
-    {
-        if (class_exists('GSD\\Extended\\'.$type)) {
-            $type = substr($type, 8);
-        } else {
-            $type = $type;
-        }
-
-        $permission = function_exists('extendedpermission') ? \extendedpermission($type) : '';
-
-        switch ($type) {
-            case 'layouts':
-                $permission = gettype($permission) === 'boolean' ? $permission : IS_ADMIN;
-            break;
-            case 'pages':
-                $permission = gettype($permission) === 'boolean' ? $permission : IS_ADMIN || IS_EDITOR;
-            break;
-            case 'users':
-                $permission = gettype($permission) === 'boolean' ? $permission : IS_ADMIN;
-            break;
-            case 'images':
-                $permission = gettype($permission) === 'boolean' ? $permission : IS_ADMIN || IS_EDITOR;
-            break;
-            case 'documents':
-                $permission = gettype($permission) === 'boolean' ? $permission : IS_ADMIN || IS_EDITOR;
-            break;
-            default:
-                $permission = 1;
-            break;
-        }
-
-        return $permission;
     }
 }

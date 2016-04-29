@@ -13,6 +13,20 @@ namespace GSD;
 
 class documents extends section implements isection
 {
+    public function __construct($permission = NULL)
+    {
+        global $tpl, $site;
+
+        $tpl->setvar('SECTION_TYPE', lang('LANG_DOCUMENT', 'LOWER'));
+        if ($site->arg(3) === 'edit') {
+            $tpl->setvar('SECTION_ACTION', lang('LANG_EDIT'));
+        } else {
+            $tpl->setvar('SECTION_ACTION', lang('LANG_NEW_FEMALE'));
+        }
+        $permission = gettype($permission) === 'boolean' ? $permission : IS_ADMIN || IS_EDITOR;
+        return parent::__construct($permission);
+    }
+
     public function getlist($options)
     {
         global $mysql, $tpl;

@@ -13,7 +13,7 @@ namespace GSD;
 
 class pages extends section implements isection
 {
-    public function __construct($permission)
+    public function __construct($permission = NULL)
     {
         global $tpl, $site;
         
@@ -23,7 +23,7 @@ class pages extends section implements isection
         } else {
             $tpl->setvar('SECTION_ACTION', lang('LANG_NEW_FEMALE'));
         }
-        
+        $permission = gettype($permission) === 'boolean' ? $permission : IS_ADMIN || IS_EDITOR;
         return parent::__construct($permission);
     }
     

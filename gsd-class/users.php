@@ -13,13 +13,13 @@ namespace GSD;
 
 class users extends section implements isection
 {
-    public function __construct($permission)
+    public function __construct($permission = NULL)
     {
         global $tpl;
         
         $tpl->setvar('SECTION_TYPE', lang('LANG_USER', 'LOWER'));
         $tpl->setvar('SECTION_GENDER_NEW', lang('LANG_NEW_MALE'));
-        
+        $permission = gettype($permission) === 'boolean' ? $permission : IS_ADMIN;
         return parent::__construct($permission);
     }
     

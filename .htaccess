@@ -36,3 +36,9 @@ AddOutputFilterByType DEFLATE application/xhtml+xml
 AddOutputFilterByType DEFLATE application/rss+xml
 AddOutputFilterByType DEFLATE application/javascript
 AddOutputFilterByType DEFLATE application/x-javascript
+<FilesMatch "(\.js\.gz|\.css\.gz)$">
+  # Serve correct encoding type.
+  Header set Content-Encoding gzip
+  # Force proxies to cache gzipped & non-gzipped css/js files separately.
+  Header append Vary Accept-Encoding
+</FilesMatch>
