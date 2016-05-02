@@ -21,194 +21,193 @@ class mySQL implements idatabase
     protected $_query, $_select, $_from, $_where, $_join, $_on, $_order, $_values, $_fields, $_insert, $_update, $_delete, $_show;
 
     // -- Function Name : __construct
-        // -- Params : $db,$host,$user,$pass
-        // -- Purpose : construct the object and save the params
-        public function __construct($db, $host, $user, $pass)
-        {
-            $this->db = $db;
-            $this->host = $host;
-            $this->user = $user;
-            $this->pass = $pass;
-            $this->querylist = array();
-        }
+    // -- Params : $db,$host,$user,$pass
+    // -- Purpose : construct the object and save the params
+    public function __construct($db, $host, $user, $pass)
+    {
+        $this->db = $db;
+        $this->host = $host;
+        $this->user = $user;
+        $this->pass = $pass;
+        $this->querylist = array();
+    }
 
     // -- Function Name : connect
-        // -- Params :
-        // -- Purpose : connects to the database
-        protected function connect($withdb = true)
-        {
-            try {
-                ini_set('memory_limit', '512M');
+    // -- Params :
+    // -- Purpose : connects to the database
+    protected function connect($withdb = true)
+    {
+        try {
+            ini_set('memory_limit', '512M');
 
-                $db = $withdb ? sprintf('dbname=%s', $this->db) : '';
+            $db = $withdb ? sprintf('dbname=%s', $this->db) : '';
 
-                $this->conn = new \PDO('mysql:host='.$this->host.';charset=utf8;'.$db, $this->user, $this->pass, array(
-//                \PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true,
-//                \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
-//                \PDO::ATTR_PERSISTENT => true
+            $this->conn = new \PDO('mysql:host='.$this->host.';charset=utf8;'.$db, $this->user, $this->pass, array(
+                \PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true,
             ));
-//                $this->conn->exec("SET time_zone = '+00:00';");
-            } catch (\PDOException $error) {
+
+        } catch (\PDOException $error) {
 //                                echo $error->getMessage();
-//                echo $error->getCode();
-                switch ($error->getCode()) {
-                case '2002':
-                printf('<span style="color: red;">Could not connect to database. Check host</span><br>');
-                break;
-                case '1044':
-                printf('<span style="color: red;">Could not connect to database. Check permissions</span><br>');
-                break;
-                case '1045':
-                printf('<span style="color: red;">Could not connect to database. Check credentials</span><br>');
-                break;
-                case '1049':
-                $this->connect(false);
-                break;
-                exit;
-            }
-            }
+            switch ($error->getCode()) {
+            case '2002':
+            printf('<span style="color: red;">Could not connect to database. Check host</span><br>');
+            break;
+            case '1044':
+            printf('<span style="color: red;">Could not connect to database. Check permissions</span><br>');
+            break;
+            case '1045':
+            printf('<span style="color: red;">Could not connect to database. Check credentials</span><br>');
+            break;
+            case '1049':
+            $this->connect(false);
+            break;
+            exit;
         }
+        }
+    }
 
     // -- Function Name : formatDates
-        // -- Params : $values
-        // -- Purpose : Format dates to be in a mysql format validation
-        protected function formatDates($values)
-        {
-            $express = '/^([\d]{1,2})-([\d]{1,2})-([\d]{4})$/';
+    // -- Params : $values
+    // -- Purpose : Format dates to be in a mysql format validation
+    protected function formatDates($values)
+    {
+        $express = '/^([\d]{1,2})-([\d]{1,2})-([\d]{4})$/';
 
-            foreach ($values as $key => $value) {
-                preg_match($express, $value, $matches);
-                if (sizeof($matches) === 4) {
-                    $values[$key] = preg_replace($express, '$3-$2-$1', $value);
-                }
+        foreach ($values as $key => $value) {
+            preg_match($express, $value, $matches);
+            if (sizeof($matches) === 4) {
+                $values[$key] = preg_replace($express, '$3-$2-$1', $value);
             }
-
-            return $values;
         }
+
+        return $values;
+    }
 
     // -- Function Name : formatOutputDates
-        // -- Params : $values
-        // -- Purpose : Format dates to be in Europe format reading
-        protected function formatOutputDates($values)
-        {
-            $express = '/^([\d]{4})-([\d]{1,2})-([\d]{1,2})$/';
+    // -- Params : $values
+    // -- Purpose : Format dates to be in Europe format reading
+    protected function formatOutputDates($values)
+    {
+        $express = '/^([\d]{4})-([\d]{1,2})-([\d]{1,2})$/';
 
-            foreach ($values as $key => $value) {
-                preg_match($express, $value, $matches);
+        foreach ($values as $key => $value) {
+            preg_match($express, $value, $matches);
 
-                if (sizeof($matches) === 4) {
-                    $values[$key] = preg_replace($express, '$3-$2-$1', $value);
-                }
+            if (sizeof($matches) === 4) {
+                $values[$key] = preg_replace($express, '$3-$2-$1', $value);
             }
-
-            return $values;
         }
+
+        return $values;
+    }
 
     // -- Function Name : statement
-        // -- Params : $query,$values = null
-        // -- Purpose : save query, prepare statement and calls execute function
-        public function statement($query, $values = null)
-        {
-            global $tpl;
-            $this->query = $query ? $query : $this->query;
+    // -- Params : $query,$values = null
+    // -- Purpose : save query, prepare statement and calls execute function
+    public function statement($query, $values = null)
+    {
+        global $tpl;
+        $this->query = $query ? $query : $this->query;
 
-            $values = !empty($values) ? $this->formatDates($values) : $values;
+        $values = !empty($values) ? $this->formatDates($values) : $values;
 
-            if (!$this->conn) {
-                $this->connect();
+        if (!$this->conn) {
+            $this->connect();
+        }
+        if ($this->conn) {
+            $this->prepared = $this->conn->prepare($query);
+            $this->execute($values);
+        }
+
+        if (DEBUG) {
+            if (!empty($values)) {
+                $tpl->adderror(vsprintf(str_replace('?', '"%s"', $query), $values));
+            } else {
+                $tpl->adderror($query);
             }
-            if ($this->conn) {
-                $this->prepared = $this->conn->prepare($query);
-                $this->execute($values);
-            }
 
-            if (DEBUG) {
-                if (!empty($values)) {
-                    $tpl->adderror(vsprintf(str_replace('?', '"%s"', $query), $values));
-                } else {
-                    $tpl->adderror($query);
-                }
-
-                array_push($this->querylist, $query);
-                if ($this->errnum) {
-                    $tpl->adderror(sprintf("(<strong style='font-weight: 700'>%s</strong>) %s", $this->errnum, $this->errmsg));
-                }
+            array_push($this->querylist, $query);
+            if ($this->errnum) {
+                $tpl->adderror(sprintf("(<strong style='font-weight: 700'>%s</strong>) %s", $this->errnum, $this->errmsg));
             }
         }
+    }
 
     // -- Function Name : execute
-        // -- Params : $values = null
-        // -- Purpose : executes database query
-        public function execute($values = null)
-        {
-            global $tpl;
-            try {
-                $this->executed = $this->prepared->execute($values);
-            } catch (PDOException $e) {
-                //                echo $e;
-            }
+    // -- Params : $values = null
+    // -- Purpose : executes database query
+    public function execute($values = null)
+    {
+        global $tpl;
+        try {
+            $this->executed = $this->prepared->execute($values);
+        } catch (PDOException $e) {
 
-            $this->total = $this->prepared->rowCount();
-            $erro = $this->prepared->errorInfo();
+        }
 
+        $this->total = $this->prepared->rowCount();
+        $erro = $this->prepared->errorInfo();
+
+        if ($this->_select) {
             $this->result = $this->prepared->fetchAll(PDO::FETCH_OBJ);
+        }
 
-            $this->errnum = $erro[1];
-            $this->errmsg = $erro[2];
+        $this->errnum = $erro[1];
+        $this->errmsg = $erro[2];
 
-            if (sizeof($this->result) > 0) {
-                foreach ($this->result as $key => $values) {
-                    $this->result[$key] = $this->formatOutputDates($values);
-                }
+        if (sizeof($this->result) > 0) {
+            foreach ($this->result as $key => $values) {
+                $this->result[$key] = $this->formatOutputDates($values);
             }
         }
+    }
 
     // -- Function Name : result
-        // -- Params :
-        // -- Purpose : returns database query result
-        public function result()
-        {
-            return sizeof($this->result) ? $this->result : array();
-        }
+    // -- Params :
+    // -- Purpose : returns database query result
+    public function result()
+    {
+        return sizeof($this->result) ? $this->result : array();
+    }
 
     // -- Function Name : singleresult
-        // -- Params :
-        // -- Purpose : returns database query single result
-        public function singleresult()
+    // -- Params :
+    // -- Purpose : returns database query single result
+    public function singleresult()
+    {
+        if (sizeof($this->result))
         {
-            if (sizeof($this->result))
+            foreach($this->result[0] as $key => $value)
             {
-                foreach($this->result[0] as $key => $value)
-                {
-                    return $value;
-                }
+                return $value;
             }
-            return null;
         }
+        return null;
+    }
 
     // -- Function Name : singleline
-        // -- Params :
-        // -- Purpose : returns database query single result
-        public function singleline()
-        {
-            return sizeof($this->result) ? $this->result[0] : array();
-        }
+    // -- Params :
+    // -- Purpose : returns database query single result
+    public function singleline()
+    {
+        return sizeof($this->result) ? $this->result[0] : array();
+    }
 
     // -- Function Name : close
-        // -- Params :
-        // -- Purpose : closes database connection
-        public function close()
-        {
-            $this->conn = null;
-        }
+    // -- Params :
+    // -- Purpose : closes database connection
+    public function close()
+    {
+        $this->conn = null;
+    }
 
     // -- Function Name : lastInserted
-        // -- Params :
-        // -- Purpose : returns last inserted id
-        public function lastInserted()
-        {
-            return $this->conn->lastInsertId();
-        }
+    // -- Params :
+    // -- Purpose : returns last inserted id
+    public function lastInserted()
+    {
+        return $this->conn->lastInsertId();
+    }
 
     public function usedb($db = '')
     {

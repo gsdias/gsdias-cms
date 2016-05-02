@@ -21,7 +21,6 @@ abstract class section implements isection
     {
         global $tpl;
 
-//        $tpl->setvar('SECTION_TYPE', lang('LANG_LAYOUT', 'LOWER'));
         $this->permission = $permission;
         return 0;
     }
