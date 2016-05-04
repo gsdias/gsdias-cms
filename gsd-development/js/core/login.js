@@ -22,7 +22,7 @@
         togglePassword = function () {
             var $field = $(this),
                 isHidden = $field.hasClass('fa-eye');
-            
+
             if (isHidden) {
                 $field.siblings('input').attr('type', 'text');
             } else {

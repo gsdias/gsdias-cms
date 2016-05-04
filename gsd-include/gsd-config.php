@@ -60,6 +60,7 @@ $tpl->setcondition('GTM', !!$site->gtm);
 $tpl->setcondition('FB', !!$site->fb);
 $tpl->setcondition('GA', !!$site->ga && !$site->gtm);
 $tpl->setVar('CDN', RESOURCESURL);
+$tpl->setVar('RESOURCESURL', RESOURCESURL);
 $tpl->setVar('CLIENT_RESOURCES', @$config['client_resources']);
 $tpl->setVar('CLIENT_PATH', @$config['client_path']);
 $tpl->setVar('ASSETPATH', ASSETPATHURL);

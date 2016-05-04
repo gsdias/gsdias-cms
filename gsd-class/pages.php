@@ -97,7 +97,7 @@ class pages extends section implements isection
         if (!empty($result['list'])) {
             foreach ($result['results'] as $index => $item) {
                 $result['list'][$index]['UNPUBLISHED'] = $item->published ? '' : sprintf('<br>(%s)', lang('LANG_UNPUBLISHED'));
-                $result['list'][$index]['SYNC'] = $item->sync ? sprintf('%s (<a href="/admin/pages/%d/sync">%s</a>)', ($item->published ? '<br>': ''), $item->pid, 'Sync') : '';
+                $result['list'][$index]['SYNC'] = $item->sync ? sprintf('%s (<a href="/admin/pages/%d/sync" class="redLabel">%s</a>)', ($item->published ? '<br>': ''), $item->pid, 'Sync') : '';
             }
 
             $tpl->setarray('PAGES', $result['list']);
