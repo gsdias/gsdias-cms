@@ -9,10 +9,6 @@
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
-if (!$csection->permission) {
-    $_SESSION['error'] = lang('LANG_USER_NOPERMISSION');
-    redirect('/admin/'.$site->arg(1));
-}
 
 if ($site->arg(2) == 1) {
     $_SESSION['error'] = lang('LANG_USER_DEFAULT');

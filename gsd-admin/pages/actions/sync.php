@@ -9,10 +9,6 @@
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.6
  */
-if (!$csection->permission) {
-    $_SESSION['error'] = lang('LANG_PAGE_NOPERMISSION');
-    redirect('/admin/'.$site->arg(1));
-}
 
 $mysql->statement('UPDATE pages AS p
     LEFT JOIN pages AS pp ON pp.pid = p.parent

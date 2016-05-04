@@ -9,9 +9,6 @@
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
-if (!$csection->permission) {
-    redirect('/admin/'.$site->arg(1));
-}
 
 if (@$_REQUEST['save']) {
     $allowed = array(
