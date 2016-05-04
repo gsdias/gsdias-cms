@@ -313,6 +313,9 @@ msgstr "Image '%s' saved"
 msgid "LANG_DOCUMENT_SAVED"
 msgstr "Document '%s' saved"
 
+msgid "LANG_PAGE_SYNCED"
+msgstr "Page '%s' synced"
+
 msgid "LANG_NO_LAYOUTS"
 msgstr "There are no layouts"
 

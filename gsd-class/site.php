@@ -49,6 +49,7 @@ class site
         }
 
         define('DEBUG', @$this->options['debug_checkbox']);
+        $tpl->setcondition('DEBUG', !!@$this->options['debug_checkbox']);
 
         $pattern = '/(\?)(.*)/';
         $this->uri = preg_replace($pattern, '', $_SERVER['REQUEST_URI']);

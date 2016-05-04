@@ -17,5 +17,5 @@ $mysql->statement('UPDATE pages AS p
         $site->arg(2)
     ));
 
-$_SESSION['message'] = 'Page synced';
+$_SESSION['message'] = sprintf(lang('LANG_PAGE_SYNCED'), @$_REQUEST['title']);
 redirect('/admin/'.$site->arg(1));

@@ -457,15 +457,15 @@ class tpl
 
         ob_end_clean();
 
-        return $output;
-
         if (DEBUG) {
             $this->setarray('DEBUGLIST', $this->config['error']);
-            $constants = get_defined_constants(true);
-            foreach ($constants['user'] as $constant => $value) {
-                printf('<tr><td>%s: %s</td></tr>', $constant, $value);
-            }
+//            $constants = get_defined_constants(true);
+//            foreach ($constants['user'] as $constant => $value) {
+//                printf('<tr><td>%s: %s</td></tr>', $constant, $value);
+//            }
         }
+
+        return $output;
     }
 
     public function sendError()
