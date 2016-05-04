@@ -2,6 +2,8 @@
     <h1>{LANG_PAGE_BASIC_INFO}</h1>
     <!-- IF ERRORS --><div class="errors">{ERRORS}</div><!-- ENDIF ERRORS -->
     <form method="post">
+        <input name="current_parent" type="hidden" value="{CURRENT_PAGES_PARENT}">
+        <input name="current_url" type="hidden" value="{CURRENT_PAGES_URL}">
         <div class="colA">Url <input name="url" value="{CURRENT_PAGES_URL}"></div>
         <div class="colA"><label>Versões</label>
             <select name="prid" required>
@@ -9,6 +11,16 @@
                 <!-- LOOP VERSION --><option value="{VERSION_KEY}">{VERSION_VALUE}</option><!-- ENDLOOP VERSION -->
             </select>
         </div>
+        <!-- IF HASCHILDS -->
+        <div class="colA"><label>Exitem páginas associadas a esta. Escolha as que quer atualizar o url.</label>
+            <!-- LOOP PAGES -->
+            <div class="colA checkbox">
+                <input type="checkbox" id="gsd-maintenance_checkbox" name="pages[]" value="{PAGES_PID}">
+                <label for="gsd-maintenance_checkbox">{PAGES_TITLE}</label>
+            </div>
+            <!-- ENDLOOP PAGES -->
+        </div>
+        <!-- ENDIF HASCHILDS -->
         <div class="btns blue">
             <input type="submit" class="btn blue" value="{LANG_SAVE}" name="save">
         </div>

@@ -31,7 +31,7 @@ class pages extends section implements isection
     {
         global $mysql, $tpl;
 
-        $_fields = 'p.*, concat(if(pp.url = "/" OR pp.url IS NULL, "", pp.url), p.url) AS url, p.creator AS creator_id, u.name AS creator_name';
+        $_fields = 'p.*, concat(if(pp.url = "/" OR pp.url IS NULL, "", pp.url), p.url) AS url, p.creator AS creator_id, u.name AS creator_name, if(p.beautify like concat(if(pp.url IS NULL , "", pp.url), p.url), 0, 1) AS sync';
         $fields = empty($options['fields']) ? array() : $options['fields'];
 
         $mysql->reset()
@@ -89,7 +89,7 @@ class pages extends section implements isection
         $result = parent::getlist(array(
             'search' => $options['search'],
             'results' => $mysql->result(),
-            'fields' => array_merge(array('pid', 'title', 'beautify', 'creator', 'creator_name', 'creator_id', 'index'), $fields),
+            'fields' => array_merge(array('pid', 'title', 'beautify', 'creator', 'creator_name', 'creator_id', 'index', 'sync'), $fields),
             'paginator' => $paginator,
             'totalPages' => $totalPages
         ));
@@ -97,6 +97,7 @@ class pages extends section implements isection
         if (!empty($result['list'])) {
             foreach ($result['results'] as $index => $item) {
                 $result['list'][$index]['UNPUBLISHED'] = $item->published ? '' : sprintf('<br>(%s)', lang('LANG_UNPUBLISHED'));
+                $result['list'][$index]['SYNC'] = $item->sync ? sprintf('%s (<a href="/admin/pages/%d/sync">%s</a>)', ($item->published ? '<br>': ''), $item->pid, 'Sync') : '';
             }
 
             $tpl->setarray('PAGES', $result['list']);
@@ -371,22 +372,27 @@ class pages extends section implements isection
         $hasChanged = 0;
         $fields = array();
 
-//        foreach ($defaultfields as $field) {
-//            $fieldname = $field->getName();
-//            if ($currentpage->{$fieldname} != @$_REQUEST[$fieldname]) {
-//                $hasChanged = 1;
-//            }
-//            array_push($fields, $currentpage->{$fieldname});
-//        }
+        $defaultfields = $this->fields(true);
+
+        foreach ($defaultfields as $index => $field) {
+            $fieldname = $field->getName();
+            $defaultfields[$index] = $fieldname;
+            if ($currentpage->{$fieldname} !== @$_REQUEST[$fieldname]) {
+                $hasChanged = 1;
+            }
+            array_push($fields, $currentpage->{$fieldname});
+        }
 
         $result = parent::edit();
 
-        $this->update_beautify($pid);
+        if ($currentpage->parent !== $_REQUEST['parent']) {
+            $this->update_beautify($pid);
+        }
 
         if ($hasChanged) {
-//            array_push($fields, $currentpage->modified);
-//            array_push($defaultfields, 'modified');
-//            $this->page_review($defaultfields, $fields);
+            array_push($fields, $currentpage->modified);
+            array_push($defaultfields, 'modified');
+            $this->page_review($defaultfields, $fields);
         }
 
         return $result;
@@ -396,10 +402,14 @@ class pages extends section implements isection
     {
         global $mysql;
 
-        $mysql->statement('SELECT pp.beautify, p.url
-        FROM pages AS p
-        LEFT JOIN pages AS pp ON p.parent = pp.pid
-        WHERE p.pid = ?;', array($pid));
+        $mysql->reset()
+            ->select('pp.beautify, p.url')
+            ->from('pages AS p')
+            ->join('pages AS pp', 'LEFT')
+            ->on('p.parent = pp.pid')
+            ->where('p.pid = ?')
+            ->values(array($pid))
+            ->exec();
 
         $result = $mysql->singleline();
 
@@ -418,6 +428,7 @@ class pages extends section implements isection
         array_push($fields, $user->id);
         array_push($fields, $site->arg(2));
         $questions = str_repeat(', ? ', sizeof($fields));
+
         $mysql->statement(sprintf('INSERT INTO pages_review (%s, creator, pid) values (%s);', implode(',', $this->getfieldlist($defaultfields)), substr($questions, 2)), $fields);
     }
 

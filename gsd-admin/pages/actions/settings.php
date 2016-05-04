@@ -9,12 +9,13 @@
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
+
 if (@$_REQUEST['save']) {
     $mysql->reset()
         ->select('count(*) AS total, pid')
         ->from('pages')
-        ->where('url = ?')
-        ->values($_REQUEST['url'])
+        ->where('url = ? AND parent = ?')
+        ->values(array($_REQUEST['url'], $_REQUEST['current_parent']))
         ->exec();
 
     $condition = $mysql->singleline();
@@ -24,21 +25,7 @@ if (@$_REQUEST['save']) {
         $tpl->setcondition('ERRORS');
     } else {
         if ($_REQUEST['prid']) {
-            $defaultfields = array(
-                'pid',
-                'title',
-                'description',
-                'tags',
-                'keywords',
-                'og_title',
-                'og_description',
-                'og_image',
-                'show_menu',
-                'require_auth',
-                'published',
-                'creator',
-                'modified'
-            );
+            $defaultfields = array_merge(array('pid'), $csection->getfields(true));
 
             $mysql->reset()
                 ->select()
@@ -92,86 +79,75 @@ if (@$_REQUEST['save']) {
                 ->exec();
         }
 
-        $mysql->reset()
-            ->select('url')
-            ->from('pages')
-            ->where('pid = ?')
-            ->values($site->arg(2))
-            ->exec();
+        if ($_REQUEST['current_url'] != $_REQUEST['url']) {
 
-        $currenturl = $mysql->singleresult();
+            $currenturl = $_REQUEST['current_url'];
 
-        $mysql->reset()
-            ->delete()
-            ->from('redirect')
-            ->where('`from` = ?')
-            ->values($_REQUEST['url'])
-            ->exec();
+            $mysql->reset()
+                ->delete()
+                ->from('redirect')
+                ->where('`from` = ?')
+                ->values($_REQUEST['url'])
+                ->exec();
 
-        $mysql->reset()
-            ->select('destination')
-            ->from('redirect')
-            ->where('destination = ?')
-            ->order('created')
-            ->values($currenturl)
-            ->exec();
+            $mysql->reset()
+                ->select('destination')
+                ->from('redirect')
+                ->where('destination = ?')
+                ->order('created')
+                ->values($currenturl)
+                ->exec();
 
-        if ($mysql->total) {
-            foreach ($mysql->result() as $url) {
-                //REFACTOR: THIS PART IS OUTDATED
+            if ($mysql->total) {
+                foreach ($mysql->result() as $url) {
+                    $mysql->reset()
+                        ->insert('redirect')
+                        ->fields(array('pid', 'from', 'destination', 'creator'))
+                        ->values(array($site->arg(2), $url->destination, $_REQUEST['url'], $user->id))
+                        ->exec();
+                }
+            } else {
                 $mysql->reset()
                     ->insert('redirect')
                     ->fields(array('pid', 'from', 'destination', 'creator'))
-                    ->values(array($site->arg(2), $url->destination, $_REQUEST['url'], $user->id))
+                    ->values(array($site->arg(2), $currenturl, $_REQUEST['url'], $user->id))
                     ->exec();
             }
-        } else {
-            $mysql->reset()
-                ->insert('redirect')
-                ->fields(array('pid', 'from', 'destination', 'creator'))
-                ->values(array($site->arg(2), $currenturl, $_REQUEST['url'], $user->id))
-                ->exec();
+
+            $mysql->statement('UPDATE pages AS p
+            LEFT JOIN pages AS pp ON pp.pid = p.parent
+            SET p.url = ?, p.beautify = concat(if(pp.beautify IS NULL, "", pp.beautify), ?)
+            WHERE p.pid = ?;', array(
+                $_REQUEST['url'],
+                $_REQUEST['url'],
+                $site->arg(2),
+            ));
+
+            foreach($_REQUEST['pages'] as $pid) {
+                $mysql->statement('UPDATE pages AS p
+                SET p.beautify = concat(?, p.url)
+                WHERE p.pid = ?;', array(
+                    $_REQUEST['url'],
+                    $pid,
+                ));
+            }
+
         }
-
-//        $mysql->reset()
-//            ->update('pages AS p')
-//            ->join('pages AS pp', 'LEFT')
-//            ->on('pp.pid = p.parent')
-//            ->fields(array('p.url', 'p.beautify'))
-//            ->values(array(
-//                $_REQUEST['url'],
-//                sprintf('concat(if(pp.beautify IS NULL, "", pp.beautify), %s)', mysql_real_escape_string($_REQUEST['url'])),
-//                $site->arg(2)
-//            ))
-//            ->where('p.pid = ?')
-//            ->exec();
-
-        $mysql->statement('UPDATE pages AS p
-        LEFT JOIN pages AS pp ON pp.pid = p.parent
-        SET p.url = ?, p.beautify = concat(if(pp.beautify IS NULL, "", pp.beautify), ?)
-        WHERE p.pid = ?;', array(
-            $_REQUEST['url'],
-            $_REQUEST['url'],
-            $site->arg(2),
-        ));
-
-//        $mysql->reset()
-//            ->update('pages AS p')
-//            ->join('pages AS pp', 'LEFT')
-//            ->on('pp.pid = p.parent')
-//            ->fields(array('p.beautify'))
-//            ->values(array(
-//                'concat(if(pp.beautify IS NULL, "", pp.beautify), p.url)',
-//                $site->arg(2)
-//            ))
-//            ->where('p.parent = ?')
-//            ->exec();
-
-        $mysql->statement('UPDATE pages AS p
-        LEFT JOIN pages AS pp ON pp.pid = p.parent
-        SET p.beautify = concat(if(pp.beautify IS NULL, "", pp.beautify), p.url)
-        WHERE p.parent = ?;', array($site->arg(2)));
 
         redirect('/admin/'.$site->arg(1));
     }
 }
+
+$mysql->reset()
+    ->select('pid, title')
+    ->from('pages')
+    ->where('parent = ?')
+    ->values($site->arg(2))
+    ->exec();
+
+$pages = array();
+foreach ($mysql->result() as $child) {
+    $pages[] = array('PID' => $child->pid, 'TITLE' => $child->title);
+}
+$tpl->setarray('PAGES', $pages);
+$tpl->setcondition('HASCHILDS', !empty($pages));

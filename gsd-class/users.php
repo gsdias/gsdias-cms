@@ -167,7 +167,7 @@ class users extends section implements isection
             $fields[] = new field(array('name' => 'disabled', 'label' => lang('LANG_DISABLED'), 'validator' => array('isCheckbox'), 'type' => 'checkbox'));
         }
         
-        if (!$update || ($update && $_REQUEST['password'] === '')) {
+        if (!$update || ($update && @$_REQUEST['password'] === '')) {
             unset($fields[2]);
         }
         

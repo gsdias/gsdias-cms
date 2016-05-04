@@ -366,8 +366,19 @@ abstract class section implements isection
         return $hasErrors;
     }
     
-    protected function fields($update = false)
+    protected function fields()
     {
         return array();
+    }
+
+    public function getFields($update = false)
+    {
+        $fields = $this->fields($update);
+
+        foreach($fields as $index => $field) {
+            $fields[$index] = $field->getName();
+        }
+
+        return $fields;
     }
 }
