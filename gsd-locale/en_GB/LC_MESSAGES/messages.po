@@ -316,6 +316,9 @@ msgstr "Document '%s' uploaded"
 msgid "LANG_SETTINGS_SAVED"
 msgstr "Settings saved"
 
+msgid "LANG_ASSOCIATED_PAGES"
+msgstr "There are associated pages. Choose which one you want to update."
+
 msgid "LANG_PAGE_SAVED"
 msgstr "Page '%s' saved"
 

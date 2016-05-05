@@ -316,6 +316,9 @@ msgstr "Documento '%s' carregado"
 msgid "LANG_SETTINGS_SAVED"
 msgstr "Definições salvas"
 
+msgid "LANG_ASSOCIATED_PAGES"
+msgstr "Exitem páginas associadas a esta. Escolha as que quer atualizar o url."
+
 msgid "LANG_PAGE_SAVED"
 msgstr "Página '%s' salva"
 

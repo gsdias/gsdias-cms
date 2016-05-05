@@ -1,3 +1,17 @@
+version 1.5.1
+
+Added recover password
+Added option to sync pages with parent url when changed
+Added default url for pages. Now the page can be accessed from '/p/id' and beautify url
+Remove all create, update and edit templates to use the same one based on fields configuration
+Fields for each section is part of the class instead of action files
+Added field class
+Added missing i18n
+Refactor some code
+Moved dashboard templates files to a folder
+Fix bug with logic of changing page url
+Fix bug with debug mode
+
 version 1.5
 
 Permissions can be extended now

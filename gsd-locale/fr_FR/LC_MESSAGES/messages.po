@@ -316,6 +316,9 @@ msgstr "Document '%s' expédié"
 msgid "LANG_SETTINGS_SAVED"
 msgstr "Paramètres sauvée"
 
+msgid "LANG_ASSOCIATED_PAGES"
+msgstr "Exitem páginas associadas a esta. Escolha as que quer atualizar o url."
+
 msgid "LANG_PAGE_SAVED"
 msgstr "Page '%s' sauvée"
 

@@ -8,9 +8,9 @@ array_shift($path);
 
 $config['url'] = 'localhost';
 $_mysql['host'] = '127.0.0.1';
-$_mysql['user'] = 'root';
+$_mysql['user'] = '';
 $_mysql['pass'] = '';
-$_mysql['db'] = 'demo';
+$_mysql['db'] = '';
 $_email['host'] = 'localhost';
 $_email['port'] = 25;
 $_email['user'] = '';
