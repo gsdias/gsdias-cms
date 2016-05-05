@@ -31,7 +31,7 @@ class pages extends section implements isection
     {
         global $mysql, $tpl;
 
-        $_fields = 'p.*, concat(if(pp.url = "/" OR pp.url IS NULL, "", pp.url), p.url) AS url, p.creator AS creator_id, u.name AS creator_name, if(p.beautify like concat(if(pp.url IS NULL , "", pp.url), p.url), 0, 1) AS sync';
+        $_fields = 'p.*, p.creator AS creator_id, u.name AS creator_name, if(p.beautify like concat(if(pp.beautify IS NULL , "", pp.beautify), p.url), 0, 1) AS sync';
         $fields = empty($options['fields']) ? array() : $options['fields'];
 
         $mysql->reset()
@@ -159,20 +159,6 @@ class pages extends section implements isection
                 }
                 $tpl->setarray('VERSION', $review);
             }
-
-            $mysql->statement('SELECT p.pid, p.title
-                FROM pages AS p
-                WHERE pid <> ?;', array($this->item->pid));
-
-            $parent = array();
-            foreach ($mysql->result() as $field) {
-                $parent[] = array(
-                    'KEY' => $field->pid,
-                    'VALUE' => $field->title,
-                    'SELECTED' => $field->pid == $this->item->parent ? 'selected="selected"' : '',
-                );
-            }
-            $tpl->setarray('PARENT', $parent);
         }
 
         return $result['item'];
@@ -339,13 +325,15 @@ class pages extends section implements isection
         return $types;
     }
     
-    private function getParents()
+    private function getParents($id = '')
     {
         global $mysql;
         
         $mysql->reset()
             ->select('pid, title')
             ->from('pages')
+            ->where('pid <> ?')
+            ->values($id)
             ->exec();
 
         $types = array(0 => '{LANG_CHOOSE}');
@@ -459,6 +447,7 @@ class pages extends section implements isection
     protected function fields($update = false)
     {
         $fields = array();
+        $id = is_array($this->item) ? '' : $this->item->pid;
         
         $fields[] = new field(array('name' => 'title', 'validator' => array('isRequired', 'isString'), 'label' => lang('LANG_TITLE')));
         if (!$update) {
@@ -471,7 +460,7 @@ class pages extends section implements isection
         $fields[] = new field(array('name' => 'og_title', 'validator' => array('isString'), 'label' => lang('LANG_OG_TITLE')));
         $fields[] = new field(array('name' => 'og_image', 'type' => 'image', 'validator' => array('isNumber'), 'label' => lang('LANG_OG_IMAGE')));
         $fields[] = new field(array('name' => 'og_description', 'type' => 'textarea', 'validator' => array('isString'), 'label' => lang('LANG_OG_DESCRIPTION')));
-        $fields[] = new field(array('name' => 'parent', 'type' => 'select', 'validator' => array('isNumber'), 'label' => lang('LANG_PARENT'), 'values' => $this->getParents()));
+        $fields[] = new field(array('name' => 'parent', 'type' => 'select', 'validator' => array('isNumber'), 'label' => lang('LANG_PARENT'), 'values' => $this->getParents($id)));
         $fields[] = new field(array('name' => 'show_menu', 'validator' => array('isCheckbox'), 'label' => lang('LANG_SHOW_MENU'), 'type' => 'checkbox'));
         $fields[] = new field(array('name' => 'require_auth', 'validator' => array('isCheckbox'), 'label' => lang('LANG_REQUIRE_AUTH'), 'type' => 'checkbox'));
         

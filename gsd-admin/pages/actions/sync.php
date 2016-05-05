@@ -12,10 +12,17 @@
 
 $mysql->statement('UPDATE pages AS p
     LEFT JOIN pages AS pp ON pp.pid = p.parent
-    SET p.beautify = concat(if(pp.beautify IS NULL, "", pp.beautify), p.url)
+    SET p.beautify = CONCAT(IFNULL(pp.beautify, ""), p.url)
     WHERE p.pid = ?;', array(
         $site->arg(2)
     ));
 
-$_SESSION['message'] = sprintf(lang('LANG_PAGE_SYNCED'), @$_REQUEST['title']);
+$mysql->reset()
+    ->select('title')
+    ->from('pages')
+    ->where('pid = ?')
+    ->values($site->arg(2))
+    ->exec();
+
+$_SESSION['message'] = sprintf(lang('LANG_PAGE_SYNCED'), $mysql->singleresult());
 redirect('/admin/'.$site->arg(1));

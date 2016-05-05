@@ -162,6 +162,16 @@ abstract class section implements isection
                         'label' => $label
                     ));
                     break;
+                    case 'number':
+                    $field = (string) new input(array(
+                        'id' => $name,
+                        'name' => $name,
+                        'required' => $isRequired,
+                        'value' => $update ? ($noValue ? '' : @$item->{$name}) : $value,
+                        'label' => $label,
+                        'type' => $type,
+                    ));
+                    break;
                     default:
                     
                     $field = (string) new input(array(

@@ -48,7 +48,7 @@ function isString($value = '', $field = '', $label = '')
 {
     $label = $label ? $label : lang('LANG_'.strtoupper($field->getName()));
     $result = array(
-        'result' => is_string($value) && !is_numeric($value),
+        'result' => is_string($value),
         'value' => escapeText($value),
         'field' => $field->getName(),
         'message' => sprintf('(%s) Invalid type. Needs to be a string', $label)
@@ -99,6 +99,7 @@ function isUrl($value = '', $field = '', $label = '')
 function isNumber($value = 0, $field = '', $label = '')
 {
     $label = $label ? $label : lang('LANG_'.strtoupper($field->getName()));
+    $value = $value === '' ? 0 : $value;
     $result = array(
         'result' => is_numeric($value),
         'value' => $value,

@@ -116,7 +116,7 @@ if (@$_REQUEST['save']) {
 
             $mysql->statement('UPDATE pages AS p
             LEFT JOIN pages AS pp ON pp.pid = p.parent
-            SET p.url = ?, p.beautify = concat(if(pp.beautify IS NULL, "", pp.beautify), ?)
+            SET p.url = ?, p.beautify = CONCAT(IFNULL(pp.beautify, ""), ?)
             WHERE p.pid = ?;', array(
                 $_REQUEST['url'],
                 $_REQUEST['url'],
