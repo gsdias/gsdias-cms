@@ -17,10 +17,10 @@ msgid "LANG_DEBUG_LABEL"
 msgstr "Modo debug"
 
 msgid "LANG_MAINTENANCE_LABEL"
-msgstr "Manutencao"
+msgstr "Manutenção"
 
 msgid "LANG_MAINTENANCE_TEXT"
-msgstr "O site encontra-se em manutencao. Volte mais tarde"
+msgstr "O site encontra-se em manutenção. Volte mais tarde"
 
 msgid "LANG_ERROR"
 msgstr "Houve um problema. Tente novamente mais tarde"
@@ -130,6 +130,24 @@ msgstr "Último Login"
 msgid "LANG_TITLE"
 msgstr "Título"
 
+msgid "LANG_URL"
+msgstr "Url"
+
+msgid "LANG_KEYWORDS"
+msgstr ""
+
+msgid "LANG_TAGS"
+msgstr ""
+
+msgid "LANG_OG_TITLE"
+msgstr ""
+
+msgid "LANG_OG_IMAGE"
+msgstr ""
+
+msgid "LANG_OG_DESCRIPTION"
+msgstr ""
+
 msgid "LANG_LOGOUT"
 msgstr "Sair"
 
@@ -190,9 +208,6 @@ msgstr "Mostrar no menu"
 msgid "LANG_REQUIRE_AUTH"
 msgstr "Requer autenticação"
 
-msgid "LANG_ADITIONAL_INFORMATION"
-msgstr "Informação adicional"
-
 msgid "LANG_PUBLISHED"
 msgstr "Publicada"
 
@@ -200,7 +215,7 @@ msgid "LANG_UNPUBLISHED"
 msgstr "Por publicar"
 
 msgid "LANG_PARENT"
-msgstr "Pagina ascendente"
+msgstr "Página ascendente"
 
 msgid "LANG_SIZE"
 msgstr "Tamanho"

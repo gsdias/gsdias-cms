@@ -130,6 +130,24 @@ msgstr "Dernière Connexion"
 msgid "LANG_TITLE"
 msgstr "Titre"
 
+msgid "LANG_URL"
+msgstr "Url"
+
+msgid "LANG_KEYWORDS"
+msgstr ""
+
+msgid "LANG_TAGS"
+msgstr ""
+
+msgid "LANG_OG_TITLE"
+msgstr ""
+
+msgid "LANG_OG_IMAGE"
+msgstr ""
+
+msgid "LANG_OG_DESCRIPTION"
+msgstr ""
+
 msgid "LANG_LOGOUT"
 msgstr "Laisser"
 
@@ -189,9 +207,6 @@ msgstr "Afficher dans le menu"
 
 msgid "LANG_REQUIRE_AUTH"
 msgstr "Requiert une authentification"
-
-msgid "LANG_ADITIONAL_INFORMATION"
-msgstr "Informations complémentaires"
 
 msgid "LANG_PUBLISHED"
 msgstr "Publié"

@@ -7,7 +7,7 @@
  * @version    1.5
  *
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
- * @since      File available since Release 1.6
+ * @since      File available since Release 1.5.1
  */
 
 $mysql->statement('UPDATE pages AS p

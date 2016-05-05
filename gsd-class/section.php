@@ -19,8 +19,6 @@ abstract class section implements isection
 
     public function __construct($permission)
     {
-        global $tpl;
-
         $this->permission = $permission;
         return 0;
     }

@@ -130,6 +130,24 @@ msgstr "Last Login"
 msgid "LANG_TITLE"
 msgstr "Title"
 
+msgid "LANG_URL"
+msgstr "Url"
+
+msgid "LANG_KEYWORDS"
+msgstr "Keywords"
+
+msgid "LANG_TAGS"
+msgstr "Tags"
+
+msgid "LANG_OG_TITLE"
+msgstr "Facebook title"
+
+msgid "LANG_OG_IMAGE"
+msgstr "Facebook image"
+
+msgid "LANG_OG_DESCRIPTION"
+msgstr "Facebook description"
+
 msgid "LANG_LOGOUT"
 msgstr "Logout"
 
@@ -189,9 +207,6 @@ msgstr "Show in menu"
 
 msgid "LANG_REQUIRE_AUTH"
 msgstr "Require auth"
-
-msgid "LANG_ADITIONAL_INFORMATION"
-msgstr "Aditional information"
 
 msgid "LANG_PUBLISHED"
 msgstr "Published"
