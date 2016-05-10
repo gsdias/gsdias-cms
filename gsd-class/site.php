@@ -16,6 +16,8 @@ class site
     public $name, $email, $ga, $gtm, $fb, $uri, $page, $main, $startpoint, $pagemodules, $layout, $protocol, $isFrontend, $options;
     protected $path;
 
+    const VERSION = '1.5.1';
+
     public function __construct()
     {
         global $mysql, $tpl;
@@ -29,27 +31,26 @@ class site
         $mysql->reset()
             ->select()
             ->from('options')
+            ->order('index')
             ->exec();
 
         define('IS_INSTALLED', !file_exists('gsd-install'.PHPEXT));
 
         foreach ($mysql->result() as $option) {
-            $name = str_replace('gsd-', '', $option->name);
-            $this->{str_replace(array('_image', '_select'), '', $name)} = $option->value;
+            $name = $option->name;
+            $this->{$name} = $option->value;
 
-            if (strpos($name, '_image') !== false) {
+            if ($option->type === 'image') {
                 $image = new image(array('iid' => $option->value, 'width' => 'auto', 'height' => 'auto'));
-                $name = str_replace(array('_image', '_select'), '', $name);
                 $tpl->setvar('SITE_'.strtoupper($name), $image);
             } else {
-                $name = str_replace(array('_image', '_select'), '', $name);
                 $tpl->setvar('SITE_'.strtoupper($name), $option->value);
             }
-            $this->options[$name] = $option->value;
+            $this->options[$name] = array('type' => $option->type, 'value' => $option->value, 'label' => $option->label);
         }
 
-        define('DEBUG', @$this->options['debug_checkbox']);
-        $tpl->setcondition('DEBUG', !!@$this->options['debug_checkbox']);
+        define('DEBUG', @$this->options['debug']['value']);
+        $tpl->setcondition('DEBUG', !!@$this->options['debug']['value']);
 
         $pattern = '/(\?)(.*)/';
         $this->uri = preg_replace($pattern, '', $_SERVER['REQUEST_URI']);

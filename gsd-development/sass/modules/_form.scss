@@ -111,6 +111,15 @@ select {
     padding: 10px;
 }
 
+.warning {
+    background: #fcf8e3;
+    border: solid 1px #f6dc00;
+    color: #c09853;
+    padding: 10px;
+    display: block;
+    border-radius: 3px;
+}
+
 .form-messages {
     clear: both;
     color: #ce3e3e;

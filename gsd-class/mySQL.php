@@ -148,7 +148,7 @@ class mySQL implements idatabase
         $this->total = $this->prepared->rowCount();
         $erro = $this->prepared->errorInfo();
 
-        if ($this->_select) {
+        if ($this->_select || $this->_show) {
             $this->result = $this->prepared->fetchAll(PDO::FETCH_OBJ);
         }
 

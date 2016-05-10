@@ -377,7 +377,7 @@ class pages extends section implements isection
             $this->update_beautify($pid);
         }
 
-        if ($hasChanged) {
+        if (empty($result['errmsg']) && $hasChanged) {
             array_push($fields, $currentpage->modified);
             array_push($defaultfields, 'modified');
             $this->page_review($defaultfields, $fields);

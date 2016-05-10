@@ -1,6 +1,22 @@
 <main>
-    <!-- IF ERRORS --><div class="errors">{ERRORS}</div><!-- ENDIF ERRORS -->
-    <!-- IF MESSAGES --><div class="errors messages">{MESSAGES}</div><!-- ENDIF MESSAGES -->
+    <!-- IF ERRORS -->
+    <div class="errors">
+        <i class="fa fa-times"></i>
+        {ERRORS}
+    </div>
+    <!-- ENDIF ERRORS -->
+    <!-- IF MESSAGES -->
+    <div class="errors messages">
+        <i class="fa fa-check"></i>
+        {MESSAGES}
+    </div>
+    <!-- ENDIF MESSAGES -->
+    <!-- IF WARNING -->
+    <div class="warning">
+        <i class="fa fa-exclamation-triangle"></i>
+        {WARNINGS}
+    </div>
+    <!-- ENDIF WARNING -->
     [_PAGES]
     [_USERS]
     [_IMAGES]

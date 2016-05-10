@@ -9,21 +9,20 @@
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
+
 if (@$_REQUEST['save']) {
     $fields = 1;
 
-    $mysql->reset()
-        ->select()
-        ->from('options')
-        ->order('index')
-        ->exec();
-
     $options = array();
-    foreach ($mysql->result() as $item) {
-        $value = @$_REQUEST[$item->name];
-        $name = $item->name;
-        if (strpos($item->name, '_checkbox') !== false) {
-            $value = @$_REQUEST[$item->name] ? @$_REQUEST[$item->name] : null;
+    foreach ($site->options as $name => $info) {
+        $value = $_REQUEST[$name];
+
+        if ($name === 'version') {
+            continue;
+        }
+
+        if ($info['type'] === 'checkbox') {
+            $value = $value ? $value : null;
         }
 
         $mysql->reset()
@@ -32,6 +31,7 @@ if (@$_REQUEST['save']) {
             ->where('name = ?')
             ->values(array(escapeText($value), $name))
             ->exec();
+
         $fields = $mysql->errnum ? 0 : $fields;
     }
 
@@ -45,55 +45,54 @@ if (@$_REQUEST['save']) {
     }
 }
 
-$mysql->reset()
-    ->select()
-    ->from('options')
-    ->order('index')
-    ->exec();
-
 $options = array();
-foreach ($mysql->result() as $item) {
+foreach ($site->options as $name => $info) {
     $extraclass = '';
-    if (strpos($item->name, '_image') !== false) {
+    $label = $info['label'];
+    $value = $info['value'];
+
+    if ($info['type'] === 'image') {
         $image = new GSD\image(array(
-            'iid' => $item->value,
+            'iid' => $value,
             'height' => '100',
             'width' => 'auto',
-            'class' => sprintf('preview %s', $item->value ? '' : 'is-hidden'),
+            'class' => sprintf('preview %s', $value ? '' : 'is-hidden'),
         ));
 
         $partial = new GSD\tpl();
         $partial->setvars(array(
-            'LABEL' => $item->label,
-            'NAME' => $item->name,
+            'LABEL' => $label,
+            'NAME' => $name,
             'IMAGE' => $image,
-            'VALUE' => @$item->value ? @$item->value : 0,
-            'EMPTY' => @$item->value ? 'is-hidden' : '',
+            'VALUE' => @$value ? @$value : 0,
+            'EMPTY' => @$value ? 'is-hidden' : '',
         ));
         $partial->setfile('_image');
 
         $field = $partial;
         $extraclass = ' image';
-    } elseif ($item->name === 'gsd-locale_select') {
+    } elseif ($name === 'locale') {
         $field = new GSD\select(array(
-            'id' => $item->name,
-            'name' => $item->name,
+            'id' => $name,
+            'name' => $name,
             'list' => $languages,
-            'label' => $item->label,
-            'selected' => @$item->value,
+            'label' => $label,
+            'selected' => @$value,
         ));
-    } elseif (strpos($item->name, '_checkbox') !== false) {
+    } elseif ($info['type'] === 'checkbox') {
         $extraclass = ' checkbox';
         $field = new GSD\input(array(
-            'id' => $item->name,
-            'name' => $item->name,
-            'label' => $item->label,
-            'selected' => @$item->value,
+            'id' => $name,
+            'name' => $name,
+            'label' => $label,
+            'selected' => @$value,
             'value' => 1,
             'type' => 'checkbox',
         ));
+    } elseif ($name === 'version') {
+        continue;
     } else {
-        $field = (string) new GSD\input(array('name' => $item->name, 'value' => @$item->value, 'label' => $item->label));
+        $field = (string) new GSD\input(array('name' => $name, 'value' => @$value, 'label' => $label));
     }
 
     $options[] = array(

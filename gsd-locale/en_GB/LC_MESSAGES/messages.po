@@ -13,6 +13,12 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Language: en_GB\n"
 
+msgid "LANG_UPDATE_NEEDED"
+msgstr "There was detected an update. You are running version %s and new updated version is %s. Run <a href='/admin/update'>update</a> to make database changes if needed"
+
+msgid "LANG_UPDATE_FINISHED"
+msgstr "Update done with success"
+
 msgid "LANG_DEBUG_LABEL"
 msgstr "Debug mode"
 

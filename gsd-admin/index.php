@@ -42,6 +42,8 @@ if (!IS_LOGGED) {
             $file = 'gsd-admin/settings'.PHPEXT;
         } elseif ($site->arg(1) == 'language') {
             $file = 'gsd-admin/language'.PHPEXT;
+        } elseif ($site->arg(1) == 'update') {
+            $file = 'gsd-admin/update'.PHPEXT;
         } else {
             if (class_exists('\\GSD\\'.$site->arg(1)) || class_exists('\\GSD\\Extended\extended'.$site->arg(1))) {
                 $file = 'gsd-admin/list'.PHPEXT;
