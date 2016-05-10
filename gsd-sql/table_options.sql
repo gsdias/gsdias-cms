@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS `options` (
 -- Indexes for table `options`
 --
 INSERT INTO options (`name`, `type`, `label`, `value`, `index`) VALUES
-('version', NULL, '', '1.5.1', 1),
+('version', NULL, '', '1.6', 1),
 ('name', 'input', '{LANG_NAME}', NULL, 2),
 ('email', 'input', '{LANG_EMAIL}', NULL, 3),
 ('ga', 'input', 'Google Analytics', NULL, 4),

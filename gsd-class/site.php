@@ -4,8 +4,6 @@
  * @author     Goncalo Silva Dias <mail@gsdias.pt>
  * @copyright  2014-2015 GSDias
  *
- * @version    1.5.1
- *
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
@@ -16,7 +14,7 @@ class site
     public $name, $email, $ga, $gtm, $fb, $uri, $page, $main, $startpoint, $pagemodules, $layout, $protocol, $isFrontend, $options;
     protected $path;
 
-    const VERSION = '1.5.1';
+    const VERSION = '1.6';
 
     public function __construct()
     {

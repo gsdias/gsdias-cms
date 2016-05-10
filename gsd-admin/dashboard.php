@@ -4,8 +4,6 @@
  * @author     Goncalo Silva Dias <mail@gsdias.pt>
  * @copyright  2014-2015 GSDias
  *
- * @version    1.5.1
- *
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
@@ -15,7 +13,7 @@ $tpl->setpaths(array(TPLPATH.'dashboard/%s'.TPLEXT));
 if (IS_ADMIN) {
     $needupdate = $site->options['version']['value'] !== $site::VERSION;
     if ($needupdate) {
-        $tpl->setvar('WARNINGS', sprintf(lang('LANG_UPDATE_NEEDED'), $site::VERSION, @$site->options['version']['value']));
+        $tpl->setvar('WARNINGS', sprintf(lang('LANG_UPDATE_NEEDED'), @$site->options['version']['value'], $site::VERSION));
         $tpl->setcondition('WARNING', $needupdate);
     }
     $mysql->reset()
