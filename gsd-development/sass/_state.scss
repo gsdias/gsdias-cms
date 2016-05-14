@@ -15,3 +15,17 @@
 .is-hidden {
     display: none;
 }
+
+.is-active {
+    .field-action {
+        display: block;
+    }
+}
+
+.fields {
+    tr:hover, .gsd-editing {
+        .field-action {
+            display: block;
+        }
+    }
+}

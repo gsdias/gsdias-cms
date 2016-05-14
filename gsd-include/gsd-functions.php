@@ -62,7 +62,7 @@ function isRequired($value = '', $field = '', $label = '')
         'result' => trim($value) !== '',
         'value' => $value,
         'field' => $field->getName(),
-        'message' => sprintf('(%s) Is required', $label)
+        'message' => sprintf('(%s) '.lang('LANG_REQUIRED'), $label)
     );
     
     return $result;
@@ -102,7 +102,7 @@ function isNumber($value = 0, $field = '', $label = '')
         'result' => is_numeric($value),
         'value' => $value,
         'field' => $field->getName(),
-        'message' => sprintf('(%s) Invalid type. Needs to be a number', $label)
+        'message' => sprintf(lang('LANG_INVALID_NUMBER'), $label)
     );
 
     return $result;

@@ -17,6 +17,10 @@ abstract class section implements isection
 
     public function __construct($permission)
     {
+        global $tpl;
+
+        $tpl->setvar('SECTION_ACTION', lang('LANG_EDIT'));
+
         $this->permission = $permission;
         return 0;
     }
@@ -331,6 +335,10 @@ abstract class section implements isection
 
         if ($field instanceof field) {
             $value = @$_REQUEST[$field->getName()];
+            if ($field->getExtra()) {
+                $response['field'] = null;
+                return $response;
+            }
             foreach($field->getValidator() as $filter) {
                 if (function_exists($filter)) {
                     $response = $filter($value, $field, $field->getLabel());

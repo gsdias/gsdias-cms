@@ -15,14 +15,15 @@ class layouts extends section implements isection
     {
         global $tpl, $site;
         
-        $tpl->setvar('SECTION_TYPE', lang('LANG_LAYOUT', 'LOWER'));
-        if ($site->arg(3) === 'edit') {
-            $tpl->setvar('SECTION_ACTION', lang('LANG_EDIT'));
-        } else {
-            $tpl->setvar('SECTION_ACTION', lang('LANG_NEW_MALE'));
-        }
         $permission = gettype($permission) === 'boolean' ? $permission : IS_ADMIN;
-        return parent::__construct($permission);
+        $result = parent::__construct($permission);
+
+        $tpl->setvar('SECTION_TYPE', lang('LANG_LAYOUT', 'LOWER'));
+        if ($site->arg(2) === 'create') {
+            $tpl->repvar('SECTION_ACTION', lang('LANG_NEW_MALE'));
+        }
+
+        return $result;
     }
     
     public function getlist($options)

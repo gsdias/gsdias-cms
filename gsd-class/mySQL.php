@@ -45,7 +45,7 @@ class mySQL implements idatabase
             ));
 
         } catch (\PDOException $error) {
-//                                echo $error->getMessage();
+//            echo $error->getMessage();
             switch ($error->getCode()) {
             case '2002':
             printf('<span style="color: red;">Could not connect to database. Check host</span><br>');

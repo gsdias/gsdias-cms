@@ -148,6 +148,30 @@
             tbody.bottom = tbody.el.position().top + tbody.el.outerHeight(true);
             tbody.middle = tbody.el.find('tr:first').height() / 2;
             tbody.tr = tbody.el.find('tr');
+        },
+
+        togglefield = function () {
+            var $action = $(this),
+                $line = $action.closest('tr'),
+                $field = $line.find('.field'),
+                $label = $line.find('.value');
+
+            $field.toggleClass('is-hidden');
+            $label.toggleClass('is-hidden');
+            $label.text($field.val());
+            $action.toggleClass('fa-check fa-edit');
+            $line.toggleClass('gsd-editing');
+        },
+
+        addfield = function () {
+            var $action = $(this),
+                $line = $action.closest('tr'),
+                $new = $line.clone();
+
+            $new.find('.field').val('');
+            $new.find('.value').text('');
+
+            $line.before($new);
         };
 
     $(document).bind(GSD.globalevents.init, function () {
@@ -166,6 +190,8 @@
         $('[name="title"]').on('blur', generateurl);
         $('body').on('change', '.item_value', newsubmodule);
         $('body').on('click', '.fa-gear', togglesettings);
+        $('body').on('click', '.gsd-edit', togglefield);
+        $('body').on('click', '.gsd-add', addfield);
     });
 
 }(GSD.Pages = GSD.Pages || {}, GSD.Api, GSD.$, _, document));

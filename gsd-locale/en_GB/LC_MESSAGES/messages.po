@@ -453,3 +453,6 @@ msgstr "Language not converted"
 
 msgid "LANG_LANGUAGE_NOT_SAVED"
 msgstr "Language not saved"
+
+msgid "LANG_INVALID_NUMBER"
+msgstr "(%S) Tipo inválido. Precisa de ser um número"

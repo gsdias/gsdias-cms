@@ -15,14 +15,15 @@ class images extends section implements isection
     {
         global $tpl, $site;
         
-        $tpl->setvar('SECTION_TYPE', lang('LANG_IMAGE', 'LOWER'));
-        if ($site->arg(3) === 'edit') {
-            $tpl->setvar('SECTION_ACTION', lang('LANG_EDIT'));
-        } else {
-            $tpl->setvar('SECTION_ACTION', lang('LANG_NEW_FEMALE'));
-        }
         $permission = gettype($permission) === 'boolean' ? $permission : IS_ADMIN || IS_EDITOR;
-        return parent::__construct($permission);
+        $result = parent::__construct($permission);
+
+        $tpl->setvar('SECTION_TYPE', lang('LANG_IMAGE', 'LOWER'));
+        if ($site->arg(2) === 'upload') {
+            $tpl->repvar('SECTION_ACTION', lang('LANG_NEW_FEMALE'));
+        }
+
+        return $result;
     }
     
     public function getlist($options)

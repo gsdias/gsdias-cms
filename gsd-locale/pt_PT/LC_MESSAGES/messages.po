@@ -453,3 +453,6 @@ msgstr "Língua não convertida"
 
 msgid "LANG_LANGUAGE_NOT_SAVED"
 msgstr "Não foi possível salvar ficheiro de edição"
+
+msgid "LANG_INVALID_NUMBER"
+msgstr "(%S) Invalid type. Needs to be a number"

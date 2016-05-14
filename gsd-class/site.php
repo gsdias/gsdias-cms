@@ -11,7 +11,7 @@ namespace GSD;
 
 class site
 {
-    public $name, $email, $ga, $gtm, $fb, $uri, $page, $main, $startpoint, $pagemodules, $layout, $protocol, $isFrontend, $options;
+    public $name, $email, $ga, $gtm, $fb, $uri, $page, $main, $startpoint, $pagemodules, $pageextra, $layout, $protocol, $isFrontend, $options;
     protected $path;
 
     const VERSION = '1.6';
@@ -125,28 +125,57 @@ class site
 
             $this->main = trim(str_replace('.html', '', $page->file));
 
-            $mysql->reset()
-                ->select()
-                ->from('pagemodules AS pm')
-                ->join('layoutsections AS ls')
-                ->on('ls.lsid = pm.lsid')
-                ->where('pid = ?')
-                ->values($page->pid)
-                ->exec();
+            $this->fetchModules($page->pid);
 
-            if ($mysql->total) {
-                $pagemodules = array();
-                foreach ($mysql->result() as $module) {
-                    $pagemodules[@$module->label] = $module->data;
-                }
-                $this->pagemodules = $pagemodules;
-            }
+            $this->fetchExtra($page->pid);
         } else {
             http_response_code(404);
             $this->startpoint = '404';
             $tpl->setvar('PAGE_TITLE', $this->name);
         }
         $tpl->setvar('PAGE_CANONICAL', $this->protocol.$_SERVER['HTTP_HOST'].$this->uri);
+    }
+
+    public function fetchModules($pid)
+    {
+        global $mysql;
+
+        $mysql->reset()
+            ->select()
+            ->from('pagemodules AS pm')
+            ->join('layoutsections AS ls')
+            ->on('ls.lsid = pm.lsid')
+            ->where('pid = ?')
+            ->values($pid)
+            ->exec();
+
+        if ($mysql->total) {
+            $pagemodules = array();
+            foreach ($mysql->result() as $module) {
+                $pagemodules[@$module->label] = $module->data;
+            }
+            $this->pagemodules = $pagemodules;
+        }
+    }
+
+    public function fetchExtra($pid)
+    {
+        global $mysql;
+
+        $mysql->reset()
+            ->select()
+            ->from('pages_extra')
+            ->where('pid = ?')
+            ->values($pid)
+            ->exec();
+
+        if ($mysql->total) {
+            $pageextra = array();
+            foreach ($mysql->result() as $module) {
+                $pageextra[$module->name] = $module->value;
+            }
+            $this->pageextra = $pageextra;
+        }
     }
 
     public function arg($pos)

@@ -23,6 +23,7 @@ class field
             'isRequired' => false,
             'notRender' => false,
             'noValue' => false,
+            'extra' => false,
             'value' => '',
             'values' => array()
         );
@@ -82,6 +83,11 @@ class field
     public function getNotRender()
     {
         return $this->args['notRender'];
+    }
+
+    public function getExtra()
+    {
+        return $this->args['extra'];
     }
 
     public function __toString()

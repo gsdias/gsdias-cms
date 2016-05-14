@@ -48,6 +48,14 @@
         border: solid 1px $border-color;
         box-shadow: 0 0 1px $border-color;
     }
+
+    &.fields {
+        max-width: 55.5%;
+
+        td {
+            padding: 5px;
+        }
+    }
 }
 
 .pages {

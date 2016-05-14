@@ -13,12 +13,17 @@ class users extends section implements isection
 {
     public function __construct($permission = NULL)
     {
-        global $tpl;
-        
-        $tpl->setvar('SECTION_TYPE', lang('LANG_USER', 'LOWER'));
-        $tpl->setvar('SECTION_GENDER_NEW', lang('LANG_NEW_MALE'));
+        global $tpl, $site;
+
         $permission = gettype($permission) === 'boolean' ? $permission : IS_ADMIN;
-        return parent::__construct($permission);
+        $result = parent::__construct($permission);
+
+        $tpl->setvar('SECTION_TYPE', lang('LANG_USER', 'LOWER'));
+        if ($site->arg(2) === 'create') {
+            $tpl->repvar('SECTION_ACTION', lang('LANG_NEW_MALE'));
+        }
+
+        return $result;
     }
     
     public function getlist($options)
@@ -101,15 +106,9 @@ class users extends section implements isection
 
         return $result['item'];
     }
+
     public function edit()
     {
-        foreach($fields as $index => $field) {
-            if (is_array($field)) {
-                if(in_array('isPassword', $field[1]) && $_REQUEST[$field[0]] === '') {
-                    unset($fields[$index]);
-                }
-            }
-        }
         return parent::edit();
     }
 

@@ -15,14 +15,15 @@ class pages extends section implements isection
     {
         global $tpl, $site;
         
-        $tpl->setvar('SECTION_TYPE', lang('LANG_PAGE', 'LOWER'));
-        if ($site->arg(3) === 'edit') {
-            $tpl->setvar('SECTION_ACTION', lang('LANG_EDIT'));
-        } else {
-            $tpl->setvar('SECTION_ACTION', lang('LANG_NEW_FEMALE'));
-        }
         $permission = gettype($permission) === 'boolean' ? $permission : IS_ADMIN || IS_EDITOR;
-        return parent::__construct($permission);
+        $result = parent::__construct($permission);
+
+        $tpl->setvar('SECTION_TYPE', lang('LANG_PAGE', 'LOWER'));
+        if ($site->arg(2) === 'create') {
+            $tpl->repvar('SECTION_ACTION', lang('LANG_NEW_FEMALE'));
+        }
+
+        return $result;
     }
     
     public function getlist($options)
@@ -108,7 +109,11 @@ class pages extends section implements isection
     {
         global $mysql, $tpl;
 
-        $mysql->statement('SELECT pages.*, pages.created, u.name AS creator FROM pages LEFT JOIN users AS u ON pages.creator = u.uid WHERE pages.pid = ?;', array($id));
+        $mysql->statement('SELECT pages.*, pages.created, u.name AS creator, l.file AS layout
+        FROM pages
+        LEFT JOIN users AS u ON pages.creator = u.uid
+        LEFT JOIN layouts AS l ON pages.lid = l.lid
+        WHERE pages.pid = ?;', array($id));
 
         $result = parent::getcurrent($mysql->singleline());
 
@@ -144,6 +149,15 @@ class pages extends section implements isection
             $fields['CURRENT_PAGES_OG_IMAGE'] = $partial;
 
             $tpl->repvars($fields);
+
+            $fields = $this->fields(true);
+
+            $mysql->statement('SELECT * FROM pages_extra WHERE pid = ?;', array($id));
+            if ($mysql->total) {
+                foreach ($mysql->result() as $field) {
+                    $result['item']->{$field->name} = $field->value;
+                }
+            }
 
             $mysql->statement('SELECT * FROM pages_review WHERE pid = ?;', array($id));
 
@@ -303,6 +317,18 @@ class pages extends section implements isection
             $this->update_beautify($result['id']);
         }
 
+        $fields = $this->fields();
+
+        foreach ($fields as $field) {
+            if ($field->getExtra()) {
+                $mysql->reset()
+                ->insert('pages_extra')
+                ->fields(array('pid', 'name', 'value'))
+                ->values(array($result['id'], $field->getName(), @$_REQUEST[$field->getName()]))
+                ->exec();
+            }
+        }
+
         return $result;
     }
     
@@ -370,6 +396,19 @@ class pages extends section implements isection
         }
 
         $result = parent::edit();
+
+        $fields = $this->fields(true);
+
+        foreach ($fields as $field) {
+            if ($field->getExtra()) {
+                $mysql->reset()
+                    ->update('pages_extra')
+                    ->fields(array('value'))
+                    ->where('pid = ? AND name = ?')
+                    ->values(array(@$_REQUEST[$field->getName()], $pid, $field->getName()))
+                    ->exec();
+            }
+        }
 
         if ($currentpage->parent !== $_REQUEST['parent']) {
             $this->update_beautify($pid);
