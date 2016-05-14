@@ -78,7 +78,7 @@ class layouts extends section implements isection
 
         $result = parent::getcurrent($mysql->singleline());
 
-        return $result['item'];
+        return $result;
     }
 
     public function add()

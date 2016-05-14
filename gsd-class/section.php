@@ -84,7 +84,7 @@ abstract class section implements isection
 
         $tpl->setvars($fields);
 
-        return array('item' => $item, 'fields' => $fields);
+        return $fields;
     }
 
     public function generatefields($update = false)

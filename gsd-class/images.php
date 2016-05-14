@@ -85,7 +85,7 @@ class images extends section implements isection
 
         $result = parent::getcurrent($mysql->singleline());
 
-        return $result['item'];
+        return $result;
     }
     
     protected function fields($update = false)

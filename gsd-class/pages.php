@@ -117,10 +117,10 @@ class pages extends section implements isection
 
         $result = parent::getcurrent($mysql->singleline());
 
-        if (!empty($result['item'])) {
-            $item = $result['item'];
+        if (!empty($this->item)) {
+            $item = $this->item;
             $created = explode(' ', $item->created);
-            $fields = $result['fields'];
+            $fields = $result;
 
             $fields['CURRENT_PAGES_CREATED'] = timeago(dateDif($created[0], date('Y-m-d', time())), $created[1]);
 
@@ -155,7 +155,7 @@ class pages extends section implements isection
             $mysql->statement('SELECT * FROM pages_extra WHERE pid = ?;', array($id));
             if ($mysql->total) {
                 foreach ($mysql->result() as $field) {
-                    $result['item']->{$field->name} = $field->value;
+                    $this->item->{$field->name} = $field->value;
                 }
             }
 
@@ -173,7 +173,7 @@ class pages extends section implements isection
             }
         }
 
-        return $result['item'];
+        return $result;
     }
 
     public function generatefields($initial = false)

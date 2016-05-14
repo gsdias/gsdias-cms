@@ -436,15 +436,17 @@ function getLanguage()
 
     $languageList = array_keys($languages);
 
+    $list = array();
+
     $browserlang = preg_replace('#;q=[0-9].[0-9]#s', '', @$_SERVER['HTTP_ACCEPT_LANGUAGE']);
     $browserlang = explode(',', str_replace('-', '_', $browserlang));
 
     $redirect = explode('/', @$_REQUEST['redirect']);
 
-    $list = array($site->arg(0), @$redirect[1]);
+    $list[] = $site->arg(0);
 
-    if (!$site->isFrontend) {
-        array_unshift($list, $user->locale, @$site->locale);
+    if (@$redirect[1]) {
+        $list[] = $redirect[1];
     }
 
     $list = array_merge($list, array($user->locale), $browserlang);

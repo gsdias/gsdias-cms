@@ -84,10 +84,10 @@ class users extends section implements isection
 
         $result = parent::getcurrent($mysql->singleline());
 
-        if (!empty($result['item'])) {
-            $item = $result['item'];
+        if (!empty($this->item)) {
+            $item = $this->item;
             $created = explode(' ', $item->created);
-            $fields = $result['fields'];
+            $fields = $result;
 
             $fields['CURRENT_USERS_DISABLED'] = $item->disabled ? 'checked="checked"' : '';
             $fields['CURRENT_USERS_STATUS'] = !$item->disabled ? lang('LANG_ENABLED') : lang('LANG_DISABLED');
@@ -104,7 +104,7 @@ class users extends section implements isection
             $tpl->repvars($fields);
         }
 
-        return $result['item'];
+        return $result;
     }
 
     public function edit()
