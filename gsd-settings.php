@@ -61,6 +61,7 @@ $tables = array(
 );
 
 $languages = array(
+    '' => 'LANG_CHOOSE',
     'pt_PT' => 'Português',
     'en_GB' => 'English',
     'fr_FR' => 'Français',
