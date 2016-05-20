@@ -1,3 +1,18 @@
+version 1.6
+
+Added a version control
+Removed version information from all files
+Changed logic for database settings
+Added settings type in table
+Added pages_extra table for extra fields
+Fixed issue with pdo execution where fetchall was not being executed on show command
+Added layout information for getcurrent of page types
+Fixed issue with revision creation on page save. It was saving even on error
+Removed item object from getcurrent method as its available already
+Added version constant on site object
+Fixed some style on forms
+Changed locale order to read
+
 version 1.5.1
 
 Added recover password
