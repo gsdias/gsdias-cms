@@ -28,6 +28,7 @@ class mySQL implements idatabase
         $this->user = $user;
         $this->pass = $pass;
         $this->querylist = array();
+        $this->connect();
     }
 
     // -- Function Name : connect
@@ -45,22 +46,23 @@ class mySQL implements idatabase
             ));
 
         } catch (\PDOException $error) {
-//            echo $error->getMessage();
             switch ($error->getCode()) {
-            case '2002':
-            printf('<span style="color: red;">Could not connect to database. Check host</span><br>');
-            break;
-            case '1044':
-            printf('<span style="color: red;">Could not connect to database. Check permissions</span><br>');
-            break;
-            case '1045':
-            printf('<span style="color: red;">Could not connect to database. Check credentials</span><br>');
-            break;
-            case '1049':
-            $this->connect(false);
-            break;
-            exit;
-        }
+                case '2002':
+                printf('<span style="color: red;">Could not connect to database. Check host</span><br>');
+                break;
+                case '1044':
+                printf('<span style="color: red;">Could not connect to database. Check permissions</span><br>');
+                break;
+                case '1045':
+                printf('<span style="color: red;">Could not connect to database. Check credentials</span><br>');
+                break;
+                case '1049':
+                    $this->connect(false);
+                    if (!defined('IS_INSTALLED')) {
+                        define('IS_INSTALLED', 0);
+                    }
+                break;
+            }
         }
     }
 

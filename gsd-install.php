@@ -18,7 +18,7 @@ if (@$_REQUEST['save']) {
         ->exec();
 
     if ($mysql->total) {
-        $tpl->setvar('STEP2_MESSAGES', 'Admin user saved with success. You can login now. Don\'t forget to remove install files.');
+        $tpl->setvar('STEP2_MESSAGES', 'Admin user saved with success. You can <a href="/admin">login</a> now.');
     }
 } else {
     $site->main = 'STEP1';

@@ -32,8 +32,6 @@ class site
             ->order('index')
             ->exec();
 
-        define('IS_INSTALLED', !file_exists('gsd-install'.PHPEXT));
-
         foreach ($mysql->result() as $option) {
             $name = $option->name;
             $this->{$name} = $option->value;
