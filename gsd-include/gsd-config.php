@@ -44,9 +44,12 @@ if (function_exists('bindtextdomain')) {
     bind_textdomain_codeset($domain, $encoding);
 
     textdomain($domain);
-    if (is_dir(CLIENTPATH.'locale')) {
+    if (is_dir(CLIENTPATH.'locale') && is_dir(CLIENTPATH.'locale/'.$language)) {
         bindtextdomain('extended', CLIENTPATH.'locale');
         bind_textdomain_codeset('extended', $encoding);
+    } else {
+        $tpl->setarray('WARNINGS', array('MSG' => lang('LANG_MISSING_EXTENDED_LANGUAGE')));
+        $tpl->setcondition('WARNINGS');
     }
 }
 
@@ -65,22 +68,16 @@ $tpl->setVar('ASSETPATH', ASSETPATHURL);
 $tpl->setVar('REDIRECT', @$_REQUEST['redirect'] ? sprintf('?redirect=%s', $_REQUEST['redirect']) : '');
 $tpl->setVar('SITE_URL', $site->protocol.@$config['url']);
 
-if (@$_SESSION['error']) {
-    $tpl->setvar('ERRORS', $_SESSION['error']);
-    $tpl->setcondition('ERRORS');
-    unset($_SESSION['error']);
-}
+displaymessages('ERRORS', @$_SESSION['ERRORS']);
+displaymessages('MESSAGES', @$_SESSION['MESSAGES']);
 
-if (@$_SESSION['message']) {
-    $tpl->setvar('MESSAGES', $_SESSION['message']);
-    $tpl->setcondition('MESSAGES');
-    unset($_SESSION['message']);
-}
+$_SESSION['ERRORS'] = array();
+$_SESSION['MESSAGES'] = array();
 
 if (!$site->isFrontend) {
-    $section = lang('LANG_'.strtoupper(@$site->arg(1)));
+    $section = @$site->arg(1) ? lang('LANG_'.strtoupper($site->arg(1))) : lang('LANG_DASHBOARD');
     $tpl->setvars(array(
-        'PAGE_TITLE' => sprintf('%s - %s', $site->name, ucwords($section == 'LANG_' ? lang('LANG_DASHBOARD') : $section)),
+        'PAGE_TITLE' => sprintf('%s - %s', $site->name, ucwords($section)),
         'PAGE_CANONICAL' => $site->protocol.$_SERVER['HTTP_HOST'].$site->uri,
     ));
 }

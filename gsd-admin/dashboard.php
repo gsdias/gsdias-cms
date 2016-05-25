@@ -13,8 +13,8 @@ $tpl->setpaths(array(TPLPATH.'dashboard/%s'.TPLEXT));
 if (IS_ADMIN) {
     $needupdate = $site->options['version']['value'] !== $site::VERSION;
     if ($needupdate) {
-        $tpl->setvar('WARNINGS', sprintf(lang('LANG_UPDATE_NEEDED'), @$site->options['version']['value'], $site::VERSION));
-        $tpl->setcondition('WARNING', $needupdate);
+        $tpl->setarray('WARNINGS', array('MSG' => sprintf(lang('LANG_UPDATE_NEEDED'), @$site->options['version']['value'], $site::VERSION)));
+        $tpl->setcondition('WARNINGS', $needupdate);
     }
     $mysql->reset()
         ->select()

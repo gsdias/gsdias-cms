@@ -68,7 +68,7 @@ class images extends section implements isection
                 $result['list'][$index]['SIZE'] = sprintf('<strong>%s x %s</strong><br>%s', $item->width, $item->height, $item->size);
             }
 
-            $tpl->setarray('IMAGES', $result['list']);
+            $tpl->setarray('IMAGES', $result['list'], 0);
         }
 
         return $result;

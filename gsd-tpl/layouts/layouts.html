@@ -2,12 +2,9 @@
     <h1>{LANG_LAYOUTS}
         <!-- IF IS_ADMIN --><a href="/admin/layouts/create" class="btn">{LANG_ADD} {LANG_NEW_MALE LOWER}</a><!-- ENDIF IS_ADMIN -->
     </h1>
-    <!-- IF ERRORS -->
-    <div class="errors"><i class="fa fa-times"></i>{ERRORS}</div>
-    <!-- ENDIF ERRORS -->
-    <!-- IF MESSAGES -->
-    <div class="errors messages"><i class="fa fa-check"></i>{MESSAGES}</div>
-    <!-- ENDIF MESSAGES -->
+    [_ERRORS]
+    [_WARNINGS]
+    [_MESSAGES]
     <!-- IF LAYOUTS_EXIST -->
     <table class="table pages hasPages" data-type="layouts">
         <thead>
@@ -35,6 +32,6 @@
     <!-- ENDIF LAYOUTS_EXIST -->
 
     <!-- IF !LAYOUTS_EXIST -->
-    <span class="warning">{LANG_NO_LAYOUTS}</span>
+    <div class="messages warning">{LANG_NO_LAYOUTS}</div>
     <!-- ENDIF !LAYOUTS_EXIST -->
 </main>

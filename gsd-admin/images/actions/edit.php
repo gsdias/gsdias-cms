@@ -41,12 +41,12 @@ if (@$_REQUEST['save']) {
 
     $result = $csection->edit();
 
-    $_SESSION['message'] = sprintf(lang('LANG_IMAGE_SAVED'), $_REQUEST['name']);
+    $tpl->setarray('MESSAGES', array('MSG' => sprintf(lang('LANG_IMAGE_SAVED'), $_REQUEST['name'])));
 
     redirect('/admin/'.$site->arg(1));
 
     if (!$csection->showErrors(lang('LANG_IMAGE_ERROR'))) {
-        $_SESSION['message'] = sprintf(lang('LANG_IMAGE_SAVED'), $_REQUEST['name']);
+        $tpl->setarray('MESSAGES', array('MSG' => sprintf(lang('LANG_IMAGE_SAVED'), $_REQUEST['name'])));
 
         redirect('/admin/'.$site->arg(1));
     }

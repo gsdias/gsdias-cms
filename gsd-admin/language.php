@@ -35,7 +35,7 @@ if (@$_REQUEST['save']) {
     file_put_contents($file, $message);
     curl_close($ch);
 
-    $newfile = "msgid \"\"\nmsgstr \"\"\n\"Project-Id-Version: \\n\"\n\"POT-Creation-Date: 2014-11-12 17:19-0000\\n\"\n\"PO-Revision-Date: 2015-05-15 08:36-0000\\n\"\n\"Last-Translator: \\n\"\n\"Language-Team: \\n\"\n\"MIME-Version: 1.0\\n\"\n\"Content-Type: text/plain; charset=UTF-8\\n\"\n\"Content-Transfer-Encoding: 8bit\\n\"\n\"X-Generator: Poedit 1.6.10\\n\"\n\"X-Poedit-Basepath: .\\n\"\n\"Plural-Forms: nplurals=2; plural=(n != 1);\\n\"\n\"Language: $language\\n\"\n".$string;
+    $newfile = "msgid \"\"\nmsgstr \"\"\n\"Project-Id-Version: \\n\"\n\"POT-Creation-Date: 2014-11-12 17:19-0000\\n\"\n\"PO-Revision-Date: 2015-05-15 08:36-0000\\n\"\n\"Last-Translator: \\n\"\n\"Language-Team: \\n\"\n\"MIME-Version: 1.0\\n\"\n\"Content-Type: text/plain; charset=UTF-8\\n\"\n\"Content-Transfer-Encoding: 8bit\\n\"\n\"Plural-Forms: nplurals=2; plural=(n != 1);\\n\"\n\"Language: $language\\n\"\n".$string;
 
     if ($site->arg(2) === 'extended') {
         $file = CLIENTPATH.'locale/'.$language.'/LC_MESSAGES/extended.po';
@@ -46,19 +46,21 @@ if (@$_REQUEST['save']) {
     $content = file_put_contents($file, $newfile);
 
     if ($content) {
-        $tpl->setcondition('MESSAGES');
-        $tpl->setvar('MESSAGES', sprintf('<p>%s</p>', lang('LANG_LANGUAGE_SAVED')));
+        $tpl->setarray('MESSAGES', array('MSG' => lang('LANG_LANGUAGE_SAVED')));
     } else {
+        $tpl->setarray('ERRORS', array('MSG' => lang('LANG_LANGUAGE_NOT_SAVED')));
         $tpl->setcondition('ERRORS');
-        $tpl->setvar('ERRORS', sprintf('<p>%s</p>', lang('LANG_LANGUAGE_NOT_SAVED')));
     }
 
     if ($converted) {
-        $tpl->setcondition('MESSAGES');
-        $tpl->setvar('MESSAGES', sprintf('<p>%s</p>', lang('LANG_LANGUAGE_CONVERTED')));
+        $tpl->setarray('MESSAGES', array('MSG' => lang('LANG_LANGUAGE_CONVERTED')));
     } else {
+        $tpl->setarray('ERRORS', array('MSG' => lang('LANG_LANGUAGE_NOT_CONVERTED')));
         $tpl->setcondition('ERRORS');
-        $tpl->setvar('ERRORS', sprintf('<p>%s</p>', lang('LANG_LANGUAGE_NOT_CONVERTED')));
+    }
+
+    if (!empty($_SESSION['message'])) {
+        redirect('/admin');
     }
 }
 

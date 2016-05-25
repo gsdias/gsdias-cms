@@ -56,8 +56,7 @@ if (!IS_LOGGED) {
     }
 
     if (isset($csection) && !$csection->permission) {
-        $_SESSION['error'] = lang('LANG_NOPERMISSION');
-        header('Location: /admin', true, 302);
-        exit;
+        $tpl->setarray('ERRORS', array('MSG' => lang('LANG_NOPERMISSION')));
+        redirect('/admin');
     }
 }

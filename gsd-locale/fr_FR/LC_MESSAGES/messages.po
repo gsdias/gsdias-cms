@@ -8,8 +8,6 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.10\n"
-"X-Poedit-Basepath: .\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Language: fr_FR\n"
 
@@ -447,3 +445,6 @@ msgstr "Lingua nao convertida"
 
 msgid "LANG_LANGUAGE_NOT_SAVED"
 msgstr "Nao foi possivel salvar ficheiro de edicao"
+
+msgid "LANG_MISSING_EXTENDED_LANGUAGE"
+msgstr "Missing extended language. That can lead to missing text"

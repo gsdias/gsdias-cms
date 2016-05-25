@@ -82,7 +82,7 @@ if (@$_REQUEST['confirm'] == $afirmative) {
         $tpl->setvar('ERRORS', lang('LANG_PAGE_ERROR'));
         $tpl->setcondition('ERRORS');
     } else {
-        $_SESSION['message'] = sprintf(lang('LANG_PAGE_REMOVED'), $title);
+        $_SESSION['message'][] = array('MSG' => sprintf(lang('LANG_PAGE_REMOVED'), $title));
 
         redirect('/admin/'.$site->arg(1));
     }

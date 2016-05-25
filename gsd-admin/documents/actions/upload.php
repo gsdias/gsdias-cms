@@ -40,7 +40,7 @@ if (@$_REQUEST['save']) {
             $id = $mysql->lastInserted();
 
             $file = savefile($_FILES['asset'], ASSETPATH.'documents/', null, null, $id);
-            $_SESSION['message'] = sprintf(lang('LANG_DOCUMENT_UPLOADED'), $_REQUEST['name']);
+            $tpl->setarray('MESSAGES', array('MSG' => sprintf(lang('LANG_DOCUMENT_UPLOADED'), $_REQUEST['name'])));
 
             redirect('/admin/'.$site->arg(1));
         }

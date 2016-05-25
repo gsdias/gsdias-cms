@@ -31,7 +31,7 @@ header {
         margin-bottom: 11px;
     }
 
-    .logout {
+    ul {
         overflow: hidden;
         color: $gsd-color;
         display: block;
@@ -39,6 +39,10 @@ header {
         position: relative;
         float: right;
         margin-right: 11px;
+        li {
+            display: inline-block;
+            vertical-align: middle;
+        }
     }
 
     #showMenu {

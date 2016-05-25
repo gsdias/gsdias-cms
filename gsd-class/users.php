@@ -13,9 +13,9 @@ class users extends section implements isection
 {
     public function __construct($permission = NULL)
     {
-        global $tpl, $site;
+        global $tpl, $site, $user;
 
-        $permission = gettype($permission) === 'boolean' ? $permission : IS_ADMIN;
+        $permission = gettype($permission) === 'boolean' ? $permission : IS_ADMIN || $site->arg(2) === $user->id;
         $result = parent::__construct($permission);
 
         $tpl->setvar('SECTION_TYPE', lang('LANG_USER', 'LOWER'));
@@ -70,7 +70,7 @@ class users extends section implements isection
                 $result['list'][$index]['DISABLED'] = $item->disabled ? '<br>({LANG_DISABLED})' : '';
             }
 
-            $tpl->setarray('USERS', $result['list']);
+            $tpl->setarray('USERS', $result['list'], 0);
         }
 
         return $result;

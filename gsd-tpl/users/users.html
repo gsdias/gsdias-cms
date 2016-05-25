@@ -2,8 +2,9 @@
     <h1>{LANG_USERS}
         <!-- IF IS_ADMIN --><a href="/admin/users/create" class="btn">{LANG_ADD} {LANG_NEW_MALE LOWER}</a><!-- ENDIF IS_ADMIN -->
     </h1>
-    <!-- IF ERRORS --><div class="errors">{ERRORS}</div><!-- ENDIF ERRORS -->
-    <!-- IF MESSAGES --><div class="errors messages">{MESSAGES}</div><!-- ENDIF MESSAGES -->
+    [_ERRORS]
+    [_WARNINGS]
+    [_MESSAGES]
     <div class="search">
         <form method="post">
             <input type="text" value="{SEARCH_VALUE}" name="search">

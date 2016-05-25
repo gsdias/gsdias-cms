@@ -22,7 +22,7 @@ if (@$_REQUEST['confirm'] == $afirmative) {
     $result = $csection->remove();
 
     if (!$result['errnum']) {
-        $_SESSION['message'] = sprintf(lang('LANG_IMAGE_REMOVED'), $image->name);
+        $tpl->setarray('MESSAGES', array('MSG' => sprintf(lang('LANG_IMAGE_REMOVED'), $image->name)));
 
         redirect('/admin/'.$site->arg(1));
     }

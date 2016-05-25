@@ -34,7 +34,7 @@ if (@$_REQUEST['save']) {
     }
 
     if ($fields == 1) {
-        $_SESSION['message'] = lang('LANG_SETTINGS_SAVED');
+        $tpl->setarray('MESSAGES', array('MSG' => lang('LANG_SETTINGS_SAVED')));
         header('Location: /admin', true, 302);
         exit;
     } else {

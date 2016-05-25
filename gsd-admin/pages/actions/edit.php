@@ -69,15 +69,15 @@ if (@$_REQUEST['save']) {
             }
         }
         if (!isset($api)) {
-            $_SESSION['message'] = sprintf(lang('LANG_PAGE_SAVED'), $_REQUEST['title']);
-
+            $tpl->setarray('MESSAGES', array('MSG' => sprintf(lang('LANG_PAGE_SAVED'), $_REQUEST['title'])));
             redirect('/admin/'.$site->arg(1));
         }
     } else {
         if (is_array($result['errmsg'])) {
             foreach($result['errmsg'] as $msg) {
-                $tpl->setvar('ERRORS', $msg.'<br>');
+                $tpl->setarray('ERRORS', array('MSG' => $msg));
             }
+            $tpl->setcondition('ERRORS');
         } else {
             $tpl->setvar('ERRORS', '{LANG_PAGE_ERROR}');
         }

@@ -2,12 +2,9 @@
     <h1>{LANG_DOCUMENTS}
         <a href="/admin/documents/upload" class="btn">{LANG_UPLOAD}</a>
     </h1>
-    <!-- IF ERRORS -->
-    <div class="errors">{ERRORS}</div>
-    <!-- ENDIF ERRORS -->
-    <!-- IF MESSAGES -->
-    <div class="errors messages">{MESSAGES}</div>
-    <!-- ENDIF MESSAGES -->
+    [_ERRORS]
+    [_WARNINGS]
+    [_MESSAGES]
     <!-- IF DOCUMENTS_EXIST -->
     <table class="table pages hasPages" data-type="documents">
         <thead>
@@ -40,6 +37,6 @@
     <!-- ENDIF DOCUMENTS_EXIST -->
     
     <!-- IF !DOCUMENTS_EXIST -->
-    <span class="warning">{LANG_NO_DOCUMENTS}</span>
+    <div class="messages warning">{LANG_NO_DOCUMENTS}</div>
     <!-- ENDIF !DOCUMENTS_EXIST -->
 </main>

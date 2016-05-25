@@ -17,8 +17,9 @@
             <input type="submit" value="{LANG_FILTER}" name="search_submit">
         </form>
     </div>
-    <!-- IF ERRORS --><div class="errors">{ERRORS}</div><!-- ENDIF ERRORS -->
-    <!-- IF MESSAGES --><div class="errors messages">{MESSAGES}</div><!-- ENDIF MESSAGES -->
+    [_ERRORS]
+    [_WARNINGS]
+    [_MESSAGES]
     <!-- IF PAGES_EXIST -->
     <table class="table pages hasPages" data-type="pages">
         <thead>
@@ -43,5 +44,5 @@
     </table>
     {PAGINATOR}<!-- ENDIF PAGES_EXIST -->
     
-    <!-- IF !PAGES_EXIST --><span class="warning">{LANG_NO_PAGES}</span><!-- ENDIF !PAGES_EXIST -->
+    <!-- IF !PAGES_EXIST --><div class="messages warning">{LANG_NO_PAGES}</div><!-- ENDIF !PAGES_EXIST -->
 </main>

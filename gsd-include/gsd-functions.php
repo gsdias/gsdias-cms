@@ -18,8 +18,30 @@ function GSDClassLoading($className)
 
 function redirect($path = '/', $code = 302)
 {
+    global $tpl;
+
+    if (!empty(@$tpl->config['array']['MESSAGES'])) {
+        $_SESSION['MESSAGES'] = array_merge(@$_SESSION['MESSAGES'] ? $_SESSION['MESSAGES'] : array(), $tpl->config['array']['MESSAGES']);
+    }
+    if (!empty(@$tpl->config['array']['ERRORS'])) {
+        $_SESSION['ERRORS'] = array_merge(@$_SESSION['ERRORS'] ? $_SESSION['ERRORS'] : array(), $tpl->config['array']['ERRORS']);
+    }
+
     header('Location: '.$path, true, $code);
     exit;
+}
+
+function displayMessages($id, $list)
+{
+    global $tpl;
+
+    if (empty($list)) {
+        return;
+    }
+
+    $tpl->setarray($id, $list);
+    $tpl->setcondition($id);
+    unset($_SESSION[$id]);
 }
 
 function escapeText($value = '', $encoding = 'UTF-8')
@@ -134,7 +156,7 @@ function isCheckbox($value = '', $field = '')
 
 function lang($text, $option = 'NONE')
 {
-    global $site;
+    global $site, $tpl;
 
     if (function_exists('_')) {
         if (@$site->isFrontend) {
@@ -146,6 +168,11 @@ function lang($text, $option = 'NONE')
         }
     } else {
         $translated = $text;
+    }
+
+    if ($translated === $text) {
+        $tpl->setarray('WARNINGS', array('MSG' => sprintf('(%s) Missing translation', $text)));
+        $tpl->setcondition('WARNINGS');
     }
 
     switch ($option) {
@@ -453,8 +480,8 @@ function getLanguage()
 
     $list[] = @$site->locale;
 
-    foreach ($list as $prefered) {
-        foreach ($languageList as $key) {
+    foreach (array_filter($list) as $prefered) {
+        foreach (array_filter($languageList) as $key) {
             $decomposed = explode('_', $key);
 
             if ($key === $prefered || $decomposed[0] === $prefered) {

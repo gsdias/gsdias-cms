@@ -64,7 +64,7 @@ if (@$_REQUEST['save']) {
     }
 
     if (!$csection->showErrors(lang('LANG_LAYOUT_ALREADY_EXISTS'))) {
-        $_SESSION['message'] = sprintf(lang('LANG_LAYOUT_CREATED'), $_REQUEST['name']);
+        $tpl->setarray('MESSAGES', array('MSG' => sprintf(lang('LANG_LAYOUT_CREATED'), $_REQUEST['name'])));
 
         redirect('/admin/'.$site->arg(1));
     }

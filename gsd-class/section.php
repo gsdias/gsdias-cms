@@ -366,12 +366,12 @@ abstract class section implements isection
         if (is_array($this->result['errmsg'])) {
             foreach($this->result['errmsg'] as $msg) {
                 if (!empty($msg)) {
-                    $tpl->setvar('ERRORS', $msg.'<br>');
+                    $tpl->setarray('ERRORS', array('MSG' => $msg));
                     $hasErrors = 1;
                 }
             }
         } else if (!empty($this->result['errmsg'])) {
-            $tpl->setvar('ERRORS', $msg);
+            $tpl->setarray('ERRORS', array('MSG' => $msg));
             $hasErrors = 1;
         }
 

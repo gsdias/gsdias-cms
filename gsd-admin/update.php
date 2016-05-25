@@ -33,8 +33,7 @@ if (in_array(1, $update)) {
         ->values(array($site::VERSION, 'version'))
         ->exec();
 
-    $_SESSION['message'] = lang('LANG_UPDATE_FINISHED');
-    $tpl->setcondition('MESSAGES');
+    $tpl->setarray('MESSAGES', array('MSG' => lang('LANG_UPDATE_FINISHED')));
 
     redirect('/admin');
 }

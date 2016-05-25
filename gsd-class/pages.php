@@ -99,7 +99,7 @@ class pages extends section implements isection
                 $result['list'][$index]['SYNC'] = $item->sync ? sprintf('%s (<a href="/admin/pages/%d/sync" class="redLabel">%s</a>)', ($item->published ? '<br>': ''), $item->pid, 'Sync') : '';
             }
 
-            $tpl->setarray('PAGES', $result['list']);
+            $tpl->setarray('PAGES', $result['list'], 0);
         }
 
         return $result;
@@ -341,7 +341,7 @@ class pages extends section implements isection
             ->from('layouts')
             ->exec();
 
-        $types = array(0 => '{LANG_CHOOSE}');
+        $types = array(0 => lang('LANG_CHOOSE'));
         foreach ($mysql->result() as $item) {
             $types[$item->lid] = $item->name;
         }
@@ -360,7 +360,7 @@ class pages extends section implements isection
             ->values($id)
             ->exec();
 
-        $types = array(0 => '{LANG_CHOOSE}');
+        $types = array(0 => lang('LANG_CHOOSE'));
         foreach ($mysql->result() as $item) {
             $types[$item->pid] = $item->title;
         }

@@ -19,7 +19,7 @@ if (@$_REQUEST['save']) {
     $condition = $mysql->singleline();
 
     if ($condition->total > 0 && $condition->pid != $site->arg(2)) {
-        $tpl->setvar('ERRORS', lang('LANG_PAGE_ALREADY_EXISTS'));
+        $tpl->setarray('ERRORS', array('MSG' => lang('LANG_PAGE_ALREADY_EXISTS')));
         $tpl->setcondition('ERRORS');
     } else {
         if ($_REQUEST['prid']) {

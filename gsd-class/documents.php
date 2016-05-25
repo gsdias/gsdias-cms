@@ -68,7 +68,7 @@ class documents extends section implements isection
                 $result['list'][$index]['SIZE'] = sprintf('%s', $item->size);
             }
 
-            $tpl->setarray('DOCUMENTS', $result['list']);
+            $tpl->setarray('DOCUMENTS', $result['list'], 0);
         }
 
         return $result;

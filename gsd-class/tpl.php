@@ -108,8 +108,10 @@ class tpl
      *
      * @return nothing
      */
-    public function setArray($id, $value = array(), $merge = false)
+    public function setArray($id, $value = array(), $merge = true)
     {
+        $value = count($value) != count($value, 1) ? $value : array($value);
+
         if ($merge && !empty($this->config['array'][$id])) {
             $this->config['array'][$id] = array_merge($this->config['array'][$id], $value);
         } else {

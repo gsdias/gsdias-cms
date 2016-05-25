@@ -28,7 +28,7 @@ if (@$_REQUEST['save']) {
             $id = $mysql->lastInserted();
 
             $file = savefile($_FILES['asset'], ASSETPATH.'images/', null, null, $id);
-            $_SESSION['message'] = sprintf(lang('LANG_IMAGE_UPLOADED'), $_REQUEST['name']);
+            $tpl->setarray('MESSAGES', array('MSG' => sprintf(lang('LANG_IMAGE_UPLOADED'), $_REQUEST['name'])));
             
             redirect('/admin/'.$site->arg(1));
         }

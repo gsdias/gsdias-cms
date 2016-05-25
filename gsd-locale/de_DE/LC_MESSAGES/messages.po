@@ -9,7 +9,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Language: pt_PT\n"
+"Language: de_DE\n"
 
 msgid "LANG_UPDATE_NEEDED"
 msgstr "Foi detectada uma actualização. Está a correr a versão %s e a versão mais actual é %s. Execute a <a href='/admin/update'>actualizaçäo</a> para efectuar alteraçōes na base de dados se necessário"
@@ -453,7 +453,7 @@ msgid "LANG_LANGUAGE_NOT_SAVED"
 msgstr "Não foi possível salvar ficheiro de edição"
 
 msgid "LANG_INVALID_NUMBER"
-msgstr "(%s) tipo inválido. Precisa de ser um número"
+msgstr "(%s) Invalid type. Needs to be a number"
 
 msgid "LANG_MISSING_EXTENDED_LANGUAGE"
-msgstr "Falta ficheiro de localização extendida. Pode resultar em falta de texto"
+msgstr "Missing extended language. That can lead to missing text"
