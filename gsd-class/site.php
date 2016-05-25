@@ -14,7 +14,7 @@ class site
     public $name, $email, $ga, $gtm, $fb, $uri, $page, $main, $startpoint, $pagemodules, $pageextra, $layout, $protocol, $isFrontend, $options;
     protected $path;
 
-    const VERSION = '1.6';
+    const VERSION = '1.7';
 
     public function __construct()
     {
@@ -85,8 +85,7 @@ class site
             ->exec();
 
         if ($mysql->total) {
-            header('Location: '.$mysql->singleresult(), true, 301);
-            exit;
+            redirect($mysql->singleresult(), 301);
         }
 
         $mysql->reset()

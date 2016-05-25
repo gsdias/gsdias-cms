@@ -150,8 +150,6 @@ class pages extends section implements isection
 
             $tpl->repvars($fields);
 
-            $fields = $this->fields(true);
-
             $mysql->statement('SELECT * FROM pages_extra WHERE pid = ?;', array($id));
             if ($mysql->total) {
                 foreach ($mysql->result() as $field) {

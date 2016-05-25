@@ -9,16 +9,14 @@
  */
 if (!IS_LOGGED) {
     if ($site->uri != '/admin/auth' && $site->uri != '/admin/auth/' && $site->uri != '/admin/reset') {
-        header('location: /admin/auth?redirect='.urlencode($site->uri));
-        exit;
+        redirect('/admin/auth?redirect='.urlencode($site->uri));
     } else {
         $site->startpoint = 'login';
         $tpl->setvar('EXTRACLASS', 'login');
     }
 } else {
     if ($site->arg(2) && !$site->arg(3) && is_numeric($site->arg(2))) {
-        header('location: '.$site->uri.'/details');
-        exit;
+        redirect($site->uri.'/details');
     }
     $site->main = $site->arg(1) ? $site->arg(1) : 'dashboard';
     $site->startpoint = 'index';

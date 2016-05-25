@@ -100,8 +100,7 @@ class user implements iuser
     {
         unset($_SESSION);
         @session_destroy();
-        header('location: /');
-        exit;
+        redirect('/');
     }
     
     public function resetpassword($field)

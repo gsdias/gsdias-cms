@@ -35,8 +35,7 @@ if (@$_REQUEST['save']) {
 
     if ($fields == 1) {
         $tpl->setarray('MESSAGES', array('MSG' => lang('LANG_SETTINGS_SAVED')));
-        header('Location: /admin', true, 302);
-        exit;
+        redirect('/admin', 302);
     } else {
         $tpl->setvar('ERRORS', lang('LANG_SETTINGS_ERROR'));
         $tpl->setcondition('ERRORS');

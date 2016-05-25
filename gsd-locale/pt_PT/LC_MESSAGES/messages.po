@@ -457,3 +457,18 @@ msgstr "(%s) tipo inválido. Precisa de ser um número"
 
 msgid "LANG_MISSING_EXTENDED_LANGUAGE"
 msgstr "Falta ficheiro de localização extendida. Pode resultar em falta de texto"
+
+msgid "LANG_KEYWORDS"
+msgstr "Keywords"
+
+msgid "LANG_TAGS"
+msgstr "Tags"
+
+msgid "LANG_OG_TITLE"
+msgstr "Titulo Facebook"
+
+msgid "LANG_OG_IMAGE"
+msgstr "Imagem Facebook"
+
+msgid "LANG_OG_DESCRIPTION"
+msgstr "Descrição Facebook"

@@ -59,7 +59,7 @@ if (@$_REQUEST['save']) {
         $tpl->setcondition('ERRORS');
     }
 
-    if (!empty($_SESSION['message'])) {
+    if (!empty($tpl->config['array']['MESSAGES'])) {
         redirect('/admin');
     }
 }

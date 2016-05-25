@@ -18,8 +18,7 @@ if (@$_REQUEST['login'] && !$user->isLogged()) {
         if ($logged) {
             $uri = @$_REQUEST['redirect'] ? $_REQUEST['redirect'] : ($site->arg(0) == 'admin' ? '/admin' : '/');
 
-            header('location: '.$uri);
-            exit;
+            redirect($uri);
         } else {
             $tpl->setvar('FORM_MESSAGES', lang('WRONG_LOGIN'));
             $tpl->setvar('LOGIN_EMAIL', $_REQUEST['email']);
@@ -49,8 +48,7 @@ if (IS_LOGGED) {
     $tpl->setvar('USER_ID', $user->id);
 
     if ($site->arg(0) == 'login') {
-        header('location: /');
-        exit;
+        redirect('/');
     }
 
     foreach($permissions as $permission) {
@@ -69,16 +67,14 @@ if (IS_LOGGED) {
 
 if ($uri == '/admin/auth' || $uri == '/admin/auth/') {
     if (IS_LOGGED) {
-        header('location: /admin');
-        exit;
+        redirect('/admin');
     }
     $site->startpoint = 'admin/login';
 }
 
 if ($uri == '/admin/reset') {
     if (IS_LOGGED) {
-        header('location: /admin');
-        exit;
+        redirect('/admin');
     }
     $site->startpoint = 'admin/login';
 }

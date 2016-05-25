@@ -53,8 +53,7 @@ if (@$_REQUEST['save']) {
 
         if (!isset($api)) {
             $_SESSION['message'] = sprintf(lang('LANG_PAGE_CREATED'), $_REQUEST['title']);
-            header("Location: /admin/pages/$pid/edit", true, 302);
-            exit;
+            redirect("/admin/pages/$pid/edit", 302);
         }
     } else {
         if (!isset($api)) {
