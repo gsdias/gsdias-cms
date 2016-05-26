@@ -23,10 +23,10 @@ if (@$_REQUEST['confirm'] == $afirmative) {
     $result = $csection->remove();
 
     if ($result['errnum']) {
-        $tpl->setvar('ERRORS', lang('LANG_LAYOUT_RELATED'));
+        $tpl->setarray('ERRORS', array('MSG' => lang('LANG_LAYOUT_RELATED')));
         $tpl->setcondition('ERRORS');
     } else {
-        $_SESSION['message'] = sprintf(lang('LANG_LAYOUT_REMOVED'), $name);
+        $tpl->setarray('MESSAGES', array('MSG' => sprintf(lang('LANG_LAYOUT_REMOVED'), $name)));
 
         redirect('/admin/'.$site->arg(1));
     }

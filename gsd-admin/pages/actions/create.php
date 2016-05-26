@@ -52,20 +52,12 @@ if (@$_REQUEST['save']) {
         $result['pmid'] = $pmid;
 
         if (!isset($api)) {
-            $_SESSION['message'] = sprintf(lang('LANG_PAGE_CREATED'), $_REQUEST['title']);
+            $tpl->setarray('MESSAGES', array('MSG' => sprintf(lang('LANG_PAGE_CREATED'), $_REQUEST['title'])));
             redirect("/admin/pages/$pid/edit", 302);
         }
     } else {
         if (!isset($api)) {
-            if ($result['errnum'] === 1000) {
-                array_unshift($result['errmsg'], lang('LANG_PAGE_ALREADY_EXISTS'));
-            }
-
-            foreach($result['errmsg'] as $msg) {
-                $tpl->setvar('ERRORS', $msg.'<br>');
-            }
-
-            $tpl->setcondition('ERRORS');
+            $csection->showErrors(lang('LANG_PAGE_ALREADY_EXISTS'));
         }
     }
 }

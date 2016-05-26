@@ -78,11 +78,11 @@ if (@$_REQUEST['confirm'] == $afirmative) {
 
     $result = $csection->remove();
 
-    if ($result['errnum']) {
-        $tpl->setvar('ERRORS', lang('LANG_PAGE_ERROR'));
+    if ($result['total'] === 0) {
+        $tpl->setarray('ERRORS', array('MSG' => lang('LANG_PAGE_ERROR')));
         $tpl->setcondition('ERRORS');
     } else {
-        $_SESSION['message'][] = array('MSG' => sprintf(lang('LANG_PAGE_REMOVED'), $title));
+        $tpl->setarray('MESSAGES', array('MSG' => sprintf(lang('LANG_PAGE_REMOVED'), $title)));
 
         redirect('/admin/'.$site->arg(1));
     }

@@ -13,7 +13,7 @@ if (@$_REQUEST['save']) {
     $result = $csection->edit();
 
     if (!$csection->showErrors(lang('LANG_USER_ALREADY_EXISTS'))) {
-        $_SESSION['message'] = sprintf(lang('LANG_USER_SAVED'), $_REQUEST['name']);
+        $tpl->setarray('MESSAGES', array('MSG' => sprintf(lang('LANG_USER_SAVED'), $_REQUEST['name'])));
 
         if ($result['id'] == $user->id) {
             $user->locale = $_REQUEST['locale'];

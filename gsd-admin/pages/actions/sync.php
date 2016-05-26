@@ -22,5 +22,5 @@ $mysql->reset()
     ->values($site->arg(2))
     ->exec();
 
-$_SESSION['message'] = sprintf(lang('LANG_PAGE_SYNCED'), $mysql->singleresult());
+$tpl->setarray('MESSAGES', array('MSG' => sprintf(lang('LANG_PAGE_SYNCED'), $mysql->singleresult())));
 redirect('/admin/'.$site->arg(1));

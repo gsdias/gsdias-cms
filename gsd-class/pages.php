@@ -292,7 +292,7 @@ class pages extends section implements isection
         
         $path = explode('/', $_REQUEST['url']);
         
-        if ($path[1] === 'p') {
+        if (@$path[1] === 'p') {
             return array(
                 'errnum' => 0,
                 'errmsg' => array('Reserved path for native url'),
@@ -408,7 +408,7 @@ class pages extends section implements isection
             }
         }
 
-        if ($currentpage->parent !== $_REQUEST['parent']) {
+        if ($currentpage->parent !== @$_REQUEST['parent']) {
             $this->update_beautify($pid);
         }
 

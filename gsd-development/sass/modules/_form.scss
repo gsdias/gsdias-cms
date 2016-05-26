@@ -18,17 +18,20 @@ label {
 }
 
 input {
-    border: solid 1px $border-color;
+    box-shadow: 0 0 0 1px $border-color inset;
+    border: none;
     border-radius: 5px;
     display: block;
     height: 30px;
     padding: 0 2%;
-    width: 91%;
+    width: 96%;
 
     &[type="checkbox"] {
         max-height: none;
         max-width: none;
         width: auto;
+        box-shadow: none;
+        border: solid $border-color 1px;
     }
 
     &.error {
@@ -46,7 +49,7 @@ input {
 
     &.box {
         background: #ffc;
-        border-color: #9B870C;
+        box-shadow: 0 0 0 1px #9B870C inset;
         color: #9B870C;
     }
 }
@@ -58,22 +61,22 @@ input {
     }
 }
 textarea {
-    border: solid 1px $border-color;
+    box-shadow: 0 0 0 1px $border-color inset;
+    border: none;
     border-radius: 5px;
     display: block;
     min-height: 100px;
     padding: 1%;
-    width: 91%;
+    width: 98%;
 }
 
 select {
-    border: solid 1px rgba(46,130,147,0.5);
+    box-shadow: 0 0 0 1px $border-color inset;
+    border: none;
     border-radius: 3px;
     height: 33px;
     background: #fff;
-    max-width: 542px;
-    min-width: 200px;
-    width: 55.392%;
+    width: 100%;
 
     &.error {
         border-color: red;
@@ -106,19 +109,6 @@ select {
 @include respond-min($tablet-port) {
     label {
         margin-bottom: 10px;
-    }
-
-    input {
-        max-width: 500px;
-        min-width: 200px;
-        width: 51.11%
-    }
-
-    textarea {
-        max-width: 520px;
-        min-width: 200px;
-        padding: 1%;
-        width: 53.109%;
     }
 }
 

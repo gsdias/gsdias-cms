@@ -34,11 +34,11 @@ if (@$_REQUEST['save']) {
         }
         
         if ($result['errnum']) {
-            $tpl->setvar('ERRORS', lang('LANG_IMAGE_ERROR'));
+            $tpl->setarray('ERRORS', array('MSG' => lang('LANG_IMAGE_ERROR')));
             $tpl->setcondition('ERRORS');
         }
     } else {
-        $tpl->setvar('ERRORS', lang('LANG_IMAGE_FORMAT'));
+        $tpl->setarray('ERRORS', array('MSG' => lang('LANG_IMAGE_FORMAT')));
         $tpl->setcondition('ERRORS');
     }
 }

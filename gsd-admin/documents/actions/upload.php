@@ -45,7 +45,7 @@ if (@$_REQUEST['save']) {
             redirect('/admin/'.$site->arg(1));
         }
     } else {
-        $tpl->setvar('ERRORS', lang('LANG_DOCUMENT_FORMAT'));
+        $tpl->setarray('ERRORS', array('MSG' => lang('LANG_DOCUMENT_FORMAT')));
         $tpl->setcondition('ERRORS');
     }
 }

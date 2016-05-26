@@ -1,5 +1,8 @@
 ALTER TABLE `options` ADD `type` VARCHAR(20) NULL AFTER `name`;
 
+INSERT INTO options (`name`, `type`, `label`, `value`, `index`) VALUES
+('gsd-version', '', '', '1.4', 0);
+
 UPDATE `options` SET `name` = 'version', `type` = NULL WHERE `options`.`name` = 'gsd-version';
 UPDATE `options` SET `name` = 'name', `type` = 'input' WHERE `options`.`name` = 'gsd-name';
 UPDATE `options` SET `name` = 'email', `type` = 'input' WHERE `options`.`name` = 'gsd-email';

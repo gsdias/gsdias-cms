@@ -73,14 +73,6 @@ if (@$_REQUEST['save']) {
             redirect('/admin/'.$site->arg(1));
         }
     } else {
-        if (is_array($result['errmsg'])) {
-            foreach($result['errmsg'] as $msg) {
-                $tpl->setarray('ERRORS', array('MSG' => $msg));
-            }
-            $tpl->setcondition('ERRORS');
-        } else {
-            $tpl->setvar('ERRORS', '{LANG_PAGE_ERROR}');
-        }
-        $tpl->setcondition('ERRORS');
+        $csection->showErrors(lang('LANG_PAGE_ERROR'));
     }
 }

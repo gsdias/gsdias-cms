@@ -20,10 +20,10 @@ function redirect($path = '/', $code = 302)
 {
     global $tpl;
 
-    if (!empty(@$tpl->config['array']['MESSAGES'])) {
+    if (!empty($tpl->config['array']['MESSAGES'])) {
         $_SESSION['MESSAGES'] = array_merge(@$_SESSION['MESSAGES'] ? $_SESSION['MESSAGES'] : array(), $tpl->config['array']['MESSAGES']);
     }
-    if (!empty(@$tpl->config['array']['ERRORS'])) {
+    if (!empty($tpl->config['array']['ERRORS'])) {
         $_SESSION['ERRORS'] = array_merge(@$_SESSION['ERRORS'] ? $_SESSION['ERRORS'] : array(), $tpl->config['array']['ERRORS']);
     }
 
@@ -51,7 +51,7 @@ function escapeText($value = '', $encoding = 'UTF-8')
 
 function isFile($value = '', $field = '', $label = '')
 {
-    $label = $label ? $label : lang('LANG_'.strtoupper($field->getName()));
+    $label = $label ? $label : 'LANG_'.strtoupper($field->getName());
     $result = array(
         'result' => isset($_FILES[$field->getName()]),
         'value' => 1,
@@ -66,7 +66,7 @@ function isFile($value = '', $field = '', $label = '')
 
 function isString($value = '', $field = '', $label = '')
 {
-    $label = $label ? $label : lang('LANG_'.strtoupper($field->getName()));
+    $label = $label ? $label : 'LANG_'.strtoupper($field->getName());
     $result = array(
         'result' => is_string($value),
         'value' => escapeText($value),
@@ -79,7 +79,7 @@ function isString($value = '', $field = '', $label = '')
 
 function isRequired($value = '', $field = '', $label = '')
 {
-    $label = $label ? $label : lang('LANG_'.strtoupper($field->getName()));
+    $label = $label ? $label : 'LANG_'.strtoupper($field->getName());
     $result = array(
         'result' => trim($value) !== '',
         'value' => $value,
@@ -92,7 +92,7 @@ function isRequired($value = '', $field = '', $label = '')
 
 function isEmail($value = '', $field = '', $label = '')
 {
-    $label = $label ? $label : lang('LANG_'.strtoupper($field->getName()));
+    $label = $label ? $label : 'LANG_'.strtoupper($field->getName());
     $result = array(
         'result' => !$value || filter_var($value, FILTER_VALIDATE_EMAIL),
         'value' => $value,
@@ -105,7 +105,7 @@ function isEmail($value = '', $field = '', $label = '')
 
 function isUrl($value = '', $field = '', $label = '')
 {
-    $label = $label ? $label : lang('LANG_'.strtoupper($field[0]));
+    $label = $label ? $label : 'LANG_'.strtoupper($field[0]);
     $result = array(
         'result' => !$value || filter_var($value, FILTER_VALIDATE_URL),
         'value' => $value,
@@ -118,7 +118,7 @@ function isUrl($value = '', $field = '', $label = '')
 
 function isNumber($value = 0, $field = '', $label = '')
 {
-    $label = $label ? $label : lang('LANG_'.strtoupper($field->getName()));
+    $label = $label ? $label : 'LANG_'.strtoupper($field->getName());
     $value = $value === '' ? 0 : $value;
     $result = array(
         'result' => is_numeric($value),
@@ -170,7 +170,7 @@ function lang($text, $option = 'NONE')
         $translated = $text;
     }
 
-    if ($translated === $text) {
+    if ($translated === $text && substr($text, 0, 5) === 'LANG_') {
         $tpl->setarray('WARNINGS', array('MSG' => sprintf('(%s) Missing translation', $text)));
         $tpl->setcondition('WARNINGS');
     }

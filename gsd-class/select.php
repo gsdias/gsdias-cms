@@ -60,7 +60,7 @@ class select
         
         $disabled = $disabled ? ' disabled="disabled"' : '';
 
-        $result = sprintf('<option value="%s"%s%s>%s</option>'."\n\r", $value, $selected, $disabled, $label);
+        $result = sprintf('<option value="%s"%s%s>%s</option>'."\n\r", $value, $selected, $disabled, lang($label));
 
         if (!$this->args['empty'] && ($value == 'null' || $value === '' || $label === 'null' || $label === '')) {
             $result = '';
@@ -85,7 +85,7 @@ class select
 
                 $list[$value] = array(
                     'KEY' => $value,
-                    'VALUE' => $label,
+                    'VALUE' => lang($label),
                 );
 
                 if ($check == $this->args['selected']) {
