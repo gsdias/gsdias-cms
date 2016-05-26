@@ -9,7 +9,7 @@
  */
 
 if ($site->arg(2) == 1) {
-    $_SESSION['error'] = lang('LANG_USER_DEFAULT');
+    $tpl->setarray('ERRORS', array('MSG' => lang('LANG_USER_DEFAULT')));
     redirect('/admin/'.$site->arg(1));
 }
 

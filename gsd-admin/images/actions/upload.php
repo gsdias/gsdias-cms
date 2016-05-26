@@ -32,11 +32,6 @@ if (@$_REQUEST['save']) {
             
             redirect('/admin/'.$site->arg(1));
         }
-        
-        if ($result['errnum']) {
-            $tpl->setarray('ERRORS', array('MSG' => lang('LANG_IMAGE_ERROR')));
-            $tpl->setcondition('ERRORS');
-        }
     } else {
         $tpl->setarray('ERRORS', array('MSG' => lang('LANG_IMAGE_FORMAT')));
         $tpl->setcondition('ERRORS');
