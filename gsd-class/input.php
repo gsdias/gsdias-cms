@@ -45,9 +45,10 @@ class input
         $type = $this->args['type'];
         $required = $this->args['required'] ? ' required' : '';
         $checked = $this->args['selected'] ? ' checked="checked"': '';
+        $class = $this->args['type'] === 'password' ? ' class="gsd-password"' : '';
         $isEmail = $this->args['type'] === 'email' ? ' data-rule-email="true"' : '';
-        $isPassword = $this->args['type'] === 'password' ? ' <i class="fa fa-eye gsd-password"></i>' : '';
+        $isPassword = $this->args['type'] === 'password' ? ' <i class="fa fa-eye gsd-pass-toggle"></i><i class="gsd-complexity"></i>' : '';
 
-        return sprintf('%s<input type="%s" id="%s"%s value="%s"%s%s%s>%s%s', $outputLeft, $type, $this->args['id'], $name, $this->args['value'], $checked, $required, $isEmail, $outputRight, $isPassword);
+        return sprintf('%s<input type="%s" id="%s"%s value="%s"%s%s%s%s>%s%s', $outputLeft, $type, $this->args['id'], $name, $this->args['value'], $checked, $required, $isEmail, $class, $outputRight, $isPassword);
     }
 }

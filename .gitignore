@@ -12,3 +12,4 @@ gsd-frontend/
 gsd-tpl/_shared/_scripts.html
 gsd-tpl/_shared/_top.html
 *.mo
+gsd-settings.php

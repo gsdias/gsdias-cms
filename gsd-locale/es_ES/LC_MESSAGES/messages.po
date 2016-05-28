@@ -453,7 +453,22 @@ msgid "LANG_LANGUAGE_NOT_SAVED"
 msgstr "Não foi possível salvar ficheiro de edição"
 
 msgid "LANG_INVALID_NUMBER"
-msgstr "(%s) Invalid type. Needs to be a number"
+msgstr "(%s) tipo inválido. Precisa de ser um número"
 
 msgid "LANG_MISSING_EXTENDED_LANGUAGE"
-msgstr "Missing extended language. That can lead to missing text"
+msgstr "Falta ficheiro de localização extendida. Pode resultar em falta de texto"
+
+msgid "LANG_KEYWORDS"
+msgstr "Keywords"
+
+msgid "LANG_TAGS"
+msgstr "Tags"
+
+msgid "LANG_OG_TITLE"
+msgstr "Titulo Facebook"
+
+msgid "LANG_OG_IMAGE"
+msgstr "Imagem Facebook"
+
+msgid "LANG_OG_DESCRIPTION"
+msgstr "Descrição Facebook"

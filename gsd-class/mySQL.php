@@ -128,7 +128,7 @@ class mySQL implements idatabase
 
             array_push($this->querylist, $query);
             if ($this->errnum) {
-                $tpl->adderror(sprintf("(<strong style='font-weight: 700'>%s</strong>) %s", $this->errnum, $this->errmsg));
+                $pl->setarray('ERRORS', array('MSG' => sprintf("(<strong style='font-weight: 700'>%s</strong>) %s", $this->errnum, $this->errmsg)));
             }
         }
     }
@@ -138,7 +138,7 @@ class mySQL implements idatabase
     // -- Purpose : executes database query
     public function execute($values = null)
     {
-        global $tpl;
+        global $tpl, $site;
         try {
             $this->executed = $this->prepared->execute($values);
         } catch (PDOException $e) {
@@ -154,7 +154,11 @@ class mySQL implements idatabase
 
         $this->errnum = $erro[1];
         $this->errmsg = $erro[2];
-
+        
+        if (!!@$site->options['debug']['value'] && $this->errnum) {
+            $tpl->setarray('ERRORS', array('MSG' => sprintf("(<strong style='font-weight: 700'>%s</strong>) %s", $erro[1], $erro[2])));
+            $tpl->setcondition('ERRORS');
+        }
         if (sizeof($this->result) > 0) {
             foreach ($this->result as $key => $values) {
                 $this->result[$key] = $this->formatOutputDates($values);

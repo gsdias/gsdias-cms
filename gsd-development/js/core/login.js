@@ -30,8 +30,64 @@
             }
             $field.toggleClass('fa-eye', !isHidden);
             $field.toggleClass('fa-eye-slash', isHidden);
+        },
+
+        refreshState = function() {
+            var value = this.value,
+                numberStrong = 1,
+                $container = $(this).closest('.colA');
+
+            if (value.length >= 12 && checkHasNumber(value) && checkHasUpperAndLower(value) && checkSpecialChar(value)) {
+                numberStrong = 5;
+            } else if (value.length >= 10 && checkHasNumber(value) && checkHasUpperAndLower(value)) {
+                numberStrong = 4;
+            } else if (value.length >= 8 && checkHasNumber(value) && checkHasUpperAndLower(value)) {
+                numberStrong = 3;
+            } else if (value.length >= 8 && (checkHasNumber(value) || checkHasUpperAndLower(value))) {
+                numberStrong = 2;
+            }
+            addCheckClass(numberStrong, $container);
+        },
+
+        addCheckClass = function(numberStrong, $container) {
+            var passCells = $container.find('.gsd-complexity'),
+                givenClass = 'gsd-complexity';
+
+            passCells.removeClass();
+            switch (numberStrong) {
+                case 1:
+                    givenClass += ' red';
+                break;
+                case 2:
+                    givenClass += ' orange';
+                break;
+                case 3:
+                    givenClass += ' yellow';
+                break;
+                case 4:
+                    givenClass += ' blue';
+                break;
+                case 5:
+                    givenClass += ' green';
+                break;
+            }
+            passCells.addClass(givenClass);
+        },
+
+        checkSpecialChar = function(value) {
+            value = value.replace(/[a-zA-Z0-9]/g, '');
+            return value.length > 0;
+        },
+
+        checkHasNumber = function(value) {
+            return value.replace(/\D/g, '').length > 0;
+        },
+
+        checkHasUpperAndLower = function(value) {
+            return !(_.isNull(value.match(/[a-z]/g)) || _.isNull(value.match(/[A-Z]/g)));
         };
 
     $('.gsd-recover, .gsd-login').on('click', showForm);
-    $('.gsd-password').on('click', togglePassword);
+    $('.gsd-pass-toggle').on('click', togglePassword);
+    $('.gsd-password').on('keyup', refreshState);
 }(GSD.App, GSD.Api, GSD.$, _));

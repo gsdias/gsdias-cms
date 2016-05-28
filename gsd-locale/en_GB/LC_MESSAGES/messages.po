@@ -30,7 +30,7 @@ msgid "LANG_ERROR"
 msgstr "There was an error. Try again later"
 
 msgid "LANG_TEXT"
-msgstr "Texto"
+msgstr "Text"
 
 msgid "LANG_DEFAULT"
 msgstr "Default"
@@ -410,11 +410,11 @@ msgstr "There is already a layout associated to that file"
 msgid "LANG_PAGE_ALREADY_EXISTS"
 msgstr "There is already a page with that url"
 
-msgid "LANG_PAGE_ERROR"
-msgstr "There was a problem. Check your data and try again"
-
 msgid "LANG_USER_ALREADY_EXISTS"
 msgstr "There is already an user with that email"
+
+msgid "LANG_PAGE_ERROR"
+msgstr "There was a problem. Check your data and try again"
 
 msgid "LANG_USER_ERROR"
 msgstr "There was an error. Try again later"

@@ -16,12 +16,12 @@ require_once 'api.php';
 
 @session_start();
 
-if (!isset($_SERVER['REDIRECT_URL'])) {
+if (!isset($_SERVER['REQUEST_URI'])) {
     echo 'Missing command';
     exit;
 }
 
-$path = explode('/', $_SERVER['REDIRECT_URL']);
+$path = explode('/', $_SERVER['REQUEST_URI']);
 
 $cmdposition = array_search('gsd-api', $path) + 1;
 

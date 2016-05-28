@@ -21,10 +21,18 @@
     }
 
     [type="submit"] {
-        background: $gsd-color;
-        color: #fff;
+        background: none;
+        box-shadow: none;
+        border: solid 1px $gsd-color;
+        color: $gsd-color;
         min-width: inherit;
         padding: 5px;
         width: 80px;
+        -webkit-transition: box-shadow .3s ease;
+
+        &:hover {
+            text-decoration: none;
+            box-shadow: 0 0 5px 0 $gsd-color inset;
+        }
     }
 }

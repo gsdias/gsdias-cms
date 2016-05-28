@@ -98,13 +98,24 @@ window.jQuery = window.$ = {};
     });
 
     $().ready(function () {
-
+        var loading = $('<svg width="30px" height="30px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="uil-clock"><rect x="0" y="0" width="100" height="100" fill="none" class="bk"></rect><circle cx="50" cy="50" r="30" fill="#fff" stroke="#276876" stroke-width="8px"></circle><line x1="50" y1="50" x2="50" y2="30" stroke="#276876" stroke-width="9" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="2s" repeatCount="indefinite"></animateTransform></line></svg>');
         $(document).bind(GSD.globalevents.init, function () {
             // Add validation to any new forms that have been included
             $('form').removeData('validator');
             $('form').removeData('unobtrusiveValidation');
             $('form').validate({
-                onkeyup: false
+                onkeyup: false,
+                submitHandler: function (form) {
+                    var $submit = $(form).find('[type="submit"]'),
+                        left = $submit.offset().left,
+                        top = $submit.offset().top,
+                        width = $submit.outerWidth() / 2;
+                    
+                    loading.css({ position: 'absolute', left: left + width - 15, top: top });
+                    
+                    app.page.body.el.append(loading);
+                    form.submit();
+                }
             });
             $.validator.messages.required = GSD.messages.required;
             $.validator.messages.email = GSD.messages.email;
