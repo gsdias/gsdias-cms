@@ -25,6 +25,7 @@
         <thead>
             <tr>
                 <th>{LANG_PATH}</th>
+                <th>Layout</th>
                 <th>{LANG_CREATED}</th>
                 <th>{LANG_ACTIONS}</th>
                 <th><i class="fa fa-refresh fa-1x refresh"></i></th>
@@ -33,8 +34,11 @@
         </thead>
         <!-- LOOP PAGES --><tr data-pid="{PAGES_PID}" data-index="{PAGES_INDEX}"{PAGES_ISHIDDEN}>
             <td>
+                <a href="{PAGES_BEAUTIFY}" target="_blank" class="fa fa-binoculars page-preview"></a>
                 {PAGES_TITLE}<br>
                 <a href="/admin/pages/{PAGES_PID}">{PAGES_BEAUTIFY}</a>{PAGES_UNPUBLISHED}{PAGES_SYNC}
+            </td>
+            <td>{PAGES_LAYOUT}
             </td>
             <td><em class="ago">({PAGES_CREATED})</em> <br>{LANG_BY} <a href="/admin/users/{PAGES_CREATOR_ID}">{PAGES_CREATOR_NAME}</a></td>
             <td class="actions"><a href="/admin/pages/{PAGES_PID}/settings">{LANG_SETTINGS}</a><a href="/admin/pages/{PAGES_PID}/edit">{LANG_EDIT}</a></td>

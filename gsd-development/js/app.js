@@ -110,9 +110,9 @@ window.jQuery = window.$ = {};
                         left = $submit.offset().left,
                         top = $submit.offset().top,
                         width = $submit.outerWidth() / 2;
-                    
+
                     loading.css({ position: 'absolute', left: left + width - 15, top: top });
-                    
+
                     app.page.body.el.append(loading);
                     form.submit();
                 }

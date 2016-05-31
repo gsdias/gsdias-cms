@@ -55,8 +55,14 @@ class site
         $this->isFrontend = $this->path[0] !== 'admin';
         $tpl->setcondition('CMS', !$this->isFrontend);
 
+        $tpl->setvar('HTML_CLASS', 'gsd');
+
         if ($this->isFrontend) {
             $this->page();
+
+            if (@$this->options['maintenance']['value']) {
+                $this->startpoint = 'maintenance';
+            }
         }
     }
 

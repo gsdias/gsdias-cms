@@ -58,7 +58,7 @@ class users extends section implements isection
         $result = parent::getlist(array(
             'search' => $options['search'],
             'results' => $mysql->result(),
-            'fields' => array_merge(array('uid', 'name', 'creator_name', 'creator_id'), $fields),
+            'fields' => array_merge(array('uid', 'name', 'level', 'creator_name', 'creator_id'), $fields),
             'paginator' => $paginator,
         ));
 

@@ -18,12 +18,12 @@ $_email['pass'] = '';
 
 define('TPLEXT', '.html');
 define('PHPEXT', '.php');
-define('ADMINPATH', dirname(__FILE__).'/gsd-admin/');
-define('TPLPATH', dirname(__FILE__).'/gsd-tpl/');
-define('CLASSPATH', dirname(__FILE__).'/gsd-class/');
-define('INCLUDEPATH', dirname(__FILE__).'/gsd-include/');
-define('ASSETPATH', dirname(__FILE__).'/gsd-frontend/assets/');
-define('CLIENTPATH', dirname(__FILE__).'/gsd-frontend/');
+define('ADMINPATH', ROOTPATH.'gsd-admin/');
+define('TPLPATH', ROOTPATH.'gsd-tpl/');
+define('CLASSPATH', ROOTPATH.'gsd-class/');
+define('INCLUDEPATH', ROOTPATH.'gsd-include/');
+define('ASSETPATH', ROOTPATH.'gsd-frontend/assets/');
+define('CLIENTPATH', ROOTPATH.'gsd-frontend/');
 define('RESOURCESURL', '/gsd-resources');
 define('ASSETPATHURL', '/gsd-frontend/assets/');
 define('CLIENTINCLUDEPATH', CLIENTPATH.'include/');
@@ -62,9 +62,11 @@ $tables = array(
 
 $languages = array(
     '' => 'LANG_CHOOSE',
-    'pt_PT' => 'Português',
+    'de_DE' => 'Deutsch',
     'en_GB' => 'English',
+    'es_ES' => 'Español',
     'fr_FR' => 'Français',
+    'pt_PT' => 'Português',
 );
 
 $permissions = array(

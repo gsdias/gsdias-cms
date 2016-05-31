@@ -21,10 +21,8 @@ if (!IS_LOGGED) {
     $site->main = $site->arg(1) ? $site->arg(1) : 'dashboard';
     $site->startpoint = 'index';
 
-    $clientfields = CLIENTPATH.'include/admin/fields'.PHPEXT;
-    if (is_file($clientfields)) {
-        include_once $clientfields;
-    }
+    $clientfields = CLIENTPATH.'tpl/admin/_clientaside'.TPLEXT;
+    $tpl->setcondition('HASCLIENTASIDE', is_file($clientfields));
 
     if (!$site->arg(1)) {
         include_once 'gsd-admin/dashboard'.PHPEXT;

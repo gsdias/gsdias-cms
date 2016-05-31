@@ -7,9 +7,9 @@
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
-if (@$site->arg(2) == 'images') {
-    $iid = is_numeric(@$site->arg(3)) ? $site->arg(3) : 0;
-    $name = explode('.', @$site->arg(3));
+if (@$site->arg(1) == 'images') {
+    $iid = is_numeric(@$site->arg(2)) ? $site->arg(2) : 0;
+    $name = explode('.', @$site->arg(2));
 
     if (sizeof($name) === 2 || $iid) {
         if (sizeof($name) === 2) {

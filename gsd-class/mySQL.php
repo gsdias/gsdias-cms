@@ -128,7 +128,8 @@ class mySQL implements idatabase
 
             array_push($this->querylist, $query);
             if ($this->errnum) {
-                $pl->setarray('ERRORS', array('MSG' => sprintf("(<strong style='font-weight: 700'>%s</strong>) %s", $this->errnum, $this->errmsg)));
+                $tpl->setarray('ERRORS', array('MSG' => sprintf("(<strong style='font-weight: 700'>%s</strong>) %s", $this->errnum, $this->errmsg)));
+                $tpl->setcondition('ERRORS');
             }
         }
     }

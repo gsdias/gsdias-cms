@@ -22,10 +22,6 @@
 @import "compass/css3/font-face";
 @import "compass/reset";
 
-// Internal Imports
-$sprites: sprite-map("icons/normal/*.png");
-$sprites2x: sprite-map("icons/retina/*.png");
-
 .gsd {
     /*===============================
             Core includes

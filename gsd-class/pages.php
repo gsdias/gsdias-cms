@@ -30,7 +30,7 @@ class pages extends section implements isection
     {
         global $mysql, $tpl;
 
-        $_fields = 'p.*, p.creator AS creator_id, u.name AS creator_name, if(p.beautify like concat(if(pp.beautify IS NULL , "", pp.beautify), p.url), 0, 1) AS sync';
+        $_fields = 'p.*, p.creator AS creator_id, u.name AS creator_name, if(p.beautify like concat(if(pp.beautify IS NULL , "", pp.beautify), p.url), 0, 1) AS sync, l.name AS layout';
         $fields = empty($options['fields']) ? array() : $options['fields'];
 
         $mysql->reset()
@@ -38,7 +38,9 @@ class pages extends section implements isection
             ->join('users AS u', 'LEFT')
             ->on('p.creator = u.uid')
             ->join('pages AS pp', 'LEFT')
-            ->on('p.parent = pp.pid');
+            ->on('p.parent = pp.pid')
+            ->join('layouts AS l', 'LEFT')
+            ->on('l.lid = p.lid');
 
         if (@$_REQUEST['search']) {
             $mysql->where(sprintf('MATCH (p.title, p.description) AGAINST ("%s" WITH QUERY EXPANSION)', $_REQUEST['search']));
@@ -88,7 +90,7 @@ class pages extends section implements isection
         $result = parent::getlist(array(
             'search' => $options['search'],
             'results' => $mysql->result(),
-            'fields' => array_merge(array('pid', 'title', 'beautify', 'creator', 'creator_name', 'creator_id', 'index', 'sync'), $fields),
+            'fields' => array_merge(array('pid', 'title', 'beautify', 'creator', 'creator_name', 'creator_id', 'index', 'sync', 'layout'), $fields),
             'paginator' => $paginator,
             'totalPages' => $totalPages
         ));
@@ -380,7 +382,7 @@ class pages extends section implements isection
 
         $currentpage = $mysql->singleline();
         $hasChanged = 0;
-        $fields = array();
+        $fieldsvalue = array();
 
         $defaultfields = $this->fields(true);
 
@@ -390,7 +392,7 @@ class pages extends section implements isection
             if ($currentpage->{$fieldname} !== @$_REQUEST[$fieldname]) {
                 $hasChanged = 1;
             }
-            array_push($fields, $currentpage->{$fieldname});
+            array_push($fieldsvalue, $currentpage->{$fieldname});
         }
 
         $result = parent::edit();
@@ -413,9 +415,9 @@ class pages extends section implements isection
         }
 
         if (empty($result['errmsg']) && $hasChanged) {
-            array_push($fields, $currentpage->modified);
+            array_push($fieldsvalue, $currentpage->modified);
             array_push($defaultfields, 'modified');
-            $this->page_review($defaultfields, $fields);
+            $this->page_review($defaultfields, $fieldsvalue);
         }
 
         return $result;
@@ -450,15 +452,18 @@ class pages extends section implements isection
 
         array_push($fields, $user->id);
         array_push($fields, $site->arg(2));
-        $questions = str_repeat(', ? ', sizeof($fields));
 
-        $mysql->statement(sprintf('INSERT INTO pages_review (%s, creator, pid) values (%s);', implode(',', $this->getfieldlist($defaultfields)), substr($questions, 2)), $fields);
+        $mysql->reset()
+            ->insert('pages_review')
+            ->fields(array_merge($this->getfieldlist($defaultfields), array('creator', 'pid')))
+            ->values($fields)
+            ->exec();
     }
 
-    private function getfieldlist($defaultfields)
+    private function getfieldlist($fields)
     {
         $list = array();
-        foreach($defaultfields as $field) {
+        foreach($fields as $field) {
             $list[] = is_array($field) ? $field[0] : $field;
         }
 

@@ -24,6 +24,7 @@ if (@$_REQUEST['save']) {
     } else {
         if ($_REQUEST['prid']) {
             $defaultfields = array_merge(array('pid'), $csection->getfields(true));
+            $valid = 1;
 
             $mysql->reset()
                 ->select()
@@ -63,11 +64,16 @@ if (@$_REQUEST['save']) {
                 ->values($fields)
                 ->exec();
 
+            $valid = $mysql->errnum ? 0 : $valid;
+
             $mysql->reset()
                 ->update('pages')
                 ->fields($defaultfields)
                 ->values($review)
+                ->where('pid = ?')
                 ->exec();
+
+            $valid = $mysql->errnum ? 0 : $valid;
 
             $mysql->reset()
                 ->delete()
@@ -75,6 +81,12 @@ if (@$_REQUEST['save']) {
                 ->where('prid = ?')
                 ->values($_REQUEST['prid'])
                 ->exec();
+
+            $valid = $mysql->errnum ? 0 : $valid;
+
+            if ($valid) {
+                $tpl->setarray('MESSAGES', array('MSG' => 'Page changed to revision X'));
+            }
         }
 
         if ($_REQUEST['current_url'] != $_REQUEST['url']) {
@@ -120,6 +132,10 @@ if (@$_REQUEST['save']) {
                 $_REQUEST['url'],
                 $site->arg(2),
             ));
+
+            if (!$mysql->errnum) {
+                $tpl->setarray('MESSAGES', array('MSG' => 'Url for the page changed to X'));
+            }
 
             foreach($_REQUEST['pages'] as $pid) {
                 $mysql->statement('UPDATE pages AS p
