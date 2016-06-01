@@ -24,10 +24,11 @@
         background: none;
         box-shadow: none;
         border: solid 1px $gsd-color;
+        border-radius: 3px;
         color: $gsd-color;
         min-width: inherit;
         padding: 5px;
-        width: 80px;
+        width: auto;
         -webkit-transition: box-shadow .3s ease;
 
         &:hover {

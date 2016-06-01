@@ -28,6 +28,8 @@ if (!@$_REQUEST['confirm']) {
 
     $tpl->setcondition('IS_PARENT', $mysql->total > 0);
 
+    $tpl->includeFiles('EXTRAINFO', 'pages/parentlist');
+
     $pages = array();
     foreach ($mysql->result() as $page) {
         $_parents = $parents;

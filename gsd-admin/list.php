@@ -33,6 +33,8 @@ if ($action) {
 
         if ($action === 'edit') {
             $site->main = '_fields';
+        } else if ($action === 'remove') {
+            $site->main = '_remove';
         }
         
         $file = sprintf('gsd-admin/%s/actions/%s%s', $section, $action, PHPEXT);

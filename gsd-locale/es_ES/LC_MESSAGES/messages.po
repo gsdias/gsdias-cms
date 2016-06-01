@@ -350,19 +350,19 @@ msgstr "Não existem imagens"
 msgid "LANG_NO_DOCUMENTS"
 msgstr "Não existem documentos"
 
-msgid "LANG_REMOVE_LAYOUT"
+msgid "LANG_REMOVE_LAYOUTS"
 msgstr "Pretende apagar o layout"
 
-msgid "LANG_REMOVE_PAGE"
+msgid "LANG_REMOVE_PAGES"
 msgstr "Pretende apagar a página"
 
-msgid "LANG_REMOVE_USER"
+msgid "LANG_REMOVE_USERS"
 msgstr "Pretende apagar o utilizador"
 
-msgid "LANG_REMOVE_IMAGE"
+msgid "LANG_REMOVE_IMAGES"
 msgstr "Pretende apagar a imagem"
 
-msgid "LANG_REMOVE_DOCUMENT"
+msgid "LANG_REMOVE_DOCUMENTS"
 msgstr "Pretende apagar o documento"
 
 msgid "LANG_LAYOUTS"

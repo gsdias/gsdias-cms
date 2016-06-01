@@ -350,19 +350,19 @@ msgstr "There are no images"
 msgid "LANG_NO_DOCUMENTS"
 msgstr "There are no documents"
 
-msgid "LANG_REMOVE_LAYOUT"
+msgid "LANG_REMOVE_LAYOUTS"
 msgstr "Do you want to remove layout"
 
-msgid "LANG_REMOVE_PAGE"
+msgid "LANG_REMOVE_PAGES"
 msgstr "Do you want to remove page"
 
-msgid "LANG_REMOVE_USER"
+msgid "LANG_REMOVE_USERS"
 msgstr "Do you want to remove user"
 
-msgid "LANG_REMOVE_IMAGE"
+msgid "LANG_REMOVE_IMAGES"
 msgstr "Do you want to remove image"
 
-msgid "LANG_REMOVE_DOCUMENT"
+msgid "LANG_REMOVE_DOCUMENTS"
 msgstr "Do you want to remove document"
 
 msgid "LANG_LAYOUTS"

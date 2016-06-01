@@ -363,6 +363,10 @@ class tpl
     {
         global $site;
 
+        $path = explode('/', $file);
+        $file = array_pop($path);
+        $path = array_pop($path);
+
         if (isset($this->config['files'][$file])) {
             return $pathname ? '' : file_get_contents($this->config['files'][$file]);
         }
@@ -370,7 +374,7 @@ class tpl
         $file = strtolower($file);
 
         foreach ($this->config['paths'] as $_path) {
-            $cpath = sprintf($_path, $file, $file);
+            $cpath = sprintf($_path, $path ? $path : $file, $file);
 
             if (is_file($cpath)) {
                 $this->addError('TPL: '.$cpath);
@@ -399,7 +403,7 @@ class tpl
 
         $this->sendError();
 
-        preg_match_all('*\[[A-Z_]+\]*', $this->config['file'], $matches);
+        preg_match_all('*\[[A-Z_\/]+\]*', $this->config['file'], $matches);
         while (sizeof($matches[0]) > 0) {
             foreach ($matches[0] as $file) {
                 $value = str_replace(array('[', ']'), '', $file);
@@ -411,7 +415,7 @@ class tpl
                 $this->checkblocks('IF');
                 $this->checkblocks('LOOP');
             }
-            preg_match_all('*\[[A-Z_]+\]*', $this->config['file'], $matches);
+            preg_match_all('*\[[A-Z_\/]+\]*', $this->config['file'], $matches);
         }
         $this->replaceVar();
         $this->checkblocks('PLACEHOLDER');

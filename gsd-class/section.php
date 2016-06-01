@@ -81,6 +81,10 @@ abstract class section implements isection
         foreach ($item as $field => $value) {
             $fields['CURRENT_'.strtoupper($this->tablename()).'_'.strtoupper($field)] = $value;
         }
+        if ($site->arg(3) === 'remove') {
+            $fields['REMOVE_TYPE'] = lang('LANG_REMOVE_'.strtoupper($this->tablename()));
+            $fields['CURRENT_TYPE_NAME'] = @$item->name ? $item->name : @$item->title;
+        }
 
         $tpl->setvars($fields);
 
