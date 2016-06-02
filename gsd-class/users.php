@@ -36,10 +36,11 @@ class users extends section implements isection
         $mysql->reset()
             ->from('users')
             ->join('users AS u', 'LEFT')
-            ->on('users.creator = u.uid');
+            ->on('users.creator = u.uid')
+            ->where('users.deleted IS NULL');
 
         if ($options['search']) {
-            $mysql->where(sprintf('users.name like "%%%s%%"', $options['search']));
+            $mysql->where(sprintf('AND users.name like "%%%s%%"', $options['search']));
         }
 
         $mysql->order('users.uid');
@@ -80,28 +81,23 @@ class users extends section implements isection
     {
         global $tpl, $mysql, $languages, $permissions;
 
-        $mysql->statement('SELECT users.*, users.created, users.creator AS creator_id, u.name AS creator_name FROM users LEFT JOIN users AS u ON users.creator = u.uid WHERE users.uid = ?;', array($id));
+        $mysql->reset()
+            ->select('users.*, users.created, users.creator AS creator_id, u.name AS creator_name')
+            ->from('users')
+            ->join('users AS u', 'left')
+            ->on('users.creator = u.uid')
+            ->where('users.uid = ?')
+            ->values($id);
 
-        $result = parent::getcurrent($mysql->singleline());
+        $result = parent::getcurrent();
 
         if (!empty($this->item)) {
             $item = $this->item;
             $created = explode(' ', $item->created);
-            $fields = $result;
 
-            $fields['CURRENT_USERS_DISABLED'] = $item->disabled ? 'checked="checked"' : '';
-            $fields['CURRENT_USERS_STATUS'] = !$item->disabled ? lang('LANG_ENABLED') : lang('LANG_DISABLED');
-            $fields['PERMISSION'] = new select(array(
-                'list' => $permissions,
-                'label' => lang('LANG_PERMISSION'),
-                'selected' => $item->level,
-                'name' => 'level',
-            ));
+            $result['CURRENT_USERS_STATUS'] = !$item->disabled ? lang('LANG_ENABLED') : lang('LANG_DISABLED');
 
-            $types = new select(array('list' => $languages, 'id' => 'LANGUAGE', 'selected' => $item->locale));
-            $types->object();
-
-            $tpl->repvars($fields);
+            $tpl->repvars($result);
         }
 
         return $result;

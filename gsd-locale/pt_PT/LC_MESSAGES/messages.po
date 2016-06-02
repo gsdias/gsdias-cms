@@ -29,6 +29,12 @@ msgstr "O site encontra-se em manutenção. Volte mais tarde"
 msgid "LANG_ERROR"
 msgstr "Houve um problema. Tente novamente mais tarde"
 
+msgid "LANG_RECOVER_ERROR"
+msgstr "Houve um problema. Não foi possível reverter a acção."
+
+msgid "LANG_RECOVER_DONE"
+msgstr "Acção revertida com sucesso."
+
 msgid "LANG_TEXT"
 msgstr "Texto"
 
@@ -297,7 +303,7 @@ msgid "LANG_USER_REMOVED"
 msgstr "Utilizador '%s' apagado"
 
 msgid "LANG_IMAGE_REMOVED"
-msgstr "Imagem '%s' apagada"
+msgstr "Imagem '%s' apagada. Pode <a href='/admin/images/1/recover'>reverter</a> a accao."
 
 msgid "LANG_DOCUMENT_REMOVED"
 msgstr "Documento '%s' apagado"

@@ -36,10 +36,11 @@ class layouts extends section implements isection
         $mysql->reset()
             ->from('layouts AS l')
             ->join('users AS u', 'LEFT')
-            ->on('l.creator = u.uid');
+            ->on('l.creator = u.uid')
+            ->where('l.deleted IS NULL');
 
         if ($options['search']) {
-            $mysql->where(sprintf('l.name like "%%%s%%"', $options['search']));
+            $mysql->where(sprintf('AND l.name like "%%%s%%"', $options['search']));
         }
 
         $mysql->order('lid');
@@ -73,16 +74,24 @@ class layouts extends section implements isection
             ->select()
             ->from('layouts')
             ->where('lid = ?')
-            ->values($id)
-            ->exec();
+            ->values($id);
 
-        $result = parent::getcurrent($mysql->singleline());
+        $result = parent::getcurrent();
 
         return $result;
     }
 
     public function add()
     {
+        global $mysql;
+
+        $mysql->reset()
+            ->delete()
+            ->from('layouts')
+            ->where('file = ? AND deleted IS NOT NULL')
+            ->values($_REQUEST['file'])
+            ->exec();
+
         return parent::add();
     }
     

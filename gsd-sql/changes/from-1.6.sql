@@ -1,2 +1,9 @@
 ALTER TABLE `pages`
  ADD FULLTEXT KEY `search` (`title`,`description`);
+
+
+ALTER TABLE `layouts` ADD `deleted` BOOLEAN NULL DEFAULT NULL;
+ALTER TABLE `pages` ADD `deleted` BOOLEAN NULL DEFAULT NULL;
+ALTER TABLE `users` ADD `deleted` BOOLEAN NULL DEFAULT NULL;
+ALTER TABLE `images` ADD `deleted` BOOLEAN NULL DEFAULT NULL;
+ALTER TABLE `documents` ADD `deleted` BOOLEAN NULL DEFAULT NULL;

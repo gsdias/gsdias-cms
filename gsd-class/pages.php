@@ -40,10 +40,11 @@ class pages extends section implements isection
             ->join('pages AS pp', 'LEFT')
             ->on('p.parent = pp.pid')
             ->join('layouts AS l', 'LEFT')
-            ->on('l.lid = p.lid');
+            ->on('l.lid = p.lid')
+            ->where('p.deleted IS NULL');
 
         if (@$_REQUEST['search']) {
-            $mysql->where(sprintf('MATCH (p.title, p.description) AGAINST ("%s" WITH QUERY EXPANSION)', $_REQUEST['search']));
+            $mysql->where(sprintf('AND MATCH (p.title, p.description) AGAINST ("%s" WITH QUERY EXPANSION)', $_REQUEST['search']));
         }
         if (@$_REQUEST['filter']) {
             $tpl->setvar('FILTER_'.strtoupper($_REQUEST['filter']), 'selected="selected"');
@@ -111,25 +112,24 @@ class pages extends section implements isection
     {
         global $mysql, $tpl;
 
-        $mysql->statement('SELECT pages.*, pages.created, u.name AS creator, l.file AS layout
-        FROM pages
-        LEFT JOIN users AS u ON pages.creator = u.uid
-        LEFT JOIN layouts AS l ON pages.lid = l.lid
-        WHERE pages.pid = ?;', array($id));
+        $mysql->reset()
+            ->select('pages.*, pages.created, u.name AS creator, l.file AS layout')
+            ->from('pages')
+            ->join('users AS u')
+            ->on('pages.creator = u.uid')
+            ->join('layouts AS l')
+            ->on('pages.lid = l.lid')
+            ->where('pid = ?')
+            ->values($id);
 
-        $result = parent::getcurrent($mysql->singleline());
+        $result = parent::getcurrent();
 
         if (!empty($this->item)) {
             $item = $this->item;
             $created = explode(' ', $item->created);
-            $fields = $result;
 
-            $fields['CURRENT_PAGES_CREATED'] = timeago(dateDif($created[0], date('Y-m-d', time())), $created[1]);
-
-            $fields['MENU_CHECKED'] = @$item->show_menu ? 'checked="checked"' : '';
-            $fields['AUTH_CHECKED'] = @$item->require_auth ? 'checked="checked"' : '';
-            $fields['PUBLISHED_CHECKED'] = @$item->published ? 'checked="checked"' : '';
-            $fields['CURRENT_PAGES_STATUS'] = @$item->published ? 'Publicada' : 'Por publicar';
+            $result['CURRENT_PAGES_CREATED'] = timeago(dateDif($created[0], date('Y-m-d', time())), $created[1]);
+            $result['CURRENT_PAGES_STATUS'] = @$item->published ? 'Publicada' : 'Por publicar';
 
             $image = new image(array(
                 'iid' => @$item->og_image,
@@ -148,9 +148,9 @@ class pages extends section implements isection
             ));
             $partial->setfile('_image');
 
-            $fields['CURRENT_PAGES_OG_IMAGE'] = $partial;
+            $result['CURRENT_PAGES_OG_IMAGE'] = $partial;
 
-            $tpl->repvars($fields);
+            $tpl->repvars($result);
 
             $mysql->statement('SELECT * FROM pages_extra WHERE pid = ?;', array($id));
             if ($mysql->total) {
@@ -303,6 +303,13 @@ class pages extends section implements isection
         }
 
         $mysql->reset()
+            ->delete()
+            ->from('pages')
+            ->where('url = ? AND parent = ? AND deleted IS NOT NULL')
+            ->values(array($_REQUEST['url'], $_REQUEST['parent']))
+            ->exec();
+
+        $mysql->reset()
             ->select('max(`index`) AS max')
             ->from('pages')
             ->exec();
@@ -339,6 +346,7 @@ class pages extends section implements isection
         $mysql->reset()
             ->select('lid, name')
             ->from('layouts')
+            ->where('deleted IS NULL')
             ->exec();
 
         $types = array(0 => lang('LANG_CHOOSE'));
@@ -356,7 +364,7 @@ class pages extends section implements isection
         $mysql->reset()
             ->select('pid, title')
             ->from('pages')
-            ->where('pid <> ?')
+            ->where('pid <> ? AND deleted IS NULL')
             ->values($id)
             ->exec();
 

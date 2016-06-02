@@ -101,10 +101,10 @@ class site
             ->on('layouts.lid = pages.lid');
         
         if (@$this->path[0] === 'p' && is_numeric(@$this->path[1])) {
-            $mysql->where('published IS NOT NULL AND pid = ?')
+            $mysql->where('published IS NOT NULL AND deleted IS NULL AND pid = ?')
                     ->values($this->path[1]);
         } else {
-            $mysql->where('published IS NOT NULL AND BINARY beautify = ?')
+            $mysql->where('published IS NOT NULL AND deleted IS NULL AND BINARY beautify = ?')
                 ->values($this->uri);
         }
         

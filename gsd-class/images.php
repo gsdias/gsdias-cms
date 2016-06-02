@@ -36,10 +36,11 @@ class images extends section implements isection
         $mysql->reset()
             ->from('images')
             ->join('users AS u', 'LEFT')
-            ->on('images.creator = u.uid');
+            ->on('images.creator = u.uid')
+            ->where('images.deleted IS NULL');
 
         if ($options['search']) {
-            $mysql->where(sprintf('tags like "%%%s%%"', $options['search']));
+            $mysql->where(sprintf('AND tags like "%%%s%%"', $options['search']));
         }
 
         $mysql->order('images.iid');
@@ -78,14 +79,15 @@ class images extends section implements isection
     {
         global $mysql, $tpl;
 
-        $mysql->statement('SELECT images.*, images.created
-        FROM images
-        LEFT JOIN users AS u ON images.creator = u.uid
-        WHERE images.iid = ?;', array($id));
+        $mysql->reset()
+            ->select('images.*, images.created')
+            ->from('images')
+            ->join('users AS u')
+            ->on('images.creator = u.uid')
+            ->where('iid = ?')
+            ->values($id);
 
-        $result = parent::getcurrent($mysql->singleline());
-
-        return $result;
+        return parent::getcurrent();
     }
     
     protected function fields($update = false)

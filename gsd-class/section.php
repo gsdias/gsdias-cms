@@ -66,23 +66,28 @@ abstract class section implements isection
         return array('list' => $list, 'results' => $results);
     }
 
-    public function getcurrent($item = array())
+    public function getcurrent($id = 0)
     {
-        global $site, $tpl;
+        global $site, $tpl, $mysql;
 
-        if (empty($item)) {
+        $section = $this->tablename();
+
+        $mysql->where(sprintf('AND %s.deleted IS NULL', $section))
+            ->exec();
+
+        $this->item = $mysql->singleline();
+
+        if (empty($this->item)) {
             redirect('/admin/'.$site->arg(1));
         }
 
-        $this->item = $item;
-
         $fields = array();
 
-        foreach ($item as $field => $value) {
-            $fields['CURRENT_'.strtoupper($this->tablename()).'_'.strtoupper($field)] = $value;
+        foreach ($this->item as $field => $value) {
+            $fields['CURRENT_'.strtoupper($section).'_'.strtoupper($field)] = $value;
         }
         if ($site->arg(3) === 'remove') {
-            $fields['REMOVE_TYPE'] = lang('LANG_REMOVE_'.strtoupper($this->tablename()));
+            $fields['REMOVE_TYPE'] = lang('LANG_REMOVE_'.strtoupper($section));
             $fields['CURRENT_TYPE_NAME'] = @$item->name ? $item->name : @$item->title;
         }
 
@@ -317,10 +322,10 @@ abstract class section implements isection
         $section = $this->tablename();
 
         $mysql->reset()
-            ->delete()
-            ->from($section)
+            ->update($section)
+            ->fields(array('deleted'))
             ->where(sprintf('%sid = ?', substr($section, 0, 1)))
-            ->values($site->arg(2))
+            ->values(array(1, $site->arg(2)))
             ->exec();
 
         return array('total' => $mysql->total, 'errnum' => $mysql->errnum, 'id' => $site->arg(2));

@@ -19,7 +19,7 @@ if (IS_ADMIN) {
     $mysql->reset()
         ->select()
         ->from('users')
-        ->where('disabled IS NULL')
+        ->where('disabled IS NULL AND deleted IS NULL')
         ->order('created', 'DESC')
         ->limit(0, 5)
         ->exec();
@@ -42,7 +42,7 @@ if (IS_ADMIN || IS_EDITOR) {
     $mysql->reset()
         ->select()
         ->from('pages')
-        ->where('published IS NOT NULL')
+        ->where('published IS NOT NULL AND deleted IS NULL')
         ->order('created', 'DESC')
         ->limit(0, 5)
         ->exec();
@@ -66,6 +66,7 @@ if (IS_ADMIN || IS_EDITOR) {
         ->select()
         ->from('images')
         ->order('created', 'DESC')
+        ->where('deleted IS NULL')
         ->limit(0, 5)
         ->exec();
 
@@ -88,6 +89,7 @@ if (IS_ADMIN || IS_EDITOR) {
         ->select()
         ->from('documents')
         ->order('created', 'DESC')
+        ->where('deleted IS NULL')
         ->limit(0, 5)
         ->exec();
 

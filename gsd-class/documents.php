@@ -36,10 +36,11 @@ class documents extends section implements isection
         $mysql->reset()
             ->from('documents')
             ->join('users AS u', 'LEFT')
-            ->on('documents.creator = u.uid');
+            ->on('documents.creator = u.uid')
+            ->where('documents.deleted IS NULL');
 
         if ($options['search']) {
-            $mysql->where(sprintf('tags like "%%%s%%"', $options['search']));
+            $mysql->where(sprintf('AND tags like "%%%s%%"', $options['search']));
         }
 
         $mysql->order('documents.did');
@@ -78,14 +79,15 @@ class documents extends section implements isection
     {
         global $mysql, $tpl;
 
-        $mysql->statement('SELECT documents.*, documents.created
-        FROM documents
-        LEFT JOIN users AS u ON documents.creator = u.uid
-        WHERE documents.did = ?;', array($id));
+        $mysql->reset()
+            ->select('documents.*, documents.created')
+            ->from('documents')
+            ->join('users AS u')
+            ->on('documents.creator = u.uid')
+            ->where('did = ?')
+            ->values($id);
 
-        $result = parent::getcurrent($mysql->singleline());
-
-        return $result;
+        return parent::getcurrent();
     }
     
     protected function fields($update = false)

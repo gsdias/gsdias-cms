@@ -16,7 +16,7 @@ if (@$site->arg(1) == 'images') {
             $mysql->reset()
                 ->select('iid, extension')
                 ->from('images')
-                ->where('name = ?')
+                ->where('name = ? AND deleted IS NULL')
                 ->where('AND extension = ?')
                 ->values(array($name[0], @$name[1]))
                 ->exec();
@@ -24,7 +24,7 @@ if (@$site->arg(1) == 'images') {
             $mysql->reset()
                 ->select('iid, extension')
                 ->from('images')
-                ->where('iid = ?')
+                ->where('iid = ? AND deleted IS NULL')
                 ->values($iid)
                 ->exec();
         }

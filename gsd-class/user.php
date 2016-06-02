@@ -65,7 +65,7 @@ class user implements iuser
 
         $mysql->statement('SELECT '.$fields.'
         FROM users
-        WHERE disabled IS NULL AND email = ? AND password = md5(?);', array($email, $password));
+        WHERE disabled IS NULL AND deleted IS NULL AND email = ? AND password = md5(?);', array($email, $password));
 
         $result = $mysql->total === 1;
 

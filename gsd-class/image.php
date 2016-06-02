@@ -35,11 +35,17 @@ class image
             $mysql->reset()
                 ->select('extension')
                 ->from('images')
-                ->where('iid = ?')
+                ->where('iid = ? AND deleted IS NULL')
                 ->values($this->args['iid'])
                 ->exec();
 
-            $this->args['src'] = sprintf(ASSETPATHURL.'images/%s.%s', $this->args['iid'], $mysql->singleresult());
+            $extension = $mysql->singleresult();
+
+            if ($extension) {
+                $this->args['src'] = sprintf(ASSETPATHURL.'images/%s.%s', $this->args['iid'], $extension);
+            } else {
+                $this->args = $defaults;
+            }
         }
         $this->args['width'] = $this->args['width'] ? sprintf(' width="%s"', $this->args['width']) : '';
         $this->args['height'] = $this->args['height'] ? sprintf(' height="%s"', $this->args['height']) : '';
