@@ -5,7 +5,7 @@ Check wiki to help you work with CMS and extend a few features.
 ### What is this repository for? ###
 
 * CMS to use in any website built in PHP
-* Version 1.6
+* Version 1.7
 
 ### How do I get set up? ###
 
