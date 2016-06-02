@@ -26,6 +26,13 @@ input {
     padding: 0 2%;
     width: 96%;
 
+    &:focus {
+        outline-color: rgba(46,130,147,0.5);
+        outline-offset: -4px;
+        outline-style: dashed;
+        outline-width: 1px;
+    }
+
     &[type="checkbox"] {
         max-height: none;
         max-width: none;
@@ -68,6 +75,13 @@ textarea {
     min-height: 100px;
     padding: 1%;
     width: 98%;
+
+    &:focus {
+        outline-color: rgba(46,130,147,0.5);
+        outline-offset: -4px;
+        outline-style: dashed;
+        outline-width: 1px;
+    }
 }
 
 select {
@@ -77,6 +91,13 @@ select {
     height: 30px;
     background: #fff;
     width: 100%;
+
+    &:focus {
+        outline-color: rgba(46,130,147,0.5);
+        outline-offset: -4px;
+        outline-style: dashed;
+        outline-width: 1px;
+    }
 
     &.error {
         border-color: red;

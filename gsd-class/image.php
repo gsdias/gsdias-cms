@@ -12,6 +12,7 @@ namespace GSD;
 class image
 {
     private $args, $width = 100, $height = 100;
+    public $notValid;
 
     public function __construct($args = array())
     {
@@ -45,6 +46,7 @@ class image
                 $this->args['src'] = sprintf(ASSETPATHURL.'images/%s.%s', $this->args['iid'], $extension);
             } else {
                 $this->args = $defaults;
+                $this->notValid = 1;
             }
         }
         $this->args['width'] = $this->args['width'] ? sprintf(' width="%s"', $this->args['width']) : '';

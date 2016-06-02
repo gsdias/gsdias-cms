@@ -131,25 +131,6 @@ class pages extends section implements isection
             $result['CURRENT_PAGES_CREATED'] = timeago(dateDif($created[0], date('Y-m-d', time())), $created[1]);
             $result['CURRENT_PAGES_STATUS'] = @$item->published ? 'Publicada' : 'Por publicar';
 
-            $image = new image(array(
-                'iid' => @$item->og_image,
-                'height' => '100',
-                'width' => 'auto',
-                'class' => sprintf('preview %s', $item->og_image ? '' : 'is-hidden'),
-            ));
-
-            $partial = new tpl();
-            $partial->setvars(array(
-                'LABEL' => 'Imagem',
-                'NAME' => 'og_image',
-                'VALUE' => $item->og_image,
-                'IMAGE' => $image,
-                'EMPTY' => $item->og_image ? 'is-hidden' : '',
-            ));
-            $partial->setfile('_image');
-
-            $result['CURRENT_PAGES_OG_IMAGE'] = $partial;
-
             $tpl->repvars($result);
 
             $mysql->statement('SELECT * FROM pages_extra WHERE pid = ?;', array($id));

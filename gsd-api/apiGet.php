@@ -37,9 +37,10 @@ class apiGet
 
         $mysql->reset()
             ->select()
-            ->from('images');
+            ->from('images')
+            ->where('deleted IS NULL');
         if (@$fields['search']) {
-            $mysql->where(sprintf('tags like "%%%s%%"', $fields['search']));
+            $mysql->where(sprintf('AND tags like "%%%s%%"', $fields['search']));
         }
 
         $mysql->exec();

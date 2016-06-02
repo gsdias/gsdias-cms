@@ -11,23 +11,10 @@ $section = $site->arg(1);
 $id = $site->arg(2);
 $action = $site->arg(3);
 
-$file = CLIENTPATH.'include/admin/fields'.PHPEXT;
-if (is_file($file)) {
-    include_once $file;
-}
-
-if (class_exists('GSD\\Extended\\extended'.$section)) {
-    $classsection = 'extended'.$section;
-} elseif (class_exists('GSD\\'.$section)) {
-    $classsection = $section;
-} else {
-    $classsection = '';
-}
-
 //ACTION DETECTED
 if ($action) {
-    if ($classsection) {
-        $csection = \GSD\sectionFactory::create($classsection);
+    if ($section) {
+        $csection = \GSD\sectionFactory::create($section);
 
         $site->main = sprintf('%s/%s', $section, $action);
 
@@ -58,7 +45,7 @@ if ($action) {
 
     //ID DETECTED
     if ($id) {
-        $csection = \GSD\sectionFactory::create($classsection);
+        $csection = \GSD\sectionFactory::create($section);
 
         $csection->generatefields();
 
@@ -84,7 +71,7 @@ if ($action) {
     } else {
         $numberPerPage = 10;
 
-        $csection = \GSD\sectionFactory::create($classsection);
+        $csection = \GSD\sectionFactory::create($section);
 
         $csection->getlist(array('numberPerPage' => $numberPerPage, 'page' => @$_REQUEST['page'], 'search' => @$_REQUEST['search']));
     }

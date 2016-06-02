@@ -13,15 +13,13 @@ class sectionFactory
 {
     public static function create($type)
     {
-        if (class_exists('GSD\\Extended\\'.$type)) {
-            $classname = 'GSD\\Extended\\'.$type;
-            $newtype = substr($type, 8);
+        if (class_exists('GSD\\Extended\\extended'.$type)) {
+            $classname = 'GSD\\Extended\\extended'.$type;
         } else {
             $classname = 'GSD\\'.$type;
-            $newtype = $type;
         }
 
-        return new $classname();
+        return new $classname;
 
     }
 }

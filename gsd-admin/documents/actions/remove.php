@@ -17,7 +17,7 @@ if (@$_REQUEST['confirm'] == $afirmative) {
 
     $document = $mysql->singleline();
 
-    removefile(ASSETPATH.'documents/'.$site->arg(2).'.'.$document->extension);
+//    removefile(ASSETPATH.'documents/'.$site->arg(2).'.'.$document->extension);
 
     $result = $csection->remove();
 

@@ -17,7 +17,7 @@ if (@$_REQUEST['confirm'] == $afirmative) {
 
     $image = $mysql->singleline();
 
-    removefile(ASSETPATH.'images/'.$site->arg(2).'.'.$image->extension);
+//    removefile(ASSETPATH.'images/'.$site->arg(2).'.'.$image->extension);
 
     $result = $csection->remove();
 
