@@ -8,7 +8,6 @@
  * @since      File available since Release 1.0
  */
 if (@$_REQUEST['save']) {
-
     $mysql->reset()
         ->select('extension, width, height, size')
         ->from('images')

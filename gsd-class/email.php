@@ -212,7 +212,7 @@ class email
             ob_end_clean();
         }
 
-          $this->message->setBody($message ? $message : $this->text, $this->isPlain ? 'text/plain' : 'text/html');
+        $this->message->setBody($message ? $message : $this->text, $this->isPlain ? 'text/plain' : 'text/html');
 
         // Send the message
         $result = $this->swift->send($this->message);

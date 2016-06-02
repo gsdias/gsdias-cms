@@ -11,7 +11,7 @@ namespace GSD;
 
 class images extends section implements isection
 {
-    public function __construct($permission = NULL)
+    public function __construct($permission = null)
     {
         global $tpl, $site;
         

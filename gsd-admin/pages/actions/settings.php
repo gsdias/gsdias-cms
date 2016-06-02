@@ -90,7 +90,6 @@ if (@$_REQUEST['save']) {
         }
 
         if ($_REQUEST['current_url'] != $_REQUEST['url']) {
-
             $currenturl = $_REQUEST['current_url'];
 
             $mysql->reset()
@@ -137,7 +136,7 @@ if (@$_REQUEST['save']) {
                 $tpl->setarray('MESSAGES', array('MSG' => 'Url for the page changed to X'));
             }
 
-            foreach($_REQUEST['pages'] as $pid) {
+            foreach ($_REQUEST['pages'] as $pid) {
                 $mysql->statement('UPDATE pages AS p
                 SET p.beautify = concat(?, p.url)
                 WHERE p.pid = ?;', array(
@@ -145,7 +144,6 @@ if (@$_REQUEST['save']) {
                     $pid,
                 ));
             }
-
         }
 
         redirect('/admin/'.$site->arg(1));

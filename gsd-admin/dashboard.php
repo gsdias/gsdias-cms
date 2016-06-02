@@ -11,7 +11,7 @@
 $tpl->setpaths(array(TPLPATH.'dashboard/%s'.TPLEXT));
 
 if (IS_ADMIN) {
-    $needupdate = $site->options['version']['value'] !== $site::VERSION;
+    $needupdate = @$site->options['version']['value'] !== $site::VERSION;
     if ($needupdate) {
         $tpl->setarray('WARNINGS', array('MSG' => sprintf(lang('LANG_UPDATE_NEEDED'), @$site->options['version']['value'], $site::VERSION)));
         $tpl->setcondition('WARNINGS', $needupdate);
@@ -35,7 +35,6 @@ if (IS_ADMIN) {
         );
     }
     $tpl->setarray('USERS', $users);
-
 }
 
 if (IS_ADMIN || IS_EDITOR) {

@@ -11,7 +11,7 @@ namespace GSD;
 
 class layouts extends section implements isection
 {
-    public function __construct($permission = NULL)
+    public function __construct($permission = null)
     {
         global $tpl, $site;
         
@@ -113,7 +113,7 @@ class layouts extends section implements isection
     }
     
     private function getFiles()
-    {        
+    {
         $templatefiles = scandir(CLIENTTPLPATH.'_layouts');
 
         $templates = array(0 => lang('LANG_CHOOSE'));
@@ -129,7 +129,6 @@ class layouts extends section implements isection
     
     protected function fields($update = false)
     {
-        
         $fields = array();
         
         $fields[] = new field(array('name' => 'name', 'label' => lang('LANG_NAME'), 'validator' => array('isRequired', 'isString')));

@@ -54,6 +54,7 @@ $tables = array(
     'users' => 1,
     'pages' => 1,
     'pages_review' => 1,
+    'pages_extra' => 1,
     'redirect' => 1,
     'images' => 1,
     'documents' => 1,

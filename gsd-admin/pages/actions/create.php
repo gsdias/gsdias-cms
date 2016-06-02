@@ -12,7 +12,6 @@ if (@$_REQUEST['save']) {
     $result = $csection->add();
 
     if ($result['total']) {
-        
         $mysql->reset()
             ->delete()
             ->from('redirect')

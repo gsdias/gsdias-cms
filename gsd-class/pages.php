@@ -11,7 +11,7 @@ namespace GSD;
 
 class pages extends section implements isection
 {
-    public function __construct($permission = NULL)
+    public function __construct($permission = null)
     {
         global $tpl, $site;
         
@@ -452,7 +452,7 @@ class pages extends section implements isection
     private function getfieldlist($fields)
     {
         $list = array();
-        foreach($fields as $field) {
+        foreach ($fields as $field) {
             $list[] = is_array($field) ? $field[0] : $field;
         }
 

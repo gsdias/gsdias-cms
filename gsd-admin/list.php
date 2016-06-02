@@ -20,7 +20,7 @@ if ($action) {
 
         if ($action === 'edit') {
             $site->main = '_fields';
-        } else if ($action === 'remove') {
+        } elseif ($action === 'remove') {
             $site->main = '_remove';
         }
         

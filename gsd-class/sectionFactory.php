@@ -20,6 +20,5 @@ class sectionFactory
         }
 
         return new $classname;
-
     }
 }

@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS `documents` (
   `did` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `name` varchar(100) NOT NULL,
   `description` varchar(100) DEFAULT NULL,
+  `tags` varchar(100) DEFAULT NULL,
   `extension` varchar(5) NOT NULL,
   `size` varchar(10) NOT NULL,
   `creator` int(11) NOT NULL,

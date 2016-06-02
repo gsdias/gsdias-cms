@@ -480,7 +480,6 @@ class tpl
 
     public function returnFile($file)
     {
-
         $this->setcondition('DEBUG', DEBUG);
         $lines = file_get_contents($this->config['path'].TPLPATH.$file.TPLEXT);
         $output .= $this->replaceVar($lines);

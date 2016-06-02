@@ -9,7 +9,6 @@
  */
 
 if (@$_REQUEST['save']) {
-
     $result = $csection->edit();
 
     if (!$csection->showErrors(lang('LANG_USER_ALREADY_EXISTS'))) {

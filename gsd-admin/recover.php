@@ -12,7 +12,7 @@ $mysql->reset()
     ->update($site->arg(1))
     ->fields('deleted')
     ->where(sprintf('%sid = ?', substr($section, 0, 1)))
-    ->values(array(NULL, $site->arg(2)))
+    ->values(array(null, $site->arg(2)))
     ->exec();
 
 if ($mysql->errmsg) {

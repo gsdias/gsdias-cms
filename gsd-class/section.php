@@ -221,8 +221,7 @@ abstract class section implements isection
         $_REQUEST['created'] = date('Y-m-d H:i:s', time());
 
         $list = array();
-        foreach ($fields as $index => $field)
-        {
+        foreach ($fields as $index => $field) {
             $result = $this->filterField($field);
 
             if ($result['field'] === null) {
@@ -348,7 +347,7 @@ abstract class section implements isection
                 $response['field'] = null;
                 return $response;
             }
-            foreach($field->getValidator() as $filter) {
+            foreach ($field->getValidator() as $filter) {
                 if (function_exists($filter)) {
                     $response = $filter($value, $field, $field->getLabel());
                     $value = $response['value'];
@@ -373,13 +372,13 @@ abstract class section implements isection
         $hasErrors = 0;
 
         if (is_array($this->result['errmsg'])) {
-            foreach($this->result['errmsg'] as $msg) {
+            foreach ($this->result['errmsg'] as $msg) {
                 if (!empty($msg)) {
                     $tpl->setarray('ERRORS', array('MSG' => $msg));
                     $hasErrors = 1;
                 }
             }
-        } else if (!empty($this->result['errmsg'])) {
+        } elseif (!empty($this->result['errmsg'])) {
             $tpl->setarray('ERRORS', array('MSG' => $msg));
             $hasErrors = 1;
         }
@@ -398,7 +397,7 @@ abstract class section implements isection
     {
         $fields = $this->fields($update);
 
-        foreach($fields as $index => $field) {
+        foreach ($fields as $index => $field) {
             $fields[$index] = $field->getName();
         }
 

@@ -28,7 +28,6 @@ class mySQL implements idatabase
         $this->user = $user;
         $this->pass = $pass;
         $this->querylist = array();
-        $this->connect();
     }
 
     // -- Function Name : connect
@@ -36,6 +35,8 @@ class mySQL implements idatabase
     // -- Purpose : connects to the database
     protected function connect($withdb = true)
     {
+        global $tpl;
+
         try {
             ini_set('memory_limit', '512M');
 
@@ -44,17 +45,19 @@ class mySQL implements idatabase
             $this->conn = new \PDO('mysql:host='.$this->host.';charset=utf8;'.$db, $this->user, $this->pass, array(
                 \PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true,
             ));
-
         } catch (\PDOException $error) {
             switch ($error->getCode()) {
                 case '2002':
-                printf('<span style="color: red;">Could not connect to database. Check host</span><br>');
+                    $tpl->setarray('ERRORS', array('MSG' => 'Could not connect to database. Check host'));
+                    $tpl->setcondition('ERRORS');
                 break;
                 case '1044':
-                printf('<span style="color: red;">Could not connect to database. Check permissions</span><br>');
+                    $tpl->setarray('ERRORS', array('MSG' => 'Could not connect to database. Check permissions'));
+                    $tpl->setcondition('ERRORS');
                 break;
                 case '1045':
-                printf('<span style="color: red;">Could not connect to database. Check credentials</span><br>');
+                    $tpl->setarray('ERRORS', array('MSG' => 'Could not connect to database. Check credentials'));
+                    $tpl->setcondition('ERRORS');
                 break;
                 case '1049':
                     $this->connect(false);
@@ -143,7 +146,6 @@ class mySQL implements idatabase
         try {
             $this->executed = $this->prepared->execute($values);
         } catch (PDOException $e) {
-
         }
 
         $this->total = $this->prepared->rowCount();
@@ -180,10 +182,8 @@ class mySQL implements idatabase
     // -- Purpose : returns database query single result
     public function singleresult()
     {
-        if (sizeof($this->result))
-        {
-            foreach($this->result[0] as $key => $value)
-            {
+        if (sizeof($this->result)) {
+            foreach ($this->result[0] as $key => $value) {
                 return $value;
             }
         }
