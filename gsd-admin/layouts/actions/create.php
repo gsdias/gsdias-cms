@@ -7,7 +7,7 @@
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
-
+defined('GVALID') or die;
 if (@$_REQUEST['save']) {
     $content = file_get_contents(sprintf(CLIENTTPLPATH.'_layouts/%s', $_REQUEST['file']));
 

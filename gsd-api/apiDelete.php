@@ -10,6 +10,7 @@
 
 #### DELETE
 namespace GSD\Api;
+defined('GVALID') or die;
 
 class apiDelete
 {

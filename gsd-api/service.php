@@ -7,6 +7,7 @@
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
+defined('GVALID') or die;
 $classname = 'GSD\\Api\\api'.ucwords(strtolower($_SERVER['REQUEST_METHOD']));
 $classnameextended = 'GSD\\Api\\Extended\\apiExtended'.ucwords(strtolower($_SERVER['REQUEST_METHOD']));
 

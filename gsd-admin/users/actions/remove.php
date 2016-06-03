@@ -7,7 +7,7 @@
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
-
+defined('GVALID') or die;
 if ($site->arg(2) == 1) {
     $tpl->setarray('ERRORS', array('MSG' => lang('LANG_USER_DEFAULT')));
     redirect('/admin/'.$site->arg(1));

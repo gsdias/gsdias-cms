@@ -10,6 +10,7 @@
 
 #### GET
 namespace GSD\Api;
+defined('GVALID') or die;
 
 class apiGet
 {

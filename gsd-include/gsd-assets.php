@@ -7,6 +7,7 @@
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
+defined('GVALID') or die;
 if (@$site->arg(1) == 'images') {
     $iid = is_numeric(@$site->arg(2)) ? $site->arg(2) : 0;
     $name = explode('.', @$site->arg(2));

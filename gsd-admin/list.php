@@ -7,6 +7,7 @@
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
+defined('GVALID') or die;
 $section = $site->arg(1);
 $id = $site->arg(2);
 $action = $site->arg(3);

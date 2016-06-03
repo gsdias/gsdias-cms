@@ -1,3 +1,30 @@
+version 1.7
+
+Added custom settings file to ignore
+Added default settings file
+Changed logic to show error, warning and success messages. Now a list of message is provided
+Added flag deleted to all types instead of deleting. Will be using to recover deleted types
+Removed fields file from admin
+Added option to recover type
+Made remove template generic for all types
+Fixed issue with revision pages
+Added success mesages on url page change
+Fixed an issue with api reading uri
+gsd-assets.php, gsd-install.php and gsd-assets.php moved to folder gsd-include
+Now its top level class section that queries database on getcurrent method
+Added password complexity validation to help improve security
+Changed logic to check if cms is installed
+Added extra information on pages and users list
+Fixed issue with label i18n for fields
+On templates a path can be provided
+Fixed permission on user edit if own
+Added new loader
+Changed a few styles
+Added cms logo image base64
+If there is a text that does not have translation now a warning is thrown
+Added Spanish and Deutch languages (translation is required)
+Removed extra properties for fields (class and style)
+
 version 1.6
 
 Added a version control

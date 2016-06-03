@@ -3,11 +3,6 @@ FileETag None
 
 AddType text/cache-manifest .appcache
 
-# Protect files and directories from prying eyes.
-<FilesMatch "(class|include)">
-  Order allow,deny
-</FilesMatch>
-
 <ifModule mod_expires.c>
 <FilesMatch "\.(js|css|ico|jpg|jpeg|png|gif|swf)$">
 #Header set Cache-Control "max-age=29030400, public"

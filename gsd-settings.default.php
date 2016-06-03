@@ -1,5 +1,5 @@
 <?php
-
+defined('GVALID') or die;
 $pattern = '/(\?)(.*)/';
 $uri = preg_replace($pattern, '', $_SERVER['REQUEST_URI']);
 

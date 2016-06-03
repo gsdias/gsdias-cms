@@ -7,6 +7,7 @@
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
+defined('GVALID') or die;
 function GSDClassLoading($className)
 {
     $className = str_replace(array('GSD\\Extended\\', 'GSD\\Api\\Extended\\', 'GSD\\Api\\', 'GSD\\'), array(CLIENTCLASSPATH, CLIENTPATH.'api/', ROOTPATH.'gsd-api/', CLASSPATH), $className);

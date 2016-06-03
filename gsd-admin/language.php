@@ -7,6 +7,7 @@
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
+defined('GVALID') or die;
 if (@$_REQUEST['save']) {
     if ($site->arg(2) === 'extended') {
         $file = CLIENTPATH.'locale/'.$language.'/LC_MESSAGES/extended.mo';

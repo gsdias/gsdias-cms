@@ -7,7 +7,7 @@
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.6
  */
-
+defined('GVALID') or die;
 $files = scandir('gsd-sql/changes');
 
 $update = array();

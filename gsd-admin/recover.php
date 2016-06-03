@@ -7,7 +7,7 @@
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.7
  */
-
+defined('GVALID') or die;
 $mysql->reset()
     ->update($site->arg(1))
     ->fields('deleted')

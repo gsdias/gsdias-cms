@@ -8,6 +8,7 @@
  * @since      File available since Release 1.2
  */
 namespace GSD;
+defined('GVALID') or die;
 
 class paginator
 {

@@ -10,7 +10,7 @@
 define('ROOTPATH', __DIR__.'/');
 define('GVALID', 1);
 
-include_once 'gsd-include/gsd-config.php';
+include_once ROOTPATH.'gsd-include/gsd-config.php';
 
 if (!IS_INSTALLED) {
     if ($site->uri != '/admin') {

@@ -7,6 +7,7 @@
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
+defined('GVALID') or die;
 include_once ROOTPATH.'gsd-settings.php';
 include_once ROOTPATH.'gsd-class/interfaces'.PHPEXT;
 include_once INCLUDEPATH.'gsd-functions'.PHPEXT;

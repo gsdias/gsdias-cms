@@ -8,6 +8,7 @@
  * @since      File available since Release 1.0
  */
 define('ROOTPATH', dirname(__FILE__).'/../');
+define('GVALID', 1);
 
 include_once ROOTPATH.'gsd-include/gsd-config.php';
 

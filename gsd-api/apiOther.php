@@ -10,6 +10,7 @@
 
 #### OTHER
 namespace GSD\Api;
+defined('GVALID') or die;
 
 use GSD;
 

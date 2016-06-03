@@ -8,6 +8,7 @@
  * @since      File available since Release 1.0
  */
 namespace GSD\Api;
+defined('GVALID') or die;
 
 use GSD;
 

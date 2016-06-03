@@ -7,7 +7,7 @@
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.5.1
  */
-
+defined('GVALID') or die;
 $mysql->statement('UPDATE pages AS p
     LEFT JOIN pages AS pp ON pp.pid = p.parent
     SET p.beautify = CONCAT(IFNULL(pp.beautify, ""), p.url)
