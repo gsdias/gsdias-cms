@@ -1,3 +1,10 @@
+version 1.7.1
+
+Removed FilesMatch from .htaccess
+Added security check for direct access to php files
+Fix issue with assets type document
+Added missing field on documents table
+
 version 1.7
 
 Added custom settings file to ignore
