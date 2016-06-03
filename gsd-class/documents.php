@@ -59,13 +59,13 @@ class documents extends section implements isection
         $result = parent::getlist(array(
             'search' => $options['search'],
             'results' => $mysql->result(),
-            'fields' => array_merge(array('did', 'name', 'description', 'creator', 'creator_name', 'creator_id'), $fields),
+            'fields' => array_merge(array('did', 'name', 'description', 'creator', 'creator_name', 'creator_id', 'extension'), $fields),
             'paginator' => $paginator,
         ));
 
         if (!empty($result['list'])) {
             foreach ($result['results'] as $index => $item) {
-                $result['list'][$index]['ASSET'] = $item->name;
+                $result['list'][$index]['ASSET'] = sprintf('/assets/documents/%s.%s', $item->name, $item->extension);
                 $result['list'][$index]['SIZE'] = sprintf('%s', $item->size);
             }
 
