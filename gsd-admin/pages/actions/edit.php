@@ -8,7 +8,7 @@
  * @since      File available since Release 1.0
  */
 defined('GVALID') or die;
-if (@$_REQUEST['save']) {
+if ($site->p('save')) {
     $result = $csection->edit();
 
     if ($result['total']) {
@@ -21,16 +21,16 @@ if (@$_REQUEST['save']) {
                 $moduleid = explode('_', $module);
                 foreach ($vals as $i => $val) {
                     $value[] = array(
-                            'value' => @$_REQUEST[$module][$i],
-                            'class' => @$_REQUEST['class_'.$module][$i],
-                            'style' => @$_REQUEST['style_'.$module][$i],
+                            'value' => @$site->p($module)[$i],
+                            'class' => @$site->p('class_'.$module)[$i],
+                            'style' => @$site->p('style_'.$module)[$i],
                     );
                 }
                 if (!sizeof(@$modules[$moduleid[4]])) {
                     $modules[$moduleid[4]] = array(
                         'list' => array(),
-                        'style' => @$_REQUEST['style_value_pm_'.$moduleid[4]],
-                        'class' => @$_REQUEST['class_value_pm_'.$moduleid[4]],
+                        'style' => @$site->p('style_value_pm_'.$moduleid[4]),
+                        'class' => @$site->p('class_value_pm_'.$moduleid[4]),
                     );
                 }
                 $modules[$moduleid[4]]['list'][] = $value;

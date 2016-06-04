@@ -25,7 +25,7 @@ $mysql = GSD\mysqlFactory::create($_mysql['db'], $_mysql['host'], $_mysql['user'
 
 $site = new GSD\site();
 
-$user = @$_SESSION['user'] ? $_SESSION['user'] : (class_exists('\\GSD\\Extended\\extendeduser') ? new GSD\Extended\extendeduser() : new GSD\user());
+$user = $site->p('user', 1) ? $site->p('user', 1) : (class_exists('\\GSD\\Extended\\extendeduser') ? new GSD\Extended\extendeduser() : new GSD\user());
 
 $language = getLanguage();
 
@@ -66,11 +66,11 @@ $tpl->setVar('RESOURCESURL', RESOURCESURL);
 $tpl->setVar('CLIENT_RESOURCES', @$config['client_resources']);
 $tpl->setVar('CLIENT_PATH', @$config['client_path']);
 $tpl->setVar('ASSETPATH', ASSETPATHURL);
-$tpl->setVar('REDIRECT', @$_REQUEST['redirect'] ? sprintf('?redirect=%s', $_REQUEST['redirect']) : '');
+$tpl->setVar('REDIRECT', $site->p('redirect') ? sprintf('?redirect=%s', $site->p('redirect')) : '');
 $tpl->setVar('SITE_URL', $site->protocol.@$config['url']);
 
-displaymessages('ERRORS', @$_SESSION['ERRORS']);
-displaymessages('MESSAGES', @$_SESSION['MESSAGES']);
+displaymessages('ERRORS', $site->p('ERRORS', 1));
+displaymessages('MESSAGES', $site->p('MESSAGES', 1));
 
 $_SESSION['ERRORS'] = array();
 $_SESSION['MESSAGES'] = array();

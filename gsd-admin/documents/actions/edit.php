@@ -8,7 +8,7 @@
  * @since      File available since Release 1.0
  */
 defined('GVALID') or die;
-if (@$_REQUEST['save']) {
+if ($site->p('save')) {
     $defaultfields = array(
         $_REQUEST['name'],
         $_REQUEST['description'],

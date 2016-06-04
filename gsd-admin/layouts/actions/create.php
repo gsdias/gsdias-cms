@@ -8,7 +8,7 @@
  * @since      File available since Release 1.0
  */
 defined('GVALID') or die;
-if (@$_REQUEST['save']) {
+if ($site->p('save')) {
     $content = file_get_contents(sprintf(CLIENTTPLPATH.'_layouts/%s', $_REQUEST['file']));
 
     $_REQUEST['file'] = str_replace('.html', '', $_REQUEST['file']);

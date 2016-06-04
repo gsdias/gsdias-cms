@@ -38,8 +38,8 @@ abstract class section implements isection
 
         $list = array();
 
-        $first = !@$_REQUEST['page'] || @$_REQUEST['page'] == 1 ? -1 : 0;
-        $last = sizeof($results) < 11 || @$_REQUEST['page'] == $options['totalPages'] ? -1 : sizeof($results) - 1;
+        $first = !$site->p('page') || $site->p('page') == 1 ? -1 : 0;
+        $last = sizeof($results) < 11 || $site->p('page') == $options['totalPages'] ? -1 : sizeof($results) - 1;
 
         foreach ($results as $index => $line) {
             $item = array();
@@ -248,7 +248,7 @@ abstract class section implements isection
                 ->values($values)
                 ->exec();
             
-            $return = array('total' => $mysql->total, 'errnum' => $mysql->errnum, 'errmsg' => $mysql->errmsg, 'id' => $mysql->lastinserted());
+            $return = array('total' => $mysql->total, 'errnum' => $mysql->errnum, 'errmsg' => $mysql->errmsg, 'id' => $mysql->lastinserted(), 'fields' => $fields, 'values' => $values);
         } else {
             $return['errmsg'] = $list;
         }
@@ -305,7 +305,7 @@ abstract class section implements isection
                 ->values($values)
                 ->exec();
 
-            $return = array('total' => $mysql->total, 'errnum' => $mysql->errnum, 'errmsg' => $mysql->errmsg ? array($mysql->errmsg) : '', 'id' => $pid);
+            $return = array('total' => $mysql->total, 'errnum' => $mysql->errnum, 'errmsg' => $mysql->errmsg ? array($mysql->errmsg) : '', 'id' => $pid, 'fields' => $allfields, 'values' => $values);
         } else {
             $return['errmsg'] = $list;
         }
@@ -340,10 +340,12 @@ abstract class section implements isection
 
     private function filterField($field)
     {
+        global $site;
+
         $response = array('value' => null, 'result' => 1, 'field' => '');
 
         if ($field instanceof field) {
-            $value = @$_REQUEST[$field->getName()];
+            $value = $site->p($field->getName());
             if ($field->getExtra()) {
                 $response['field'] = null;
                 return $response;
@@ -358,7 +360,7 @@ abstract class section implements isection
                 }
             }
         } else {
-            $value = @$_REQUEST[$field];
+            $value = $site->p($field);
             $response['value'] = $value;
             $response['field'] = $field;
         }

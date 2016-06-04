@@ -29,7 +29,7 @@ class pages extends section implements isection
     
     public function getlist($options)
     {
-        global $mysql, $tpl;
+        global $mysql, $tpl, $site;
 
         $_fields = 'p.*, p.creator AS creator_id, u.name AS creator_name, if(p.beautify like concat(if(pp.beautify IS NULL , "", pp.beautify), p.url), 0, 1) AS sync, l.name AS layout';
         $fields = empty($options['fields']) ? array() : $options['fields'];
@@ -44,35 +44,35 @@ class pages extends section implements isection
             ->on('l.lid = p.lid')
             ->where('p.deleted IS NULL');
 
-        if (@$_REQUEST['search']) {
+        if ($site->p('search')) {
             $mysql->where(sprintf('AND MATCH (p.title, p.description) AGAINST ("%s" WITH QUERY EXPANSION)', $_REQUEST['search']));
         }
-        if (@$_REQUEST['filter']) {
+        if ($site->p('filter')) {
             $tpl->setvar('FILTER_'.strtoupper($_REQUEST['filter']), 'selected="selected"');
             switch ($_REQUEST['filter']) {
                 case 'published':
-                    $mysql->where(sprintf('%s p.published IS NOT NULL', @$_REQUEST['search'] ? 'AND' : ''));
+                    $mysql->where(sprintf('%s p.published IS NOT NULL', $site->p('search') ? 'AND' : ''));
                 break;
                 case 'unpublished':
-                    $mysql->where(sprintf('%s p.published IS NULL', @$_REQUEST['search'] ? 'AND' : ''));
+                    $mysql->where(sprintf('%s p.published IS NULL', $site->p('search') ? 'AND' : ''));
                 break;
                 case 'visiblemenu':
-                    $mysql->where(sprintf('%s p.show_menu IS NOT NULL', @$_REQUEST['search'] ? 'AND' : ''));
+                    $mysql->where(sprintf('%s p.show_menu IS NOT NULL', $site->p('search') ? 'AND' : ''));
                 break;
                 case 'invisiblemenu':
-                    $mysql->where(sprintf('%s p.show_menu IS NULL', @$_REQUEST['search'] ? 'AND' : ''));
+                    $mysql->where(sprintf('%s p.show_menu IS NULL', $site->p('search') ? 'AND' : ''));
                 break;
                 case 'secure':
-                    $mysql->where(sprintf('%s p.require_auth IS NOT NULL', @$_REQUEST['search'] ? 'AND' : ''));
+                    $mysql->where(sprintf('%s p.require_auth IS NOT NULL', $site->p('search') ? 'AND' : ''));
                 break;
                 case 'nonsecure':
-                    $mysql->where(sprintf('%s p.require_auth IS NULL', @$_REQUEST['search'] ? 'AND' : ''));
+                    $mysql->where(sprintf('%s p.require_auth IS NULL', $site->p('search') ? 'AND' : ''));
                 break;
             }
         }
 
         $mysql->order('p.index');
-        $page = @$_REQUEST['page'] ? $_REQUEST['page'] : 1;
+        $page = $site->p('page') ? $_REQUEST['page'] : 1;
         $paginator = new paginator(@$options['numberPerPage'], $page);
 
         if (!empty($fields)) {
@@ -313,12 +313,16 @@ class pages extends section implements isection
                 $mysql->reset()
                 ->insert('pages_extra')
                 ->fields(array('pid', 'name', 'value'))
-                ->values(array($result['id'], $field->getName(), @$_REQUEST[$field->getName()]))
+                ->values(array($result['id'], $field->getName(), $site->p($field->getName())))
                 ->exec();
             }
         }
 
         return $result;
+    }
+    public function settings()
+    {
+
     }
     
     private function getLayouts()
@@ -379,7 +383,7 @@ class pages extends section implements isection
         foreach ($defaultfields as $index => $field) {
             $fieldname = $field->getName();
             $defaultfields[$index] = $fieldname;
-            if ($currentpage->{$fieldname} !== @$_REQUEST[$fieldname]) {
+            if ($currentpage->{$fieldname} !== $site->p($fieldname)) {
                 $hasChanged = 1;
             }
             array_push($fieldsvalue, $currentpage->{$fieldname});
@@ -395,12 +399,12 @@ class pages extends section implements isection
                     ->update('pages_extra')
                     ->fields(array('value'))
                     ->where('pid = ? AND name = ?')
-                    ->values(array(@$_REQUEST[$field->getName()], $pid, $field->getName()))
+                    ->values(array($site->p($field->getName()), $pid, $field->getName()))
                     ->exec();
             }
         }
 
-        if ($currentpage->parent !== @$_REQUEST['parent']) {
+        if ($currentpage->parent !== $site->p('parent')) {
             $this->update_beautify($pid);
         }
 

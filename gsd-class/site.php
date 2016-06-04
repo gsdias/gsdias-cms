@@ -50,7 +50,7 @@ class site
         $tpl->setcondition('DEBUG', !!@$this->options['debug']['value']);
 
         $pattern = '/(\?)(.*)/';
-        $this->uri = preg_replace($pattern, '', $_SERVER['REQUEST_URI']);
+        $this->uri = rtrim(preg_replace($pattern, '', $_SERVER['REQUEST_URI']), '/');
 
         $this->path();
         $this->isFrontend = $this->path[0] !== 'admin';
@@ -102,10 +102,10 @@ class site
             ->on('layouts.lid = pages.lid');
         
         if (@$this->path[0] === 'p' && is_numeric(@$this->path[1])) {
-            $mysql->where('published IS NOT NULL AND deleted IS NULL AND pid = ?')
+            $mysql->where('published IS NOT NULL AND pages.deleted IS NULL AND pid = ?')
                     ->values($this->path[1]);
         } else {
-            $mysql->where('published IS NOT NULL AND deleted IS NULL AND BINARY beautify = ?')
+            $mysql->where('published IS NOT NULL AND pages.deleted IS NULL AND BINARY beautify = ?')
                 ->values($this->uri);
         }
         
@@ -187,9 +187,9 @@ class site
         return @$this->path[$pos];
     }
 
-    public function param($name)
+    public function p($name, $session = 0)
     {
-        return @$_REQUEST[$name];
+        return $session ? @$_SESSION[$name] : @$_REQUEST[$name]);
     }
 
     public function searchpage($givenpath)

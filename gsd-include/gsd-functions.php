@@ -22,10 +22,10 @@ function redirect($path = '/', $code = 302)
     global $tpl;
 
     if (!empty($tpl->config['array']['MESSAGES'])) {
-        $_SESSION['MESSAGES'] = array_merge(@$_SESSION['MESSAGES'] ? $_SESSION['MESSAGES'] : array(), $tpl->config['array']['MESSAGES']);
+        $_SESSION['MESSAGES'] = array_merge($site->p('MESSAGES', 1) ? $site->p('MESSAGES', 1) : array(), $tpl->config['array']['MESSAGES']);
     }
     if (!empty($tpl->config['array']['ERRORS'])) {
-        $_SESSION['ERRORS'] = array_merge(@$_SESSION['ERRORS'] ? $_SESSION['ERRORS'] : array(), $tpl->config['array']['ERRORS']);
+        $_SESSION['ERRORS'] = array_merge($site->p('ERRORS', 1) ? $site->p('ERRORS', 1) : array(), $tpl->config['array']['ERRORS']);
     }
 
     header('Location: '.$path, true, $code);
@@ -34,7 +34,7 @@ function redirect($path = '/', $code = 302)
 
 function displayMessages($id, $list)
 {
-    global $tpl;
+    global $tpl, $site;
 
     if (empty($list)) {
         return;
@@ -42,7 +42,7 @@ function displayMessages($id, $list)
 
     $tpl->setarray($id, $list);
     $tpl->setcondition($id);
-    unset($_SESSION[$id]);
+    unset($site->p($id, 1));
 }
 
 function escapeText($value = '', $encoding = 'UTF-8')
@@ -464,12 +464,12 @@ function getLanguage()
 
     $languageList = array_keys($languages);
 
-    $list = array();
+    $list = array($site->p('locale'));
 
     $browserlang = preg_replace('#;q=[0-9].[0-9]#s', '', @$_SERVER['HTTP_ACCEPT_LANGUAGE']);
     $browserlang = explode(',', str_replace('-', '_', $browserlang));
 
-    $redirect = explode('/', @$_REQUEST['redirect']);
+    $redirect = explode('/', $site->p('redirect'));
 
     $list[] = $site->arg(0);
 

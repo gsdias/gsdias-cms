@@ -8,7 +8,7 @@
  * @since      File available since Release 1.0
  */
 defined('GVALID') or die;
-if (@$_REQUEST['save']) {
+if ($site->p('save')) {
     $size = getimagesize($_FILES['asset']['tmp_name']);
 
     $valid = is_array($size);

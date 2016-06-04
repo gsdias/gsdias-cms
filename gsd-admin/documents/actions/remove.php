@@ -8,7 +8,7 @@
  * @since      File available since Release 1.0
  */
 defined('GVALID') or die;
-if (@$_REQUEST['confirm'] == $afirmative) {
+if ($site->p('confirm') == $afirmative) {
     $mysql->reset()
         ->select('extension, name')
         ->from('documents')
@@ -29,6 +29,6 @@ if (@$_REQUEST['confirm'] == $afirmative) {
     }
 }
 
-if (@$_REQUEST['confirm'] == $negative) {
+if ($site->p('confirm') == $negative) {
     redirect('/admin/'.$site->arg(1));
 }
