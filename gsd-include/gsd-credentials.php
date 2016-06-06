@@ -8,7 +8,7 @@
  * @since      File available since Release 1.0
  */
 defined('GVALID') or die;
-if ($site->arg(0) == 'logout') {
+if ($site->a(0) == 'logout') {
     $user->logout();
 }
 
@@ -17,7 +17,7 @@ if (@$_REQUEST['login'] && !$user->isLogged()) {
         $logged = $user->login($_REQUEST['email'], $_REQUEST['password']);
 
         if ($logged) {
-            $uri = @$_REQUEST['redirect'] ? $_REQUEST['redirect'] : ($site->arg(0) == 'admin' ? '/admin' : '/');
+            $uri = @$_REQUEST['redirect'] ? $_REQUEST['redirect'] : ($site->a(0) == 'admin' ? '/admin' : '/');
 
             redirect($uri);
         } else {
@@ -48,7 +48,7 @@ if (IS_LOGGED) {
     $tpl->setcondition('IS_LOGGED');
     $tpl->setvar('USER_ID', $user->id);
 
-    if ($site->arg(0) == 'login') {
+    if ($site->a(0) == 'login') {
         redirect('/');
     }
 
@@ -57,7 +57,7 @@ if (IS_LOGGED) {
         define('IS_'.strtoupper($permission), $permission == $user->level);
     }
 
-    if ($site->arg(0) == 'admin') {
+    if ($site->a(0) == 'admin') {
         if ($user->level == 'user') {
             $user->logout();
         }

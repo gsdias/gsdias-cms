@@ -18,6 +18,6 @@ if ($site->p('save')) {
             $user->locale = $site->p('locale');
         }
 
-        redirect('/admin/'.$site->arg(1));
+        redirect('/admin/'.$site->a(1));
     }
 }

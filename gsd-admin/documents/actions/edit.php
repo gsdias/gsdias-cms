@@ -12,7 +12,7 @@ if ($site->p('save')) {
     $defaultfields = array(
         $site->p('name'),
         $site->p('description'),
-        $site->arg(2),
+        $site->a(2),
     );
 
     $mysql->reset()
@@ -23,7 +23,7 @@ if ($site->p('save')) {
         ->exec();
 
     if ($_FILES['asset']['error'] == 0) {
-        removefile(ASSETPATH.'images/'.$site->arg(2));
+        removefile(ASSETPATH.'images/'.$site->a(2));
 
         $name = explode('.', $_FILES['asset']['name']);
         $extension = end($name);
@@ -35,10 +35,10 @@ if ($site->p('save')) {
             $size[0],
             $size[1],
             round(filesize($_FILES['asset']['tmp_name']) / 1000, 0).'KB',
-            $site->arg(2),
+            $site->a(2),
         );
 
-        $file = savefile($_FILES['asset'], ASSETPATH.'images/'.$site->arg(2).'/', null, null, $site->arg(2));
+        $file = savefile($_FILES['asset'], ASSETPATH.'images/'.$site->a(2).'/', null, null, $site->a(2));
 
         $mysql->reset()
         ->update('documents')
@@ -47,5 +47,5 @@ if ($site->p('save')) {
         ->values($fields)
         ->exec();
     }
-    redirect('/admin/'.$site->arg(1));
+    redirect('/admin/'.$site->a(1));
 }

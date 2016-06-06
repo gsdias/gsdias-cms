@@ -8,9 +8,9 @@
  * @since      File available since Release 1.0
  */
 defined('GVALID') or die;
-if (@$site->arg(1) == 'images') {
-    $iid = is_numeric(@$site->arg(2)) ? $site->arg(2) : 0;
-    $name = explode('.', @$site->arg(2));
+if (@$site->a(1) == 'images') {
+    $iid = is_numeric(@$site->a(2)) ? $site->a(2) : 0;
+    $name = explode('.', @$site->a(2));
 
     if (sizeof($name) === 2 || $iid) {
         if (sizeof($name) === 2) {
@@ -48,9 +48,9 @@ if (@$site->arg(1) == 'images') {
         }
     }
 }
-if (@$site->arg(1) == 'documents') {
-    $iid = is_numeric(@$site->arg(2)) ? $site->arg(2) : 0;
-    $name = explode('.', @$site->arg(2));
+if (@$site->a(1) == 'documents') {
+    $iid = is_numeric(@$site->a(2)) ? $site->a(2) : 0;
+    $name = explode('.', @$site->a(2));
 
     if (sizeof($name) === 2 || $iid) {
         if (sizeof($name) === 2) {
@@ -73,7 +73,7 @@ if (@$site->arg(1) == 'documents') {
         $document = $mysql->singleline();
 
         $asset = sprintf(ASSETPATH.'documents/%d.%s', @$document->did, @$document->extension);
-        $filename = sizeof($name) === 2 ? $site->arg(2) : sprintf('%s.%s', @$document->name, @$document->extension);
+        $filename = sizeof($name) === 2 ? $site->a(2) : sprintf('%s.%s', @$document->name, @$document->extension);
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $mime = finfo_file($finfo, $asset);
 

@@ -16,11 +16,11 @@ class users extends section implements isection
     {
         global $tpl, $site, $user;
 
-        $permission = gettype($permission) === 'boolean' ? $permission : IS_ADMIN || $site->arg(2) === $user->id;
+        $permission = gettype($permission) === 'boolean' ? $permission : IS_ADMIN || $site->a(2) === $user->id;
         $result = parent::__construct($permission);
 
         $tpl->setvar('SECTION_TYPE', lang('LANG_USER', 'LOWER'));
-        if ($site->arg(2) === 'create') {
+        if ($site->a(2) === 'create') {
             $tpl->repvar('SECTION_ACTION', lang('LANG_NEW_MALE'));
         }
 

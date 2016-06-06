@@ -23,7 +23,7 @@ if (!$site->p('confirm')) {
         ->select()
         ->from('pages')
         ->where('parent = ?')
-        ->values(array($site->arg(2)))
+        ->values(array($site->a(2)))
         ->exec();
 
     $tpl->setcondition('IS_PARENT', $mysql->total > 0);
@@ -39,7 +39,7 @@ if (!$site->p('confirm')) {
             'LIST' => new GSD\select(array(
                 'name' => 'parent['.$page->pid.']',
                 'list' => $_parents,
-                'selected' => $site->arg(2),
+                'selected' => $site->a(2),
             )),
         );
     }
@@ -52,7 +52,7 @@ if ($site->p('confirm') == $afirmative) {
         ->select('url, title')
         ->from('pages')
         ->where('pid = ?')
-        ->values(array($site->arg(2)))
+        ->values(array($site->a(2)))
         ->exec();
 
     $result = $mysql->singleline();
@@ -62,7 +62,7 @@ if ($site->p('confirm') == $afirmative) {
 
     if (!empty($site->p('parent'))) {
         foreach ($site->p('parent') as $pid => $parent) {
-            $parent = $parent == $site->arg(2) ? 0 : $parent;
+            $parent = $parent == $site->a(2) ? 0 : $parent;
 
             $mysql->statement('UPDATE pages AS p
             LEFT JOIN pages AS parent ON parent.pid = ?
@@ -86,10 +86,10 @@ if ($site->p('confirm') == $afirmative) {
     } else {
         $tpl->setarray('MESSAGES', array('MSG' => sprintf(lang('LANG_PAGE_REMOVED'), $title)));
 
-        redirect('/admin/'.$site->arg(1));
+        redirect('/admin/'.$site->a(1));
     }
 }
 
 if ($site->p('confirm') == $negative) {
-    redirect('/admin/'.$site->arg(1));
+    redirect('/admin/'.$site->a(1));
 }

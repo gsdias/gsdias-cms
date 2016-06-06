@@ -471,7 +471,7 @@ function getLanguage()
 
     $redirect = explode('/', $site->p('redirect'));
 
-    $list[] = $site->arg(0);
+    $list[] = $site->a(0);
 
     if (@$redirect[1]) {
         $list[] = $redirect[1];

@@ -76,7 +76,7 @@ $_SESSION['ERRORS'] = array();
 $_SESSION['MESSAGES'] = array();
 
 if (!$site->isFrontend) {
-    $section = @$site->arg(1) ? lang('LANG_'.strtoupper($site->arg(1))) : lang('LANG_DASHBOARD');
+    $section = @$site->a(1) ? lang('LANG_'.strtoupper($site->a(1))) : lang('LANG_DASHBOARD');
     $tpl->setvars(array(
         'PAGE_TITLE' => sprintf('%s - %s', $site->name, ucwords($section)),
         'PAGE_CANONICAL' => $site->protocol.$_SERVER['HTTP_HOST'].$site->uri,
@@ -85,6 +85,6 @@ if (!$site->isFrontend) {
 
 $frontendindex = is_file(ROOTPATH.'gsd-frontend/index.php') ? ROOTPATH.'gsd-frontend/index.php' : '';
 
-if (IS_INSTALLED && $site->arg(0) != 'admin' && is_file(CLIENTPATH.'config'.PHPEXT)) {
+if (IS_INSTALLED && $site->a(0) != 'admin' && is_file(CLIENTPATH.'config'.PHPEXT)) {
     include_once CLIENTPATH.'config'.PHPEXT;
 }

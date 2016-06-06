@@ -30,7 +30,7 @@ if ($site->p('save')) {
             $file = savefile($_FILES['asset'], ASSETPATH.'images/', null, null, $id);
             $tpl->setarray('MESSAGES', array('MSG' => sprintf(lang('LANG_IMAGE_UPLOADED'), $site->p('name'))));
             
-            redirect('/admin/'.$site->arg(1));
+            redirect('/admin/'.$site->a(1));
         }
     } else {
         $tpl->setarray('ERRORS', array('MSG' => lang('LANG_IMAGE_FORMAT')));

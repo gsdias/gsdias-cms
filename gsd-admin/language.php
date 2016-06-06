@@ -9,7 +9,7 @@
  */
 defined('GVALID') or die;
 if ($site->p('save')) {
-    if ($site->arg(2) === 'extended') {
+    if ($site->a(2) === 'extended') {
         $file = CLIENTPATH.'locale/'.$language.'/LC_MESSAGES/extended.mo';
     } else {
         $file = ROOTPATH.'gsd-locale/'.$language.'/LC_MESSAGES/messages.mo';
@@ -38,7 +38,7 @@ if ($site->p('save')) {
 
     $newfile = "msgid \"\"\nmsgstr \"\"\n\"Project-Id-Version: \\n\"\n\"POT-Creation-Date: 2014-11-12 17:19-0000\\n\"\n\"PO-Revision-Date: 2015-05-15 08:36-0000\\n\"\n\"Last-Translator: \\n\"\n\"Language-Team: \\n\"\n\"MIME-Version: 1.0\\n\"\n\"Content-Type: text/plain; charset=UTF-8\\n\"\n\"Content-Transfer-Encoding: 8bit\\n\"\n\"Plural-Forms: nplurals=2; plural=(n != 1);\\n\"\n\"Language: $language\\n\"\n".$string;
 
-    if ($site->arg(2) === 'extended') {
+    if ($site->a(2) === 'extended') {
         $file = CLIENTPATH.'locale/'.$language.'/LC_MESSAGES/extended.po';
     } else {
         $file = ROOTPATH.'gsd-locale/'.$language.'/LC_MESSAGES/messages.po';
@@ -65,7 +65,7 @@ if ($site->p('save')) {
     }
 }
 
-if ($site->arg(2) === 'extended') {
+if ($site->a(2) === 'extended') {
     $file = CLIENTPATH.'locale/'.$language.'/LC_MESSAGES/extended.po';
 } else {
     $file = ROOTPATH.'gsd-locale/'.$language.'/LC_MESSAGES/messages.po';

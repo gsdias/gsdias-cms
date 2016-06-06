@@ -79,7 +79,7 @@ abstract class section implements isection
         $this->item = $mysql->singleline();
 
         if (empty($this->item)) {
-            redirect('/admin/'.$site->arg(1));
+            redirect('/admin/'.$site->a(1));
         }
 
         $fields = array();
@@ -87,7 +87,7 @@ abstract class section implements isection
         foreach ($this->item as $field => $value) {
             $fields['CURRENT_'.strtoupper($section).'_'.strtoupper($field)] = $value;
         }
-        if ($site->arg(3) === 'remove') {
+        if ($site->a(3) === 'remove') {
             $fields['REMOVE_TYPE'] = lang('LANG_REMOVE_'.strtoupper($section));
             $fields['CURRENT_TYPE_NAME'] = @$item->name ? $item->name : @$item->title;
         }
@@ -264,7 +264,7 @@ abstract class section implements isection
 
         $return = array('total' => 0, 'errnum' => 0, 'errmsg' => 0, 'id' => 0);
 
-        $pid = isset($api) ? $api->pid : $site->arg(2);
+        $pid = isset($api) ? $api->pid : $site->a(2);
 
         $section = $this->tablename();
 
@@ -325,10 +325,10 @@ abstract class section implements isection
             ->update($section)
             ->fields(array('deleted'))
             ->where(sprintf('%sid = ?', substr($section, 0, 1)))
-            ->values(array(1, $site->arg(2)))
+            ->values(array(1, $site->a(2)))
             ->exec();
 
-        return array('total' => $mysql->total, 'errnum' => $mysql->errnum, 'id' => $site->arg(2));
+        return array('total' => $mysql->total, 'errnum' => $mysql->errnum, 'id' => $site->a(2));
     }
 
     private function tablename()

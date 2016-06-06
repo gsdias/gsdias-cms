@@ -13,7 +13,7 @@ if ($site->p('save')) {
         ->select('extension, width, height, size')
         ->from('images')
         ->where('iid = ?')
-        ->values($site->arg(2))
+        ->values($site->a(2))
         ->exec();
 
     $image = $mysql->singleline();
@@ -24,7 +24,7 @@ if ($site->p('save')) {
     $_REQUEST['size'] = $image->size;
     
     if ($_FILES['asset']['error'] == 0) {
-        removefile(ASSETPATH.'images/'.$site->arg(2).'.'.$image->extension);
+        removefile(ASSETPATH.'images/'.$site->a(2).'.'.$image->extension);
 
         $name = explode('.', $_FILES['asset']['name']);
         $extension = end($name);
@@ -36,7 +36,7 @@ if ($site->p('save')) {
         $_REQUEST['height'] = $size[1];
         $_REQUEST['size'] = round(filesize($_FILES['asset']['tmp_name']) / 1000, 0).'KB';
 
-        $file = savefile($_FILES['asset'], sprintf('%simages/', ASSETPATH), null, null, $site->arg(2));
+        $file = savefile($_FILES['asset'], sprintf('%simages/', ASSETPATH), null, null, $site->a(2));
     }
 
     $result = $csection->edit();
@@ -44,6 +44,6 @@ if ($site->p('save')) {
     if (!$csection->showErrors(lang('LANG_IMAGE_ERROR'))) {
         $tpl->setarray('MESSAGES', array('MSG' => sprintf(lang('LANG_IMAGE_SAVED'), $site->p('name'))));
 
-        redirect('/admin/'.$site->arg(1));
+        redirect('/admin/'.$site->a(1));
     }
 }

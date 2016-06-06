@@ -186,7 +186,17 @@ class site
 
     public function arg($pos)
     {
+        return $this->a($pos);
+    }
+
+    public function a($pos)
+    {
         return @$this->path[$pos];
+    }
+
+    public function param($name, $session = 0)
+    {
+        return $this->p($name, $session);
     }
 
     public function p($name, $session = 0)

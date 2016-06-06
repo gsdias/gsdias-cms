@@ -8,9 +8,9 @@
  * @since      File available since Release 1.0
  */
 defined('GVALID') or die;
-if ($site->arg(2) == 1) {
+if ($site->a(2) == 1) {
     $tpl->setarray('ERRORS', array('MSG' => lang('LANG_USER_DEFAULT')));
-    redirect('/admin/'.$site->arg(1));
+    redirect('/admin/'.$site->a(1));
 }
 
 if ($site->p('confirm') == $afirmative) {
@@ -18,7 +18,7 @@ if ($site->p('confirm') == $afirmative) {
         ->select('name')
         ->from('users')
         ->where('uid = ?')
-        ->values(array($site->arg(2)))
+        ->values(array($site->a(2)))
         ->exec();
 
     $result = $mysql->singleline();
@@ -33,10 +33,10 @@ if ($site->p('confirm') == $afirmative) {
     } else {
         $tpl->setarray('MESSAGES', array('MSG' => sprintf(lang('LANG_USER_REMOVED'), $name)));
 
-        redirect('/admin/'.$site->arg(1));
+        redirect('/admin/'.$site->a(1));
     }
 }
 
 if ($site->p('confirm') == $negative) {
-    redirect('/admin/'.$site->arg(1));
+    redirect('/admin/'.$site->a(1));
 }

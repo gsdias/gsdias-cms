@@ -385,7 +385,7 @@ class tpl
         }
 
         foreach ($this->config['paths'] as $_path) {
-            $cpath = sprintf($_path, $site->arg(0), $file);
+            $cpath = sprintf($_path, $site->a(0), $file);
 
             if (is_file($cpath)) {
                 $this->addError('TPL: '.$cpath);

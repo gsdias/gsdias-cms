@@ -20,7 +20,7 @@ class layouts extends section implements isection
         $result = parent::__construct($permission);
 
         $tpl->setvar('SECTION_TYPE', lang('LANG_LAYOUT', 'LOWER'));
-        if ($site->arg(2) === 'create') {
+        if ($site->a(2) === 'create') {
             $tpl->repvar('SECTION_ACTION', lang('LANG_NEW_MALE'));
         }
 

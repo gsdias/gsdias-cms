@@ -18,7 +18,7 @@ if ($site->p('save')) {
 
     $condition = $mysql->singleline();
 
-    if ($condition->total > 0 && $condition->pid != $site->arg(2)) {
+    if ($condition->total > 0 && $condition->pid != $site->a(2)) {
         $tpl->setarray('ERRORS', array('MSG' => lang('LANG_PAGE_ALREADY_EXISTS')));
         $tpl->setcondition('ERRORS');
     } else {
@@ -30,7 +30,7 @@ if ($site->p('save')) {
                 ->select()
                 ->from('pages')
                 ->where('pid = ?')
-                ->values($site->arg(2))
+                ->values($site->a(2))
                 ->exec();
 
             $currentpage = $mysql->singleline();
@@ -56,7 +56,7 @@ if ($site->p('save')) {
                 $review[] = $reviewpage->{$field};
             }
 
-            $review[] = $site->arg(2);
+            $review[] = $site->a(2);
 
             $mysql->reset()
                 ->insert('pages_review')
@@ -112,14 +112,14 @@ if ($site->p('save')) {
                     $mysql->reset()
                         ->insert('redirect')
                         ->fields(array('pid', 'from', 'destination', 'creator'))
-                        ->values(array($site->arg(2), $url->destination, $site->p('url'), $user->id))
+                        ->values(array($site->a(2), $url->destination, $site->p('url'), $user->id))
                         ->exec();
                 }
             } else {
                 $mysql->reset()
                     ->insert('redirect')
                     ->fields(array('pid', 'from', 'destination', 'creator'))
-                    ->values(array($site->arg(2), $currenturl, $site->p('url'), $user->id))
+                    ->values(array($site->a(2), $currenturl, $site->p('url'), $user->id))
                     ->exec();
             }
 
@@ -129,7 +129,7 @@ if ($site->p('save')) {
             WHERE p.pid = ?;', array(
                 $site->p('url'),
                 $site->p('url'),
-                $site->arg(2),
+                $site->a(2),
             ));
 
             if (!$mysql->errnum) {
@@ -146,7 +146,7 @@ if ($site->p('save')) {
             }
         }
 
-        redirect('/admin/'.$site->arg(1));
+        redirect('/admin/'.$site->a(1));
     }
 }
 
@@ -154,7 +154,7 @@ $mysql->reset()
     ->select('pid, title')
     ->from('pages')
     ->where('parent = ?')
-    ->values($site->arg(2))
+    ->values($site->a(2))
     ->exec();
 
 $pages = array();

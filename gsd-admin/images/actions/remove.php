@@ -13,22 +13,22 @@ if ($site->p('confirm') == $afirmative) {
         ->select('extension, name')
         ->from('images')
         ->where('iid = ?')
-        ->values(array($site->arg(2)))
+        ->values(array($site->a(2)))
         ->exec();
 
     $image = $mysql->singleline();
 
-//    removefile(ASSETPATH.'images/'.$site->arg(2).'.'.$image->extension);
+//    removefile(ASSETPATH.'images/'.$site->a(2).'.'.$image->extension);
 
     $result = $csection->remove();
 
     if (!$result['errnum']) {
         $tpl->setarray('MESSAGES', array('MSG' => sprintf(lang('LANG_IMAGE_REMOVED'), $image->name)));
 
-        redirect('/admin/'.$site->arg(1));
+        redirect('/admin/'.$site->a(1));
     }
 }
 
 if ($site->p('confirm') == $negative) {
-    redirect('/admin/'.$site->arg(1));
+    redirect('/admin/'.$site->a(1));
 }

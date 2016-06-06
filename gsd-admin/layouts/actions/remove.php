@@ -13,7 +13,7 @@ if ($site->p('confirm') == $afirmative) {
         ->select('name')
         ->from('layouts')
         ->where('lid = ?')
-        ->values(array($site->arg(2)))
+        ->values(array($site->a(2)))
         ->exec();
 
     $result = $mysql->singleline();
@@ -28,10 +28,10 @@ if ($site->p('confirm') == $afirmative) {
     } else {
         $tpl->setarray('MESSAGES', array('MSG' => sprintf(lang('LANG_LAYOUT_REMOVED'), $name)));
 
-        redirect('/admin/'.$site->arg(1));
+        redirect('/admin/'.$site->a(1));
     }
 }
 
 if ($site->p('confirm') == $negative) {
-    redirect('/admin/'.$site->arg(1));
+    redirect('/admin/'.$site->a(1));
 }

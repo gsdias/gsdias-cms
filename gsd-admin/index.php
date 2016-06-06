@@ -16,33 +16,33 @@ if (!IS_LOGGED) {
         $tpl->setvar('EXTRACLASS', 'login');
     }
 } else {
-    if ($site->arg(2) && !$site->arg(3) && is_numeric($site->arg(2))) {
+    if ($site->a(2) && !$site->a(3) && is_numeric($site->a(2))) {
         redirect($site->uri.'/details');
     }
-    $site->main = $site->arg(1) ? $site->arg(1) : 'dashboard';
+    $site->main = $site->a(1) ? $site->a(1) : 'dashboard';
     $site->startpoint = 'index';
 
     $clientfields = CLIENTPATH.'tpl/admin/_clientaside'.TPLEXT;
     $tpl->setcondition('HASCLIENTASIDE', is_file($clientfields));
 
-    if (!$site->arg(1)) {
+    if (!$site->a(1)) {
         include_once 'gsd-admin/dashboard'.PHPEXT;
         $tpl->setvar('DASHBOARD_ACTIVE', 'active');
     } else {
         $afirmative = lang('LANG_YES');
         $negative = lang('LANG_NO');
         
-        $tpl->setvar(strtoupper($site->arg(1)).'_ACTIVE', 'active');
-        if ($site->arg(1) == 'settings') {
+        $tpl->setvar(strtoupper($site->a(1)).'_ACTIVE', 'active');
+        if ($site->a(1) == 'settings') {
             $file = 'gsd-admin/settings'.PHPEXT;
-        } elseif ($site->arg(1) == 'language') {
+        } elseif ($site->a(1) == 'language') {
             $file = 'gsd-admin/language'.PHPEXT;
-        } elseif ($site->arg(1) == 'update') {
+        } elseif ($site->a(1) == 'update') {
             $file = 'gsd-admin/update'.PHPEXT;
-        } elseif ($site->arg(3) == 'recover') {
+        } elseif ($site->a(3) == 'recover') {
             $file = 'gsd-admin/recover'.PHPEXT;
         } else {
-            if (class_exists('\\GSD\\'.$site->arg(1)) || class_exists('\\GSD\\Extended\extended'.$site->arg(1))) {
+            if (class_exists('\\GSD\\'.$site->a(1)) || class_exists('\\GSD\\Extended\extended'.$site->a(1))) {
                 $file = 'gsd-admin/list'.PHPEXT;
             } else {
                 $site->main = '404';

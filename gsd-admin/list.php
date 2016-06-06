@@ -8,9 +8,9 @@
  * @since      File available since Release 1.0
  */
 defined('GVALID') or die;
-$section = $site->arg(1);
-$id = $site->arg(2);
-$action = $site->arg(3);
+$section = $site->a(1);
+$id = $site->a(2);
+$action = $site->a(3);
 
 //ACTION DETECTED
 if ($action) {

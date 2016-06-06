@@ -66,6 +66,6 @@ if ($site->p('save')) {
     if (!$csection->showErrors(lang('LANG_LAYOUT_ALREADY_EXISTS'))) {
         $tpl->setarray('MESSAGES', array('MSG' => sprintf(lang('LANG_LAYOUT_CREATED'), $site->p('name'))));
 
-        redirect('/admin/'.$site->arg(1));
+        redirect('/admin/'.$site->a(1));
     }
 }

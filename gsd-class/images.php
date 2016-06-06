@@ -20,7 +20,7 @@ class images extends section implements isection
         $result = parent::__construct($permission);
 
         $tpl->setvar('SECTION_TYPE', lang('LANG_IMAGE', 'LOWER'));
-        if ($site->arg(2) === 'upload') {
+        if ($site->a(2) === 'upload') {
             $tpl->repvar('SECTION_ACTION', lang('LANG_NEW_FEMALE'));
         }
 

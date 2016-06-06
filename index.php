@@ -22,7 +22,7 @@ if (!IS_INSTALLED) {
 
     $tpl->includeFiles('MAIN', $site->main);
     $tpl->setFile($site->startpoint);
-} elseif ($site->arg(0) == 'assets') {
+} elseif ($site->a(0) == 'assets') {
     require_once INCLUDEPATH.'gsd-assets'.PHPEXT;
 } else {
     require_once INCLUDEPATH.'gsd-credentials'.PHPEXT;

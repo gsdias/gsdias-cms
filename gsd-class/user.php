@@ -74,7 +74,7 @@ class user implements iuser
             $this->code = md5($_SERVER['REMOTE_ADDR'] + '' + time());
             $user = $mysql->singleline();
 
-            if ($user->level == 'user' && $site->arg(0) == 'admin') {
+            if ($user->level == 'user' && $site->a(0) == 'admin') {
                 return 0;
             }
 

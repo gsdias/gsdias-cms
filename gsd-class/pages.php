@@ -20,7 +20,7 @@ class pages extends section implements isection
         $result = parent::__construct($permission);
 
         $tpl->setvar('SECTION_TYPE', lang('LANG_PAGE', 'LOWER'));
-        if ($site->arg(2) === 'create') {
+        if ($site->a(2) === 'create') {
             $tpl->repvar('SECTION_ACTION', lang('LANG_NEW_FEMALE'));
         }
 
@@ -366,7 +366,7 @@ class pages extends section implements isection
     {
         global $mysql, $site, $api;
         
-        $pid = isset($api) ? $api->pid : $site->arg(2);
+        $pid = isset($api) ? $api->pid : $site->a(2);
         $mysql->reset()
             ->select()
             ->from('pages')
@@ -445,7 +445,7 @@ class pages extends section implements isection
         global $mysql, $user, $site;
 
         array_push($fields, $user->id);
-        array_push($fields, $site->arg(2));
+        array_push($fields, $site->a(2));
 
         $mysql->reset()
             ->insert('pages_review')

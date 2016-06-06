@@ -13,22 +13,22 @@ if ($site->p('confirm') == $afirmative) {
         ->select('extension, name')
         ->from('documents')
         ->where('did = ?')
-        ->values(array($site->arg(2)))
+        ->values(array($site->a(2)))
         ->exec();
 
     $document = $mysql->singleline();
 
-//    removefile(ASSETPATH.'documents/'.$site->arg(2).'.'.$document->extension);
+//    removefile(ASSETPATH.'documents/'.$site->a(2).'.'.$document->extension);
 
     $result = $csection->remove();
 
     if (!$result['errnum']) {
         $tpl->setarray('MESSAGES', array('MSG' => sprintf(lang('LANG_DOCUMENT_REMOVED'), $document->name)));
 
-        redirect('/admin/'.$site->arg(1));
+        redirect('/admin/'.$site->a(1));
     }
 }
 
 if ($site->p('confirm') == $negative) {
-    redirect('/admin/'.$site->arg(1));
+    redirect('/admin/'.$site->a(1));
 }
