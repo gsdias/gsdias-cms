@@ -15,9 +15,9 @@ if ($site->p('save')) {
         $file = ROOTPATH.'gsd-locale/'.$language.'/LC_MESSAGES/messages.mo';
     }
     $string = '';
-    foreach ($_REQUEST['msgid'] as $i => $value) {
+    foreach ($site->p('msgid') as $i => $value) {
         $id = $value;
-        $str = $_REQUEST['msgstr'][$i];
+        $str = $site->p('msgstr')[$i];
         $string .= "\nmsgid \"$id\"\nmsgstr \"$str\"\n";
     }
 

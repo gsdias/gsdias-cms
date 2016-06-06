@@ -13,7 +13,7 @@ if ($site->p('save')) {
         ->select('count(*) AS total, pid')
         ->from('pages')
         ->where('url = ? AND parent = ?')
-        ->values(array($_REQUEST['url'], $_REQUEST['current_parent']))
+        ->values(array($site->p('url'), $site->p('current_parent')))
         ->exec();
 
     $condition = $mysql->singleline();
@@ -22,7 +22,7 @@ if ($site->p('save')) {
         $tpl->setarray('ERRORS', array('MSG' => lang('LANG_PAGE_ALREADY_EXISTS')));
         $tpl->setcondition('ERRORS');
     } else {
-        if ($_REQUEST['prid']) {
+        if ($site->p('prid')) {
             $defaultfields = array_merge(array('pid'), $csection->getfields(true));
             $valid = 1;
 
@@ -44,7 +44,7 @@ if ($site->p('save')) {
                 ->select()
                 ->from('pages_review')
                 ->where('prid = ?')
-                ->values($_REQUEST['prid'])
+                ->values($site->p('prid'))
                 ->exec();
 
             $reviewpage = $mysql->singleline();
@@ -79,7 +79,7 @@ if ($site->p('save')) {
                 ->delete()
                 ->from('pages_review')
                 ->where('prid = ?')
-                ->values($_REQUEST['prid'])
+                ->values($site->p('prid'))
                 ->exec();
 
             $valid = $mysql->errnum ? 0 : $valid;
@@ -89,14 +89,14 @@ if ($site->p('save')) {
             }
         }
 
-        if ($_REQUEST['current_url'] != $_REQUEST['url']) {
-            $currenturl = $_REQUEST['current_url'];
+        if ($site->p('current_url') != $site->p('url')) {
+            $currenturl = $site->p('current_url');
 
             $mysql->reset()
                 ->delete()
                 ->from('redirect')
                 ->where('`from` = ?')
-                ->values($_REQUEST['url'])
+                ->values($site->p('url'))
                 ->exec();
 
             $mysql->reset()
@@ -112,14 +112,14 @@ if ($site->p('save')) {
                     $mysql->reset()
                         ->insert('redirect')
                         ->fields(array('pid', 'from', 'destination', 'creator'))
-                        ->values(array($site->arg(2), $url->destination, $_REQUEST['url'], $user->id))
+                        ->values(array($site->arg(2), $url->destination, $site->p('url'), $user->id))
                         ->exec();
                 }
             } else {
                 $mysql->reset()
                     ->insert('redirect')
                     ->fields(array('pid', 'from', 'destination', 'creator'))
-                    ->values(array($site->arg(2), $currenturl, $_REQUEST['url'], $user->id))
+                    ->values(array($site->arg(2), $currenturl, $site->p('url'), $user->id))
                     ->exec();
             }
 
@@ -127,8 +127,8 @@ if ($site->p('save')) {
             LEFT JOIN pages AS pp ON pp.pid = p.parent
             SET p.url = ?, p.beautify = CONCAT(IFNULL(pp.beautify, ""), ?)
             WHERE p.pid = ?;', array(
-                $_REQUEST['url'],
-                $_REQUEST['url'],
+                $site->p('url'),
+                $site->p('url'),
                 $site->arg(2),
             ));
 
@@ -136,11 +136,11 @@ if ($site->p('save')) {
                 $tpl->setarray('MESSAGES', array('MSG' => 'Url for the page changed to X'));
             }
 
-            foreach ($_REQUEST['pages'] as $pid) {
+            foreach ($site->p('pages') as $pid) {
                 $mysql->statement('UPDATE pages AS p
                 SET p.beautify = concat(?, p.url)
                 WHERE p.pid = ?;', array(
-                    $_REQUEST['url'],
+                    $site->p('url'),
                     $pid,
                 ));
             }

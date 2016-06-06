@@ -45,11 +45,11 @@ class pages extends section implements isection
             ->where('p.deleted IS NULL');
 
         if ($site->p('search')) {
-            $mysql->where(sprintf('AND MATCH (p.title, p.description) AGAINST ("%s" WITH QUERY EXPANSION)', $_REQUEST['search']));
+            $mysql->where(sprintf('AND MATCH (p.title, p.description) AGAINST ("%s" WITH QUERY EXPANSION)', $site->p('search')));
         }
         if ($site->p('filter')) {
-            $tpl->setvar('FILTER_'.strtoupper($_REQUEST['filter']), 'selected="selected"');
-            switch ($_REQUEST['filter']) {
+            $tpl->setvar('FILTER_'.strtoupper($site->p('filter')), 'selected="selected"');
+            switch ($site->p('filter')) {
                 case 'published':
                     $mysql->where(sprintf('%s p.published IS NOT NULL', $site->p('search') ? 'AND' : ''));
                 break;
@@ -72,7 +72,7 @@ class pages extends section implements isection
         }
 
         $mysql->order('p.index');
-        $page = $site->p('page') ? $_REQUEST['page'] : 1;
+        $page = $site->p('page') ? $site->p('page') : 1;
         $paginator = new paginator(@$options['numberPerPage'], $page);
 
         if (!empty($fields)) {
@@ -274,7 +274,7 @@ class pages extends section implements isection
     {
         global $mysql, $site, $user;
         
-        $path = explode('/', $_REQUEST['url']);
+        $path = explode('/', $site->p('url'));
         
         if (@$path[1] === 'p') {
             return array(
@@ -288,7 +288,7 @@ class pages extends section implements isection
             ->delete()
             ->from('pages')
             ->where('url = ? AND parent = ? AND deleted IS NOT NULL')
-            ->values(array($_REQUEST['url'], $_REQUEST['parent']))
+            ->values(array($site->p('url'), $site->p('parent')))
             ->exec();
 
         $mysql->reset()

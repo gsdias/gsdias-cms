@@ -42,7 +42,7 @@ if ($site->p('save')) {
     $result = $csection->edit();
 
     if (!$csection->showErrors(lang('LANG_IMAGE_ERROR'))) {
-        $tpl->setarray('MESSAGES', array('MSG' => sprintf(lang('LANG_IMAGE_SAVED'), $_REQUEST['name'])));
+        $tpl->setarray('MESSAGES', array('MSG' => sprintf(lang('LANG_IMAGE_SAVED'), $site->p('name'))));
 
         redirect('/admin/'.$site->arg(1));
     }

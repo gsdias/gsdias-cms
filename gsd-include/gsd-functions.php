@@ -19,7 +19,7 @@ function GSDClassLoading($className)
 
 function redirect($path = '/', $code = 302)
 {
-    global $tpl;
+    global $tpl, $site;
 
     if (!empty($tpl->config['array']['MESSAGES'])) {
         $_SESSION['MESSAGES'] = array_merge($site->p('MESSAGES', 1) ? $site->p('MESSAGES', 1) : array(), $tpl->config['array']['MESSAGES']);
@@ -42,7 +42,7 @@ function displayMessages($id, $list)
 
     $tpl->setarray($id, $list);
     $tpl->setcondition($id);
-    unset($site->p($id, 1));
+    unset($_SESSION[$id]);
 }
 
 function escapeText($value = '', $encoding = 'UTF-8')

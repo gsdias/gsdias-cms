@@ -28,7 +28,7 @@ abstract class section implements isection
 
     public function getlist($options)
     {
-        global $tpl;
+        global $tpl, $site;
 
         $results = empty($options['results']) ? array() : $options['results'];
         $fields = empty($options['fields']) ? array() : $options['fields'];

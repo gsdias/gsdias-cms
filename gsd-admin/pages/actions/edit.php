@@ -14,7 +14,7 @@ if ($site->p('save')) {
     if ($result['total']) {
         $modules = array();
 
-        foreach ($_REQUEST as $module => $value) {
+        foreach ($site->p() as $module => $value) {
             if (substr($module, 0, 10) == 'value_pm_s') {
                 $vals = $value;
                 $value = array();
@@ -40,8 +40,8 @@ if ($site->p('save')) {
                                 array(
                                     array(
                                         'value' => $value,
-                                        'class' => @$_REQUEST['class_'.$module],
-                                        'style' => @$_REQUEST['style_'.$module],
+                                        'class' => $site->p('class_'.$module),
+                                        'style' => $site->p('style_'.$module),
                                     ),
                                 ),
                             ),
@@ -69,7 +69,7 @@ if ($site->p('save')) {
             }
         }
         if (!isset($api)) {
-            $tpl->setarray('MESSAGES', array('MSG' => sprintf(lang('LANG_PAGE_SAVED'), $_REQUEST['title'])));
+            $tpl->setarray('MESSAGES', array('MSG' => sprintf(lang('LANG_PAGE_SAVED'), $site->p('title'))));
             redirect('/admin/'.$site->arg(1));
         }
     } else {

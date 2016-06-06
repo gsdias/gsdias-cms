@@ -13,7 +13,7 @@ if ($site->arg(2) == 1) {
     redirect('/admin/'.$site->arg(1));
 }
 
-if (@$_REQUEST['confirm'] == $afirmative) {
+if ($site->p('confirm') == $afirmative) {
     $mysql->reset()
         ->select('name')
         ->from('users')
@@ -37,6 +37,6 @@ if (@$_REQUEST['confirm'] == $afirmative) {
     }
 }
 
-if (@$_REQUEST['confirm'] == $negative) {
+if ($site->p('confirm') == $negative) {
     redirect('/admin/'.$site->arg(1));
 }

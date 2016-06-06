@@ -9,9 +9,9 @@
  */
 defined('GVALID') or die;
 if ($site->p('save')) {
-    $content = file_get_contents(sprintf(CLIENTTPLPATH.'_layouts/%s', $_REQUEST['file']));
+    $content = file_get_contents(sprintf(CLIENTTPLPATH.'_layouts/%s', $site->p('file')));
 
-    $_REQUEST['file'] = str_replace('.html', '', $_REQUEST['file']);
+    $_REQUEST['file'] = str_replace('.html', '', $site->p('file'));
 
     $result = $csection->add();
 
@@ -64,7 +64,7 @@ if ($site->p('save')) {
     }
 
     if (!$csection->showErrors(lang('LANG_LAYOUT_ALREADY_EXISTS'))) {
-        $tpl->setarray('MESSAGES', array('MSG' => sprintf(lang('LANG_LAYOUT_CREATED'), $_REQUEST['name'])));
+        $tpl->setarray('MESSAGES', array('MSG' => sprintf(lang('LANG_LAYOUT_CREATED'), $site->p('name'))));
 
         redirect('/admin/'.$site->arg(1));
     }

@@ -8,12 +8,12 @@
  * @since      File available since Release 1.0
  */
 defined('GVALID') or die;
-if (@$_REQUEST['save']) {
+if ($site->p('save')) {
     $fields = 1;
 
     $options = array();
     foreach ($site->options as $name => $info) {
-        $value = $_REQUEST[$name];
+        $value = $site->p($name);
 
         if ($name === 'version') {
             continue;

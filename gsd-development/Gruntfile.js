@@ -143,7 +143,7 @@ module.exports = function (grunt) {
                 tasks: ['jshint', 'useminPrepare', 'concat:generated', 'uglify:generated', 'usemin', 'string-replace']
             },
             css: {
-                files: ['./sass/*.scss', './sass/*/*.scss', pkg.gsdfrontend + 'development/sass/*.scss', pkg.gsdfrontend + 'development/sass/*/*.scss'],
+                files: ['./sass/*', './sass/**/*', pkg.gsdfrontend + 'development/sass/*.scss', pkg.gsdfrontend + 'development/sass/*/*.scss'],
                 tasks: ['compass']
             },
             html: {

@@ -1,0 +1,19 @@
+{
+  "name": "CMS GSDias",
+  "version": "1.7.1",
+  "authors": [
+    "Goncalo Silva Dias"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "medium-editor": "~5.20.0",
+    "medium-editor-insert-plugin": "2.3.2"
+  }
+}

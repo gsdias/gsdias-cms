@@ -8,14 +8,14 @@
  * @since      File available since Release 1.0
  */
 defined('GVALID') or die;
-if (@$_REQUEST['save']) {
+if ($site->p('save')) {
     $result = $csection->edit();
 
     if (!$csection->showErrors(lang('LANG_USER_ALREADY_EXISTS'))) {
-        $tpl->setarray('MESSAGES', array('MSG' => sprintf(lang('LANG_USER_SAVED'), $_REQUEST['name'])));
+        $tpl->setarray('MESSAGES', array('MSG' => sprintf(lang('LANG_USER_SAVED'), $site->p('name'))));
 
         if ($result['id'] == $user->id) {
-            $user->locale = $_REQUEST['locale'];
+            $user->locale = $site->p('locale');
         }
 
         redirect('/admin/'.$site->arg(1));

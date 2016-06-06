@@ -10,8 +10,8 @@
 defined('GVALID') or die;
 if ($site->p('save')) {
     $defaultfields = array(
-        $_REQUEST['name'],
-        $_REQUEST['description'],
+        $site->p('name'),
+        $site->p('description'),
         $site->arg(2),
     );
 

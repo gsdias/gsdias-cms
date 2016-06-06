@@ -50,8 +50,8 @@ class apiOther
             ->join('users AS u', 'LEFT')
             ->on('l.creator = u.uid');
 
-        if (@$_REQUEST['search']) {
-            $mysql->where(sprintf('l.title like "%%%s%%"', $_REQUEST['search']));
+        if ($site->p('search')) {
+            $mysql->where(sprintf('l.title like "%%%s%%"', $site->p('search')));
         }
 
         $mysql->order('lid');
@@ -104,12 +104,12 @@ class apiOther
             ->join('pages AS pp', 'LEFT')
             ->on('p.parent = pp.pid');
 
-        if (@$_REQUEST['search']) {
-            $mysql->where(sprintf('p.title like "%%%s%%"', $_REQUEST['search']));
+        if ($site->p('search')) {
+            $mysql->where(sprintf('p.title like "%%%s%%"', $site->p('search')));
         }
 
-        if (@$_REQUEST['filter']) {
-            switch ($_REQUEST['filter']) {
+        if ($site->p('filter')) {
+            switch ($site->p('filter')) {
                 case 'published':
                     $mysql->where('p.published IS NOT NULL');
                 break;
@@ -182,8 +182,8 @@ class apiOther
         $mysql->reset()
             ->from('users AS u');
 
-        if (@$_REQUEST['search']) {
-            $mysql->where(sprintf('u.name like "%%%s%%"', $_REQUEST['search']));
+        if ($site->p('search')) {
+            $mysql->where(sprintf('u.name like "%%%s%%"', $site->p('search')));
         }
 
         $mysql->order('u.uid');
@@ -235,8 +235,8 @@ class apiOther
             ->join('users AS u', 'LEFT')
             ->on('i.creator = u.uid');
 
-        if (@$_REQUEST['search']) {
-            $mysql->where(sprintf('tags like "%%%s%%"', $_REQUEST['search']));
+        if ($site->p('search')) {
+            $mysql->where(sprintf('tags like "%%%s%%"', $site->p('search')));
         }
 
         $mysql->order('i.iid');
@@ -287,8 +287,8 @@ class apiOther
             ->join('users AS u', 'LEFT')
             ->on('d.creator = u.uid');
 
-        if (@$_REQUEST['search']) {
-            $mysql->where(sprintf('tags like "%%%s%%"', $_REQUEST['search']));
+        if ($site->p('search')) {
+            $mysql->where(sprintf('tags like "%%%s%%"', $site->p('search')));
         }
 
         $mysql->order('d.did');

@@ -8,11 +8,11 @@
  * @since      File available since Release 1.0
  */
 defined('GVALID') or die;
-if (@$_REQUEST['save']) {
+if ($site->p('save')) {
     $result = $csection->add();
 
     if (!$csection->showErrors(lang('LANG_USER_ALREADY_EXISTS'))) {
-        $tpl->setarray('MESSAGES', array('MSG' => sprintf(lang('LANG_USER_CREATED'), $_REQUEST['name'])));
+        $tpl->setarray('MESSAGES', array('MSG' => sprintf(lang('LANG_USER_CREATED'), $site->p('name'))));
 
         redirect('/admin/'.$site->arg(1));
     }

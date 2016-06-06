@@ -16,10 +16,6 @@
 =================================*/
 @import "compass/utilities/general/clearfix";
 @import "compass/css3/images";
-@import "compass/css3/border-radius";
-@import "compass/css3/box-shadow";
-@import "compass/css3/box-sizing";
-@import "compass/css3/font-face";
 @import "compass/reset";
 
 .gsd {
@@ -28,26 +24,36 @@
     =================================*/
     @import "core/settings";
     @import "core/retina-sprites";
-    @import "core/icons";
-    @import "core/header";
-    @import "core/footer";
+    @import "core/narrow/icons";
+    @import "core/narrow/header";
+    @import "core/narrow/footer";
 
     /*===============================
             Base and Layout
     =================================*/
-    @import "_base.scss";
-    @import "_layout.scss";
+    @import "narrow/_base.scss";
+    @import "narrow/_layout.scss";
 
     /*===============================
             Reusable, page-independant modules
     =================================*/
-    @import "modules/**";
+    @import "modules/narrow/**";
 
     /*===============================
             State and Theme
     =================================*/
-    @import "_state.scss";
-    @import "_theme.scss";
+    @import "narrow/_state.scss";
+    @import "narrow/_theme.scss";
+
+    @media (min-width: 768px) {
+
+        @import "portrait/_layout.scss";
+
+        @import "modules/portrait/**";
+    }
+    @media (min-width: 1024px) {
+        @import "modules/landscape/**";
+    }
 }
 
 @import "../../gsd-frontend/development/sass/_core/_global";
@@ -55,26 +61,4 @@
     @import "../../gsd-frontend/development/sass/_client.scss";
 }
 
-
-
-.msgError {
-    background: #fff;
-    border: solid 1px #000;
-    margin: 20px;
-    padding: 0 10px;
-
-    table {
-        border: none;
-
-        tr {
-            margin: 10px 0;
-            display: block;
-
-            td {
-                border: none;
-                text-align: left;
-                font-size: 12px;
-            }
-        }
-    }
-}
+@import "narrow/debug";

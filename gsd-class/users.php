@@ -122,7 +122,7 @@ class users extends section implements isection
         if (empty($result['errmsg'])) {
             $email = new email();
 
-            $email->setto(@$emailparams['email'] ? $emailparams['email'] : $_REQUEST['email']);
+            $email->setto(@$emailparams['email'] ? $emailparams['email'] : $site->p('email'));
             $email->setfrom($site->email);
             $email->setreplyto($site->email);
             $email->setsubject(lang('LANG_REGISTER_SUBJECT'));

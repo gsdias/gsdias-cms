@@ -8,7 +8,7 @@
  * @since      File available since Release 1.0
  */
 defined('GVALID') or die;
-if (@$_REQUEST['save']) {
+if ($site->p('save')) {
     $result = $csection->add();
 
     if ($result['total']) {
@@ -16,11 +16,7 @@ if (@$_REQUEST['save']) {
             ->delete()
             ->from('redirect')
             ->where('`from` = ?')
-            ->values(
-                array(
-                    escapeText($_REQUEST['url'])
-                )
-            )
+            ->values(array(escapeText($site->p('url'))))
             ->exec();
         
         $pid = $result['id'];
@@ -31,7 +27,7 @@ if (@$_REQUEST['save']) {
             ->join('layoutsectionmoduletypes AS lsmt')
             ->on('lsmt.lsid = ls.lsid')
             ->where('lid = ?')
-            ->values(array(@$_REQUEST['lid']))
+            ->values(array($site->p('lid')))
             ->exec();
 
         $pmid = array();
@@ -51,7 +47,7 @@ if (@$_REQUEST['save']) {
         $result['pmid'] = $pmid;
 
         if (!isset($api)) {
-            $tpl->setarray('MESSAGES', array('MSG' => sprintf(lang('LANG_PAGE_CREATED'), $_REQUEST['title'])));
+            $tpl->setarray('MESSAGES', array('MSG' => sprintf(lang('LANG_PAGE_CREATED'), $site->p('title'))));
             redirect("/admin/pages/$pid/edit", 302);
         }
     } else {

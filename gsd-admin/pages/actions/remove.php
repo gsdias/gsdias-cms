@@ -8,7 +8,7 @@
  * @since      File available since Release 1.0
  */
 defined('GVALID') or die;
-if (!@$_REQUEST['confirm']) {
+if (!$site->p('confirm')) {
     $mysql->reset()
         ->select()
         ->from('pages')
@@ -47,7 +47,7 @@ if (!@$_REQUEST['confirm']) {
     $tpl->setarray('CHILDS', $pages);
 }
 
-if (@$_REQUEST['confirm'] == $afirmative) {
+if ($site->p('confirm') == $afirmative) {
     $mysql->reset()
         ->select('url, title')
         ->from('pages')
@@ -60,8 +60,8 @@ if (@$_REQUEST['confirm'] == $afirmative) {
     $title = $result->title;
     $currenturl = $result->url;
 
-    if (!empty($_REQUEST['parent'])) {
-        foreach ($_REQUEST['parent'] as $pid => $parent) {
+    if (!empty($site->p('parent'))) {
+        foreach ($site->p('parent') as $pid => $parent) {
             $parent = $parent == $site->arg(2) ? 0 : $parent;
 
             $mysql->statement('UPDATE pages AS p
@@ -90,6 +90,6 @@ if (@$_REQUEST['confirm'] == $afirmative) {
     }
 }
 
-if (@$_REQUEST['confirm'] == $negative) {
+if ($site->p('confirm') == $negative) {
     redirect('/admin/'.$site->arg(1));
 }

@@ -6,18 +6,12 @@
  * @since      File available since Release 1.0
  */
 
-$font-arial: "Helvetica Neue", Helvetica, Arial, sans-serif;
 $font-arial: 'Josefin Sans', "Comic Sans MS", cursive, sans-serif;
 
-// Used for background on buttons
-$bg-color: #5591b7;
 // normal text
 $text-color: #262626;
 // border color
 $border-color: rgba(46,130,147,.5);
-
-//form delimiter
-$delimiter: #c8c8c8;
 
 $gsd-color: #276876;
 
@@ -49,52 +43,6 @@ $tablet-land: 1024px;
     filter: alpha(opacity = $opacity);
     -ms-filter: alpha(opacity = $opacity);
 }
-
-// Adapted from http://jakearchibald.github.io/sass-ie/
-$mq-support: true !default;
-$mq-max-width: 1200px;
-@mixin respond-min($width) {
-
-	// Check for units on the width
-	@if unitless($width){
-		@warn "Assuming #{$width} to be in pixels, change to #{$width}px or another unit of measurement";
-		$width: $width * 1px;
-	}
-
-	@if $mq-support {
-		@media screen and (min-width: em($width)) {
-            @content;
-        }
-	} @else {
-
-		// Check media query applies
-		@if (em($width) <= em($mq-max-width)) {
-			@content;
-		}
-	}
-}
-
-@mixin respond-max($width) {
-
-	// Check for units on the width
-	@if unitless($width){
-		@warn "Assuming #{$width} to be in pixels, change to #{$width}px or another unit of measurement";
-		$width: $width * 1px;
-	}
-
-	@if $mq-support {
-		@media screen and (max-width: em($width)) {
-            @content;
-        }
-	} @else {
-
-		// Check media query applies
-		@if (em($width) >= em($mq-max-width)) {
-			@content;
-		}
-	}
-}
-
 
 // Converts px to em from a base context. Adapted from http://web-design-weekly.com/blog/snippets/converts-pixels-to-ems-with-sass/
 $browser-context: 16; // Default

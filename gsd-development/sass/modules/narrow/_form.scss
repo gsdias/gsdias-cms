@@ -127,12 +127,6 @@ select {
     }
 }
 
-@include respond-min($tablet-port) {
-    label {
-        margin-bottom: 10px;
-    }
-}
-
 .settings {
     background: #ccc;
     display: none;
@@ -164,23 +158,23 @@ select {
     width: 10px;
     height: 10px;
     border-radius: 10px;
-    
+
     &.red {
         background: red;
     }
-    
+
     &.orange {
         background: orange;
     }
-    
+
     &.yellow {
         background: #F0E68C;
     }
-    
+
     &.blue {
         background: blue;
     }
-    
+
     &.green {
         background: green;
     }

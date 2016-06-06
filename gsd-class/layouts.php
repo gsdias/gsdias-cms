@@ -29,7 +29,7 @@ class layouts extends section implements isection
     
     public function getlist($options)
     {
-        global $mysql, $tpl;
+        global $mysql, $tpl, $site;
 
         $_fields = 'l.lid, l.name, l.created, u.name AS creator_name, u.uid AS creator_id';
         $fields = empty($options['fields']) ? array() : $options['fields'];
@@ -45,7 +45,7 @@ class layouts extends section implements isection
         }
 
         $mysql->order('lid');
-        $paginator = new paginator(@$options['numberPerPage'], @$_REQUEST['page']);
+        $paginator = new paginator(@$options['numberPerPage'], $site->p('page'));
 
         if (!empty($fields)) {
             foreach ($fields as $field) {
@@ -84,13 +84,13 @@ class layouts extends section implements isection
 
     public function add()
     {
-        global $mysql;
+        global $mysql, $site;
 
         $mysql->reset()
             ->delete()
             ->from('layouts')
             ->where('file = ? AND deleted IS NOT NULL')
-            ->values($_REQUEST['file'])
+            ->values($site->p('file'))
             ->exec();
 
         return parent::add();

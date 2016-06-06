@@ -8,14 +8,14 @@
  * @since      File available since Release 1.0
  */
 defined('GVALID') or die;
-if (@$_REQUEST['save']) {
+if ($site->p('save')) {
     $site->main = 'STEP2';
     $site->startpoint = 'index';
 
     $mysql->reset()
         ->insert('users')
         ->fields(array('level', 'email', 'password', 'name', 'creator'))
-        ->values(array('admin', $_REQUEST['email'], md5($_REQUEST['password']), $_REQUEST['name'], 0))
+        ->values(array('admin', $_REQUEST['email'], md5($_REQUEST['password']), $site->p('name'), 0))
         ->exec();
 
     if ($mysql->total) {

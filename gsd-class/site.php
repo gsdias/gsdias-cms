@@ -52,8 +52,10 @@ class site
         $pattern = '/(\?)(.*)/';
         $this->uri = rtrim(preg_replace($pattern, '', $_SERVER['REQUEST_URI']), '/');
 
+        $this->uri = $this->uri ? $this->uri : '/';
+
         $this->path();
-        $this->isFrontend = $this->path[0] !== 'admin';
+        $this->isFrontend = @$this->path[0] !== 'admin';
         $tpl->setcondition('CMS', !$this->isFrontend);
 
         $tpl->setvar('HTML_CLASS', 'gsd');
@@ -189,7 +191,9 @@ class site
 
     public function p($name, $session = 0)
     {
-        return $session ? @$_SESSION[$name] : @$_REQUEST[$name]);
+        $type = $session ? $_SESSION : $_REQUEST;
+
+        return $name ? @$type[$name] : $type;
     }
 
     public function searchpage($givenpath)

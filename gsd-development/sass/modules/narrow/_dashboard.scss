@@ -40,17 +40,4 @@
     a {
         color: $gsd-color;
     }
-
-    @include respond-min($tablet-port) {
-		float: left;
-        width: 45%;
-	}
-
-    @include respond-min($tablet-land) {
-        width: 29.1%;
-	}
-
-    @include respond-min(1200px) {
-        width: 23%;
-	}
 }
