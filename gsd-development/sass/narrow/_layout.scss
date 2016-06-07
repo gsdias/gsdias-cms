@@ -26,10 +26,17 @@
     width: 100%;
     margin-bottom: 30px;
     position: relative;
+
+    &.fullWidth {
+        max-width: none;
+        width: 100%;
+    }
 }
 
 .main {
-    margin-left: 64px;
+    margin-left: 140px;
+    background: #fff;
+    min-height: 100%;
 
     &:after {
         content: '';
@@ -48,4 +55,14 @@
 
 .ago {
     font-size: 12px;
+}
+
+.section-header {
+    background: none;
+    overflow: hidden;
+    padding: 10px 0;
+
+    h1 {
+        float: left;
+    }
 }

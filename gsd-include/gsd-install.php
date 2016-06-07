@@ -8,6 +8,7 @@
  * @since      File available since Release 1.0
  */
 defined('GVALID') or die;
+$tpl->setvar('HTML_CLASS', 'gsd');
 if ($site->p('save')) {
     $site->main = 'STEP2';
     $site->startpoint = 'index';

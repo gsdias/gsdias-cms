@@ -30,12 +30,11 @@ class notification implements inotification
     }
     public function reset($uid)
     {
-        global $mysql;
+        global $mysql, $tpl;
 
-        $mysql->statement('SELECT notifications FROM users WHERE uid = :uid;', array(':uid' => $uid));
+        $mysql->statement('SELECT notifications FROM users WHERE uid = ?;', array($uid));
 
-//        $notifications = json_decode(array($mysql->singleresult()), true);
-        $notifications = array();
+         $notifications = json_decode($mysql->singleresult(), true);
 
         $this->read = $this->unread = array();
         $this->list = is_array($notifications) ? $notifications : array();
@@ -73,7 +72,7 @@ class notification implements inotification
 
     public function add($message)
     {
-        $notification = array('m' => $message, 's' => 0);
+        $notification = array('m' => $message, 's' => 0, 't' => date('Y-m-d', time()));
 
         array_push($this->unread, $notification);
         array_push($this->list, $notification);

@@ -8,6 +8,7 @@
  * @since      File available since Release 1.0
  */
 defined('GVALID') or die;
+$tpl->setvar('HTML_CLASS', 'gsd');
 if (!IS_LOGGED) {
     if ($site->uri != '/admin/auth' && $site->uri != '/admin/auth/' && $site->uri != '/admin/reset') {
         redirect('/admin/auth?redirect='.urlencode($site->uri));
@@ -37,6 +38,8 @@ if (!IS_LOGGED) {
             $file = 'gsd-admin/settings'.PHPEXT;
         } elseif ($site->a(1) == 'language') {
             $file = 'gsd-admin/language'.PHPEXT;
+        } elseif ($site->a(1) == 'notifications') {
+            $file = 'gsd-admin/notifications'.PHPEXT;
         } elseif ($site->a(1) == 'update') {
             $file = 'gsd-admin/update'.PHPEXT;
         } elseif ($site->a(3) == 'recover') {

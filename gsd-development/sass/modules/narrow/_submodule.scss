@@ -19,3 +19,23 @@
 .image_block {
     position: relative;
 }
+
+.html_module {
+    outline-color: rgba(46,130,147,0.5);
+    outline-offset: 0;
+    outline-style: dashed;
+    outline-width: 1px;
+    padding: 10px;
+
+    ul {
+        list-style: inside disc;
+    }
+
+    b {
+        font-weight: 700;
+    }
+
+    i {
+        font-style: italic;
+    }
+}

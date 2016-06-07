@@ -155,8 +155,6 @@ class tpl
         $item = new image(array(
             'iid' => @$item['list'][0][0]['value'],
             'width' => 'auto',
-            'class' => @$item['list'][0][0]['class'],
-            'style' => @$item['list'][0][0]['style'],
         ));
 
         return @$extra.$item;
@@ -169,7 +167,7 @@ class tpl
         $data = unserialize($site->pagemodules[$placeholder[0]]);
         $ul = '';
         if (gettype($data) == 'array' && sizeof($data)) {
-            $ul .= sprintf('<ul class="%s">', $data['class']);
+            $ul .= '<ul>';
             foreach ($data['list'] as $items) {
                 $li = '';
                 if (gettype($items) == 'array' && sizeof($items)) {
@@ -209,12 +207,10 @@ class tpl
                 $image = new GSD\image(array(
                     'iid' => $item['value'],
                     'width' => 'auto',
-                    'class' => $item['class'],
-                    'style' => $item['style'],
                 ));
                 $li = sprintf('<li>%s</li>', $image);
             } elseif ($item['value']) {
-                $li = sprintf('<li%s%s>%s</li>', $item['class'] ? sprintf(' class="%s"', $item['class']) : '', $item['style'] ? sprintf(' style="%s"', $item['style']) : '', $item['value']);
+                $li = sprintf('<li>%s</li>', $item['value']);
             }
         }
 

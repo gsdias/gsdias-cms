@@ -6,7 +6,7 @@
  * @since      File available since Release 1.0
  */
 
-header {
+.main-header {
     background: #efefef;
     padding: 10px 0 0;
     position: relative;
@@ -24,6 +24,19 @@ header {
 
     i {
         margin-left: 10px;
+
+        &.circle {
+            background: $gsd-color;
+            color: #fff;
+            border-radius: 20px;
+            width: 20px;
+            height: 20px;
+            text-align: center;
+            display: inline-block;
+            vertical-align: middle;
+            line-height: 22px;
+            margin: 0 10px;
+        }
     }
 
     .logo {

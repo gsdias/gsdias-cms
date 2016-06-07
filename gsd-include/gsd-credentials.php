@@ -40,11 +40,6 @@ if (@$_REQUEST['reset'] && !$user->isLogged()) {
 define('IS_LOGGED', $user->isLogged());
 
 if (IS_LOGGED) {
-    $clientfields = CLIENTPATH.'include/admin/fields'.PHPEXT;
-    if (is_file($clientfields)) {
-        include_once $clientfields;
-    }
-
     $tpl->setcondition('IS_LOGGED');
     $tpl->setvar('USER_ID', $user->id);
 
@@ -63,6 +58,7 @@ if (IS_LOGGED) {
         }
 
         $tpl->setvar('USER_NAME', $user->name);
+        $tpl->setvar('USER_NOTIFICATIONS_UNREAD', sizeof($user->notifications->unread));
     }
 }
 

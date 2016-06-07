@@ -35,17 +35,16 @@ class user implements iuser
 
     public function islogged()
     {
-        global $mysql;
+        global $mysql, $tpl;
 
         $isLogged = $this->id != null;
 
-//        if ($isLogged) {
-//            $mysql->statement('SELECT sync FROM users WHERE uid = :uid', array(':uid' => $this->id));
-//
-//            if ($mysql->singleresult()) {
-//                $mysql->statement('UPDATE users SET sync = 0 WHERE uid = :uid', array(':uid' => $this->id));
-//            }
-//        }
+        if ($isLogged) {
+            $mysql->statement('SELECT sync FROM users WHERE uid = :uid', array(':uid' => $this->id));
+            if ($mysql->singleresult()) {
+                $mysql->statement('UPDATE users SET sync = 0 WHERE uid = :uid', array(':uid' => $this->id));
+            }
+        }
 
         return $isLogged;
     }
@@ -86,7 +85,7 @@ class user implements iuser
             $this->firstName = array_shift($names);
             $this->lastName = array_pop($names);
             $this->email = $user->email;
-            $this->notifications = new notification($this->id);
+            $this->notifications = new notification($user->uid);
             $_SESSION['user'] = $this;
 
             $mysql->statement('UPDATE users SET last_login = CURRENT_TIMESTAMP(), code = ? WHERE uid = ?;',

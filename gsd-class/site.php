@@ -15,7 +15,7 @@ class site
     public $name, $email, $ga, $gtm, $fb, $uri, $page, $main, $startpoint, $pagemodules, $pageextra, $layout, $protocol, $isFrontend, $options;
     protected $path;
 
-    const VERSION = '1.7.1';
+    const VERSION = '1.7.2';
 
     public function __construct()
     {
@@ -57,8 +57,6 @@ class site
         $this->path();
         $this->isFrontend = @$this->path[0] !== 'admin';
         $tpl->setcondition('CMS', !$this->isFrontend);
-
-        $tpl->setvar('HTML_CLASS', 'gsd');
 
         if ($this->isFrontend) {
             $this->page();
@@ -127,6 +125,7 @@ class site
                 'PAGE_OG_TITLE' => $page->og_title ? $page->og_title : $page->title,
                 'PAGE_OG_DESCRIPTION' => $page->og_description,
                 'PAGE_OG_IMAGE' => $page->og_image ? $this->protocol.$_SERVER['HTTP_HOST'].ASSETPATHURL.'images/'.$page->og_image : '',
+                'PAGE_BODY' => $page->body,
             ));
 
             $this->main = trim(str_replace('.html', '', $page->file));
@@ -194,12 +193,12 @@ class site
         return @$this->path[$pos];
     }
 
-    public function param($name, $session = 0)
+    public function param($name = '', $session = 0)
     {
         return $this->p($name, $session);
     }
 
-    public function p($name, $session = 0)
+    public function p($name = '', $session = 0)
     {
         $type = $session ? $_SESSION : $_REQUEST;
 

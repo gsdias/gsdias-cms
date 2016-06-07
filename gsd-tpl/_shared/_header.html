@@ -1,8 +1,8 @@
-<header class="header">
+<header class="header main-header">
     <a href="http://www.gsdias.pt" class="logo" target="_blank"><i class="icon icon-cms-logo"></i></a>
     <!-- IF IS_LOGGED -->
     <ul>
-        <li><a href="/admin/users/{USER_ID}/edit">{USER_NAME}</a></li>
+        <li><a href="/admin/notifications" title="{LANG_NOTIFICATIONS}"><i class="circle">{USER_NOTIFICATIONS_UNREAD}</i></a><a href="/admin/users/{USER_ID}/edit">{USER_NAME}</a></li>
         <li><a href="/logout" class="logout" title="{LANG_LOGOUT}"><i class="fa fa-power-off fa-2x"></i></a></li>
     </ul>
     <!-- ENDIF IS_LOGGED -->

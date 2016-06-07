@@ -39,7 +39,7 @@ if (@$site->a(1) == 'images') {
 
             $fp = fopen($asset, 'rb');
             if ($size && $fp) {
-                header("Content-type: {$size['mime']}");
+                header("Content-type: {$size['mime']}", true, 200);
                 fpassthru($fp);
                 exit;
             }

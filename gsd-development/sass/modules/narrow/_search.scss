@@ -7,16 +7,15 @@
  */
 
 .search {
-    position: absolute;
-    right: 20px;
-    top: 20px;
+    float: right;
+    overflow: hidden;
+    height: 30px;
 
     select {
         width: auto;
     }
 
     input {
-        display: inline-block;
         width: 200px;
     }
 

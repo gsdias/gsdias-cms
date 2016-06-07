@@ -172,6 +172,16 @@ abstract class section implements isection
                         'label' => $label
                     ));
                     break;
+                    case 'html':
+                    $field = (string) new textarea(array(
+                        'id' => $name,
+                        'class' => 'html_module',
+                        'name' => $name,
+                        'value' => @$item->{$name},
+                        'label' => $label
+                    ));
+                    $extraclass = 'fullWidth';
+                    break;
                     case 'number':
                     $field = (string) new input(array(
                         'id' => $name,
@@ -358,6 +368,9 @@ abstract class section implements isection
                         break;
                     }
                 }
+            }
+            if (empty($field->getValidator())) {
+                $response = array('value' => $value, 'result' => 1, 'field' => $field->getName());
             }
         } else {
             $value = $site->p($field);

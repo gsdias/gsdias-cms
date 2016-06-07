@@ -22,15 +22,11 @@ if ($site->p('save')) {
                 foreach ($vals as $i => $val) {
                     $value[] = array(
                             'value' => @$site->p($module)[$i],
-                            'class' => @$site->p('class_'.$module)[$i],
-                            'style' => @$site->p('style_'.$module)[$i],
                     );
                 }
                 if (!sizeof(@$modules[$moduleid[4]])) {
                     $modules[$moduleid[4]] = array(
                         'list' => array(),
-                        'style' => @$site->p('style_value_pm_'.$moduleid[4]),
-                        'class' => @$site->p('class_value_pm_'.$moduleid[4]),
                     );
                 }
                 $modules[$moduleid[4]]['list'][] = $value;
@@ -40,13 +36,9 @@ if ($site->p('save')) {
                                 array(
                                     array(
                                         'value' => $value,
-                                        'class' => $site->p('class_'.$module),
-                                        'style' => $site->p('style_'.$module),
                                     ),
                                 ),
                             ),
-                    'class' => '',
-                    'style' => '',
                 );
 
                 $mysql->reset()

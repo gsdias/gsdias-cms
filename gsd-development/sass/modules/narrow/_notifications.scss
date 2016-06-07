@@ -6,13 +6,6 @@
  * @since      File available since Release 1.0
  */
 
-.list {
-    float: left;
-    width: 45%;
-
-    &.full-width {
-        float: none;
-        width: 96%;
-        margin: auto;
-    }
+.highlighted {
+    background: #c9c9c9;
 }

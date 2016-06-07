@@ -227,8 +227,6 @@ class pages extends section implements isection
                                 $spartial->setvars(array_merge(array(
                                     'NAME' => 'value_pm_s_'.$index.'_'.$item->pmid.'[]',
                                     'VALUE' => $data['value'],
-                                    'CLASS' => $data['class'],
-                                    'STYLE' => $data['style'],
                                     'LABEL' => 'Value',
                                 ), $extra));
                                 $spartial->setfile($item->sfile);
@@ -471,8 +469,6 @@ class pages extends section implements isection
             'LABEL' => lang(sprintf('LANG_%s', $lsname)),
             'NAME' => 'value_pm_'.$pmid,
             'VALUE' => @$item['value'],
-            'CLASS' => @$item['class'],
-            'STYLE' => @$item['style'],
         ), $extra));
 
         return $partial;
@@ -506,6 +502,7 @@ class pages extends section implements isection
         if ($update) {
             $fields[] = new field(array('name' => 'published', 'validator' => array('isCheckbox'), 'label' => lang('LANG_PUBLISHED'), 'type' => 'checkbox'));
         }
+        $fields[] = new field(array('name' => 'body', 'label' => lang('LANG_BODY'), 'type' => 'html'));
         
         return array_merge(parent::fields($update), $fields);
     }

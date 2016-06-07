@@ -22,6 +22,7 @@ class textarea
             'label' => '',
             'value' => '',
             'labelClass' => '',
+            'class' => '',
         );
 
         $this->args = array_merge($defaults, $args);
@@ -31,6 +32,6 @@ class textarea
     {
         $output = $this->args['label'] ? sprintf('<label%s>%s</label>', $this->args['labelClass'] ? ' class="'.$this->args['labelClass'].'"' : '', $this->args['label']) : '';
 
-        return sprintf('%s<textarea id="%s" name="%s">%s</textarea>', $output, $this->args['id'], $this->args['name'], $this->args['value']);
+        return sprintf('%s<textarea id="%s" name="%s" class="%s">%s</textarea>', $output, $this->args['id'], $this->args['name'], $this->args['class'], $this->args['value']);
     }
 }

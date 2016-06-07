@@ -478,3 +478,9 @@ msgstr "Imagem Facebook"
 
 msgid "LANG_OG_DESCRIPTION"
 msgstr "Descrição Facebook"
+
+msgid "LANG_NOTIFICATIONS"
+msgstr "Notificações"
+
+msgid "LANG_BODY"
+msgstr "Body"

@@ -6,6 +6,15 @@
  * @since      File available since Release 1.7
  */
 
+@-webkit-keyframes loadingContainer {
+    0% {
+        width: 100%;
+    }
+    100% {
+        width: 0;
+    }
+}
+
 .messages {
     background: #dafbd6;
     border: solid 1px #92ca7a;
@@ -16,11 +25,39 @@
     margin-bottom: 30px;
     padding: 10px 25px;
     position: relative;
+    overflow: hidden;
+
+    &.fades {
+        -webkit-transition: all ease .3s;
+        opacity: 0;
+        max-height: 0;
+        padding: 0 25px;
+        margin-bottom: 0;
+    }
+
+    .progress {
+        width: 100%;
+        border-bottom: solid 2px #206934;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+
+        -webkit-animation-duration: 5s;
+        -webkit-animation-fill-mode: forwards;
+        -webkit-animation-iteration-count: 1;
+        -webkit-animation-name: loadingContainer;
+        -webkit-animation-timing-function: ease;
+    }
 
     .fa {
         position: absolute;
         left: 5px;
         top: 10px;
+
+        &.fa-close {
+            left: auto;
+            right: 5px;
+        }
     }
 
     p {

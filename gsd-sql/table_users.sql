@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `name` varchar(120) NOT NULL,
   `locale` varchar(10) DEFAULT 'en_GB',
   `level` varchar(10) DEFAULT 'user',
-  `notifications` int(1) DEFAULT NULL,
+  `notifications` text DEFAULT NULL,
   `sync` int(1) DEFAULT NULL,
   `creator` int(11) DEFAULT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,

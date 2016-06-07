@@ -10,6 +10,8 @@
 
     'use strict';
 
+    var transitionend = Modernizr.prefixed('transitionend');
+
     global.updateHistory = function (url, title) {
         history.pushState(null, title, url);
     };
@@ -23,9 +25,20 @@
         global.resizemain();
 
         if (app.isCMS) {
-            var editor = new MediumEditor('.html_module');
+            var editor = new MediumEditor('.html_module', {
+                toolbar: {
+                    buttons: ['bold', 'italic', 'underline', 'unorderedlist', 'anchor', 'h2', 'h3', 'quote', 'removeFormat']
+                }
+            });
             editor.subscribe('editableInput', function (event, editable) {
                 $('[medium-editor-textarea-id="' + $(event.srcElement).attr('id') + '"]').val($(editable).html());
+            });
+
+            $('.messages .progress').on('webkitAnimationEnd oAnimationEnd MSAnimationEnd animationend', function () {
+                $(this).closest('.messages').addClass('fades');
+            });
+            $('.messages').on('click', '.fa-close', function () {
+                $(this).closest('.messages').addClass('fades');
             });
         }
     });

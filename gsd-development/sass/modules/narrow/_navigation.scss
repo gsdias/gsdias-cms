@@ -11,8 +11,13 @@
     color: $gsd-color;
     float: left;
     position: relative;
-    text-align: center;
+    width: 140px;
     z-index: 11;
+
+    .fa {
+        margin-right: 10px;
+        vertical-align: middle;
+    }
 
     > ul {
         box-shadow: inset -5px 0px 10px -5px rgba(0, 0, 0, 0.5);

@@ -11,21 +11,26 @@ defined('GVALID') or die;
 $files = scandir('gsd-sql/changes');
 
 $update = array();
+$startupdate = 0;
 
 foreach ($files as $file) {
     if ($file != '.' && $file != '..') {
+        if (strpos($file, @$site->options['version']['value']) !== false) {
+            $startupdate = 1;
+        }
+        if (!$startupdate) {
+            continue;
+        }
         $sentence = file_get_contents(sprintf('gsd-sql/changes/%s', $file));
-        $mysql->statement('SET foreign_key_checks = 0;'.$sentence.'SET foreign_key_checks = 1;');
+        $mysql->statement($sentence);
 
-        if ($mysql->executed) {
-            $update[] = 1;
-        } else {
-            $update[] = 0;
+        if ($mysql->errmsg) {
+            $update[] = $mysql->errmsg;
         }
     }
 }
 
-if (in_array(1, $update)) {
+if (empty($update)) {
     $mysql->reset()
         ->update('options')
         ->fields(array('value'))
@@ -35,5 +40,10 @@ if (in_array(1, $update)) {
 
     $tpl->setarray('MESSAGES', array('MSG' => lang('LANG_UPDATE_FINISHED')));
 
+    redirect('/admin');
+} else {
+    foreach($update as $error) {
+        $tpl->setarray('ERRORS', array('MSG' => $error));
+    }
     redirect('/admin');
 }
