@@ -140,7 +140,7 @@ module.exports = function (grunt) {
         watch: {
             js: {
                 files: ['./js/*.js', './js/*/*.js', pkg.gsdfrontend + 'development/js/*.js', pkg.gsdfrontend + 'development/js/*/*.js'],
-                tasks: ['jshint', 'useminPrepare', 'concat:generated', 'uglify:generated', 'usemin', 'string-replace']
+                tasks: [/*'jshint', */'useminPrepare', 'concat:generated', 'uglify:generated', 'usemin', 'string-replace']
             },
             css: {
                 files: ['./sass/*', './sass/**/*', pkg.gsdfrontend + 'development/sass/*.scss', pkg.gsdfrontend + 'development/sass/*/*.scss'],
@@ -148,7 +148,7 @@ module.exports = function (grunt) {
             },
             html: {
                 files: ['./tpl/*'],
-                tasks: ['copy', 'jshint', 'jscs', 'useminPrepare', 'concat:generated','uglify:generated', 'usemin', 'string-replace']
+                tasks: ['copy', /*'jshint', 'jscs', */'useminPrepare', 'concat:generated','uglify:generated', 'usemin', 'string-replace']
             }
         },
         compass: {
@@ -234,6 +234,17 @@ module.exports = function (grunt) {
                 level: 'all',
                 quiet: true
             }
+        },
+        babel: {
+            options: {
+                sourceMap: false,
+                presets:['react']
+            },
+            dist: {
+                files: {
+                    "js/react.js": "js/react/react.jsx"
+                }
+            }
         }
     });
 
@@ -246,8 +257,8 @@ module.exports = function (grunt) {
     grunt.registerTask('build', [
         'clean:start',
         'copy',
-        'jshint',
-        'jscs',
+        /*'jshint',
+        'jscs',*/
         'compass',
         'useminPrepare',
         'concat:generated',

@@ -21,7 +21,7 @@ class image
 
         $defaults = array(
             'iid' => 0,
-            'src' => null,
+            'src' => '/gsd-image.php',
             'alt' => '',
             'class' => '',
             'width' => '',

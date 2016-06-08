@@ -19,7 +19,7 @@
                 <th>{LANG_DIMENSION}</th>
                 <th>{LANG_DESCRIPTION}</th>
                 <th>{LANG_MODIFIED}</th>
-                <th>{LANG_ACTIONS}</th>
+                <th class="actions">{LANG_ACTIONS}</th>
                 <th width="10"><i class="fa fa-check-square-o fa-1x selection"></i></th>
             </tr>
         </thead>
@@ -31,8 +31,8 @@
             <td>{IMAGES_DESCRIPTION}</td>
             <td>{IMAGES_CREATED} <br>{LANG_BY} <a href="/admin/users/{IMAGES_CREATOR_ID}">{IMAGES_CREATOR_NAME}</a></td>
             <td class="actions">
-                <a href="/admin/images/{IMAGES_IID}/edit">{LANG_EDIT}</a>
-                <a href="/admin/images/{IMAGES_IID}/remove">{LANG_REMOVE}</a>
+                <a href="/admin/images/{IMAGES_IID}/edit" class="fa fa-pencil-square-o" title="{LANG_EDIT}"></a>
+                <a href="/admin/images/{IMAGES_IID}/remove" class="fa fa-trash-o" title="{LANG_REMOVE}"></a>
             </td>
             <td class="checkbox"><input value="{IMAGES_IID}" type="checkbox"></td>
         </tr><!-- ENDLOOP IMAGES -->

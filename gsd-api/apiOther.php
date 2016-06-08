@@ -35,7 +35,7 @@ class apiOther
 
     public function paginatorLayouts($options)
     {
-        global $mysql, $api;
+        global $mysql, $api, $site;
 
         $page = $options['page'];
         $numberPerPage = $options['numberPerPage'];
@@ -87,22 +87,24 @@ class apiOther
 
     public function paginatorPages($options)
     {
-        global $mysql, $api;
+        global $mysql, $api, $site;
 
         $page = $options['page'];
         $numberPerPage = $options['numberPerPage'];
         $output = $options['output'];
         $fields = empty($options['fields']) ? array() : $options['fields'];
-        $returnFields = array_merge(array('pid', 'title', 'beautify', 'created', 'creator_id', 'creator_name', 'index'), $fields);
+        $returnFields = array_merge(array('pid', 'title', 'beautify', 'created', 'creator_id', 'creator_name', 'index', 'layout'), $fields);
 
-        $select = $this->extendFields($fields, 'p.*, concat(if(pp.url = "/" OR pp.url IS NULL, "", pp.url), p.url) AS url, p.creator AS creator_id, u.name AS creator_name');
+        $select = $this->extendFields($fields, 'p.*, concat(if(pp.url = "/" OR pp.url IS NULL, "", pp.url), p.url) AS url, p.creator AS creator_id, u.name AS creator_name, l.name AS layout');
 
         $mysql->reset()
             ->from('pages AS p')
             ->join('users AS u', 'LEFT')
             ->on('p.creator = u.uid')
             ->join('pages AS pp', 'LEFT')
-            ->on('p.parent = pp.pid');
+            ->on('p.parent = pp.pid')
+            ->join('layouts AS l', 'LEFT')
+            ->on('l.lid = p.lid');
 
         if ($site->p('search')) {
             $mysql->where(sprintf('p.title like "%%%s%%"', $site->p('search')));
@@ -163,19 +165,19 @@ class apiOther
 
     public function paginatorUsers($options)
     {
-        global $mysql, $api;
+        global $mysql, $api, $site;
 
-        $api->checkCredentials();
-
-        if (!(IS_ADMIN || IS_EDITOR)) {
-            return lang('LANG_NOPERMISSION');
-        }
+//        $api->checkCredentials();
+//
+////        if (!(IS_ADMIN || IS_EDITOR)) {
+////            return lang('LANG_NOPERMISSION');
+////        }
 
         $page = $options['page'];
         $numberPerPage = $options['numberPerPage'];
         $output = $options['output'];
         $fields = empty($options['fields']) ? array() : $options['fields'];
-        $returnFields = array_merge(array('name', 'uid', 'created'), $fields);
+        $returnFields = array_merge(array('name', 'uid', 'created', 'level'), $fields);
 
         $select = $this->extendFields($fields, 'u.*');
 
@@ -220,7 +222,7 @@ class apiOther
 
     public function paginatorImages($options)
     {
-        global $mysql, $api;
+        global $mysql, $api, $site;
 
         $page = $options['page'];
         $numberPerPage = $options['numberPerPage'];
@@ -272,7 +274,7 @@ class apiOther
 
     public function paginatorDocuments($options)
     {
-        global $mysql, $api;
+        global $mysql, $api, $site;
 
         $page = $options['page'];
         $numberPerPage = $options['numberPerPage'];
@@ -356,10 +358,10 @@ class apiOther
 
         foreach ($list as $id) {
             $mysql->reset()
-                ->delete()
-                ->from($table)
+                ->update($table)
+                ->fields(array('deleted'))
                 ->where($field.' = ?')
-                ->values($id)
+                ->values(array(1, $id))
                 ->exec();
 
             if ($mysql->total) {

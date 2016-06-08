@@ -18,7 +18,7 @@
                 <th>{LANG_PERMISSION}</th>
                 <th>{LANG_LAST_LOGIN}</th>
                 <th>{LANG_CREATED}</th>
-                <th>{LANG_ACTIONS}</th>
+                <th class="actions">{LANG_ACTIONS}</th>
                 <th width="10"><i class="fa fa-check-square-o fa-1x selection"></i></th>
             </tr>
         </thead>
@@ -31,8 +31,8 @@
             <td>{USERS_LAST_LOGIN}</td>
             <td>{USERS_CREATED}</td>
             <td class="actions">
-                <a href="/admin/users/{USERS_UID}/edit">{LANG_EDIT}</a>
-                <a href="/admin/users/{USERS_UID}/remove">{LANG_REMOVE}</a>
+                <a href="/admin/users/{USERS_UID}/edit" class="fa fa-pencil-square-o" title="{LANG_EDIT}"></a>
+                <a href="/admin/users/{USERS_UID}/remove" class="fa fa-trash-o" title="{LANG_REMOVE}"></a>
             </td>
             <td class="checkbox"><input value="{USERS_UID}" type="checkbox"></td>
         </tr>

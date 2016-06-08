@@ -134,7 +134,7 @@ abstract class section implements isection
                     $partial->setvars(array(
                         'LABEL' => $label,
                         'NAME' => $name,
-                        'IMAGE' => @$item->{$name} && !$image->notValid ? $image : '',
+                        'IMAGE' => $image,
                         'VALUE' => @$item->{$name} ? @$item->{$name} : 0,
                         'EMPTY' => @$item->{$name} && !$image->notValid ? 'is-hidden' : '',
                     ));

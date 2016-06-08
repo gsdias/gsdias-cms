@@ -33,8 +33,14 @@
     }
 
     .actions {
+        text-align: center;
         a {
-            display: block;
+            font-size: 16px;
+            margin: 0 5px;
+
+            &:hover {
+                text-decoration: none;
+            }
         }
     }
 

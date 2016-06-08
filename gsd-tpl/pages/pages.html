@@ -1,5 +1,5 @@
 <main>
-    <header class="section-header">
+    <header class="section-header clearfix">
         <h1>{LANG_PAGES}
             <!-- IF IS_ADMIN OR IS_EDITOR --><a href="/admin/pages/create" class="btn">{LANG_ADD} {LANG_NEW_FEMALE LOWER}</a><!-- ENDIF IS_ADMIN OR IS_EDITOR -->
         </h1>
@@ -29,21 +29,23 @@
                 <th>{LANG_PATH}</th>
                 <th>Layout</th>
                 <th>{LANG_CREATED}</th>
-                <th>{LANG_ACTIONS}</th>
+                <th class="actions">{LANG_ACTIONS}</th>
                 <th><i class="fa fa-refresh fa-1x refresh"></i></th>
                 <th width="10"><i class="fa fa-check-square-o fa-1x selection"></i></th>
             </tr>
         </thead>
         <!-- LOOP PAGES --><tr data-pid="{PAGES_PID}" data-index="{PAGES_INDEX}"{PAGES_ISHIDDEN}>
             <td>
-                <a href="{PAGES_BEAUTIFY}" target="_blank" class="fa fa-binoculars page-preview"></a>
-                {PAGES_TITLE}<br>
-                <a href="/admin/pages/{PAGES_PID}">{PAGES_BEAUTIFY}</a>{PAGES_UNPUBLISHED}{PAGES_SYNC}
+                {PAGES_TITLE}<br><a href="/admin/pages/{PAGES_PID}">{PAGES_BEAUTIFY}</a>{PAGES_UNPUBLISHED}{PAGES_SYNC}
             </td>
             <td>{PAGES_LAYOUT}
             </td>
             <td><em class="ago">({PAGES_CREATED})</em> <br>{LANG_BY} <a href="/admin/users/{PAGES_CREATOR_ID}">{PAGES_CREATOR_NAME}</a></td>
-            <td class="actions"><a href="/admin/pages/{PAGES_PID}/settings">{LANG_SETTINGS}</a><a href="/admin/pages/{PAGES_PID}/edit">{LANG_EDIT}</a></td>
+            <td class="actions">
+                <a href="/p/{PAGES_PID}" target="_blank" class="fa fa-binoculars"></a>
+                <a href="/admin/pages/{PAGES_PID}/settings" title="{LANG_SETTINGS}" class="fa fa-cog"></a>
+                <a href="/admin/pages/{PAGES_PID}/edit" title="{LANG_EDIT}" class="fa fa-pencil-square-o"></a>
+            </td>
             <td><i class="fa fa-arrows-v fa-1x order"></i></td>
             <td class="checkbox"><input value="{PAGES_PID}" type="checkbox"></td>
         </tr><!-- ENDLOOP PAGES -->

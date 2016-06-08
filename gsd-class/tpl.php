@@ -204,7 +204,7 @@ class tpl
         $li = '';
         foreach ($items as $item) {
             if ($placeholder[2] == 'IMAGE' && $item['value']) {
-                $image = new GSD\image(array(
+                $image = new image(array(
                     'iid' => $item['value'],
                     'width' => 'auto',
                 ));

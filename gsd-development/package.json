@@ -16,7 +16,8 @@
         "grunt-jscs": "^1.5.0",
         "load-grunt-tasks": "^3.1.0",
         "grunt-php-cs-fixer": "0.0.8",
-        "bower": "1.7.9"
+        "bower": "1.7.9",
+        "grunt-babel": "*"
     },
     "description": "GSD CMS",
     "main": "Gruntfile.js",

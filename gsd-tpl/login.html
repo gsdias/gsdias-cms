@@ -7,11 +7,11 @@
             <form method="POST" action="/admin/auth{REDIRECT}" class="login-form">
                 <div class="colA">
                     <label><i class="fa fa-envelope"></i></label>
-                    <input name="email" value="{LOGIN_EMAIL}" data-rule-email="true" required placeholder="E-mail">
+                    <input name="email" value="{LOGIN_EMAIL}" data-rule-email="true" required placeholder="{LANG_EMAIL}">
                 </div>
                 <div class="colA">
                     <label><i class="fa fa-lock"></i></label>
-                    <input name="password" type="password" required placeholder="Password">
+                    <input name="password" type="password" required placeholder="{LANG_PASSWORD}">
                 </div>
                 <div class="form-messages">{FORM_MESSAGES}</div>
                 <input type="submit" class="btn-submit" name="login" value="Login">
@@ -21,7 +21,7 @@
             <form method="POST" action="/admin/reset{REDIRECT}" class="is-hidden recover-form">
                 <div class="colA">
                     <label><i class="fa fa-envelope"></i></label>
-                    <input name="email" value="{LOGIN_EMAIL}" data-rule-email="true" required placeholder="E-mail">
+                    <input name="email" value="{LOGIN_EMAIL}" data-rule-email="true" required placeholder="{LANG_EMAIL}">
                 </div>
                 <div class="form-messages">{FORM_MESSAGES}</div>
                 <input type="submit" class="btn-submit" name="reset" value="Reset">
