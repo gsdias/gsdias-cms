@@ -17,15 +17,17 @@ if (@$site->a(1) == 'images') {
             $mysql->reset()
                 ->select('iid, extension')
                 ->from('images')
-                ->where('name = ? AND deleted IS NULL')
-                ->where('AND extension = ?')
+                ->where('name = ?')
+                ->where('deleted IS NULL')
+                ->where('extension = ?')
                 ->values(array($name[0], @$name[1]))
                 ->exec();
         } else {
             $mysql->reset()
                 ->select('iid, extension')
                 ->from('images')
-                ->where('iid = ? AND deleted IS NULL')
+                ->where('iid = ?')
+                ->where('deleted IS NULL')
                 ->values($iid)
                 ->exec();
         }

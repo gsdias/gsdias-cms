@@ -313,8 +313,9 @@ class mySQL implements idatabase
         return $this;
     }
 
-    public function where($value)
+    public function where($value, $operator = 'AND')
     {
+        $value = empty($this->_where) ? $value : $operator.' '.$value;
         array_push($this->_where, $value);
 
         return $this;

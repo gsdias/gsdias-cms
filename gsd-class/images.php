@@ -41,7 +41,7 @@ class images extends section implements isection
             ->where('images.deleted IS NULL');
 
         if ($options['search']) {
-            $mysql->where(sprintf('AND tags like "%%%s%%"', $options['search']));
+            $mysql->where(sprintf('tags like "%%%s%%"', $options['search']));
         }
 
         $mysql->order('images.iid');

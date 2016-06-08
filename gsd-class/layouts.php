@@ -41,7 +41,7 @@ class layouts extends section implements isection
             ->where('l.deleted IS NULL');
 
         if ($options['search']) {
-            $mysql->where(sprintf('AND l.name like "%%%s%%"', $options['search']));
+            $mysql->where(sprintf('l.name like "%%%s%%"', $options['search']));
         }
 
         $mysql->order('lid');

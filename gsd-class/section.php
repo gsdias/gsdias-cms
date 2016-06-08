@@ -73,7 +73,7 @@ abstract class section implements isection
 
         $section = $this->tablename();
 
-        $mysql->where(sprintf('AND %s.deleted IS NULL', $section))
+        $mysql->where(sprintf('%s.deleted IS NULL', $section))
             ->exec();
 
         $this->item = $mysql->singleline();

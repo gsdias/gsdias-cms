@@ -59,6 +59,7 @@ class site
         $tpl->setcondition('CMS', !$this->isFrontend);
 
         if ($this->isFrontend) {
+            $tpl->setvar('HTML_CLASS', 'frontend');
             $this->page();
 
             if (@$this->options['maintenance']['value']) {

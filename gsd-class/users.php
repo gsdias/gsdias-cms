@@ -41,7 +41,7 @@ class users extends section implements isection
             ->where('users.deleted IS NULL');
 
         if ($options['search']) {
-            $mysql->where(sprintf('AND users.name like "%%%s%%"', $options['search']));
+            $mysql->where(sprintf('users.name like "%%%s%%"', $options['search']));
         }
 
         $mysql->order('users.uid');

@@ -41,7 +41,7 @@ class documents extends section implements isection
             ->where('documents.deleted IS NULL');
 
         if ($options['search']) {
-            $mysql->where(sprintf('AND tags like "%%%s%%"', $options['search']));
+            $mysql->where(sprintf('tags like "%%%s%%"', $options['search']));
         }
 
         $mysql->order('documents.did');

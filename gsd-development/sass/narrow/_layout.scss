@@ -33,6 +33,16 @@
     }
 }
 
+.colB {
+    float: left;
+    width: 45%;
+    margin-bottom: 30px;
+    position: relative;
+    &:nth-child(even) {
+        margin-left: 2.5%;
+    }
+}
+
 .main {
     margin-left: 140px;
     background: #fff;

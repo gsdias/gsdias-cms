@@ -45,28 +45,28 @@ class pages extends section implements isection
             ->where('p.deleted IS NULL');
 
         if ($site->p('search')) {
-            $mysql->where(sprintf('AND MATCH (p.title, p.description) AGAINST ("%s" WITH QUERY EXPANSION)', $site->p('search')));
+            $mysql->where(sprintf('MATCH (p.title, p.description) AGAINST ("%s" WITH QUERY EXPANSION)', $site->p('search')));
         }
         if ($site->p('filter')) {
             $tpl->setvar('FILTER_'.strtoupper($site->p('filter')), 'selected="selected"');
             switch ($site->p('filter')) {
                 case 'published':
-                    $mysql->where(sprintf('%s p.published IS NOT NULL', $site->p('search') ? 'AND' : ''));
+                    $mysql->where('p.published IS NOT NULL');
                 break;
                 case 'unpublished':
-                    $mysql->where(sprintf('%s p.published IS NULL', $site->p('search') ? 'AND' : ''));
+                    $mysql->where('p.published IS NULL');
                 break;
                 case 'visiblemenu':
-                    $mysql->where(sprintf('%s p.show_menu IS NOT NULL', $site->p('search') ? 'AND' : ''));
+                    $mysql->where('p.show_menu IS NOT NULL');
                 break;
                 case 'invisiblemenu':
-                    $mysql->where(sprintf('%s p.show_menu IS NULL', $site->p('search') ? 'AND' : ''));
+                    $mysql->where('p.show_menu IS NULL');
                 break;
                 case 'secure':
-                    $mysql->where(sprintf('%s p.require_auth IS NOT NULL', $site->p('search') ? 'AND' : ''));
+                    $mysql->where('p.require_auth IS NOT NULL');
                 break;
                 case 'nonsecure':
-                    $mysql->where(sprintf('%s p.require_auth IS NULL', $site->p('search') ? 'AND' : ''));
+                    $mysql->where('p.require_auth IS NULL');
                 break;
             }
         }
