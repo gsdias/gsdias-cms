@@ -93,9 +93,9 @@ class apiOther
         $numberPerPage = $options['numberPerPage'];
         $output = $options['output'];
         $fields = empty($options['fields']) ? array() : $options['fields'];
-        $returnFields = array_merge(array('pid', 'title', 'beautify', 'created', 'creator_id', 'creator_name', 'index', 'layout'), $fields);
+        $returnFields = array_merge(array('pid', 'title', 'beautify', 'created', 'creator_id', 'creator_name', 'index', 'layout', 'sync'), $fields);
 
-        $select = $this->extendFields($fields, 'p.*, concat(if(pp.url = "/" OR pp.url IS NULL, "", pp.url), p.url) AS url, p.creator AS creator_id, u.name AS creator_name, l.name AS layout');
+        $select = $this->extendFields($fields, 'p.*, concat(if(pp.url = "/" OR pp.url IS NULL, "", pp.url), p.url) AS url, p.creator AS creator_id, u.name AS creator_name, l.name AS layout, if(p.beautify like concat(if(pp.beautify IS NULL , "", pp.beautify), p.url), 0, 1) AS sync');
 
         $mysql->reset()
             ->from('pages AS p')
@@ -154,6 +154,7 @@ class apiOther
                 $array['created'] = '('.timeago(dateDif(@$created[0], date('Y-m-d', time())), @$created[1]).')';
                 $array['unpublished'] = $row->published ? '' : '<br>('.lang('LANG_UNPUBLISHED').')';
                 $array['isHidden'] = $page > 1 && $index === 0 ? 'is-hidden' : ($index === 10 && $mysql->total === 11 ? 'is-hidden' : '');
+                $array['sync'] = $row->sync ? '<br>(<a href="/admin/pages/'.$row->pid.'/sync" class="redLabel">Sync</a>)' : '';
                 array_push($output['data']['list'], $array);
             }
 

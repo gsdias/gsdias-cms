@@ -1,16 +1,18 @@
 <main>
-    <h1>{LANG_USERS}
-        <!-- IF IS_ADMIN --><a href="/admin/users/create" class="btn">{LANG_ADD} {LANG_NEW_MALE LOWER}</a><!-- ENDIF IS_ADMIN -->
-    </h1>
+    <header class="section-header clearfix">
+        <h1>{LANG_USERS}
+            <!-- IF IS_ADMIN --><a href="/admin/users/create" class="btn">{LANG_ADD} {LANG_NEW_MALE LOWER}</a><!-- ENDIF IS_ADMIN -->
+        </h1>
+        <div class="search">
+            <form method="post">
+                <input type="text" value="{SEARCH_VALUE}" name="search">
+                <input type="submit" value="{LANG_SEARCH}" name="search_submit">
+            </form>
+        </div>
+    </header>
     [_ERRORS]
     [_WARNINGS]
     [_MESSAGES]
-    <div class="search">
-        <form method="post">
-            <input type="text" value="{SEARCH_VALUE}" name="search">
-            <input type="submit" value="{LANG_SEARCH}" name="search_submit">
-        </form>
-    </div>
     <table class="table pages hasPages" data-type="users">
         <thead>
             <tr>

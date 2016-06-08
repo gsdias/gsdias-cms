@@ -13,7 +13,7 @@
                 <th>{LANG_SIZE}</th>
                 <th>{LANG_DESCRIPTION}</th>
                 <th>{LANG_MODIFIED}</th>
-                <th>{LANG_ACTIONS}</th>
+                <th class="actions">{LANG_ACTIONS}</th>
                 <th width="10"><i class="fa fa-check-square-o fa-1x selection"></i></th>
             </tr>
         </thead>
@@ -26,8 +26,8 @@
             <td>{DOCUMENTS_DESCRIPTION}</td>
             <td>{DOCUMENTS_CREATED} <br>{LANG_BY} <a href="/admin/users/{DOCUMENTS_CREATOR_ID}">{DOCUMENTS_CREATOR_NAME}</a></td>
             <td class="actions">
-                <a href="/admin/documents/{DOCUMENTS_DID}/edit">{LANG_EDIT}</a>
-                <a href="/admin/documents/{DOCUMENTS_DID}/remove">{LANG_REMOVE}</a>
+                <a href="/admin/documents/{DOCUMENTS_DID}/edit" title="{LANG_EDIT}" class="fa fa-pencil-square-o"></a>
+                <a href="/admin/documents/{DOCUMENTS_DID}/remove" title="{LANG_REMOVE}" class="fa fa-trash-o"></a>
             </td>
             <td class="checkbox"><input value="{DOCUMENTS_DID}" type="checkbox"></td>
         </tr>

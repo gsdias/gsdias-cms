@@ -23,7 +23,7 @@ input {
     height: 30px;
     padding: 0 2%;
     width: 96%;
-    border: solid transparent 2px;
+    border: none;
     margin: 0;
 
     &:focus {
@@ -86,9 +86,9 @@ textarea {
 
 select {
     box-shadow: 0 0 0 1px $border-color inset;
-    border: solid transparent 2px;
+    border: none;
     border-radius: 3px;
-    height: 34px;
+    height: 30px;
     background: #fff;
     width: 100%;
     margin: 0;
