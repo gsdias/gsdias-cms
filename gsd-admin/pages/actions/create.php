@@ -48,7 +48,7 @@ if ($site->p('save')) {
 
         if (!isset($api)) {
             $tpl->setarray('MESSAGES', array('MSG' => sprintf(lang('LANG_PAGE_CREATED'), $site->p('title'))));
-            redirect("/admin/pages/$pid/edit", 302);
+            redirect('/admin/'.$site->a(1));
         }
     } else {
         if (!isset($api)) {

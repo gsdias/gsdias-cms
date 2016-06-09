@@ -62,7 +62,7 @@ if ($site->p('save')) {
         }
         if (!isset($api)) {
             $tpl->setarray('MESSAGES', array('MSG' => sprintf(lang('LANG_PAGE_SAVED'), $site->p('title'))));
-            redirect('/admin/'.$site->a(1));
+            redirect('/admin/'.$site->a(1).'?page='.$site->p('page'));
         }
     } else {
         $csection->showErrors(lang('LANG_PAGE_ERROR'));

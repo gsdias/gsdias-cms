@@ -11,6 +11,7 @@ defined('GVALID') or die;
 $section = $site->a(1);
 $id = $site->a(2);
 $action = $site->a(3);
+$currentpage = $site->referer('page') ? '?page='.$site->referer('page') : '';
 
 //ACTION DETECTED
 if ($action) {
@@ -24,6 +25,8 @@ if ($action) {
         } elseif ($action === 'remove') {
             $site->main = '_remove';
         }
+
+        $csection->getcurrent($id);
         
         $file = sprintf('gsd-admin/%s/actions/%s%s', $section, $action, PHPEXT);
         if (is_file($file)) {
@@ -40,6 +43,7 @@ if ($action) {
 
         if ($action === 'edit') {
             $csection->generatefields(true);
+            $tpl->setvar('CURRENT_PAGE', $currentpage);
         }
     }
 } else {

@@ -381,10 +381,12 @@ class pages extends section implements isection
         foreach ($defaultfields as $index => $field) {
             $fieldname = $field->getName();
             $defaultfields[$index] = $fieldname;
-            if ($currentpage->{$fieldname} !== $site->p($fieldname)) {
-                $hasChanged = 1;
+            if (!$field->getExtra()) {
+                if ($currentpage->{$fieldname} !== $site->p($fieldname)) {
+                    $hasChanged = 1;
+                }
+                array_push($fieldsvalue, $currentpage->{$fieldname});
             }
-            array_push($fieldsvalue, $currentpage->{$fieldname});
         }
 
         $result = parent::edit();

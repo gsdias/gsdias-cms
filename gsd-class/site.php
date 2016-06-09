@@ -206,6 +206,16 @@ class site
         return $name ? @$type[$name] : $type;
     }
 
+    public function referer($name = '')
+    {
+        $url = @$_SERVER['HTTP_REFERER'];
+        preg_match_all('#\?(.*)#s', $url, $params, PREG_SET_ORDER);
+
+        $params = parse_str(@$params[0][1], $param);
+
+        return $name ? @$param[$name] : $url;
+    }
+
     public function searchpage($givenpath)
     {
         $temp = $this->uri;

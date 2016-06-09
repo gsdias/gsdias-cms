@@ -133,6 +133,7 @@ class apiOther
             }
         }
 
+        $mysql->where('p.deleted IS NULL');
         $mysql->order('p.index');
 
         $paginator = new GSD\paginator($numberPerPage, $page);
