@@ -6,12 +6,10 @@
  * @since      File available since Release 1.0
  */
 
-.main {
-    margin-left: 140px;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
-}
+.main-header {
+    position: relative;
 
-.colA {
-    width: 50%;
-    max-width: 500px;
+    .user-menu {
+        margin-right: 11px;
+    }
 }

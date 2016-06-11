@@ -297,6 +297,7 @@ class pages extends section implements isection
         $index = @$mysql->singleresult();
 
         $_REQUEST['index'] = ($index != null ? $index + 1 : 0);
+        $_REQUEST['url'] = $this->buildurl($site->p('title'));
 
         $result = parent::add();
         
@@ -318,6 +319,27 @@ class pages extends section implements isection
 
         return $result;
     }
+
+    private function buildurl($title)
+    {
+        $patterns = array('/ç/', '/á/', '/à/', '/â/', '/ã/',
+                          '/è/', '/é/', '/ê/',
+                          '/í/', '/ì/', '/î/',
+                          '/ò/', '/ó/', '/ô/', '/õ/',
+                          '/ù/', '/ú/', '/û/');
+        $replacements = array('c', 'a', 'a', 'a', 'a',
+                              'e', 'e', 'e',
+                              'i', 'i', 'i',
+                              'o', 'o', 'o', 'o',
+                              'u', 'u', 'u');
+
+        $url = preg_replace($patterns, $replacements, trim($title));
+        $url = preg_replace('#[^A-Za-z0-9\- ]+#', '', $url);
+        $url = preg_replace('/\ /', '-', $url);
+
+        return '/'.$url;
+    }
+
     public function settings()
     {
 
@@ -481,9 +503,9 @@ class pages extends section implements isection
         $fields = array();
         $id = is_array($this->item) ? '' : $this->item->pid;
         
-        $fields[] = new field(array('name' => 'title', 'validator' => array('isRequired', 'isString'), 'label' => lang('LANG_TITLE')));
+        $fields[] = new field(array('name' => 'title', 'validator' => array('isRequired', 'isString'), 'autofocus' => 1, 'label' => lang('LANG_TITLE')));
         if (!$update) {
-            $fields[] = new field(array('name' => 'url', 'validator' => array('isRequired', 'isString'), 'label' => lang('LANG_URL')));
+            $fields[] = new field(array('name' => 'url', 'validator' => array('isRequired', 'isString'), 'label' => lang('LANG_URL'), 'notRender' => true));
             $fields[] = new field(array('name' => 'lid', 'type' => 'select', 'validator' => array('isRequired', 'isNumber'), 'label' => lang('LANG_LAYOUT'), 'values' => $this->getLayouts()));
         }
         $fields[] = new field(array('name' => 'description', 'type' => 'textarea', 'validator' => array('isString'), 'label' => lang('LANG_DESCRIPTION')));

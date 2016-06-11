@@ -21,10 +21,11 @@ class field
             'type' => 'input',
             'validator' => array(),
             'label' => '',
-            'isRequired' => false,
-            'notRender' => false,
-            'noValue' => false,
-            'extra' => false,
+            'isRequired' => 0,
+            'notRender' => 0,
+            'noValue' => 0,
+            'extra' => 0,
+            'autofocus' => 0,
             'value' => '',
             'values' => array()
         );
@@ -89,6 +90,11 @@ class field
     public function getExtra()
     {
         return $this->args['extra'];
+    }
+
+    public function getAutofocus()
+    {
+        return $this->args['autofocus'];
     }
 
     public function __toString()

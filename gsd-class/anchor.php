@@ -22,6 +22,7 @@ class anchor
             'external' => false,
             'title' => '',
             'text' => '',
+            'class' => '',
         );
 
         $this->args = array_merge($defaults, $args);
@@ -31,7 +32,8 @@ class anchor
     {
         $target = $this->args['external'] ? ' target="_blank"' : '';
         $title = $this->args['title'] ? sprintf(' title="%s"', $this->args['title']) : '';
+        $class = $this->args['class'] ? sprintf(' class="%s"', $this->args['class']) : '';
 
-        return sprintf('<a href="%s"%s%s>%s</a>', $this->args['href'], $target, $title, $this->args['text']);
+        return sprintf('<a href="%s"%s%s%s>%s</a>', $this->args['href'], $target, $title, $class, $this->args['text']);
     }
 }

@@ -47,6 +47,7 @@
     @import "narrow/_theme.scss";
 
     @media (min-width: 768px) {
+        @import "core/portrait/header";
 
         @import "portrait/_layout.scss";
 

@@ -85,7 +85,7 @@ class notification implements inotification
 
         $notifications = json_encode($this->list);
 
-        $mysql->statement('UPDATE users SET notifications = :notifications WHERE uid = :uid', array(':notifications' => $notifications, ':uid' => $this->uid));
+        $mysql->statement('UPDATE users SET sync = 1, notifications = ? WHERE uid = ?', array($notifications, $this->uid));
     }
 }
 

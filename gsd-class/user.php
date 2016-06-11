@@ -42,6 +42,7 @@ class user implements iuser
         if ($isLogged) {
             $mysql->statement('SELECT sync FROM users WHERE uid = :uid', array(':uid' => $this->id));
             if ($mysql->singleresult()) {
+                $this->getuser($this->id);
                 $mysql->statement('UPDATE users SET sync = 0 WHERE uid = :uid', array(':uid' => $this->id));
             }
         }

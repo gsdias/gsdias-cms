@@ -40,6 +40,9 @@
             $('.messages').on('click', '.fa-close', function () {
                 $(this).closest('.messages').addClass('fades');
             });
+            $('.menu').on('click', function () {
+                $('.nav').toggleClass('active');
+            });
         }
     });
 

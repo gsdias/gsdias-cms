@@ -9,7 +9,6 @@
 .main-header {
     background: #efefef;
     padding: 10px 0 0;
-    position: relative;
     z-index: 10;
     //box-shadow: 0 0 10px 0px rgba(0, 0, 0, .5);
 
@@ -23,8 +22,6 @@
     }
 
     i {
-        margin-left: 10px;
-
         &.circle {
             background: $gsd-color;
             color: #fff;
@@ -44,17 +41,20 @@
         margin-bottom: 11px;
     }
 
-    ul {
+    .user-menu {
         overflow: hidden;
         color: $gsd-color;
         display: block;
         text-align: start;
         position: relative;
         float: right;
-        margin-right: 11px;
+        margin-right: 80px;
         li {
             display: inline-block;
             vertical-align: middle;
+        }
+        .fa {
+            margin-left: 10px;
         }
     }
 

@@ -21,10 +21,11 @@ class input
             'id' => '',
             'label' => '',
             'value' => '',
-            'required' => false,
+            'required' => 0,
             'type' => 'text',
             'labelClass' => '',
-            'selected' => false,
+            'selected' => 0,
+            'autofocus' => 0,
         );
 
         $this->args = array_merge($defaults, $args);
@@ -49,7 +50,8 @@ class input
         $class = $this->args['type'] === 'password' ? ' class="gsd-password"' : '';
         $isEmail = $this->args['type'] === 'email' ? ' data-rule-email="true"' : '';
         $isPassword = $this->args['type'] === 'password' ? ' <i class="fa fa-eye gsd-pass-toggle"></i><i class="gsd-complexity"></i>' : '';
+        $autofocus = $this->args['autofocus'] ? ' autofocus="autofocus"' : '';
 
-        return sprintf('%s<input type="%s" id="%s"%s value="%s"%s%s%s%s>%s%s', $outputLeft, $type, $this->args['id'], $name, $this->args['value'], $checked, $required, $isEmail, $class, $outputRight, $isPassword);
+        return sprintf('%s<input type="%s" id="%s"%s%s value="%s"%s%s%s%s>%s%s', $outputLeft, $type, $this->args['id'], $autofocus, $name, $this->args['value'], $checked, $required, $isEmail, $class, $outputRight, $isPassword);
     }
 }

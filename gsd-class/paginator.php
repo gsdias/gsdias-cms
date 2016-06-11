@@ -12,16 +12,25 @@ defined('GVALID') or die;
 
 class paginator
 {
-    public $total, $page, $numberPerPage;
+    public $total, $totalitems, $page, $numberPerPage;
 
     private $tpl;
 
     public function __construct($numberPerPage = 30, $page = 1)
     {
+        global $mysql, $tpl;
+
         $this->tpl = new tpl();
+
+        $mysql->select('count(*)')
+            ->exec();
 
         $this->numberPerPage = $numberPerPage;
         $this->page = is_numeric($page) ? $page : 1;
+        $this->totalitems = $mysql->singleresult();
+
+
+        $tpl->setvar('TOTAL_ITEMS', $this->totalitems);
 
         $this->pageTotal();
 
@@ -64,6 +73,8 @@ class paginator
 
     private function pageGenerator()
     {
+        global $tpl;
+
         $options = array(
             'PREV' => $this->page > 1 ? $this->page - 1 : 1,
             'NEXT' => $this->page < $this->total ? $this->page + 1 : $this->total,
@@ -77,10 +88,10 @@ class paginator
 
     private function generatepaginator($pages)
     {
-        $first_page = new anchor(array('text' => '&lt; {LANG_FIRST}', 'href' => '?page=1'));
-        $prev_page = new anchor(array('text' => lang('LANG_PREVIOUS'), 'href' => '?page='.$pages['PREV']));
-        $next_page = new anchor(array('text' => lang('LANG_NEXT'), 'href' => '?page='.$pages['NEXT']));
-        $last_page = new anchor(array('text' => '{LANG_LAST} &gt;', 'href' => '?page='.$pages['LAST']));
+        $first_page = new anchor(array('class' => 'fa fa-long-arrow-left', 'href' => '?page=1'));
+        $prev_page = new anchor(array('class' => 'fa fa-arrow-left', 'href' => '?page='.$pages['PREV']));
+        $next_page = new anchor(array('class' => 'fa fa-arrow-right', 'href' => '?page='.$pages['NEXT']));
+        $last_page = new anchor(array('class' => 'fa fa-long-arrow-right', 'href' => '?page='.$pages['LAST']));
         $this->tpl->setvars(array(
             'FIRST_PAGE' => $first_page,
             'PREV_PAGE' => $prev_page,

@@ -120,6 +120,7 @@ abstract class section implements isection
                 $isRequired = $extrafield->getRequired();
                 $noValue = $extrafield->getNoValue();
                 $type = $extrafield->getType();
+                $autofocus = $extrafield->getAutofocus();
 
                 switch ($type) {
                     case 'image':
@@ -201,6 +202,7 @@ abstract class section implements isection
                         'value' => $update ? ($noValue ? '' : @$item->{$name}) : $value,
                         'label' => $label,
                         'type' => $type,
+                        'autofocus' => $autofocus,
                     ));
                     break;
                 }
