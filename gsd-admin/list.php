@@ -74,7 +74,7 @@ if ($action) {
 
     //LISTING
     } else {
-        $numberPerPage = 10;
+        $numberPerPage = $site->options['numberPerPage']['value'];
 
         $csection = \GSD\sectionFactory::create($section);
 

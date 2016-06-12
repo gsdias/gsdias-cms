@@ -15,7 +15,7 @@ class site
     public $name, $email, $ga, $gtm, $fb, $uri, $page, $main, $startpoint, $pagemodules, $pageextra, $layout, $protocol, $isFrontend, $options;
     protected $path;
 
-    const VERSION = '1.7.2';
+    const VERSION = '1.7.3';
 
     public function __construct()
     {

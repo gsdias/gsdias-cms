@@ -67,7 +67,7 @@ class apiGet
 
     public function pages($fields, $extra, $doc = false)
     {
-        global $mysql, $api;
+        global $mysql, $api, $site;
 
         $api->checkCredentials();
 
@@ -78,7 +78,7 @@ class apiGet
         $output = array('error' => 0, 'message' => lang('LANG_NO_IMAGES'));
         $requiredFields = array('page', 'type');
         $returnFields = array();
-        $numberPerPage = 10;
+        $numberPerPage = $site->options['numberPerPage']['value'];
 
         if ($doc) {
             return $api->extended->outputDoc('pages', array('pages' => 'Page number', 'type' => 'Type list'), $returnFields);
