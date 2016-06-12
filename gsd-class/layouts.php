@@ -23,6 +23,11 @@ class layouts extends section implements isection
         if ($site->a(2) === 'create') {
             $tpl->repvar('SECTION_ACTION', lang('LANG_NEW_MALE'));
         }
+        
+        $this->labels = array(
+            'singular' => 'LANG_LAYOUT',
+            'plural' => 'LANG_LAYOUTS'
+        );
 
         return $result;
     }
@@ -45,7 +50,7 @@ class layouts extends section implements isection
         }
 
         $mysql->order('lid');
-        $paginator = new paginator(@$options['numberPerPage'], $site->p('page'));
+        $paginator = new paginator(@$options['numberPerPage'], $site->p('page'), $this->labels);
 
         if (!empty($fields)) {
             foreach ($fields as $field) {

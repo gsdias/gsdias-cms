@@ -23,6 +23,11 @@ class pages extends section implements isection
         if ($site->a(2) === 'create') {
             $tpl->repvar('SECTION_ACTION', lang('LANG_NEW_FEMALE'));
         }
+        
+        $this->labels = array(
+            'singular' => 'LANG_PAGE',
+            'plural' => 'LANG_PAGES'
+        );
 
         return $result;
     }
@@ -73,7 +78,7 @@ class pages extends section implements isection
 
         $mysql->order('p.index');
         $page = $site->p('page') ? $site->p('page') : 1;
-        $paginator = new paginator(@$options['numberPerPage'], $page);
+        $paginator = new paginator(@$options['numberPerPage'], $page, $this->labels);
 
         if (!empty($fields)) {
             foreach ($fields as $field) {

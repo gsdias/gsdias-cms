@@ -15,6 +15,7 @@ abstract class section implements isection
     public $item = array();
     public $permission = '';
     public $result = array();
+    public $labels = array();
 
     public function __construct($permission)
     {

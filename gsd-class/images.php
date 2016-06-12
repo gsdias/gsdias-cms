@@ -23,6 +23,11 @@ class images extends section implements isection
         if ($site->a(2) === 'upload') {
             $tpl->repvar('SECTION_ACTION', lang('LANG_NEW_FEMALE'));
         }
+        
+        $this->labels = array(
+            'singular' => 'LANG_IMAGE',
+            'plural' => 'LANG_IMAGES'
+        );
 
         return $result;
     }
@@ -45,7 +50,7 @@ class images extends section implements isection
         }
 
         $mysql->order('images.iid');
-        $paginator = new paginator($options['numberPerPage'], $options['page']);
+        $paginator = new paginator($options['numberPerPage'], $options['page'], $this->labels);
 
         if (!empty($fields)) {
             foreach ($fields as $field) {

@@ -16,7 +16,7 @@ class paginator
 
     private $tpl;
 
-    public function __construct($numberPerPage = 30, $page = 1)
+    public function __construct($numberPerPage = 30, $page = 1, $labels = array())
     {
         global $mysql, $tpl;
 
@@ -31,6 +31,7 @@ class paginator
 
 
         $tpl->setvar('TOTAL_ITEMS', $this->totalitems);
+        $tpl->setvar('ITEMS_LABEL', $this->totalitems == 1 ? lang(@$labels['singular']) : lang(@$labels['plural']));
 
         $this->pageTotal();
 

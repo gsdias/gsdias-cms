@@ -23,6 +23,11 @@ class users extends section implements isection
         if ($site->a(2) === 'create') {
             $tpl->repvar('SECTION_ACTION', lang('LANG_NEW_MALE'));
         }
+        
+        $this->labels = array(
+            'singular' => 'LANG_USER',
+            'plural' => 'LANG_USERS'
+        );
 
         return $result;
     }
@@ -45,7 +50,7 @@ class users extends section implements isection
         }
 
         $mysql->order('users.uid');
-        $paginator = new paginator($options['numberPerPage'], $options['page']);
+        $paginator = new paginator($options['numberPerPage'], $options['page'], $this->labels);
 
         if (!empty($fields)) {
             foreach ($fields as $field) {
