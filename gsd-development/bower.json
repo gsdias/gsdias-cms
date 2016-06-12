@@ -15,7 +15,8 @@
   "dependencies": {
     "medium-editor": "~5.20.0",
     "jquery": "3.0.0",
-    "bootstrap": "v4.0.0-alpha.2",
-    "jquery-validation": "1.15.0"
+    "jquery-validation": "1.14.0",
+    "backbone": "1.3.3",
+    "jquery-ui": "1.11.4"
   }
 }
