@@ -5,7 +5,7 @@
  * @copyright  2014-2015 GSDias
  *
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
- * @since      File available since Release 1.7
+ * @since      File available since Release 1.7.2
  */
 defined('GVALID') or die;
 

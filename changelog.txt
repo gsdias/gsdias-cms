@@ -1,6 +1,20 @@
 version 1.7.2
 
-
+Introduced bower_components
+$site object now has a method to get querystrings as well as uri
+Added system of notifications
+Now if you add or save coming from a pagination, the same is retained
+Removed properties from page_modules
+Now update only runs sql files since last version
+when method of $mysql now appends operator if provided. If not, falls back to 'AND'
+Added class for anchor objects
+Added autofocus for field objects
+Now its not asked the url when creating the page. Its built from backend
+Added body field in pages
+Added total items in object list pages
+Added field type html and start using medium editor
+Minor fix for uri handler
+Added referer method to site
 
 version 1.7.1
 
