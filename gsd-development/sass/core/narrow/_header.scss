@@ -36,9 +36,19 @@
         }
     }
 
+    .name {
+        max-width: 80px;
+        overflow: hidden;
+        display: inline-block;
+        height: 15px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        vertical-align: middle;
+    }
+
     .logo {
         display: inline-block;
-        margin-bottom: 11px;
+        margin: 0 0 11px 15px;
     }
 
     .user-menu {
@@ -49,6 +59,7 @@
         position: relative;
         float: right;
         margin-right: 80px;
+        margin-top: 4px;
         li {
             display: inline-block;
             vertical-align: middle;

@@ -14,6 +14,7 @@
   ],
   "dependencies": {
     "medium-editor": "~5.20.0",
-    "medium-editor-insert-plugin": "2.3.2"
+    "jquery": "3.0.0",
+    "bootstrap": "v4.0.0-alpha.2"
   }
 }

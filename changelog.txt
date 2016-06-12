@@ -1,3 +1,7 @@
+version 1.7.2
+
+
+
 version 1.7.1
 
 Removed FilesMatch from .htaccess
