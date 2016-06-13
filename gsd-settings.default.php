@@ -75,7 +75,3 @@ $permissions = array(
 );
 
 $numberPerPage = array(10 => 10, 20 => 20, 25 => 25, 50 => 50, 100 => 100);
-
-if ($path[0] != 'admin' && is_file(CLIENTPATH.'settings'.PHPEXT)) {
-    include_once CLIENTPATH.'settings'.PHPEXT;
-}
