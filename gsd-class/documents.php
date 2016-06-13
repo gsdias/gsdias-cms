@@ -23,6 +23,11 @@ class documents extends section implements isection
         if ($site->a(2) === 'upload') {
             $tpl->repvar('SECTION_ACTION', lang('LANG_NEW_MALE'));
         }
+        
+        $this->labels = array(
+            'singular' => 'LANG_DOCUMENT',
+            'plural' => 'LANG_DOCUMENTS'
+        );
 
         return $result;
     }
@@ -45,7 +50,7 @@ class documents extends section implements isection
         }
 
         $mysql->order('documents.did');
-        $paginator = new paginator($options['numberPerPage'], $options['page']);
+        $paginator = new paginator($options['numberPerPage'], $options['page'], $this->labels);
 
         if (!empty($fields)) {
             foreach ($fields as $field) {

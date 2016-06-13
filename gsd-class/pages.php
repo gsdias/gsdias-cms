@@ -23,6 +23,11 @@ class pages extends section implements isection
         if ($site->a(2) === 'create') {
             $tpl->repvar('SECTION_ACTION', lang('LANG_NEW_FEMALE'));
         }
+        
+        $this->labels = array(
+            'singular' => 'LANG_PAGE',
+            'plural' => 'LANG_PAGES'
+        );
 
         return $result;
     }
@@ -73,7 +78,7 @@ class pages extends section implements isection
 
         $mysql->order('p.index');
         $page = $site->p('page') ? $site->p('page') : 1;
-        $paginator = new paginator(@$options['numberPerPage'], $page);
+        $paginator = new paginator(@$options['numberPerPage'], $page, $this->labels);
 
         if (!empty($fields)) {
             foreach ($fields as $field) {
@@ -139,19 +144,6 @@ class pages extends section implements isection
                 foreach ($mysql->result() as $field) {
                     $this->item->{$field->name} = $field->value;
                 }
-            }
-
-            $mysql->statement('SELECT * FROM pages_review WHERE pid = ?;', array($id));
-
-            if ($mysql->total) {
-                $review = array();
-                foreach ($mysql->result() as $field) {
-                    $review[] = array(
-                        'KEY' => $field->prid,
-                        'VALUE' => $field->modified,
-                    );
-                }
-                $tpl->setarray('VERSION', $review);
             }
         }
 
@@ -408,6 +400,8 @@ class pages extends section implements isection
                     $hasChanged = 1;
                 }
                 array_push($fieldsvalue, $currentpage->{$fieldname});
+            } else {
+                unset($defaultfields[$index]);
             }
         }
 
@@ -423,6 +417,14 @@ class pages extends section implements isection
                     ->where('pid = ? AND name = ?')
                     ->values(array($site->p($field->getName()), $pid, $field->getName()))
                     ->exec();
+
+                if (!$mysql->total) {
+                    $mysql->reset()
+                        ->insert('pages_extra', 'IGNORE')
+                        ->fields(array('pid', 'name', 'value'))
+                        ->values(array($pid, $field->getName(), $site->p($field->getName())))
+                        ->exec();
+                }
             }
         }
 
@@ -462,17 +464,17 @@ class pages extends section implements isection
             ->exec();
     }
 
-    private function page_review($defaultfields = array(), $fields = array())
+    private function page_review($fields = array(), $values = array())
     {
         global $mysql, $user, $site;
 
-        array_push($fields, $user->id);
-        array_push($fields, $site->a(2));
+        array_push($values, $user->id);
+        array_push($values, $site->a(2));
 
         $mysql->reset()
             ->insert('pages_review')
-            ->fields(array_merge($this->getfieldlist($defaultfields), array('creator', 'pid')))
-            ->values($fields)
+            ->fields(array_merge($this->getfieldlist($fields), array('creator', 'pid')))
+            ->values($values)
             ->exec();
     }
 

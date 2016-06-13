@@ -150,6 +150,19 @@ if ($site->p('save')) {
     }
 }
 
+$mysql->statement('SELECT * FROM pages_review WHERE pid = ?;', array($id));
+
+if ($mysql->total) {
+    $review = array();
+    foreach ($mysql->result() as $field) {
+        $review[] = array(
+            'KEY' => $field->prid,
+            'VALUE' => $field->modified,
+        );
+    }
+    $tpl->setarray('VERSION', $review);
+}
+
 $mysql->reset()
     ->select('pid, title')
     ->from('pages')

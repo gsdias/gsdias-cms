@@ -76,6 +76,14 @@ foreach ($site->options as $name => $info) {
             'label' => $label,
             'selected' => @$value,
         ));
+    } elseif ($name === 'numberPerPage') {
+        $field = new GSD\select(array(
+            'id' => $name,
+            'name' => $name,
+            'list' => $numberPerPage,
+            'label' => $label,
+            'selected' => @$value,
+        ));
     } elseif ($info['type'] === 'checkbox') {
         $extraclass = ' checkbox';
         $field = new GSD\input(array(

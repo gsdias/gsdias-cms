@@ -20,7 +20,7 @@ foreach($user->notifications->list as $notification) {
 
 }
 
-$tpl->setarray('NOTIFICATIONS', $notifications);
+$tpl->setarray('NOTIFICATIONS', array_reverse($notifications));
 
 $user->notifications->mark();
 $user->notifications->save();

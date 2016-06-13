@@ -169,11 +169,9 @@ class apiOther
     {
         global $mysql, $api, $site;
 
-//        $api->checkCredentials();
-//
-////        if (!(IS_ADMIN || IS_EDITOR)) {
-////            return lang('LANG_NOPERMISSION');
-////        }
+        if (!(IS_ADMIN || IS_EDITOR)) {
+            return lang('LANG_NOPERMISSION');
+        }
 
         $page = $options['page'];
         $numberPerPage = $options['numberPerPage'];

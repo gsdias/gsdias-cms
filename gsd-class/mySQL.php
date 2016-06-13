@@ -17,7 +17,7 @@ class mySQL implements idatabase
     protected $conn, $query, $result, $db, $host, $user, $pass, $prepared;
     public $querylist, $total, $errnum, $errmsg, $executed;
 
-    protected $_query, $_select, $_from, $_where, $_join, $_on, $_order, $_values, $_fields, $_insert, $_update, $_delete, $_show;
+    protected $_query, $_select, $_from, $_where, $_join, $_on, $_order, $_values, $_fields, $_insert, $_update, $_delete, $_show, $ignore;
 
     // -- Function Name : __construct
     // -- Params : $db,$host,$user,$pass
@@ -242,6 +242,7 @@ class mySQL implements idatabase
         $this->_insert = '';
         $this->_update = '';
         $this->_delete = '';
+        $this->ignore = '';
         $this->_show = '';
         $this->_fields = array();
         $this->_join = array();
@@ -321,9 +322,10 @@ class mySQL implements idatabase
         return $this;
     }
 
-    public function insert($value)
+    public function insert($value, $ignore = '')
     {
         $this->_insert = $value;
+        $this->ignore = $ignore;
 
         return $this;
     }
@@ -380,7 +382,7 @@ class mySQL implements idatabase
         $string = '';
 
         $string .= $this->_select ? 'SELECT '.$this->_select : '';
-        $string .= $this->_insert ? 'INSERT INTO '.$this->_insert : '';
+        $string .= $this->_insert ? sprintf('INSERT %s INTO %s', $this->ignore, $this->_insert) : '';
         $string .= $this->_update ? 'UPDATE '.$this->_update : '';
         $string .= $this->_delete ? $this->_delete : '';
         $string .= $this->_show ? 'SHOW '.$this->_show : '';

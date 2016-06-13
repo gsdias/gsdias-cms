@@ -10,4 +10,13 @@
     float: right;
     width: 390px;
     height: 32px;
+    
+    select {
+        width: auto;
+    }
+
+    input {
+        width: 200px;
+        padding: 0 5px;
+    }
 }

@@ -39,8 +39,6 @@ $config['tplpath'] = array(
     TPLPATH.'%s/%s'.TPLEXT,
     TPLPATH.'_shared/%s'.TPLEXT,
     TPLPATH.'_modules/%s'.TPLEXT,
-    TPLPATH.'_editable/%s'.TPLEXT,
-    TPLPATH.'_editable/%s/%s'.TPLEXT,
 );
 
 $tables = array(
@@ -75,6 +73,8 @@ $permissions = array(
     'editor' => 'editor',
     'user' => 'user',
 );
+
+$numberPerPage = array(10 => 10, 20 => 20, 25 => 25, 50 => 50, 100 => 100);
 
 if ($path[0] != 'admin' && is_file(CLIENTPATH.'settings'.PHPEXT)) {
     include_once CLIENTPATH.'settings'.PHPEXT;

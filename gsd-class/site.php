@@ -15,7 +15,7 @@ class site
     public $name, $email, $ga, $gtm, $fb, $uri, $page, $main, $startpoint, $pagemodules, $pageextra, $layout, $protocol, $isFrontend, $options;
     protected $path;
 
-    const VERSION = '1.7.2';
+    const VERSION = '1.7.3';
 
     public function __construct()
     {
@@ -120,6 +120,7 @@ class site
             $this->layout = $page->file;
 
             $tpl->setvars(array(
+                'PAGE_ID' => $page->pid,
                 'PAGE_TITLE' => $page->title,
                 'PAGE_DESCRIPTION' => $page->description,
                 'PAGE_KEYWORDS' => $page->keywords,
@@ -139,7 +140,7 @@ class site
             $this->startpoint = '404';
             $tpl->setvar('PAGE_TITLE', $this->name);
         }
-        $tpl->setvar('PAGE_CANONICAL', $this->protocol.$_SERVER['HTTP_HOST'].$this->uri);
+        $tpl->setvar('PAGE_CANONICAL', $this->protocol.$_SERVER['HTTP_HOST'].'/p/'.@$page->pid);
     }
 
     public function fetchModules($pid)
