@@ -12,7 +12,7 @@ msgstr ""
 "Language: fr_FR\n"
 
 msgid "LANG_UPDATE_NEEDED"
-msgstr "Il a été détecté une mise à jour. Vous exécutez la version% s et nouvelle version mise à jour est% s. Exécutez <a href='/admin/update'> mise à jour </a> pour apporter des modifications de base de données si nécessaire"
+msgstr "Il a été détecté une mise à jour. Vous exécutez la version %s et nouvelle version mise à jour est %s. Exécutez <a href='/admin/update'>mise à jour</a> pour apporter des modifications de base de données si nécessaire"
 
 msgid "LANG_UPDATE_FINISHED"
 msgstr "Mise à jour effectuée avec succès"
