@@ -39,8 +39,6 @@ $config['tplpath'] = array(
     TPLPATH.'%s/%s'.TPLEXT,
     TPLPATH.'_shared/%s'.TPLEXT,
     TPLPATH.'_modules/%s'.TPLEXT,
-    TPLPATH.'_editable/%s'.TPLEXT,
-    TPLPATH.'_editable/%s/%s'.TPLEXT,
 );
 
 $tables = array(
