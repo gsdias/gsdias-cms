@@ -21,13 +21,19 @@ msgid "LANG_DEBUG_LABEL"
 msgstr "Modo debug"
 
 msgid "LANG_MAINTENANCE_LABEL"
-msgstr "Manutenção"
+msgstr "Wartung"
 
 msgid "LANG_MAINTENANCE_TEXT"
 msgstr "O site encontra-se em manutenção. Volte mais tarde"
 
 msgid "LANG_ERROR"
 msgstr "Houve um problema. Tente novamente mais tarde"
+
+msgid "LANG_RECOVER_ERROR"
+msgstr "Houve um problema. Não foi possível reverter a acção."
+
+msgid "LANG_RECOVER_DONE"
+msgstr "Acção revertida com sucesso."
 
 msgid "LANG_TEXT"
 msgstr "Texto"
@@ -472,3 +478,10 @@ msgstr "Imagem Facebook"
 
 msgid "LANG_OG_DESCRIPTION"
 msgstr "Descrição Facebook"
+
+msgid "LANG_NOTIFICATIONS"
+msgstr "Benachrichtigungen"
+
+msgid "LANG_BODY"
+msgstr "Body"
+

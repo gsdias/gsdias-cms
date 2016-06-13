@@ -29,6 +29,12 @@ msgstr "O site encontra-se em manutenção. Volte mais tarde"
 msgid "LANG_ERROR"
 msgstr "Houve um problema. Tente novamente mais tarde"
 
+msgid "LANG_RECOVER_ERROR"
+msgstr "Houve um problema. Não foi possível reverter a acção."
+
+msgid "LANG_RECOVER_DONE"
+msgstr "Acção revertida com sucesso."
+
 msgid "LANG_TEXT"
 msgstr "Texto"
 
@@ -472,3 +478,9 @@ msgstr "Imagem Facebook"
 
 msgid "LANG_OG_DESCRIPTION"
 msgstr "Descrição Facebook"
+
+msgid "LANG_NOTIFICATIONS"
+msgstr "Notificaciones"
+
+msgid "LANG_BODY"
+msgstr "Body"
