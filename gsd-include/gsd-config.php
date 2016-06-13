@@ -9,6 +9,9 @@
  */
 defined('GVALID') or die;
 include_once ROOTPATH.'gsd-settings.php';
+if ($path[0] != 'admin' && is_file(CLIENTPATH.'settings'.PHPEXT)) {
+    include_once CLIENTPATH.'settings'.PHPEXT;
+}
 include_once ROOTPATH.'gsd-class/interfaces'.PHPEXT;
 include_once INCLUDEPATH.'gsd-functions'.PHPEXT;
 
