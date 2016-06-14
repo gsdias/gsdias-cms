@@ -85,7 +85,7 @@ class users extends section implements isection
 
     public function getcurrent($id = 0)
     {
-        global $tpl, $mysql, $languages, $permissions;
+        global $tpl, $mysql;
 
         $mysql->reset()
             ->select('users.*, users.created, users.creator AS creator_id, u.name AS creator_name')
@@ -151,15 +151,15 @@ class users extends section implements isection
     
     protected function fields($update = false)
     {
-        global $permissions, $languages;
+        global $GSDConfig;
         
         $fields = array();
         
         $fields[] = new field(array('name' => 'name', 'label' => lang('LANG_NAME'), 'validator' => array('isRequired', 'isString')));
         $fields[] = new field(array('name' => 'email', 'label' => lang('LANG_EMAIL'), 'validator' => array('isRequired', 'isEmail'), 'type' => 'email'));
         $fields[] = new field(array('name' => 'password', 'label' => lang('LANG_PASSWORD'), 'validator' => array('isPassword'), 'noValue' => true, 'type' => 'password'));
-        $fields[] = new field(array('name' => 'level', 'label' => lang('LANG_PERMISSION'), 'validator' => array('isRequired', 'isString'), 'type' => 'select', 'values' => array_merge(array('' => lang('LANG_CHOOSE')), $permissions)));
-        $fields[] = new field(array('name' => 'locale', 'label' => lang('LANG_LANGUAGE'), 'validator' => array('isString'), 'type' => 'select', 'values' => array_merge(array('' => lang('LANG_CHOOSE')), $languages)));
+        $fields[] = new field(array('name' => 'level', 'label' => lang('LANG_PERMISSION'), 'validator' => array('isRequired', 'isString'), 'type' => 'select', 'values' => array_merge(array('' => lang('LANG_CHOOSE')), $GSDConfig->permissions)));
+        $fields[] = new field(array('name' => 'locale', 'label' => lang('LANG_LANGUAGE'), 'validator' => array('isString'), 'type' => 'select', 'values' => array_merge(array('' => lang('LANG_CHOOSE')), $GSDConfig->languages)));
         if (!$update) {
             $fields[] = new field(array('name' => 'creator', 'validator' => array('isNumber'), 'notRender' => true));
         } else {

@@ -19,7 +19,7 @@ if ($site->p('save')) {
             continue;
         }
 
-        if ($info['type'] === 'checkbox') {
+        if ($info->type === 'checkbox') {
             $value = $value ? $value : null;
         }
 
@@ -45,10 +45,11 @@ if ($site->p('save')) {
 $options = array();
 foreach ($site->options as $name => $info) {
     $extraclass = '';
-    $label = $info['label'];
-    $value = $info['value'];
+    $label = $info->label;
+    $value = $info->value;
+    $type = $info->type;
 
-    if ($info['type'] === 'image') {
+    if ($info->type === 'image') {
         $image = new GSD\image(array(
             'iid' => $value,
             'height' => '100',
@@ -72,7 +73,7 @@ foreach ($site->options as $name => $info) {
         $field = new GSD\select(array(
             'id' => $name,
             'name' => $name,
-            'list' => $languages,
+            'list' => $GSDConfig->languages,
             'label' => $label,
             'selected' => @$value,
         ));
@@ -80,11 +81,11 @@ foreach ($site->options as $name => $info) {
         $field = new GSD\select(array(
             'id' => $name,
             'name' => $name,
-            'list' => $numberPerPage,
+            'list' => $GSDConfig->numberPerPage,
             'label' => $label,
             'selected' => @$value,
         ));
-    } elseif ($info['type'] === 'checkbox') {
+    } elseif ($type === 'checkbox') {
         $extraclass = ' checkbox';
         $field = new GSD\input(array(
             'id' => $name,
