@@ -63,17 +63,20 @@ if (function_exists('bindtextdomain')) {
 $tpl->setpaths($config['tplpath']);
 
 $tpl->setVar('SCRIPT', sprintf('GSD.locale = "%s";GSD.ga = "%s";GSD.fb = "%s";GSD.gtm = "%s";GSD.App = { isCMS: %s };', $language, $site->options['ga']->value, $site->options['fb']->value, $site->options['gtm']->value, !$site->isFrontend ? 1 : 0));
-$tpl->setVar('GTM', $site->options['gtm']->value);
 $tpl->setcondition('GTM', !!$site->options['gtm']->value);
 $tpl->setcondition('FB', !!$site->options['fb']->value);
 $tpl->setcondition('GA', !!$site->options['ga']->value && !$site->options['gtm']->value);
-$tpl->setVar('CDN', RESOURCESURL);
-$tpl->setVar('RESOURCESURL', RESOURCESURL);
-$tpl->setVar('CLIENT_RESOURCES', @$config['client_resources']);
-$tpl->setVar('CLIENT_PATH', @$config['client_path']);
-$tpl->setVar('ASSETPATH', ASSETPATHURL);
-$tpl->setVar('REDIRECT', $site->p('redirect') ? sprintf('?redirect=%s', $site->p('redirect')) : '');
-$tpl->setVar('SITE_URL', $site->protocol.@$GSDConfig->url);
+
+$tpl->setvars(array(
+    'GTM' => $site->options['gtm']->value,
+    'CDN' => RESOURCESURL,
+    'RESOURCESURL' => RESOURCESURL,
+    'CLIENT_RESOURCES' => @$config['client_resources'],
+    'CLIENT_PATH' => @$config['client_path'],
+    'ASSETPATH' => ASSETPATHURL,
+    'REDIRECT' => $site->p('redirect') ? sprintf('?redirect=%s', $site->p('redirect')) : '',
+    'SITE_URL' => $site->protocol.@$GSDConfig->url
+));
 
 displaymessages('ERRORS', $site->p('ERRORS', 1));
 displaymessages('MESSAGES', $site->p('MESSAGES', 1));
