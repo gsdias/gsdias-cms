@@ -72,7 +72,7 @@ $tpl->setVar('CLIENT_RESOURCES', @$config['client_resources']);
 $tpl->setVar('CLIENT_PATH', @$config['client_path']);
 $tpl->setVar('ASSETPATH', ASSETPATHURL);
 $tpl->setVar('REDIRECT', $site->p('redirect') ? sprintf('?redirect=%s', $site->p('redirect')) : '');
-$tpl->setVar('SITE_URL', $site->protocol.@$config['url']);
+$tpl->setVar('SITE_URL', $site->protocol.@$GSDConfig->url);
 
 displaymessages('ERRORS', $site->p('ERRORS', 1));
 displaymessages('MESSAGES', $site->p('MESSAGES', 1));
