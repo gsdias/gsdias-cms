@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/gsdias/gsdias-cms.svg?branch=develop)](https://travis-ci.org/gsdias/gsdias-cms)
+
 # README #
 
 Check wiki to help you work with CMS and extend a few features.
