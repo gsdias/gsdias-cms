@@ -22,7 +22,7 @@
     "description": "GSD CMS",
     "main": "Gruntfile.js",
     "scripts": {
-        "test": "grunt build"
+        "test": "grunt jshint jscs"
     },
     "prefix": "gsd-",
     "gsdresources": "../gsd-resources/",
