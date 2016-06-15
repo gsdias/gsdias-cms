@@ -30,22 +30,22 @@ if ($site->p('save')) {
         ->show('DATABASES')
         ->exec();
 
-    $database[@$_mysql['db']] = 1;
+    $database[@$GSDConfig->mysql['db']] = 1;
 
     if ($mysql->total) {
         foreach ($mysql->result() as $db) {
-            if ($db->Database == $_mysql['db']) {
-                $database[$_mysql['db']] = 0;
+            if ($db->Database == $GSDConfig->mysql['db']) {
+                $database[$GSDConfig->mysql['db']] = 0;
             }
         }
     } else {
-        $mysql->statement(sprintf('CREATE DATABASE IF NOT EXISTS %s;', $_mysql['db']));
-        $mysql->usedb($_mysql['db']);
+        $mysql->statement(sprintf('CREATE DATABASE IF NOT EXISTS %s;', $GSDConfig->mysql['db']));
+        $mysql->usedb($GSDConfig->mysql['db']);
     }
 
-    if ($database[$_mysql['db']]) {
-        $mysql->statement(sprintf('CREATE DATABASE IF NOT EXISTS %s', $_mysql['db']));
-        $mysql->usedb($_mysql['db']);
+    if ($database[$GSDConfig->mysql['db']]) {
+        $mysql->statement(sprintf('CREATE DATABASE IF NOT EXISTS %s', $GSDConfig->mysql['db']));
+        $mysql->usedb($GSDConfig->mysql['db']);
     }
 
     $mysql->show('TABLES')
@@ -54,11 +54,11 @@ if ($site->p('save')) {
     if ($mysql->total) {
         $found = serialize($mysql->result());
         $table_exists = array();
-        foreach ($tables as $table => $value) {
+        foreach ($GSDConfig->tables as $table => $value) {
             if (isset($tables[$table])) {
                 if (strpos($found, sprintf('"%s"', $table)) !== false) {
                     $status = '<span style="color: green;">Exists</span><br>';
-                    $tables[$table] = 0;
+                    $GSDConfig->tables[$table] = 0;
                 } else {
                     $status = '<span style="color: red;">Don\'t exist</span><br>';
                 }
@@ -72,10 +72,10 @@ if ($site->p('save')) {
         $tpl->setarray('TABLE_EXISTS', $table_exists);
     }
 
-    if (in_array(1, $tables)) {
+    if (in_array(1, $GSDConfig->tables)) {
         $tpl->setcondition('CREATETABLES');
         $table_exists = array();
-        foreach ($tables as $table => $value) {
+        foreach ($GSDConfig->tables as $table => $value) {
             $table_exists[] = array(
                 'NAME' => $table,
                 'STATUS' => createtable($table),

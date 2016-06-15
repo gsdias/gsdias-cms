@@ -29,6 +29,7 @@ class mySQL implements idatabase
         $this->user = $user;
         $this->pass = $pass;
         $this->querylist = array();
+        $this->connect();
     }
 
     // -- Function Name : connect

@@ -62,13 +62,13 @@ if (function_exists('bindtextdomain')) {
 
 $tpl->setpaths($config['tplpath']);
 
-$tpl->setVar('SCRIPT', sprintf('GSD.locale = "%s";GSD.ga = "%s";GSD.fb = "%s";GSD.gtm = "%s";GSD.App = { isCMS: %s };', $language, $site->options['ga']->value, $site->options['fb']->value, $site->options['gtm']->value, !$site->isFrontend ? 1 : 0));
-$tpl->setcondition('GTM', !!$site->options['gtm']->value);
-$tpl->setcondition('FB', !!$site->options['fb']->value);
-$tpl->setcondition('GA', !!$site->options['ga']->value && !$site->options['gtm']->value);
+$tpl->setVar('SCRIPT', sprintf('GSD.locale = "%s";GSD.ga = "%s";GSD.fb = "%s";GSD.gtm = "%s";GSD.App = { isCMS: %s };', $language, @$site->options['ga']->value, @$site->options['fb']->value, @$site->options['gtm']->value, !$site->isFrontend ? 1 : 0));
+$tpl->setcondition('GTM', !!@$site->options['gtm']->value);
+$tpl->setcondition('FB', !!@$site->options['fb']->value);
+$tpl->setcondition('GA', !!@$site->options['ga']->value && !@$site->options['gtm']->value);
 
 $tpl->setvars(array(
-    'GTM' => $site->options['gtm']->value,
+    'GTM' => @$site->options['gtm']->value,
     'CDN' => RESOURCESURL,
     'RESOURCESURL' => RESOURCESURL,
     'CLIENT_RESOURCES' => @$config['client_resources'],
