@@ -8,7 +8,8 @@
  * @since      File available since Release 1.0
  */
 defined('GVALID') or die;
-include_once ROOTPATH.'gsd-settings.php';
+include_once ROOTPATH.'gsd-include/gsd-defines.php';
+include_once ROOTPATH.'gsd-settings'.PHPEXT;
 if ($path[0] != 'admin' && is_file(CLIENTPATH.'settings'.PHPEXT)) {
     include_once CLIENTPATH.'settings'.PHPEXT;
 }

@@ -61,20 +61,6 @@ $uri = preg_replace($pattern, '', $_SERVER['REQUEST_URI']);
 $path = explode('/', $uri);
 array_shift($path);
 
-define('TPLEXT', '.html');
-define('PHPEXT', '.php');
-define('ADMINPATH', ROOTPATH.'gsd-admin/');
-define('TPLPATH', ROOTPATH.'gsd-tpl/');
-define('CLASSPATH', ROOTPATH.'gsd-class/');
-define('INCLUDEPATH', ROOTPATH.'gsd-include/');
-define('ASSETPATH', ROOTPATH.'gsd-frontend/assets/');
-define('CLIENTPATH', ROOTPATH.'gsd-frontend/');
-define('RESOURCESURL', '/gsd-resources');
-define('ASSETPATHURL', '/gsd-frontend/assets/');
-define('CLIENTINCLUDEPATH', CLIENTPATH.'include/');
-define('CLIENTTPLPATH', CLIENTPATH.'tpl/');
-define('CLIENTCLASSPATH', CLIENTPATH.'class/');
-
 error_reporting(E_ALL);
 
 $config['tplpath'] = array(
