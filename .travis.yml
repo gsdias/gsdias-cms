@@ -1,4 +1,18 @@
-before_script:
-  - sudo npm install -g grunt
+language: node_js
+node_js:
+  - 0.12
 
-script: grunt build
+sudo: false
+
+before_install:
+  - cd gsd-development
+  - gem update --system
+  - gem install compass
+
+install:
+  - npm install grunt-cli -g
+  - npm install
+
+cache:
+  directories:
+    - node_modules
