@@ -460,9 +460,9 @@ function toAscii($str)
 
 function getLanguage()
 {
-    global $site, $languages, $user;
+    global $site, $GSDConfig, $user;
 
-    $languageList = array_keys($languages);
+    $languageList = array_keys($GSDConfig->languages);
 
     $list = array($site->p('locale'));
 

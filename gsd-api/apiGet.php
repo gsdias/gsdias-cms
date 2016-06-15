@@ -78,7 +78,7 @@ class apiGet
         $output = array('error' => 0, 'message' => lang('LANG_NO_IMAGES'));
         $requiredFields = array('page', 'type');
         $returnFields = array();
-        $numberPerPage = $site->options['numberPerPage']['value'];
+        $numberPerPage = $site->options['numberPerPage']->value;
 
         if ($doc) {
             return $api->extended->outputDoc('pages', array('pages' => 'Page number', 'type' => 'Type list'), $returnFields);

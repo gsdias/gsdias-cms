@@ -8,7 +8,8 @@
  * @since      File available since Release 1.0
  */
 defined('GVALID') or die;
-include_once ROOTPATH.'gsd-settings.php';
+include_once ROOTPATH.'gsd-include/gsd-defines.php';
+include_once ROOTPATH.'gsd-settings'.PHPEXT;
 if ($path[0] != 'admin' && is_file(CLIENTPATH.'settings'.PHPEXT)) {
     include_once CLIENTPATH.'settings'.PHPEXT;
 }
@@ -22,9 +23,11 @@ spl_autoload_register('GSDClassLoading');
 
 @session_start();
 
+$GSDConfig = new GSDConfig;
+
 $tpl = new GSD\tpl();
 
-$mysql = GSD\mysqlFactory::create($_mysql['db'], $_mysql['host'], $_mysql['user'], $_mysql['pass']);
+$mysql = GSD\mysqlFactory::create($GSDConfig->mysql['db'], $GSDConfig->mysql['host'], $GSDConfig->mysql['user'], $GSDConfig->mysql['pass']);
 
 $site = new GSD\site();
 
@@ -59,18 +62,21 @@ if (function_exists('bindtextdomain')) {
 
 $tpl->setpaths($config['tplpath']);
 
-$tpl->setVar('SCRIPT', sprintf('GSD.locale = "%s";GSD.ga = "%s";GSD.fb = "%s";GSD.gtm = "%s";GSD.App = { isCMS: %s };', $language, $site->ga, $site->fb, $site->gtm, !$site->isFrontend ? 1 : 0));
-$tpl->setVar('GTM', $site->gtm);
-$tpl->setcondition('GTM', !!$site->gtm);
-$tpl->setcondition('FB', !!$site->fb);
-$tpl->setcondition('GA', !!$site->ga && !$site->gtm);
-$tpl->setVar('CDN', RESOURCESURL);
-$tpl->setVar('RESOURCESURL', RESOURCESURL);
-$tpl->setVar('CLIENT_RESOURCES', @$config['client_resources']);
-$tpl->setVar('CLIENT_PATH', @$config['client_path']);
-$tpl->setVar('ASSETPATH', ASSETPATHURL);
-$tpl->setVar('REDIRECT', $site->p('redirect') ? sprintf('?redirect=%s', $site->p('redirect')) : '');
-$tpl->setVar('SITE_URL', $site->protocol.@$config['url']);
+$tpl->setVar('SCRIPT', sprintf('GSD.locale = "%s";GSD.ga = "%s";GSD.fb = "%s";GSD.gtm = "%s";GSD.App = { isCMS: %s };', $language, @$site->options['ga']->value, @$site->options['fb']->value, @$site->options['gtm']->value, !$site->isFrontend ? 1 : 0));
+$tpl->setcondition('GTM', !!@$site->options['gtm']->value);
+$tpl->setcondition('FB', !!@$site->options['fb']->value);
+$tpl->setcondition('GA', !!@$site->options['ga']->value && !@$site->options['gtm']->value);
+
+$tpl->setvars(array(
+    'GTM' => @$site->options['gtm']->value,
+    'CDN' => RESOURCESURL,
+    'RESOURCESURL' => RESOURCESURL,
+    'CLIENT_RESOURCES' => @$config['client_resources'],
+    'CLIENT_PATH' => @$config['client_path'],
+    'ASSETPATH' => ASSETPATHURL,
+    'REDIRECT' => $site->p('redirect') ? sprintf('?redirect=%s', $site->p('redirect')) : '',
+    'SITE_URL' => $site->protocol.@$GSDConfig->url
+));
 
 displaymessages('ERRORS', $site->p('ERRORS', 1));
 displaymessages('MESSAGES', $site->p('MESSAGES', 1));

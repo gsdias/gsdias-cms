@@ -29,6 +29,7 @@ class mySQL implements idatabase
         $this->user = $user;
         $this->pass = $pass;
         $this->querylist = array();
+        $this->connect();
     }
 
     // -- Function Name : connect
@@ -159,7 +160,7 @@ class mySQL implements idatabase
         $this->errnum = $erro[1];
         $this->errmsg = $erro[2];
         
-        if (!!@$site->options['debug']['value'] && $this->errnum) {
+        if (!!@$site->options['debug']->value && $this->errnum) {
             $tpl->setarray('ERRORS', array('MSG' => sprintf("(<strong style='font-weight: 700'>%s</strong>) %s", $erro[1], $erro[2])));
             $tpl->setcondition('ERRORS');
         }

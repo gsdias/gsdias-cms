@@ -15,7 +15,7 @@ $startupdate = 0;
 
 foreach ($files as $file) {
     if ($file != '.' && $file != '..') {
-        if (strpos($file, @$site->options['version']['value']) !== false) {
+        if (strpos($file, @$site->options['version']->value) !== false) {
             $startupdate = 1;
         }
         if (!$startupdate) {

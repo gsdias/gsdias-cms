@@ -85,11 +85,11 @@ class api
 
     public function checkCredentials($uid = 0)
     {
-        global $permissions;
+        global $GSDConfig;
 
         $this->user = @$_SESSION['user'] ? $_SESSION['user'] : (class_exists('\\GSD\\Extended\\extendeduser') ? new GSD\Extended\extendeduser($uid) : new GSD\user($uid));
 
-        foreach($permissions as $permission) {
+        foreach($GSDConfig->permissions as $permission) {
             define('IS_'.strtoupper($permission), $permission == $this->user->level);
         }
 

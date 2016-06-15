@@ -12,7 +12,7 @@ defined('GVALID') or die;
 
 class site
 {
-    public $name, $email, $ga, $gtm, $fb, $uri, $page, $main, $startpoint, $pagemodules, $pageextra, $layout, $protocol, $isFrontend, $options;
+    public $name, $email, $uri, $page, $main, $startpoint, $pagemodules, $pageextra, $layout, $protocol, $isFrontend, $options;
     protected $path;
 
     const VERSION = '1.7.3';
@@ -43,11 +43,11 @@ class site
             } else {
                 $tpl->setvar('SITE_'.strtoupper($name), $option->value);
             }
-            $this->options[$name] = array('type' => $option->type, 'value' => $option->value, 'label' => $option->label);
+            $this->options[$name] = $option;
         }
 
-        define('DEBUG', @$this->options['debug']['value']);
-        $tpl->setcondition('DEBUG', !!@$this->options['debug']['value']);
+        define('DEBUG', !!@$this->options['debug']->value);
+        $tpl->setcondition('DEBUG', DEBUG);
 
         $pattern = '/(\?)(.*)/';
         $this->uri = rtrim(preg_replace($pattern, '', $_SERVER['REQUEST_URI']), '/');
@@ -62,7 +62,7 @@ class site
             $tpl->setvar('HTML_CLASS', 'frontend');
             $this->page();
 
-            if (@$this->options['maintenance']['value']) {
+            if (@$this->options['maintenance']->value) {
                 $this->startpoint = 'maintenance';
             }
         }

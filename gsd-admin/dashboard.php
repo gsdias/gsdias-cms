@@ -11,9 +11,9 @@ defined('GVALID') or die;
 $tpl->setpaths(array(TPLPATH.'dashboard/%s'.TPLEXT));
 
 if (IS_ADMIN) {
-    $needupdate = @$site->options['version']['value'] !== $site::VERSION;
+    $needupdate = @$site->options['version']->value !== $site::VERSION;
     if ($needupdate) {
-        $tpl->setarray('WARNINGS', array('MSG' => sprintf(lang('LANG_UPDATE_NEEDED'), @$site->options['version']['value'], $site::VERSION)));
+        $tpl->setarray('WARNINGS', array('MSG' => sprintf(lang('LANG_UPDATE_NEEDED'), @$site->options['version']->value, $site::VERSION)));
         $tpl->setcondition('WARNINGS', $needupdate);
     }
     $mysql->reset()

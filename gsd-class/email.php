@@ -25,14 +25,14 @@ class email
 
     public function __construct()
     {
-        global $GLOBALS, $_email;
+        global $GLOBALS, $GSDConfig;
 
         require_once CLASSPATH.'swift/swift_required'.PHPEXT;
 
         // Create the Transport
-        $this->swift = \Swift_SmtpTransport::newInstance($_email['host'], $_email['port'])
-            ->setUsername($_email['user'])
-            ->setPassword($_email['pass']);
+        $this->swift = \Swift_SmtpTransport::newInstance($GSDConfig->email['host'], $GSDConfig->email['port'])
+            ->setUsername($GSDConfig->email['user'])
+            ->setPassword($GSDConfig->email['pass']);
 
         // Create the Mailer using your created Transport
         $this->swift = \Swift_Mailer::newInstance($this->swift);
