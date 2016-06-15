@@ -1,4 +1,4 @@
 before_script:
   - sudo npm install -g grunt
 
-script: grunt build
+script: cd gsd-development && npm install && grunt build
