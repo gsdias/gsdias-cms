@@ -55,7 +55,7 @@ if ($site->p('save')) {
         $found = serialize($mysql->result());
         $table_exists = array();
         foreach ($GSDConfig->tables as $table => $value) {
-            if (isset($tables[$table])) {
+            if (isset($GSDConfig->tables[$table])) {
                 if (strpos($found, sprintf('"%s"', $table)) !== false) {
                     $status = '<span style="color: green;">Exists</span><br>';
                     $GSDConfig->tables[$table] = 0;
