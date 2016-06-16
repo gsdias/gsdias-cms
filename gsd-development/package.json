@@ -1,6 +1,6 @@
 {
     "name": "gsd-cms",
-    "devDependencies": {
+    "dependencies": {
         "grunt-contrib-compass": "1.0.1",
         "grunt-contrib-uglify": "0.8.0",
         "grunt-contrib-jshint": "0.11.0",
@@ -19,14 +19,12 @@
     "description": "GSD CMS",
     "main": "Gruntfile.js",
     "scripts": {
-        "test": "grunt jshint jscs"
+        "test": "grunt jshint jscs compass"
     },
     "prefix": "gsd-",
     "gsdresources": "../gsd-resources/",
     "gsdfrontend": "../gsd-frontend/",
     "repository": "",
     "author": "",
-    "license": "BSD",
-    "dependencies": {
-    }
+    "license": "BSD"
 }

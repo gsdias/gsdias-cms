@@ -10,6 +10,7 @@ before_install:
 install:
   - npm install grunt-cli -g
   - npm install
+  - sudo gem install sass-globbing
 
 cache:
   directories:
