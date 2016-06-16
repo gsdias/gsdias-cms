@@ -2,13 +2,14 @@ language: node_js
 node_js:
   - 0.12
 
+sudo: false
+
 before_install:
   - cd gsd-development
 
 install:
   - npm install grunt-cli -g
   - npm install
-  - sudo gem install sass-globbing
 
 cache:
   directories:
