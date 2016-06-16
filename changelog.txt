@@ -1,3 +1,18 @@
+version 1.7.3
+
+Added .gitattributes
+Added numberPerPage from options
+Fixed issue with page revision
+Created GSDConfig object
+Added ignore on insert database statement
+Removed extra fields from revision statement
+Changed canonical url. Now returns '/p/id' instead of beautify
+Removed unused grunt tasks
+Integrated travis
+Js libraries now comes from bower
+Removed unused js libraries
+Moved required define to a new file
+
 version 1.7.2
 
 Introduced bower_components
