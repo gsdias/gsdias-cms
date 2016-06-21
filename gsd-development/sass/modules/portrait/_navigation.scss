@@ -7,9 +7,10 @@
  */
 
 .nav {
-    top: 55px;
-    left: 0;
+    top: auto;
     right: auto;
+    float: left;
+    position: relative;
     width: 140px;
     box-shadow: inset 0px 5px 10px -5px rgba(0,0,0,0.5);
 
@@ -46,8 +47,8 @@
         position: relative;
 
         ul {
-            max-height: 40px;
-            padding: 10px;
+            max-height: 100px;
+            padding: 10px 10px 0;
         }
 
         .icon {
@@ -61,7 +62,6 @@
         margin-left: 15px;
         text-align: left;
         overflow: hidden;
-        white-space: nowrap;
         border-left: $gsd-color solid 1px;
         @include prefixs('transition', 'all .3s ease');
 

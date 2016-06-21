@@ -296,7 +296,7 @@ class tpl
             $start = sizeof($param) > 2 ? $param[1] : 1;
             $end = sizeof($param) > 1 ? $param[sizeof($param) - 1] : sizeof($info);
 
-            $end = $end === 'END' ? sizeof($info) : $end;
+            $end = $end === 'END' ? sizeof($info) : ($end < 0 ? sizeof($info) - 1 : $end);
 
             if ($start === 'END') {
                 $start = sizeof($info) - $end + 1;

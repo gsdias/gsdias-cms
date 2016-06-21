@@ -164,7 +164,7 @@ abstract class section implements isection
                         'selected' => !!@$item->{$name},
                         'type' => 'checkbox'
                     ));
-                    $extraclass = 'checkbox';
+                    $extraclass = 'gsd-checkbox';
                     break;
                     case 'textarea':
                     $field = (string) new textarea(array(

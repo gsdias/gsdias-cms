@@ -86,7 +86,7 @@ foreach ($site->options as $name => $info) {
             'selected' => @$value,
         ));
     } elseif ($type === 'checkbox') {
-        $extraclass = ' checkbox';
+        $extraclass = ' gsd-checkbox';
         $field = new GSD\input(array(
             'id' => $name,
             'name' => $name,

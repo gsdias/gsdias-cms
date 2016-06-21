@@ -4,17 +4,17 @@
     <form method="post">
         <input name="current_parent" type="hidden" value="{CURRENT_PAGES_PARENT}">
         <input name="current_url" type="hidden" value="{CURRENT_PAGES_URL}">
-        <div class="colA">Url <input name="url" value="{CURRENT_PAGES_URL}"></div>
-        <div class="colA"><label>Versões</label>
+        <div class="colA col-xs-12 col-md-7">Url <input name="url" value="{CURRENT_PAGES_URL}"></div>
+        <div class="colA col-xs-12 col-md-7"><label>Versões</label>
             <select name="prid" required>
                 <option value="0">Atual</option>
                 <!-- LOOP VERSION --><option value="{VERSION_KEY}">{VERSION_VALUE}</option><!-- ENDLOOP VERSION -->
             </select>
         </div>
         <!-- IF HASCHILDS -->
-        <div class="colA"><label>{LANG_ASSOCIATED_PAGES}</label>
+        <div class="colA col-xs-12 col-md-7"><label>{LANG_ASSOCIATED_PAGES}</label>
             <!-- LOOP PAGES -->
-            <div class="colA checkbox">
+            <div class="colA gsd-checkbox">
                 <input type="checkbox" id="gsd-maintenance_checkbox" name="pages[]" value="{PAGES_PID}">
                 <label for="gsd-maintenance_checkbox">{PAGES_TITLE}</label>
             </div>

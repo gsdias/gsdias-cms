@@ -6,10 +6,17 @@
  * @since      File available since Release 1.0
  */
 
+& {
+    position: relative;
+    height: 100%;
+}
+
 body {
     font: 400 14px $font-arial;
     color: $text-color;
     background: #efefef;
+    position: relative;
+    height: 100%;
 }
 
 section {
@@ -22,7 +29,6 @@ main {
     display: block;
     position: relative;
     padding: 20px;
-    overflow: hidden;
 }
 
 h1 {

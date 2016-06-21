@@ -16,19 +16,12 @@
 
     td, th {
         padding: 10px;
+        vertical-align: middle;
     }
 
     tbody {
-        tr:nth-child(odd) {
-            background: #ededed;
-        }
-
-        tr:nth-child(even) {
-            background: #dddddd;
-        }
-
         tr:hover {
-            background: #bbbbbb;
+            background: #ededed;
         }
     }
 

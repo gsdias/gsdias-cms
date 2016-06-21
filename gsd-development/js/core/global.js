@@ -34,7 +34,7 @@
                 $('[medium-editor-textarea-id="' + $(event.srcElement).attr('id') + '"]').val($(editable).html());
             });
 
-            $('.messages .progress').on('webkitAnimationEnd oAnimationEnd MSAnimationEnd animationend', function () {
+            $('.messages .gsd-progress').on('webkitAnimationEnd oAnimationEnd MSAnimationEnd animationend', function () {
                 $(this).closest('.messages').addClass('fades');
             });
             $('.messages').on('click', '.fa-close', function () {

@@ -23,7 +23,6 @@
 }
 
 .colA {
-    width: 100%;
     margin-bottom: 30px;
     position: relative;
 
@@ -33,25 +32,15 @@
     }
 }
 
-.colB {
-    float: left;
-    width: 45%;
-    margin-bottom: 30px;
-    position: relative;
-    &:nth-child(even) {
-        margin-left: 2.5%;
-    }
-}
-
 main {
-    width: 96%;
+    width: 100%;
     padding: 2%;
+    float: left;
 }
 
 .main {
     background: #fff;
-    min-height: 100%;
-    overflow: hidden;
+    min-height: calc(100% - 80px);
 
     &:after {
         content: '';

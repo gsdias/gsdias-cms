@@ -20,7 +20,6 @@
     border: solid 1px #92ca7a;
     border-radius: 3px;
     box-shadow: inset 0 0 5px 0 #fff;
-    clear: both;
     color: #206934;
     margin-bottom: 30px;
     padding: 10px 25px;
@@ -35,7 +34,7 @@
         margin-bottom: 0;
     }
 
-    .progress {
+    .gsd-progress {
         width: 100%;
         border-bottom: solid 2px #206934;
         position: absolute;

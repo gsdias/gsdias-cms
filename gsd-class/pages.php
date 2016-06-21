@@ -325,7 +325,7 @@ class pages extends section implements isection
                               'o', 'o', 'o', 'o',
                               'u', 'u', 'u');
 
-        $url = preg_replace($patterns, $replacements, trim($title));
+        $url = preg_replace($patterns, $replacements, mb_strtolower(trim($title), 'UTF-8'));
         $url = preg_replace('#[^A-Za-z0-9\- ]+#', '', $url);
         $url = preg_replace('/\ /', '-', $url);
 
