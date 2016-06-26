@@ -409,8 +409,17 @@ class pages extends section implements isection
 
         $fields = $this->fields(true);
 
+        $list = array();
+
         foreach ($fields as $field) {
             if ($field->getExtra()) {
+                $fieldinfo = $this->filterField($field);
+
+                if (!$fieldinfo['result']) {
+                    $list[] = $fieldinfo['message'];
+                    continue;
+                }
+
                 $mysql->reset()
                     ->update('pages_extra')
                     ->fields(array('value'))
@@ -426,6 +435,11 @@ class pages extends section implements isection
                         ->exec();
                 }
             }
+        }
+
+        if (!empty($list)) {
+            $result['errmsg'] = $list;
+            $this->result['errmsg'] = $list;
         }
 
         if ($currentpage->parent !== $site->p('parent')) {

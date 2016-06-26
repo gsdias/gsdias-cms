@@ -88,7 +88,7 @@ class site
         $mysql->reset()
             ->select('destination')
             ->from('redirect')
-            ->where('`from` = ?')
+            ->where('BINARY `from` = ?')
             ->values($this->uri)
             ->exec();
 
@@ -103,10 +103,14 @@ class site
             ->on('layouts.lid = pages.lid');
         
         if (@$this->path[0] === 'p' && is_numeric(@$this->path[1])) {
-            $mysql->where('published IS NOT NULL AND pages.deleted IS NULL AND pid = ?')
+            $mysql->where('published IS NOT NULL')
+                ->where('pages.deleted IS NULL')
+                ->where('pid = ?')
                     ->values($this->path[1]);
         } else {
-            $mysql->where('published IS NOT NULL AND pages.deleted IS NULL AND BINARY beautify = ?')
+            $mysql->where('published IS NOT NULL')
+                ->where('pages.deleted IS NULL')
+                ->where('BINARY beautify = ?')
                 ->values($this->uri);
         }
         

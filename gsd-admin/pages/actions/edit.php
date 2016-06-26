@@ -11,7 +11,7 @@ defined('GVALID') or die;
 if ($site->p('save')) {
     $result = $csection->edit();
 
-    if ($result['total']) {
+    if (empty($result['errmsg'])) {
         $modules = array();
 
         foreach ($site->p() as $module => $value) {
