@@ -47,11 +47,6 @@ if (IS_LOGGED) {
         redirect('/');
     }
 
-    foreach($GSDConfig->permissions as $permission) {
-        $tpl->setcondition('IS_'.strtoupper($permission), $permission == $user->level);
-        define('IS_'.strtoupper($permission), $permission == $user->level);
-    }
-
     if ($site->a(0) == 'admin') {
         if ($user->level == 'user') {
             $user->logout();
@@ -79,4 +74,9 @@ if ($uri == '/admin/reset') {
 if ($site->a(0) == 'login') {
     $site->startpoint = 'index';
     $site->startmain = 'login';
+}
+
+foreach($GSDConfig->permissions as $permission) {
+    $tpl->setcondition('IS_'.strtoupper($permission), $permission == $user->level);
+    define('IS_'.strtoupper($permission), $permission == $user->level);
 }

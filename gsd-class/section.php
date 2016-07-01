@@ -238,7 +238,7 @@ abstract class section implements isection
         foreach ($fields as $index => $field) {
             $result = $this->filterField($field);
 
-            if ($result['field'] === null) {
+            if ($field->getExtra()) {
                 unset($fields[$index]);
                 continue;
             }
@@ -292,7 +292,7 @@ abstract class section implements isection
         foreach ($allfields as $index => $field) {
             $result = $this->filterField($field);
 
-            if ($result['field'] === null) {
+            if ($field->getExtra()) {
                 unset($allfields[$index]);
                 continue;
             }
@@ -351,7 +351,7 @@ abstract class section implements isection
         return substr($class, 0, 8) === 'Extended' ? substr($class, 17) : $class;
     }
 
-    private function filterField($field)
+    public function filterField($field)
     {
         global $site;
 
@@ -359,10 +359,7 @@ abstract class section implements isection
 
         if ($field instanceof field) {
             $value = $site->p($field->getName());
-            if ($field->getExtra()) {
-                $response['field'] = null;
-                return $response;
-            }
+
             foreach ($field->getValidator() as $filter) {
                 if (function_exists($filter)) {
                     $response = $filter($value, $field, $field->getLabel());

@@ -93,6 +93,15 @@ if ($site->p('save')) {
             $currenturl = $site->p('current_url');
 
             $mysql->reset()
+                ->select('beautify')
+                ->from('pages')
+                ->where('pid = ?')
+                ->values($site->p('current_parent'))
+                ->exec();
+
+            $parent_beautify = $mysql->singleresult();
+
+            $mysql->reset()
                 ->delete()
                 ->from('redirect')
                 ->where('`from` = ?')
@@ -112,23 +121,22 @@ if ($site->p('save')) {
                     $mysql->reset()
                         ->insert('redirect')
                         ->fields(array('pid', 'from', 'destination', 'creator'))
-                        ->values(array($site->a(2), $url->destination, $site->p('url'), $user->id))
+                        ->values(array($site->a(2), $url->destination, $parent_beautify.$site->p('url'), $user->id))
                         ->exec();
                 }
             } else {
                 $mysql->reset()
                     ->insert('redirect')
                     ->fields(array('pid', 'from', 'destination', 'creator'))
-                    ->values(array($site->a(2), $currenturl, $site->p('url'), $user->id))
+                    ->values(array($site->a(2), $currenturl, $parent_beautify.$site->p('url'), $user->id))
                     ->exec();
             }
 
             $mysql->statement('UPDATE pages AS p
-            LEFT JOIN pages AS pp ON pp.pid = p.parent
-            SET p.url = ?, p.beautify = CONCAT(IFNULL(pp.beautify, ""), ?)
+            SET p.url = ?, p.beautify = ?
             WHERE p.pid = ?;', array(
                 $site->p('url'),
-                $site->p('url'),
+                $parent_beautify.$site->p('url'),
                 $site->a(2),
             ));
 
