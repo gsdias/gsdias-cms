@@ -1,3 +1,12 @@
+version 1.7.4
+
+Fixed issue detecting field change on editing pages
+Refactor page settings and fix issue with url
+Added bootstrap 4
+Fixed issue with url builder
+Fixed issue to find right redirect url and refactor
+Fixed permission issue
+
 version 1.7.3
 
 Added .gitattributes
