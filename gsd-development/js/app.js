@@ -5,6 +5,10 @@
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
+import Backbone from 'backbone';
+import _ from 'underscore';
+import jQuery from 'jquery';
+import 'jquery-validation';
 
 window.GSD = window.GSD || {};
 

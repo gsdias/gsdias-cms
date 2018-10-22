@@ -6,6 +6,9 @@
  * @since      File available since Release 1.0
  */
 
+import _ from 'underscore';
+import MediumEditor from 'medium-editor';
+
 (function (global, app, $, _, undefined) {
 
     'use strict';

@@ -14,12 +14,8 @@
 /*===============================
         Required compass includes
 =================================*/
-@import "compass/utilities/general/clearfix";
-@import "compass/css3/images";
-@import "compass/css3/font-face";
-@import "compass/reset";
 
-@import "../bower_components/bootstrap/scss/bootstrap.scss";
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
 
 .gsd {
     /*===============================
@@ -40,7 +36,7 @@
     /*===============================
             Reusable, page-independant modules
     =================================*/
-    @import "modules/narrow/**";
+    @import "modules/narrow/index.scss";
 
     /*===============================
             State and Theme
@@ -53,10 +49,10 @@
 
         @import "portrait/_layout.scss";
 
-        @import "modules/portrait/**";
+        @import "modules/portrait/index.scss";
     }
     @media (min-width: 1024px) {
-        @import "modules/landscape/**";
+        @import "modules/landscape/index.scss";
     }
 }
 

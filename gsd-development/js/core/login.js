@@ -5,6 +5,7 @@
  * @link       https://bitbucket.org/gsdias/gsdias-cms/downloads
  * @since      File available since Release 1.0
  */
+import _ from 'underscore';
 
 (function (app, api, $, _, undefined) {
     'use strict';

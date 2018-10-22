@@ -168,7 +168,8 @@ function lang($text, $option = 'NONE')
             $translated = $translated != $text ? $translated : dcgettext('extended', $text, LC_MESSAGES);
         }
     } else {
-        $translated = $text;
+        $initLanguage = parse_ini_file("gsd-locale/en_GB/LC_MESSAGES/messages.ini");
+        $translated = @$initLanguage[$text] ? $initLanguage[$text] : $text;
     }
 
     if ($translated === $text && substr($text, 0, 5) === 'LANG_') {
