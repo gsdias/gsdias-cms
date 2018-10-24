@@ -21,6 +21,7 @@ if ($site->p('save')) {
 
     if ($mysql->total) {
         $tpl->setvar('STEP2_MESSAGES', 'Admin user saved with success. You can <a href="/admin">login</a> now.');
+        include_once 'gsd-admin/update'.PHPEXT;
     }
 } else {
     $site->main = 'STEP1';
@@ -107,6 +108,44 @@ if ($site->p('save')) {
         mkdir(ASSETPATH.'/images', 0755);
         mkdir(ASSETPATH.'/documents', 0755);
     }
+
+    if (!function_exists('_')) {
+    
+        $templatefiles = scandir('gsd-locale');
+
+        foreach ($templatefiles as $file) {
+            if (substr($file, 0, 1) !== '.') {
+                $cmslocalepath = ROOTPATH."/gsd-locale/".$file."/LC_MESSAGES/";
+                $content = file_get_contents($cmslocalepath."/messages.po");
+                $myfile = fopen($cmslocalepath."/messages.ini", "w") or die("Unable to open file!");
+                preg_match_all('#msgid "(.*)"\nmsgstr "(.*)"#m', $content, $matches, PREG_SET_ORDER);
+        
+                fwrite($myfile, "[".$file."]\n");
+        
+                foreach ($matches as $match) {
+                    if ($match[1] !== "" && $match[2] !== "") {
+                        fwrite($myfile, $match[1]." = \"".$match[2]."\"\n");
+                    }
+                }
+                fclose($myfile);
+                $clientlocalepath = CLIENTPATH."/locale/".$file."/LC_MESSAGES/";
+                if (file_exists($clientlocalepath."extended.po")) {
+                    $content = file_get_contents($clientlocalepath."extended.po");
+                    $myfile = fopen($clientlocalepath."extended.ini", "w") or die("Unable to open file!");
+                    preg_match_all('#msgid "(.*)"\nmsgstr "(.*)"#m', $content, $matches, PREG_SET_ORDER);
+        
+                    fwrite($myfile, "[".$file."]\n");
+        
+                    foreach ($matches as $match) {
+                        if ($match[1] !== "" && $match[2] !== "") {
+                            fwrite($myfile, $match[1]." = \"".$match[2]."\"\n");
+                        }
+                    }
+                    fclose($myfile);
+                }
+            }
+        }   
+    } 
 }
 
 function createtable($table)

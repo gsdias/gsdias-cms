@@ -8,9 +8,10 @@ const path = require("path");
 
 module.exports = {
   entry: {
-    cms: "./js/entry"
+    cms: "./gsd-development/js/entry",
+    frontend: "./gsd-frontend/development/js/entry"
   },
-  mode: "development",
+  mode: "production",
   optimization: {
     minimizer: [new OptimizeCSSAssetsPlugin({}), new UglifyJsPlugin({})]
   },
@@ -33,13 +34,13 @@ module.exports = {
     ]
   },
   plugins: [
-    new CleanWebpackPlugin([path.resolve(__dirname, "../gsd-resources/assets")]),
+    new CleanWebpackPlugin([path.resolve(__dirname, "./gsd-resources/assets")]),
     new MiniCssExtractPlugin({
       filename: "assets/[name].css"
     })
   ],
   output: {
     filename: "assets/[name].js",
-    path: path.resolve(__dirname, "../gsd-resources")
+    path: path.resolve(__dirname, "./gsd-resources")
   }
 };

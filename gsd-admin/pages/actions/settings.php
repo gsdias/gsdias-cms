@@ -18,7 +18,7 @@ if ($site->p('save')) {
 
     $condition = $mysql->singleline();
 
-    if ($condition->total > 0 && $condition->pid != $site->a(2)) {
+    if ($mysql->total > 0 && $condition->pid != $site->a(2)) {
         $tpl->setarray('ERRORS', array('MSG' => lang('LANG_PAGE_ALREADY_EXISTS')));
         $tpl->setcondition('ERRORS');
     } else {
@@ -143,14 +143,15 @@ if ($site->p('save')) {
             if (!$mysql->errnum) {
                 $tpl->setarray('MESSAGES', array('MSG' => 'Url for the page changed to X'));
             }
-
-            foreach ($site->p('pages') as $pid) {
-                $mysql->statement('UPDATE pages AS p
-                SET p.beautify = concat(?, p.url)
-                WHERE p.pid = ?;', array(
-                    $site->p('url'),
-                    $pid,
-                ));
+            if ($site->p('pages')) {
+                foreach ($site->p('pages') as $pid) {
+                    $mysql->statement('UPDATE pages AS p
+                    SET p.beautify = concat(?, p.url)
+                    WHERE p.pid = ?;', array(
+                        $site->p('url'),
+                        $pid,
+                    ));
+                }
             }
         }
 

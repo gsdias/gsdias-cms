@@ -12,19 +12,6 @@ define('GVALID', 1);
 
 include_once ROOTPATH.'gsd-include/gsd-config.php';
 
-$content = file_get_contents("gsd-locale/en_GB/LC_MESSAGES/messages.po");
-$myfile = fopen("gsd-locale/en_GB/LC_MESSAGES/messages.ini", "w") or die("Unable to open file!");
-preg_match_all('#msgid "(.*)"\nmsgstr "(.*)"#m', $content, $matches, PREG_SET_ORDER);
-
-fwrite($myfile, "[en_GB]\n");
-
-foreach ($matches as $match) {
-    if ($match[1] !== "" && $match[2] !== "") {
-        fwrite($myfile, $match[1]." = \"".$match[2]."\"\n");
-    }
-}
-fclose($myfile);
-
 if (!IS_INSTALLED) {
     if ($site->uri != '/admin') {
         redirect('/admin');

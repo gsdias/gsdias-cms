@@ -15,7 +15,7 @@
         Required compass includes
 =================================*/
 
-@import "../node_modules/bootstrap/scss/bootstrap.scss";
+@import "../../node_modules/bootstrap/scss/bootstrap.scss";
 
 .gsd {
     /*===============================
@@ -54,11 +54,6 @@
     @media (min-width: 1024px) {
         @import "modules/landscape/index.scss";
     }
-}
-
-@import "../../gsd-frontend/development/sass/_core/_global";
-.frontend {
-    @import "../../gsd-frontend/development/sass/_client.scss";
 }
 
 @import "narrow/debug";

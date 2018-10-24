@@ -168,8 +168,17 @@ function lang($text, $option = 'NONE')
             $translated = $translated != $text ? $translated : dcgettext('extended', $text, LC_MESSAGES);
         }
     } else {
-        $initLanguage = parse_ini_file("gsd-locale/en_GB/LC_MESSAGES/messages.ini");
-        $translated = @$initLanguage[$text] ? $initLanguage[$text] : $text;
+        $language = @$site->options['locale'] ? $site->options['locale']->value : 'en_GB';
+        $initLanguageFrontend = parse_ini_file("gsd-frontend/locale/".$language."/LC_MESSAGES/extended.ini");
+        $initLanguageBackend = parse_ini_file("gsd-locale/".$language."/LC_MESSAGES/messages.ini");
+
+        if (@$site->isFrontend) {
+            $translated = @$initLanguageFrontend[$text] ? $initLanguageFrontend[$text] : $text;
+            $translated = $translated == $text && @$initLanguageBackend[$text] ? $initLanguageBackend[$text] : $translated;
+        } else {  
+            $translated = @$initLanguageBackend[$text] ? $initLanguageBackend[$text] : $text;
+            $translated = $translated == $text && @$initLanguageFrontend[$text] ? $initLanguageFrontend[$text] : $translated;
+        }
     }
 
     if ($translated === $text && substr($text, 0, 5) === 'LANG_') {
