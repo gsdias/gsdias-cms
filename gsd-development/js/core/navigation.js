@@ -2,9 +2,16 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 class Navigation extends React.Component {
+  anchor(anchor) {
+    const { i18n } = window.GSD;
+    return <li key={anchor.URL}>
+      <a href={anchor.URL}>
+        {i18n[anchor.NAME]}
+      </a>
+    </li>;
+  }
   render() {
-    const { active } = this.props;
-    const { i18n, IS_ADMIN, IS_EDITOR, menu } = window.GSD;
+    const { i18n, menu } = window.GSD;
 
     return (
       <>
@@ -18,6 +25,9 @@ class Navigation extends React.Component {
               <i className={className} />
               {i18n[item.NAME]}
             </a>
+            {item.ITEMS && <ul>
+              {item.ITEMS.map(this.anchor)}
+            </ul>}
           </li>;
           }
         })}
