@@ -1,6 +1,11 @@
 <script type="text/javascript">
 commonDomain = document.domain;
-window.GSD = {{}};
+GSD.i18n = {
+        {I18N_DUMP}
+    };
+GSD.menu = {MENU_ITEMS JSON};
+GSD.IS_ADMIN = <!-- IF IS_ADMIN -->true<!-- ENDIF IS_ADMIN --><!-- IF !IS_ADMIN -->false<!-- ENDIF !IS_ADMIN -->;
+GSD.IS_EDITOR = <!-- IF IS_EDITOR -->true<!-- ENDIF IS_EDITOR --><!-- IF !IS_EDITOR -->false<!-- ENDIF !IS_EDITOR -->;
 {SCRIPT}
 <!-- IF GA AND !GTM -->
     var _gaq = _gaq || [];

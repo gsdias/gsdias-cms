@@ -157,8 +157,10 @@ function isCheckbox($value = '', $field = '')
 
 function lang($text, $option = 'NONE')
 {
-    global $site, $tpl;
-
+    global $site, $tpl, $language;
+    
+    $translated = $text;
+    
     if (function_exists('_')) {
         if (@$site->isFrontend) {
             $translated = dcgettext('extended', $text, LC_MESSAGES);
@@ -167,10 +169,11 @@ function lang($text, $option = 'NONE')
             $translated = _($text);
             $translated = $translated != $text ? $translated : dcgettext('extended', $text, LC_MESSAGES);
         }
-    } else {
-        $language = @$site->options['locale'] ? $site->options['locale']->value : 'en_GB';
-        $initLanguageFrontend = parse_ini_file("gsd-frontend/locale/".$language."/LC_MESSAGES/extended.ini");
-        $initLanguageBackend = parse_ini_file("gsd-locale/".$language."/LC_MESSAGES/messages.ini");
+    }
+
+    if ($translated == $text) {
+        $initLanguageFrontend = parse_ini_file(CLIENTPATH."locale/".$language."/LC_MESSAGES/extended.ini");
+        $initLanguageBackend = parse_ini_file(ROOTPATH."gsd-locale/".$language."/LC_MESSAGES/messages.ini");
 
         if (@$site->isFrontend) {
             $translated = @$initLanguageFrontend[$text] ? $initLanguageFrontend[$text] : $text;

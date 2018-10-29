@@ -1,51 +1,11 @@
-<span class="menu">Menu</span>
+<script>
+    window.activeSection = "{SITE_SECTION}";
+</script>
 <ul>
-    <li class="{DASHBOARD_ACTIVE}">
-        <a href="/admin" title="{LANG_DASHBOARD}"><i class="fa fa-dashboard fa-2x"></i>{LANG_DASHBOARD}</a>
-    </li>
-    <!-- IF IS_ADMIN -->
-    <li class="{LAYOUTS_ACTIVE}">
-        <a href="/admin/layouts" title="{LANG_LAYOUTS}"><i class="fa fa-tasks fa-2x"></i>{LANG_LAYOUTS}</a>
-    </li>
-    <!-- ENDIF IS_ADMIN -->
-    <!-- IF IS_ADMIN OR IS_EDITOR -->
-    <li class="{PAGES_ACTIVE}">
-        <a href="/admin/pages" title="{LANG_PAGES}"><i class="fa fa-files-o fa-2x"></i>{LANG_PAGES}</a>
-    </li>
-    <li class="{IMAGES_ACTIVE}">
-        <a href="/admin/images" title="{LANG_IMAGES}"><i class="fa fa-camera-retro fa-2x"></i>{LANG_IMAGES}</a>
-    </li>
-    <li class="{DOCUMENTS_ACTIVE}">
-        <a href="/admin/documents" title="{LANG_DOCUMENTS}"><i class="fa fa-briefcase fa-2x"></i>{LANG_DOCUMENTS}</a>
-    </li>
-    <!-- ENDIF IS_ADMIN OR IS_EDITOR -->
-    <!-- IF IS_ADMIN -->
-    <li class="{USERS_ACTIVE}">
-        <a href="/admin/users" title="{LANG_USERS}"><i class="fa fa-users fa-2x"></i>{LANG_USERS}</a>
-    </li>
-    <!-- ENDIF IS_ADMIN -->
     <!-- IF HASCLIENTASIDE --><li class="{EXTRA_ACTIVE}">
         <i class="fa fa-code fa-2x"></i>{LANG_EXTENDED}<!--Extra-->
         <ul>
             [_CLIENTASIDE]
         </ul>
     </li><!-- ENDIF HASCLIENTASIDE -->
-    <!-- IF IS_ADMIN OR IS_EDITOR -->
-    <li class="{LANGUAGE_ACTIVE}">
-        <a href="/admin/language" title="{LANG_LANGUAGE}"><i class="fa fa-language fa-2x"></i>{LANG_LANGUAGE}</a>
-        <ul>
-            <li>
-                <a href="/admin/language">{LANG_DEFAULT}</a>
-            </li>
-            <li>
-                <a href="/admin/language/extended">{LANG_EXTENDED}</a>
-            </li>
-        </ul>
-    </li>
-    <!-- ENDIF IS_ADMIN OR IS_EDITOR -->
-    <!-- IF IS_ADMIN -->
-    <li class="{SETTINGS_ACTIVE}">
-        <a href="/admin/settings" title="{LANG_SETTINGS}"><i class="fa fa-cogs fa-2x"></i>{LANG_SETTINGS}</a>
-    </li>
-    <!-- ENDIF IS_ADMIN -->
 </ul>

@@ -219,7 +219,7 @@ abstract class section implements isection
         return 0;
     }
 
-    public function add()
+    public function add($id = 0)
     {
         global $mysql, $user;
         
@@ -238,7 +238,7 @@ abstract class section implements isection
         foreach ($fields as $index => $field) {
             $result = $this->filterField($field);
 
-            if ($field->getExtra()) {
+            if ($field->getExtra() || $result['field'] == '') {
                 unset($fields[$index]);
                 continue;
             }
@@ -252,6 +252,10 @@ abstract class section implements isection
             }
             
             $values[] = $val;
+        }
+        if ($id) {
+            $fields[] = substr($section, 0, 1).'id';
+            $values[] = $id;
         }
 
         if (empty($list)) {
@@ -292,7 +296,7 @@ abstract class section implements isection
         foreach ($allfields as $index => $field) {
             $result = $this->filterField($field);
 
-            if ($field->getExtra()) {
+            if ($field->getExtra() || $result['field'] == '') {
                 unset($allfields[$index]);
                 continue;
             }

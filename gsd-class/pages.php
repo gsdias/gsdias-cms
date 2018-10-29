@@ -540,7 +540,7 @@ class pages extends section implements isection
             $fields[] = new field(array('name' => 'created', 'validator' => array('isRequired'), 'notRender' => true));
         }
         if ($update) {
-            $fields[] = new field(array('name' => 'published', 'validator' => array('isCheckbox'), 'label' => lang('LANG_PUBLISHED'), 'type' => 'checkbox'));
+            $fields[] = new field(array('name' => 'published', 'validator' => array('isCheckbox'), 'label' => lang('LANG_PUBLISHED'), 'notRender' => true));
         }
         $fields[] = new field(array('name' => 'body', 'label' => lang('LANG_BODY'), 'type' => 'html'));
         

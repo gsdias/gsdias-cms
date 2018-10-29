@@ -58,8 +58,8 @@ if (IS_ADMIN || IS_EDITOR) {
                 'CREATED' => timeago(dateDif($created[0], date('Y-m-d', time())), $created[1]),
             );
         }
-        $tpl->setarray('PAGES', $pages);
     }
+    $tpl->setarray('PAGES', $pages);
 
     $mysql->reset()
         ->select()
@@ -81,8 +81,8 @@ if (IS_ADMIN || IS_EDITOR) {
                 'CREATED' => timeago(dateDif($created[0], date('Y-m-d', time())), $created[1]),
             );
         }
-        $tpl->setarray('IMAGES', $images);
     }
+    $tpl->setarray('IMAGES', $images);
 
     $mysql->reset()
         ->select()
@@ -104,8 +104,8 @@ if (IS_ADMIN || IS_EDITOR) {
                 'CREATED' => timeago(dateDif($created[0], date('Y-m-d', time())), $created[1]),
             );
         }
-        $tpl->setarray('DOCUMENTS', $documents);
     }
+    $tpl->setarray('DOCUMENTS', $documents);
 }
 
 $file = CLIENTPATH.'include/admin/dashboard'.PHPEXT;

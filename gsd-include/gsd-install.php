@@ -21,6 +21,32 @@ if ($site->p('save')) {
 
     if ($mysql->total) {
         $tpl->setvar('STEP2_MESSAGES', 'Admin user saved with success. You can <a href="/admin">login</a> now.');
+
+        define('IS_ADMIN', 1);
+        $templatefiles = scandir(ASSETPATH.'/images');
+        $csection = \GSD\sectionFactory::create('images');
+        $_REQUEST['creator'] = $user->id;
+        $_REQUEST['created'] = date('Y-m-d H:i:s', time());
+        
+        foreach ($templatefiles as $file) {
+            if (substr($file, 0, 1) !== '.') {
+                $path = ASSETPATH.'/images/'.$file;
+                $file = explode('.', $file);
+                $size = getimagesize($path);
+            
+                $valid = is_array($size);
+            
+                $_REQUEST['width'] = $size[0];
+                $_REQUEST['height'] = $size[1];
+                $_REQUEST['size'] = round(filesize($path) / 1000, 0).'KB';
+            
+                $_REQUEST['name'] = $file[0];
+                $_REQUEST['description'] = '';
+                $_REQUEST['tags'] = '';
+                $_REQUEST['extension'] = $file[1];
+                $result = $csection->add($file[0]);
+            }
+        }
         include_once 'gsd-admin/update'.PHPEXT;
     }
 } else {
@@ -82,11 +108,11 @@ if ($site->p('save')) {
                 'STATUS' => createtable($table),
             );
         }
-        $tpl->setarray('CREATETABLES', $table_exists);
 
         if (is_file(CLIENTPATH.'install'.PHPEXT)) {
             include_once CLIENTPATH.'install'.PHPEXT;
         }
+        $tpl->setarray('CREATETABLES', $table_exists);
     } else {
         $site->main = 'STEP2';
         $site->startpoint = 'index';
@@ -144,7 +170,7 @@ if ($site->p('save')) {
                     fclose($myfile);
                 }
             }
-        }   
+        }
     } 
 }
 

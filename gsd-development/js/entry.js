@@ -10,3 +10,5 @@ import './core/login';
 import './core/media';
 import './core/pages';
 import './core/paginator';
+import './core/dashboard';
+import './core/navigation';

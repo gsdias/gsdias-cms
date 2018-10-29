@@ -26,6 +26,7 @@ if (!IS_INSTALLED) {
     require_once INCLUDEPATH.'gsd-assets'.PHPEXT;
 } else {
     require_once INCLUDEPATH.'gsd-credentials'.PHPEXT;
+    require_once INCLUDEPATH.'gsd-menu'.PHPEXT;
 
     if (!$site->isFrontend) {
         require_once ADMINPATH.'index'.PHPEXT;

@@ -20,20 +20,20 @@ if (!IS_LOGGED) {
     if ($site->a(2) && !$site->a(3) && is_numeric($site->a(2))) {
         redirect($site->uri.'/details');
     }
+    $tpl->i18n();
     $site->main = $site->a(1) ? $site->a(1) : 'dashboard';
     $site->startpoint = 'index';
 
     $clientfields = CLIENTPATH.'tpl/admin/_clientaside'.TPLEXT;
     $tpl->setcondition('HASCLIENTASIDE', is_file($clientfields));
+    $tpl->setcondition('SECTION_'.strtoupper($site->a(1)), true);
 
     if (!$site->a(1)) {
         include_once 'gsd-admin/dashboard'.PHPEXT;
-        $tpl->setvar('DASHBOARD_ACTIVE', 'active');
     } else {
         $afirmative = lang('LANG_YES');
         $negative = lang('LANG_NO');
         
-        $tpl->setvar(strtoupper($site->a(1)).'_ACTIVE', 'active');
         if ($site->a(1) == 'settings') {
             $file = 'gsd-admin/settings'.PHPEXT;
         } elseif ($site->a(1) == 'language') {

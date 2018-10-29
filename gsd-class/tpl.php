@@ -113,6 +113,10 @@ class tpl
     {
         $value = count($value) != count($value, 1) ? $value : array($value);
 
+        if (empty(array_filter($value))) {
+            $value = array();
+        }
+
         if ($merge && !empty($this->config['array'][$id])) {
             $this->config['array'][$id] = array_merge($this->config['array'][$id], $value);
         } else {
@@ -247,17 +251,11 @@ class tpl
                 } else {
                     $item = @$site->pagemodules[@$placeholder[0]];
                     $item = unserialize($item);
-                    if (DEBUG) {
-                        $extra = sprintf('<!-- DEBUG %s %s -->', $type, $key);
-                    }
                     $this->config['file'] = preg_replace(sprintf('#<!-- %s %s -->#s', $type, $key), @$extra.$item['list'][0][0]['value'], $this->config['file'], 1);
                 }
             } else {
                 preg_match_all(sprintf('#<!-- %s %s -->(.*?)<!-- END%s %s -->#s', $type, $key, $type, $key), $this->config['file'], $matches, PREG_SET_ORDER);
                 for ($i = 0; $i < count($matches); $i++) {
-                    if (DEBUG) {
-                        $extra = sprintf('<!-- DEBUG %s %s -->', $type, $key);
-                    }
                     if ($type === 'LOOP') {
                         $this->config['file'] = preg_replace(sprintf('#<!-- %s %s -->.*?<!-- END%s %s -->#s', $type, $key, $type, $key), @$extra.$this->loopBlock($key, $matches[$i][1]), $this->config['file'], 1);
                     } else {
@@ -277,6 +275,15 @@ class tpl
     {
         foreach ($this->config['vars'] as $id => $value) {
             $this->config['file'] = str_replace(sprintf('{%s}', $id), $value, $this->config['file']);
+        }
+        
+        foreach ($this->config['array'] as $id => $value) {
+            preg_match_all(sprintf('#{%s (.*?)}#s', $id), $this->config['file'], $matches, PREG_SET_ORDER);
+            foreach ($matches as $match) {
+                if ($match[1] === 'JSON') {
+                    $this->config['file'] = str_replace(sprintf('{%s JSON}', $id), json_encode($value, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE), $this->config['file']);
+                }
+            }
         }
     }
 
@@ -461,11 +468,34 @@ class tpl
         return $output;
     }
 
+    private function prepareVarsDebug() {
+        $result = array();
+        foreach ($this->config['vars'] as $key => $value) {
+            $result[] = array("MSG" => $key.": ".$value);
+        }
+        return $result;
+    }
+
+    public function i18n() {
+        global $language;
+
+        $i18n = '';
+        $initLanguageFrontend = parse_ini_file(CLIENTPATH."locale/".$language."/LC_MESSAGES/extended.ini");
+        $initLanguageBackend = parse_ini_file(ROOTPATH."gsd-locale/".$language."/LC_MESSAGES/messages.ini");
+        foreach ($initLanguageFrontend as $key => $value) {
+            $i18n .= sprintf('%s: "%s",', $key, $value);
+        }
+        foreach ($initLanguageBackend as $key => $value) {
+            $i18n .= sprintf('%s: "%s",', $key, $value);
+        }
+        
+        $this->setVar('I18N_DUMP', $i18n);
+    }
+
     public function sendError()
     {
-        $this->config['error'] = $this->config['error'];
-        
         if (DEBUG) {
+            $this->config['error'] = array_merge($this->config['error'], $this->prepareVarsDebug());
             $this->setarray('DEBUGLIST', $this->config['error']);
         }
     }

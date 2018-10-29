@@ -15,7 +15,7 @@ class site
     public $name, $email, $uri, $page, $main, $startpoint, $pagemodules, $pageextra, $layout, $protocol, $isFrontend, $options;
     protected $path;
 
-    const VERSION = '1.7.4';
+    const VERSION = '1.7.5';
 
     public function __construct()
     {
@@ -41,7 +41,9 @@ class site
                 $image = new image(array('iid' => $option->value, 'width' => 'auto', 'height' => 'auto'));
                 $tpl->setvar('SITE_'.strtoupper($name), $image);
             } else {
-                $tpl->setvar('SITE_'.strtoupper($name), $option->value);
+                if ($option->value != "") {
+                    $tpl->setvar('SITE_'.strtoupper($name), $option->value);
+                }
             }
             $this->options[$name] = $option;
         }
@@ -65,6 +67,8 @@ class site
             if (@$this->options['maintenance']->value) {
                 $this->startpoint = 'maintenance';
             }
+        } else {
+            $tpl->setvar('SITE_SECTION', @$this->path[1]);
         }
     }
 

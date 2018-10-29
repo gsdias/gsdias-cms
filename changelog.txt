@@ -1,3 +1,11 @@
+version 1.7.5
+
+Removed grunt and added webpack
+Fixed minor issues with UI
+Added fallback when gettext is not available
+Fixed minor issues with url generation
+Added db update on install
+
 version 1.7.4
 
 Fixed issue detecting field change on editing pages

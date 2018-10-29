@@ -8,7 +8,7 @@
  * @since      File available since Release 1.0
  */
 defined('GVALID') or die;
-if ($site->p('save')) {
+if ($site->p('save') || $site->p('published')) {
     $result = $csection->edit();
 
     if (empty($result['errmsg'])) {

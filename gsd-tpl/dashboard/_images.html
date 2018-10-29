@@ -1,7 +1,10 @@
-<section class="list">
-    <h1><i class="fa fa-camera-retro fa-1x"></i> {LANG_IMAGES}</h1>
-    <ul>
-        <!-- LOOP IMAGES --><li><a href="/admin/images/{IMAGES_ID}/edit">{IMAGES_NAME}</a> <em class="ago">({IMAGES_CREATED})</em></li><!-- ENDLOOP IMAGES -->
-        <!-- IF !IMAGES_EXIST --><li>{LANG_NO_IMAGES}</li><!-- ENDIF !IMAGES_EXIST -->
-    </ul>
-</section>
+<script>
+    GSD.images = {
+        title: "{LANG_IMAGES}",
+        items: {IMAGES JSON},
+        noitems: "{LANG_NO_IMAGES}",
+        type: "images",
+        icon: "camera-retro"
+    };
+</script>
+<section class="list" id="images"></section>

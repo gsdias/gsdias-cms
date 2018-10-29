@@ -68,7 +68,6 @@ $tpl->setcondition('FB', !!@$site->options['fb']->value);
 $tpl->setcondition('GA', !!@$site->options['ga']->value && !@$site->options['gtm']->value);
 
 $tpl->setvars(array(
-    'GTM' => @$site->options['gtm']->value,
     'CDN' => RESOURCESURL,
     'RESOURCESURL' => RESOURCESURL,
     'CLIENT_RESOURCES' => @$config['client_resources'],

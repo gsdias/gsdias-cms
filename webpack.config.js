@@ -11,7 +11,7 @@ module.exports = {
     cms: "./gsd-development/js/entry",
     frontend: "./gsd-frontend/development/js/entry"
   },
-  mode: "production",
+  mode: "development",
   optimization: {
     minimizer: [new OptimizeCSSAssetsPlugin({}), new UglifyJsPlugin({})]
   },
@@ -21,10 +21,7 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader",
-          options: {
-            presets: ["env"]
-          }
+          loader: "babel-loader"
         }
       },
       {

@@ -224,6 +224,9 @@ msgstr "Publicada"
 msgid "LANG_UNPUBLISHED"
 msgstr "Por publicar"
 
+msgid "LANG_PUBLISH"
+msgstr "Publicar"
+
 msgid "LANG_PARENT"
 msgstr "Página ascendente"
 

@@ -132,7 +132,7 @@ class users extends section implements isection
             $email->setreplyto($site->email);
             $email->setsubject(lang('LANG_REGISTER_SUBJECT'));
             $email->setvar('sitename', $site->name);
-            $email->setvar('siteurl', $config['url']);
+            $email->setvar('siteurl', $site->name);
             $email->setvar('password', $password);
 
             if (sizeof(@$emailparams['fields'])) {

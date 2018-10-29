@@ -15,10 +15,12 @@ if ($site->p('save')) {
         $file = ROOTPATH.'gsd-locale/'.$language.'/LC_MESSAGES/messages.mo';
     }
     $string = '';
+    $stringini = sprintf('[%s]', $language);
     foreach ($site->p('msgid') as $i => $value) {
         $id = $value;
         $str = $site->p('msgstr')[$i];
         $string .= "\nmsgid \"$id\"\nmsgstr \"$str\"\n";
+        $stringini .= sprintf("\n%s = \"%s\"", $id, $str);
     }
 
     $params = array('src' => $string);
@@ -40,9 +42,13 @@ if ($site->p('save')) {
 
     if ($site->a(2) === 'extended') {
         $file = CLIENTPATH.'locale/'.$language.'/LC_MESSAGES/extended.po';
+        $fileini = CLIENTPATH.'locale/'.$language.'/LC_MESSAGES/extended.ini';
     } else {
         $file = ROOTPATH.'gsd-locale/'.$language.'/LC_MESSAGES/messages.po';
+        $fileini = ROOTPATH.'gsd-locale/'.$language.'/LC_MESSAGES/messages.ini';
     }
+
+    file_put_contents($fileini, $stringini);
 
     $content = file_put_contents($file, $newfile);
 
