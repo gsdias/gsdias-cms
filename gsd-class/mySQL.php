@@ -50,8 +50,12 @@ class mySQL implements idatabase
         } catch (\PDOException $error) {
             switch ($error->getCode()) {
                 case '2002':
-                    $tpl->setarray('ERRORS', array('MSG' => 'Could not connect to database. Check host'));
-                    $tpl->setcondition('ERRORS');
+                    if (@$_REQUEST['install'] === 'tables') {
+                        $this->connect(false);
+                    } else {
+                        $tpl->setarray('ERRORS', array('MSG' => 'Could not connect to database. Check host'));
+                        $tpl->setcondition('ERRORS');
+                    }
                 break;
                 case '1044':
                     $tpl->setarray('ERRORS', array('MSG' => 'Could not connect to database. Check permissions'));

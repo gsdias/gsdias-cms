@@ -57,6 +57,8 @@ if (!IS_LOGGED) {
         }
     }
 
+    include_once 'gsd-frontend/admin/index'.PHPEXT;
+
     if (isset($csection) && !$csection->permission) {
         $tpl->setarray('ERRORS', array('MSG' => lang('LANG_NOPERMISSION')));
         redirect('/admin');

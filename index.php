@@ -12,12 +12,11 @@ define('GVALID', 1);
 
 include_once ROOTPATH.'gsd-include/gsd-config.php';
 
-if (!IS_INSTALLED) {
+if (!IS_INSTALLED || $site->p('install')) {
     if ($site->uri != '/admin') {
-        redirect('/admin');
+        redirect('/admin?install=database');
     }
 
-    $site->main = 'STEP1';
     require_once INCLUDEPATH.'gsd-install'.PHPEXT;
 
     $tpl->includeFiles('MAIN', $site->main);

@@ -9,9 +9,23 @@
  */
 defined('GVALID') or die;
 $tpl->setvar('HTML_CLASS', 'gsd');
-if ($site->p('save')) {
+
+switch($site->p('install')) {
+    case 'user':
+    case 'last':
+    $site->main = 'STEP3';
+    break;
+    case 'tables':
     $site->main = 'STEP2';
-    $site->startpoint = 'index';
+    break;
+    case 'database': 
+    $site->main = 'STEP1';
+    break;
+}
+    
+$site->startpoint = 'index';
+
+if ($site->p('install') === 'last') {
 
     $mysql->reset()
         ->insert('users')
@@ -49,9 +63,53 @@ if ($site->p('save')) {
         }
         include_once 'gsd-admin/update'.PHPEXT;
     }
-} else {
-    $site->main = 'STEP1';
-    $site->startpoint = 'index';
+} else if ($site->p('install') === 'tables') {
+    if ($site->p('save')) {
+        $handle = @fopen(ROOTPATH.'gsd-settings'.PHPEXT, "r");
+        $mysqlArray = 0;
+        $string = '';
+        if ($handle) {
+            while (($buffer = fgets($handle, 4096)) !== false) {
+                if ($mysqlArray > 0 && $mysqlArray < 5) {
+                    if ($mysqlArray == 1) {
+                        $string .= sprintf("%s'host' => '%s',\n", str_repeat(" ",8), $site->p('dbhost'));
+                    }
+                    if ($mysqlArray == 2) {
+                        $string .= sprintf("%s'user' => '%s',\n", str_repeat(" ",8), $site->p('user'));
+                    }
+                    if ($mysqlArray == 3) {
+                        $string .= sprintf("%s'pass' => '%s',\n", str_repeat(" ",8), $site->p('password'));
+                    }
+                    if ($mysqlArray == 4) {
+                        $string .= sprintf("%s'db' => '%s',\n", str_repeat(" ",8), $site->p('database'));
+                    }
+                        $mysqlArray++;
+                } else {
+                    if(strpos($buffer, '$mysql')) {
+                        $mysqlArray = 1;
+                    }
+                    $string .= $buffer;
+                }
+            }
+            if (!feof($handle)) {
+                echo "Error: unexpected fgets() fail\n";
+            }
+            fclose($handle);
+        }
+        file_put_contents(ROOTPATH.'gsd-settings'.PHPEXT, $string);
+        $GSDConfig->mysql = array(
+            'host' => $site->p('dbhost'),
+            'user' => $site->p('user'),
+            'pass' => $site->p('password'),
+            'db' => $site->p('database'),
+        );
+        
+        $mysql = GSD\mysqlFactory::create($site->p('database'), $site->p('dbhost'), $site->p('user'), $site->p('password'));
+    }
+
+    if (!@$GSDConfig->mysql['host']) {
+        redirect('/admin?install=database');
+    }
 
     $mysql->reset()
         ->show('DATABASES')
@@ -109,14 +167,14 @@ if ($site->p('save')) {
             );
         }
 
+        $tpl->setarray('CREATETABLES', $table_exists);
+
         if (is_file(CLIENTPATH.'install'.PHPEXT)) {
             include_once CLIENTPATH.'install'.PHPEXT;
         }
-        $tpl->setarray('CREATETABLES', $table_exists);
-    } else {
-        $site->main = 'STEP2';
-        $site->startpoint = 'index';
-
+    } 
+} else if ($site->p('install') === 'user') {
+    
         $mysql->reset()
             ->select('count(*)')
             ->from('users')
@@ -127,7 +185,6 @@ if ($site->p('save')) {
         } else {
             $tpl->setcondition('NOUSER');
         }
-    }
 
     if (!is_dir(ASSETPATH)) {
         mkdir(ASSETPATH, 0755);

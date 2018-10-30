@@ -1,10 +1,16 @@
-<main><!-- LOOP TABLE_EXISTS -->Checking table '{TABLE_EXISTS_NAME}': {TABLE_EXISTS_STATUS}<br><!-- ENDLOOP TABLE_EXISTS -->
-
-<!-- IF CREATETABLES -->
-Creating missing tables: <br><br>
-<!-- LOOP CREATETABLES -->table '{CREATETABLES_NAME}': {CREATETABLES_STATUS}<br><!-- ENDLOOP CREATETABLES -->
-
-<!-- ENDIF CREATETABLES -->
-
-<a href="/admin?install=user">Next step</a>
+<main>
+    [_ERRORS]
+    <form method="POST" action="/admin?install=tables">
+    <label>Host:</label>
+    <input name="dbhost" required>
+    <label class="pt-4">Username:</label>
+    <input name="user" required>
+    <label class="pt-4">Password:</label>
+    <input name="password" type="password" required>
+    <label class="pt-4">Database:</label>
+    <input name="database" required>
+    <div class="btns">
+        <input type="submit" class="btn blue" name="save" value="Save">
+    </div>
+    </form>
 </main>

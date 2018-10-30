@@ -224,6 +224,9 @@ msgstr "Published"
 msgid "LANG_UNPUBLISHED"
 msgstr "Unpublished"
 
+msgid "LANG_PUBLISH"
+msgstr "Publicar"
+
 msgid "LANG_PARENT"
 msgstr "Parent"
 
