@@ -13,14 +13,12 @@ if ($site->p('save')) {
     
     $result = generateGettext();
 
-    $content = $result[0];
-    $converted = $result[1];
+    $content = $result;
     
     $result = generateGettext(true);
 
-    $content = $content && $result[0];
-    $converted = $converted && $result[1];
-
+    $content = $result;
+    
     if ($content) {
         $tpl->setarray('MESSAGES', array('MSG' => lang('LANG_LANGUAGE_SAVED')));
     } else {
@@ -28,12 +26,12 @@ if ($site->p('save')) {
         $tpl->setcondition('ERRORS');
     }
 
-    if ($converted) {
-        $tpl->setarray('MESSAGES', array('MSG' => lang('LANG_LANGUAGE_CONVERTED')));
-    } else {
-        $tpl->setarray('ERRORS', array('MSG' => lang('LANG_LANGUAGE_NOT_CONVERTED')));
-        $tpl->setcondition('ERRORS');
-    }
+    // if ($converted) {
+    //     $tpl->setarray('MESSAGES', array('MSG' => lang('LANG_LANGUAGE_CONVERTED')));
+    // } else {
+    //     $tpl->setarray('ERRORS', array('MSG' => lang('LANG_LANGUAGE_NOT_CONVERTED')));
+    //     $tpl->setcondition('ERRORS');
+    // }
 
     if (!empty($tpl->config['array']['MESSAGES'])) {
         redirect('/admin');
@@ -48,40 +46,26 @@ function generateGettext($extended = false) {
     global $language, $site;
 
     if ($extended) {
-        $key = 'msgidclient[]';
-        $string = 'msgstrclient[]';
-        $file = CLIENTPATH.'locale/'.$language.'/LC_MESSAGES/extended.mo';
+        $key = 'msgidclient';
+        $msg = 'msgstrclient';
     } else {
-        $key = 'msgid[]';
-        $string = 'msgstr[]';
-        $file = ROOTPATH.'gsd-locale/'.$language.'/LC_MESSAGES/messages.mo';
+        $key = 'msgid';
+        $msg = 'msgstr';
+    }
+
+    if (!$site->p($key)) {
+        return true;
     }
 
     $string = '';
     $stringini = sprintf('[%s]', $language);
-    print_r($key);
-    print_r($site->p($key));
+    
     foreach ($site->p($key) as $i => $value) {
         $id = $value;
-        $str = $site->p($string)[$i];
+        $str = $site->p($msg)[$i];
         $string .= "\nmsgid \"$id\"\nmsgstr \"$str\"\n";
         $stringini .= sprintf("\n%s = \"%s\"", $id, $str);
     }
-
-    $params = array('src' => $string);
-    $defaults = array(
-    CURLOPT_URL => 'https://localise.biz/api/convert/po/messages.mo?format=gettext&locale='.$language,
-    CURLOPT_POST => true,
-    CURLOPT_POSTFIELDS => $params,
-    );
-    $ch = curl_init();
-    curl_setopt_array($ch, ($defaults));
-    ob_start();
-    $converted = curl_exec($ch);
-    $message = ob_get_contents();
-    ob_end_clean();
-    file_put_contents($file, $message);
-    curl_close($ch);
 
     $newfile = "msgid \"\"\nmsgstr \"\"\n\"Project-Id-Version: \\n\"\n\"POT-Creation-Date: 2014-11-12 17:19-0000\\n\"\n\"PO-Revision-Date: 2015-05-15 08:36-0000\\n\"\n\"Last-Translator: \\n\"\n\"Language-Team: \\n\"\n\"MIME-Version: 1.0\\n\"\n\"Content-Type: text/plain; charset=UTF-8\\n\"\n\"Content-Transfer-Encoding: 8bit\\n\"\n\"Plural-Forms: nplurals=2; plural=(n != 1);\\n\"\n\"Language: $language\\n\"\n".$string;
 
@@ -97,7 +81,7 @@ function generateGettext($extended = false) {
 
     $content = file_put_contents($file, $newfile);
 
-    return array($content && $contentini, $converted);
+    return $content && $contentini;
 }
 
 function getKeys($extended = false) {
