@@ -135,11 +135,6 @@ select {
     z-index: 1;
 }
 
-.gsd-language {
-    .string {
-        margin-top: 5px;
-    }
-}
 .gsd-password {
     text-indent: 15px;
 }
@@ -147,13 +142,13 @@ select {
     cursor: pointer;
     color: $gsd-color;
     position: absolute;
-    left: 5px;
+    left: 25px;
     top: 34px;
 }
 
 .gsd-complexity {
     position: absolute;
-    right: 5px;
+    right: 25px;
     top: 35px;
     width: 10px;
     height: 10px;

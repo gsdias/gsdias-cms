@@ -116,7 +116,7 @@ class users extends section implements isection
 
     public function add($emailparams = array())
     {
-        global $site, $config;
+        global $site, $GSDConfig;
 
         $password = substr(str_shuffle(sha1(rand().time().'gsdias-cms')), 2, 10);
 
@@ -132,7 +132,7 @@ class users extends section implements isection
             $email->setreplyto($site->email);
             $email->setsubject(lang('LANG_REGISTER_SUBJECT'));
             $email->setvar('sitename', $site->name);
-            $email->setvar('siteurl', $site->name);
+            $email->setvar('siteurl', $GSDConfig->url);
             $email->setvar('password', $password);
 
             if (sizeof(@$emailparams['fields'])) {

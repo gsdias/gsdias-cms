@@ -29,7 +29,9 @@ class mySQL implements idatabase
         $this->user = $user;
         $this->pass = $pass;
         $this->querylist = array();
-        $this->connect();
+        if ($host) {
+            $this->connect();
+        }
     }
 
     // -- Function Name : connect
@@ -120,7 +122,7 @@ class mySQL implements idatabase
 
         $values = !empty($values) ? $this->formatDates($values) : $values;
 
-        if (!$this->conn) {
+        if (!$this->conn && $this->host) {
             $this->connect();
         }
         if ($this->conn) {
@@ -419,7 +421,7 @@ class mySQL implements idatabase
 
         $this->_values = empty($this->_values) ? array() : $this->formatDates($this->_values);
 
-        if (!$this->conn) {
+        if (!$this->conn && $this->host) {
             $this->connect();
         }
         if ($this->conn) {

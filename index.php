@@ -14,7 +14,7 @@ include_once ROOTPATH.'gsd-include/gsd-config.php';
 
 if (!IS_INSTALLED || $site->p('install')) {
     if ($site->uri != '/admin') {
-        redirect('/admin?install=database');
+        redirect('/admin?install=step1');
     }
 
     require_once INCLUDEPATH.'gsd-install'.PHPEXT;

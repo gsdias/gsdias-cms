@@ -1,10 +1,15 @@
-<main><!-- LOOP TABLE_EXISTS -->Checking table '{TABLE_EXISTS_NAME}': {TABLE_EXISTS_STATUS}<br><!-- ENDLOOP TABLE_EXISTS -->
-
-<!-- IF CREATETABLES -->
-Creating missing tables: <br><br>
-<!-- LOOP CREATETABLES -->table '{CREATETABLES_NAME}': {CREATETABLES_STATUS}<br><!-- ENDLOOP CREATETABLES -->
-
-<!-- ENDIF CREATETABLES -->
-
-<a href="/admin?install=user">Next step</a>
+<main class="col-6 mx-auto">
+    <form method="POST" action="/admin?install=step3">
+        <label>Name:</label>
+        <input name="name">
+        <label class="pt-4">User admin:</label>
+        <input name="email">
+        <label class="pt-4">Password:</label>
+        <input name="password" type="password">
+        <label class="pt-4">Re password:</label>
+        <input name="repassword" type="password">
+        <div class="btns">
+            <input type="submit" class="btn blue" name="save" value="Save">
+        </div>
+    </form>
 </main>

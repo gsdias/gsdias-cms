@@ -9,6 +9,7 @@
  */
 defined('GVALID') or die;
 $tpl->setvar('HTML_CLASS', 'gsd');
+$tpl->setcondition('IS_INSTALLED', IS_INSTALLED);
 if (!IS_LOGGED) {
     if ($site->uri != '/admin/auth' && $site->uri != '/admin/auth/' && $site->uri != '/admin/reset') {
         redirect('/admin/auth?redirect='.urlencode($site->uri));

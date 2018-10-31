@@ -9,16 +9,16 @@
  */
 defined('GVALID') or die;
 $tpl->setvar('HTML_CLASS', 'gsd');
+$tpl->setvar('EXTRACLASS', 'install');
 
 switch($site->p('install')) {
-    case 'user':
-    case 'last':
+    case 'step3':
     $site->main = 'STEP3';
     break;
-    case 'tables':
+    case 'step2': 
     $site->main = 'STEP2';
     break;
-    case 'database': 
+    default: 
     $site->main = 'STEP1';
     break;
 }
@@ -27,43 +27,41 @@ $site->startpoint = 'index';
 
 if ($site->p('install') === 'last') {
 
-    $mysql->reset()
-        ->insert('users')
-        ->fields(array('level', 'email', 'password', 'name', 'creator'))
-        ->values(array('admin', $_REQUEST['email'], md5($_REQUEST['password']), $site->p('name'), 0))
-        ->exec();
-
-    if ($mysql->total) {
-        $tpl->setvar('STEP2_MESSAGES', 'Admin user saved with success. You can <a href="/admin">login</a> now.');
-
-        define('IS_ADMIN', 1);
-        $templatefiles = scandir(ASSETPATH.'/images');
-        $csection = \GSD\sectionFactory::create('images');
-        $_REQUEST['creator'] = $user->id;
-        $_REQUEST['created'] = date('Y-m-d H:i:s', time());
-        
-        foreach ($templatefiles as $file) {
-            if (substr($file, 0, 1) !== '.') {
-                $path = ASSETPATH.'/images/'.$file;
-                $file = explode('.', $file);
-                $size = getimagesize($path);
-            
-                $valid = is_array($size);
-            
-                $_REQUEST['width'] = $size[0];
-                $_REQUEST['height'] = $size[1];
-                $_REQUEST['size'] = round(filesize($path) / 1000, 0).'KB';
-            
-                $_REQUEST['name'] = $file[0];
-                $_REQUEST['description'] = '';
-                $_REQUEST['tags'] = '';
-                $_REQUEST['extension'] = $file[1];
-                $result = $csection->add($file[0]);
-            }
+    define('IS_ADMIN', 1);
+    if ($site->p('layout')) {
+        include_once ROOTPATH.'gsd-include/gsd-layouts'.PHPEXT;
+        foreach($site->p('layout') as $layout => $id) {
+            addLayout($layout.'.html', $layout, $id);
         }
-        include_once 'gsd-admin/update'.PHPEXT;
     }
-} else if ($site->p('install') === 'tables') {
+
+    $templatefiles = scandir(ASSETPATH.'/images');
+    $csection = \GSD\sectionFactory::create('images');
+    $_REQUEST['creator'] = $user->id;
+    $_REQUEST['created'] = date('Y-m-d H:i:s', time());
+    
+    foreach ($templatefiles as $file) {
+        if (substr($file, 0, 1) !== '.') {
+            $path = ASSETPATH.'/images/'.$file;
+            $file = explode('.', $file);
+            $size = getimagesize($path);
+        
+            $valid = is_array($size);
+        
+            $_REQUEST['width'] = $size[0];
+            $_REQUEST['height'] = $size[1];
+            $_REQUEST['size'] = round(filesize($path) / 1000, 0).'KB';
+        
+            $_REQUEST['name'] = $file[0];
+            $_REQUEST['description'] = '';
+            $_REQUEST['tags'] = '';
+            $_REQUEST['extension'] = $file[1];
+            $result = $csection->add($file[0]);
+        }
+    }
+    include_once 'gsd-admin/update'.PHPEXT;
+        
+} else if ($site->p('install') === 'step2') {
     if ($site->p('save')) {
         $handle = @fopen(ROOTPATH.'gsd-settings'.PHPEXT, "r");
         $mysqlArray = 0;
@@ -108,7 +106,7 @@ if ($site->p('install') === 'last') {
     }
 
     if (!@$GSDConfig->mysql['host']) {
-        redirect('/admin?install=database');
+        redirect('/admin?install=step1');
     }
 
     $mysql->reset()
@@ -173,18 +171,53 @@ if ($site->p('install') === 'last') {
             include_once CLIENTPATH.'install'.PHPEXT;
         }
     } 
-} else if ($site->p('install') === 'user') {
-    
-        $mysql->reset()
-            ->select('count(*)')
-            ->from('users')
-            ->exec();
 
-        if ($mysql->singleresult()) {
-            $tpl->setvar('STEP2_MESSAGES', 'There is already an user on the database.');
-        } else {
-            $tpl->setcondition('NOUSER');
+} else if ($site->p('install') === 'step3') {
+    $mysql->reset()
+        ->insert('users')
+        ->fields(array('level', 'email', 'password', 'name', 'creator'))
+        ->values(array('admin', $_REQUEST['email'], md5($_REQUEST['password']), $site->p('name'), 0))
+        ->exec();
+
+    $templatefiles = scandir(CLIENTTPLPATH.'_layouts');
+
+    $templates = [];
+
+    foreach ($templatefiles as $file) {
+        if ($file != '.' && $file != '..') {
+            $templates[] = array(
+                'NAME' => str_replace('.html', '', $file)
+            );
         }
+    }
+    $tpl->setarray('LAYOUTS', $templates);
+    $mysql->reset()
+        ->select()
+        ->from('layouttypes')
+        ->exec();
+
+    $types = array(array(
+        'NAME' => lang('LANG_CHOOSE'),
+        'ID' => 0
+    ));
+    foreach ($mysql->result() as $item) {
+        $types[] = array(
+            'NAME' => $item->name,
+            'ID' => $item->ltid
+        );
+    }
+    $tpl->setarray('LAYOUT_TYPE', $types);
+
+    $mysql->reset()
+        ->select('count(*)')
+        ->from('users')
+        ->exec();
+
+    if ($mysql->singleresult()) {
+        $tpl->setvar('STEP2_MESSAGES', 'There is already an user on the database.');
+    } else {
+        $tpl->setcondition('NOUSER');
+    }
 
     if (!is_dir(ASSETPATH)) {
         mkdir(ASSETPATH, 0755);
