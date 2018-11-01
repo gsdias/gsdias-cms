@@ -48,17 +48,7 @@ $tpl->setarray('MENU_ITEMS', array(
         'URL' => '/admin/language',
         'ICON' => 'fa-language',
         'PERMISSION' => IS_ADMIN || IS_EDITOR,
-        'ACTIVE' => '/admin/' . $site->a(1),
-        'ITEMS' => array(
-            array(
-                'NAME' => 'LANG_DEFAULT',
-                'URL' => '/admin/language'
-            ),
-            array(
-                'NAME' => 'LANG_EXTENDED',
-                'URL' => '/admin/language/extended'
-            )
-        )
+        'ACTIVE' => '/admin/' . $site->a(1)
     ),
     array(
         'NAME' => 'LANG_SETTINGS',

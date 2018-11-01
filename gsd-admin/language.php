@@ -11,11 +11,11 @@ defined('GVALID') or die;
 
 if ($site->p('save')) {
     
-    $result = generateGettext();
+    $result = saveKeys();
 
     $content = $result;
     
-    $result = generateGettext(true);
+    $result = saveKeys(true);
 
     $content = $result;
     
@@ -26,13 +26,6 @@ if ($site->p('save')) {
         $tpl->setcondition('ERRORS');
     }
 
-    // if ($converted) {
-    //     $tpl->setarray('MESSAGES', array('MSG' => lang('LANG_LANGUAGE_CONVERTED')));
-    // } else {
-    //     $tpl->setarray('ERRORS', array('MSG' => lang('LANG_LANGUAGE_NOT_CONVERTED')));
-    //     $tpl->setcondition('ERRORS');
-    // }
-
     if (!empty($tpl->config['array']['MESSAGES'])) {
         redirect('/admin');
     }
@@ -42,72 +35,59 @@ $lang = getKeys();
 $lang = array_merge($lang, getKeys(true));
 $tpl->setarray('FIELD', $lang);
 
-function generateGettext($extended = false) {
+function saveKeys($extended = false) {
     global $language, $site;
 
     if ($extended) {
-        $key = 'msgidclient';
-        $msg = 'msgstrclient';
+        $key = 'keyclient';
+        $msg = 'valueclient';
     } else {
-        $key = 'msgid';
-        $msg = 'msgstr';
+        $key = 'key';
+        $msg = 'value';
     }
 
     if (!$site->p($key)) {
         return true;
     }
 
-    $string = '';
     $stringini = sprintf('[%s]', $language);
     
     foreach ($site->p($key) as $i => $value) {
         $id = $value;
         $str = $site->p($msg)[$i];
-        $string .= "\nmsgid \"$id\"\nmsgstr \"$str\"\n";
         $stringini .= sprintf("\n%s = \"%s\"", $id, $str);
     }
 
-    $newfile = "msgid \"\"\nmsgstr \"\"\n\"Project-Id-Version: \\n\"\n\"POT-Creation-Date: 2014-11-12 17:19-0000\\n\"\n\"PO-Revision-Date: 2015-05-15 08:36-0000\\n\"\n\"Last-Translator: \\n\"\n\"Language-Team: \\n\"\n\"MIME-Version: 1.0\\n\"\n\"Content-Type: text/plain; charset=UTF-8\\n\"\n\"Content-Transfer-Encoding: 8bit\\n\"\n\"Plural-Forms: nplurals=2; plural=(n != 1);\\n\"\n\"Language: $language\\n\"\n".$string;
-
     if ($extended) {
-        $file = CLIENTPATH.'locale/'.$language.'/LC_MESSAGES/extended.po';
         $fileini = CLIENTPATH.'locale/'.$language.'/LC_MESSAGES/extended.ini';
     } else {
-        $file = ROOTPATH.'gsd-locale/'.$language.'/LC_MESSAGES/messages.po';
         $fileini = ROOTPATH.'gsd-locale/'.$language.'/LC_MESSAGES/messages.ini';
     }
 
     $contentini = file_put_contents($fileini, $stringini);
 
-    $content = file_put_contents($file, $newfile);
-
-    return $content && $contentini;
+    return $contentini;
 }
 
 function getKeys($extended = false) {
     global $language;
     
     if ($extended) {
-        $file = CLIENTPATH.'locale/'.$language.'/LC_MESSAGES/extended.po';
-        $key = 'msgidclient[]';
-        $string = 'msgstrclient[]';
+        $keys = parse_ini_file(CLIENTPATH."locale/".$language."/LC_MESSAGES/extended.ini");
+        $_key = 'keyclient[]';
+        $_string = 'valueclient[]';
     } else {
-        $file = ROOTPATH.'gsd-locale/'.$language.'/LC_MESSAGES/messages.po';
-        $key = 'msgid[]';
-        $string = 'msgstr[]';
+        $keys = parse_ini_file(ROOTPATH."gsd-locale/".$language."/LC_MESSAGES/messages.ini");
+        $_key = 'key[]';
+        $_string = 'value[]';
     }
-    $content = file_get_contents($file);
-
-    preg_match_all('#msgid "(.*)"\nmsgstr "(.*)"#m', $content, $matches, PREG_SET_ORDER);
 
     $lang = array();
-    foreach ($matches as $match) {
-        if ($match[1]) {
-            $lang[] = array(
-                'FIELD_ID' => new GSD\input(array('label' => 'Key', 'name' => $key, 'value' => $match[1])),
-                'FIELD_STR' => new GSD\input(array('label' => lang('LANG_TEXT'), 'name' => $string, 'value' => $match[2], 'labelClass' => 'pt-4')),
-            );
-        }
+    foreach ($keys as $key => $value) {
+        $lang[] = array(
+            'FIELD_ID' => new GSD\input(array('label' => 'Key', 'name' => $_key, 'value' => $key)),
+            'FIELD_STR' => new GSD\input(array('label' => lang('LANG_TEXT'), 'name' => $_string, 'value' => $value, 'labelClass' => 'pt-4')),
+        );
     }
     return $lang;
 }

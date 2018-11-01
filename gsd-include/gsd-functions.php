@@ -161,27 +161,15 @@ function lang($text, $option = 'NONE')
     
     $translated = $text;
     
-    if (function_exists('_')) {
-        if (@$site->isFrontend) {
-            $translated = dcgettext('extended', $text, LC_MESSAGES);
-            $translated = $translated != $text ? $translated : _($text);
-        } else {
-            $translated = _($text);
-            $translated = $translated != $text ? $translated : dcgettext('extended', $text, LC_MESSAGES);
-        }
-    }
+    $initLanguageFrontend = parse_ini_file(CLIENTPATH."locale/".$language."/LC_MESSAGES/extended.ini");
+    $initLanguageBackend = parse_ini_file(ROOTPATH."gsd-locale/".$language."/LC_MESSAGES/messages.ini");
 
-    if ($translated == $text) {
-        $initLanguageFrontend = parse_ini_file(CLIENTPATH."locale/".$language."/LC_MESSAGES/extended.ini");
-        $initLanguageBackend = parse_ini_file(ROOTPATH."gsd-locale/".$language."/LC_MESSAGES/messages.ini");
-
-        if (@$site->isFrontend) {
-            $translated = @$initLanguageFrontend[$text] ? $initLanguageFrontend[$text] : $text;
-            $translated = $translated == $text && @$initLanguageBackend[$text] ? $initLanguageBackend[$text] : $translated;
-        } else {  
-            $translated = @$initLanguageBackend[$text] ? $initLanguageBackend[$text] : $text;
-            $translated = $translated == $text && @$initLanguageFrontend[$text] ? $initLanguageFrontend[$text] : $translated;
-        }
+    if (@$site->isFrontend) {
+        $translated = @$initLanguageFrontend[$text] ? $initLanguageFrontend[$text] : $text;
+        $translated = $translated == $text && @$initLanguageBackend[$text] ? $initLanguageBackend[$text] : $translated;
+    } else {  
+        $translated = @$initLanguageBackend[$text] ? $initLanguageBackend[$text] : $text;
+        $translated = $translated == $text && @$initLanguageFrontend[$text] ? $initLanguageFrontend[$text] : $translated;
     }
 
     if ($translated === $text && substr($text, 0, 5) === 'LANG_') {
