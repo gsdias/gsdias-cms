@@ -30,7 +30,8 @@
     "description": "GSD CMS",
     "main": "js/entry.js",
     "scripts": {
-        "webpack": "webpack --watch"
+        "webpack": "webpack --watch",
+        "test": "echo 0"
     },
     "prefix": "gsd-",
     "gsdresources": "../gsd-resources/",

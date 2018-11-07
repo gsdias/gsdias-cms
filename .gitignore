@@ -7,7 +7,6 @@ gsd-resources/assets/*
 error_log
 gsd-frontend/
 *.mo
-gsd-locale/**/LC_MESSAGES/messages.ini
 .php_cs.cache
 *.log
 gsd-settings.php
